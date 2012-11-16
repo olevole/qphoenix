@@ -23,11 +23,13 @@ set(QT_USE_QTXML TRUE)
 
 include_directories(
 ${CMAKE_CURRENT_BINARY_DIR}
-${CMAKE_INCLUDE_PATH})
+${CMAKE_INCLUDE_PATH}
+src/settings
+src/exceptions
+src/historymanager)
 
-#add_subdirectory(src/historymanager)
-#add_subdirectory(src/common)
-#add_subdirectory(src/3rdparty/qtsingleapplication)
+
+
 
 configure_file(src/common/defines.h.in src/common/defines.h)
 
@@ -36,6 +38,7 @@ set(HEADERS
 src/mainwindow.h
 src/historymanager/historymanager.h
 src/exceptions/exceptions.h
+src/settings/settings.h
 )
 
 
@@ -44,6 +47,7 @@ src/main.cpp
 src/mainwindow.cpp
 src/historymanager/historymanager.cpp
 src/exceptions/exceptions.cpp
+src/settings/settings.cpp
 )
 
 set(FORMS
@@ -51,6 +55,10 @@ src/mainwindow.ui
 src/historymanager/historymanager.ui
 src/exceptions/exceptions.ui
 )
+
+
+set(DOCUMENTS
+docs/standards_capability.txt)
 
 
 
