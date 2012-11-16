@@ -1,0 +1,12 @@
+    * This document descripe QPhoenix compatibility with some
+    * FDO and other GUI and text processing, national codes,
+    * GUI design specs, etc standards.
+    
+    
+    
+  -- This project SHOULD follow FDO Icon Naming Specs as it's possible:
+     http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html
+     
+     
+  -- ISO 639-1 format for representation of icons and for translator plugins 
+     (if translation service follow this standard) should be used.
