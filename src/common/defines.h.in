@@ -1,0 +1,20 @@
+#ifndef DEFINES_H
+#define DEFINES_H
+
+
+#define VERSION "00001a"
+
+
+
+
+
+#ifdef Q_OS_LINUX
+    #define CONFIG_DIR ".config"
+    #define HISTORY_DIR CONFIG_DIR  "/"  "history"
+#elif defined(Q_OS_WIN32)
+// What to do?
+#endif
+
+
+
+#endif // DEFINES_H
