@@ -8,7 +8,7 @@ class SettingsBase;
 
 /*
  *  This is an implementation of main settings dialog.
- *  All settings pages MUST include SettingsBase
+ *  All settings pages MUST include SettingsBase.
  */
 
 class Settings : public QDialog
@@ -18,12 +18,11 @@ public:
     explicit Settings(QDialog *parent = 0);
 
     /*  Inserting Settings page into the main
-     *  settings dialog.
+     *  settings dialog. All settings pages are
+     *  presented by the following interface:
      */
     void insertPage(const SettingsBase &page);
-
-    /* Returns page obj by index
-     */
+    void deletePage(const SettingsBase &page);
     SettingsBase & pageAt(int i) const;
     
 signals:

@@ -9,8 +9,10 @@ class SettingsBase : public QObject
 public:
     explicit SettingsBase(QObject *parent = 0);
     
-    void save() = 0;
-    void read() = 0;
+
+    // Read and save the settings
+    virtual void save() = 0;
+    virtual void read() = 0;
 
     inline void setPageTitle(const QString &t) {
         mPageTitle = t;

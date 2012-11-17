@@ -39,6 +39,8 @@ src/mainwindow.h
 src/historymanager/historymanager.h
 src/exceptions/exceptions.h
 src/settings/settings.h
+src/settings/settingsbase.h
+
 )
 
 
