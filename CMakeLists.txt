@@ -26,7 +26,8 @@ ${CMAKE_CURRENT_BINARY_DIR}
 ${CMAKE_INCLUDE_PATH}
 src/settings
 src/exceptions
-src/historymanager)
+src/historymanager
+src/3rdparty/fancytab-widgets)
 
 
 
@@ -40,7 +41,8 @@ src/historymanager/historymanager.h
 src/exceptions/exceptions.h
 src/settings/settings.h
 src/settings/settingsbase.h
-src/3rdparty/fancytab-widgets
+src/3rdparty/fancytab-widgets/fancytabwidget.h
+
 )
 
 
@@ -50,6 +52,7 @@ src/mainwindow.cpp
 src/historymanager/historymanager.cpp
 src/exceptions/exceptions.cpp
 src/settings/settings.cpp
+src/3rdparty/fancytab-widgets/fancytabwidget.cpp
 )
 
 set(FORMS
