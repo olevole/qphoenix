@@ -3,6 +3,11 @@
 
 #include <QDialog>
 
+
+namespace Ui {
+class Settings;
+}
+
 class SettingsBase;
 
 
@@ -15,18 +20,26 @@ class Settings : public QDialog
 {
     Q_OBJECT
 public:
-    explicit Settings(QDialog *parent = 0);
+    explicit Settings(QWidget *parent = 0);
 
     /*  Inserting Settings page into the main
      *  settings dialog. All settings pages are
      *  presented by the following interface:
      */
-    void insertPage(const SettingsBase &page);
+    void insertPage( SettingsBase &page);
     void deletePage(const SettingsBase &page);
-    SettingsBase & pageAt(int i) const;
-    
+    SettingsBase *pageAt(const int i) const;
 signals:
+    void currentPageChanged(const int i);
+private:
+    Ui::Settings *ui;
+    QList<SettingsBase *> mSettingsPages;
     
+
+    void createConnections();
+
+    // Load default setting pages
+    void loadSettings();
 public slots:
     
 };

@@ -40,7 +40,7 @@ src/historymanager/historymanager.h
 src/exceptions/exceptions.h
 src/settings/settings.h
 src/settings/settingsbase.h
-
+src/3rdparty/fancytab-widgets
 )
 
 
@@ -56,6 +56,7 @@ set(FORMS
 src/mainwindow.ui
 src/historymanager/historymanager.ui
 src/exceptions/exceptions.ui
+src/settings/settings.ui
 )
 
 

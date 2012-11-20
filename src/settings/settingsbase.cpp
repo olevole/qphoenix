@@ -1,6 +1,6 @@
 #include "settingsbase.h"
 
-SettingsBase::SettingsBase(QObject *parent) :
-    QObject(parent)
+SettingsBase::SettingsBase(QWidget *parent) :
+    QGroupBox(parent)
 {
 }
