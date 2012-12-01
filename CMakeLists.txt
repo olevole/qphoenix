@@ -43,7 +43,7 @@ src/exceptions/exceptions.h
 src/settings/settings.h
 src/settings/settingsbase.h
 
-src/3rdparty/fancytab-widgets
+#src/3rdparty/fancytab-widgets/fancytabwidget.h
 src/core/pluginloader.h
 )
 
@@ -54,11 +54,8 @@ src/mainwindow.cpp
 src/historymanager/historymanager.cpp
 src/exceptions/exceptions.cpp
 src/settings/settings.cpp
-<<<<<<< HEAD
-src/3rdparty/fancytab-widgets/fancytabwidget.cpp
-=======
+#src/3rdparty/fancytab-widgets/fancytabwidget.cpp
 src/core/pluginloader.h
->>>>>>> fancytab_jntegration
 )
 
 set(FORMS

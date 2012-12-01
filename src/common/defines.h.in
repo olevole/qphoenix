@@ -13,7 +13,7 @@
 
 #ifdef Q_OS_LINUX
     #define CONFIG_DIR ".config"
-    #define HISTORY_DIR CONFIG_DIR (QDir::separator())  "history"
+    #define HISTORY_DIR CONFIG_DIR "/"  "history"
 #elif defined(Q_OS_WIN32)
 // What to do?
 #endif

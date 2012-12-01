@@ -22,7 +22,7 @@ private:
 signals:
     // Signals for plugins
     void translationInitiated(const QString &src_text);
-    void translationFinished(const QString &src_text, res_text);
+    void translationFinished(const QString &src_text, const QString &res_text);
 };
 
 #endif // MAINWINDOW_H

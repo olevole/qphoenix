@@ -4,7 +4,6 @@
 #include "settings.h"
 #include "exceptions.h"
 
-#include "fancytabwidget.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,7 +11,6 @@ int main(int argc, char *argv[])
 //    MainWindow w;
 //    w.show();
 
-    Core::Internal::FancyTabWidget w;
     Settings s;
     return s.exec();
 
