@@ -2,15 +2,18 @@
 #define DEFINES_H
 
 
-#define VERSION "00001a"
+#include <QDir>
+
+#define VERSION "0.01a"
 
 
+//#
 
 
 
 #ifdef Q_OS_LINUX
     #define CONFIG_DIR ".config"
-    #define HISTORY_DIR CONFIG_DIR  "/"  "history"
+    #define HISTORY_DIR CONFIG_DIR (QDir::separator())  "history"
 #elif defined(Q_OS_WIN32)
 // What to do?
 #endif

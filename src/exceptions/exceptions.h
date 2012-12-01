@@ -17,6 +17,10 @@ public:
     
 private:
     Ui::Exceptions *ui;
+
+    void addException();
+    void removeException();
+    void clear();
 };
 
 #endif // EXCEPTIONS_H
