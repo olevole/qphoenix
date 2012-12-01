@@ -17,6 +17,12 @@ public:
     
 private:
     Ui::MainWindow *ui;
+
+
+signals:
+    // Signals for plugins
+    void translationInitiated(const QString &src_text);
+    void translationFinished(const QString &src_text, res_text);
 };
 
 #endif // MAINWINDOW_H

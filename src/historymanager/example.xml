@@ -3,12 +3,12 @@
     
     <entry time="12:34" src="en" dest="ru">
       <src_text>Привет</src_text>
-      <res_test>Hello</dest_text>
+      <res_text>Hello</res_text>
     </entry> 
     
     <entry time="14:31" src="de" dest="ru">
       <src_text>Wie gehts</src_text>
-      <res_test>Как дела?</dest_text>
+      <res_text>Как дела?</res_text>
     </entry> 
       
       
