@@ -24,11 +24,13 @@ set(QT_USE_QTXML TRUE)
 include_directories(
 ${CMAKE_CURRENT_BINARY_DIR}
 ${CMAKE_INCLUDE_PATH}
-src/settings
+src/gui/settings
 src/exceptions
 src/historymanager
 src/3rdparty/fancytab-widgets
-src/core)
+src/core
+src/api
+src/include)
 
 
 
@@ -40,11 +42,12 @@ set(HEADERS
 src/mainwindow.h
 src/historymanager/historymanager.h
 src/exceptions/exceptions.h
-src/settings/settings.h
-src/settings/settingsbase.h
+src/gui/settings/settings.h
+src/gui/settings/settingsbase.h
 
 #src/3rdparty/fancytab-widgets/fancytabwidget.h
 src/core/pluginloader.h
+#src/api/pluginapi.h
 )
 
 
@@ -53,7 +56,7 @@ src/main.cpp
 src/mainwindow.cpp
 src/historymanager/historymanager.cpp
 src/exceptions/exceptions.cpp
-src/settings/settings.cpp
+src/gui/settings/settings.cpp
 #src/3rdparty/fancytab-widgets/fancytabwidget.cpp
 src/core/pluginloader.h
 )
@@ -62,7 +65,7 @@ set(FORMS
 src/mainwindow.ui
 src/historymanager/historymanager.ui
 src/exceptions/exceptions.ui
-src/settings/settings.ui
+src/gui/gsettings/settings.ui
 )
 
 

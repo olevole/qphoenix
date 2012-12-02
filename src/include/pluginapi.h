@@ -1,34 +1,23 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef PLUGINAPI_H
+#define PLUGINAPI_H
 
-#include <QMainWindow>
 
-class QTextEdit;
-class QTextBrowser;
-class QLayout;
-class QGroupBox;
-class QStatusBar;
-class QToolBar;
+/*
+ * This is an API for QPhoenix plugins. This  interface class
+ * MUST be inherited by MainWindow and all methods should be
+ * re-implemented and actualised.
+ */
 
-namespace Gui {
+#include <QString>
 
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
-    
+namespace Api {
+
+class PluginAPI {
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
-    
-private:
     QString srcLang() const;
     QString resbpiLang() const;
     QString srcText() const;
     QString resText() const;
-
-
-
-
 signals:
     // Signals for plugins
     void translationInitiated(const QString &src_text);
@@ -39,6 +28,10 @@ signals:
     void languagesSwapped();
 };
 
-}// end Gui namespace
 
-#endif // MAINWINDOW_H
+
+
+}
+
+
+#endif // PLUGINAPI_H
