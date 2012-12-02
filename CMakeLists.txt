@@ -27,7 +27,6 @@ ${CMAKE_INCLUDE_PATH}
 src/gui/settings
 src/3rdparty/fancytab-widgets
 src/core
-src/api
 src/include
 src/gui)
 
