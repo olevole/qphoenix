@@ -9,5 +9,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
 
-    return 0;
+    Gui::MainWindow *mw = new Gui::MainWindow;
+    mw->show();
+
+    return a.exec();
 }

@@ -3,7 +3,7 @@
 
 using namespace Core;
 
-PluginLoader::PluginLoader(QObject *parent) :
+PipePluginLoader::PipePluginLoader(QObject *parent) :
     QObject(parent)
 {
 }

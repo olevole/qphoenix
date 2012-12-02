@@ -6,11 +6,11 @@
 
 namespace Core {
 
-class PluginLoader : public QObject
+class PipePluginLoader : public QObject
 {
     Q_OBJECT
 public:
-    explicit PluginLoader(QObject *parent = 0);
+    explicit PipePluginLoader(QObject *parent = 0);
     
 signals:
     

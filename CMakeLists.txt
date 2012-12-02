@@ -25,7 +25,7 @@ include_directories(
 ${CMAKE_CURRENT_BINARY_DIR}
 ${CMAKE_INCLUDE_PATH}
 src/gui/settings
-src/3rdparty/fancytab-widgets
+src/gui/3rdparty/fancytab-widgets
 src/core
 src/include
 src/gui)
