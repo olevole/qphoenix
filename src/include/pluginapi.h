@@ -9,29 +9,33 @@
  */
 
 #include <QString>
+#include "plugininterface.h"
+#include "settingsinterface.h"
 
 namespace Api {
 
 class MainWindowAPI {
 public:
-    virtual QString srcLang() const;
-    virtual QString resbpiLang() const;
-    QString srcText() const;
-    QString resText() const;
-signals:
-    // Signals for plugins
-    void translationInitiated(const QString &src_text);
-    void translationFinished(const QString &src_text, const QString &res_text);
+    virtual QString srcLang() const = 0;
+    virtual QString resbpiLang() const = 0;
+    virtual QString srcText() const = 0;
+    virtual QString resText() const = 0;
+//signals:
+//    // Signals for plugins
+//    virtual void translationInitiated(const QString &src_text) = 0 ;
+//    virtual void translationFinished(const QString &src_text, const QString &res_text) = 0;
 
-    void sourceLanguageChanged();
-    void resultLanguageChanged();
-    void languagesSwapped();
+//    virtual void sourceLanguageChanged() = 0;
+//    virtual void resultLanguageChanged() = 0;
+//    virtual void languagesSwapped() = 0;
 };
 
 
 
 
 class SettingsAPI {
+public:
+
 
 };
 
