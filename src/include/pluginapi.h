@@ -12,10 +12,10 @@
 
 namespace Api {
 
-class PluginAPI {
+class MainWindowAPI {
 public:
-    QString srcLang() const;
-    QString resbpiLang() const;
+    virtual QString srcLang() const;
+    virtual QString resbpiLang() const;
     QString srcText() const;
     QString resText() const;
 signals:
@@ -26,6 +26,13 @@ signals:
     void sourceLanguageChanged();
     void resultLanguageChanged();
     void languagesSwapped();
+};
+
+
+
+
+class SettingsAPI {
+
 };
 
 

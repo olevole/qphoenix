@@ -33,7 +33,7 @@ src/gui)
 
 
 
-configure_file(src/common/defines.h.in src/common/defines.h)
+configure_file(src/core/common/defines.h.in src/core/common/defines.h)
 
 
 set(HEADERS
