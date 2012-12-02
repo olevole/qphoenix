@@ -25,12 +25,11 @@ include_directories(
 ${CMAKE_CURRENT_BINARY_DIR}
 ${CMAKE_INCLUDE_PATH}
 src/gui/settings
-src/exceptions
-src/historymanager
 src/3rdparty/fancytab-widgets
 src/core
 src/api
-src/include)
+src/include
+src/gui)
 
 
 
@@ -39,33 +38,23 @@ configure_file(src/common/defines.h.in src/common/defines.h)
 
 
 set(HEADERS
-src/mainwindow.h
-src/historymanager/historymanager.h
-src/exceptions/exceptions.h
+src/gui/mainwindow.h
 src/gui/settings/settings.h
 src/gui/settings/settingsbase.h
-
-#src/3rdparty/fancytab-widgets/fancytabwidget.h
 src/core/pluginloader.h
-#src/api/pluginapi.h
 )
 
 
 set(SOURCES
 src/main.cpp
-src/mainwindow.cpp
-src/historymanager/historymanager.cpp
-src/exceptions/exceptions.cpp
+src/gui/mainwindow.cpp
 src/gui/settings/settings.cpp
-#src/3rdparty/fancytab-widgets/fancytabwidget.cpp
 src/core/pluginloader.h
 )
 
 set(FORMS
-src/mainwindow.ui
-src/historymanager/historymanager.ui
-src/exceptions/exceptions.ui
-src/gui/gsettings/settings.ui
+src/gui/mainwindow.ui
+src/gui/settings/settings.ui
 )
 
 
