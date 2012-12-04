@@ -4,16 +4,19 @@
 #include <QDialog>
 
 
-namespace Ui {
-class Settings;
-}
 
+
+
+
+class Ui_Settings;
 class SettingsBase;
+
+namespace Gui {
 
 
 /*
  *  This is an implementation of main settings dialog.
- *  All settings pages MUST include SettingsBase.
+ *  All settings pages MUST include SettingsInteface.
  */
 
 class Settings : public QDialog
@@ -22,7 +25,7 @@ class Settings : public QDialog
 public:
     explicit Settings(QWidget *parent = 0);
 
-    /*  Inserting Settings page into the main
+    /*  Inserting Settings page into the lmain
      *  settings dialog. All settings pages are
      *  presented by the following interface:
      */
@@ -32,16 +35,17 @@ public:
 signals:
     void currentPageChanged(const int i);
 private:
-    Ui::Settings *ui;
+    Ui_Settings *ui;
     QList<SettingsBase *> mSettingsPages;
     
 
     void createConnections();
 
-    // Load default setting pages
+//     Load default setting pages
     void loadSettings();
 public slots:
     
 };
 
+} // end Gui namespace
 #endif // SETTINGS_H

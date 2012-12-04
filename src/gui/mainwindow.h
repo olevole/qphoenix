@@ -15,7 +15,7 @@ class Ui_MainWindow;
 namespace Gui {
 
 
-class MainWindow : public QMainWindow, Api::MainWindowAPI
+class MainWindow : public  QMainWindow
 {
     Q_OBJECT
     
@@ -23,11 +23,10 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    QString srcLang() const {return "ru";}
-    QString resbpiLang() const { return "en";}
+    QString srcLang() const { return "ru";}
+    QString resLang() const { return "en";}
     QString srcText() const { return "en";}
     QString resText() const { return "en";}
-    
 private:
 
 
@@ -36,13 +35,10 @@ private:
 
 
 signals:
-    // Signals for plugins
-    void translationInitiated(const QString &src_text);
-    void translationFinished(const QString &src_text, const QString &res_text);
+//    void languageChange();
+public slots:
+//    void setSou
 
-    void sourceLanguageChanged();
-    void resultLanguageChanged();
-    void languagesSwapped();
 };
 
 }// end Gui namespace

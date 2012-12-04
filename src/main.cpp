@@ -12,5 +12,7 @@ int main(int argc, char *argv[])
     Gui::MainWindow *mw = new Gui::MainWindow;
     mw->show();
 
+    Gui::Settings s;s.show();
+
     return a.exec();
 }

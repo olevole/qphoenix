@@ -2,14 +2,16 @@
 #include "settingsbase.h"
 #include "ui_settings.h"
 
-
+using namespace  Gui;
 
 Settings::Settings(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::Settings)
-
+    QDialog(parent)
 {
+
+
+    ui = new Ui_Settings;
     ui->setupUi(this);
+
     createConnections();
     loadSettings();
 

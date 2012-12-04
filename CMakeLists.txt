@@ -43,6 +43,9 @@ src/gui/settings/settingsbase.h
 src/core/pluginloader.h
 src/include/settingsinterface.h
 src/include/plugininterface.h
+src/include/pluginapi.h
+
+
 )
 
 
