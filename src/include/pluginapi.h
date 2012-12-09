@@ -12,7 +12,9 @@ class QStatusBar;
 class QComboBox;
 class QToolButton;
 class QPushButton;
-
+class QTextEdit;
+class QTextBrowser;
+class QMenuBar;
 
 namespace Api {
 
@@ -24,49 +26,42 @@ namespace Api {
  */
 
 
+
+/*!
+ * \brief The MainWindowAPI class
+ */
+
 class MainWindowAPI {
 public:
-    /*!
+    /*
      * Yes, I know, this is not a best solution,
      * but it the easiest way to take plugins full
      * controll on the widgets. Plugin developers
-     * should be carefull using this object
+     * should be carefull using these objects
      * pointers. Do not forget, other plugins
      * can use those objects too, it could take
      * a race condition effect.
      */
 
-    virtual QString srcLang() const = 0;
-    virtual QString resLang() const = 0;
-
-    virtual QString srcText() const = 0;
-    virtual QString resText() const = 0;
 
     virtual QToolBar    *toolbar() = 0;
     virtual QStatusBar  *statusbar()  = 0;
     virtual QComboBox   *srcComboBox() = 0;
     virtual QComboBox   *resComboBox() = 0;
-
-
-//signals:
-//    virtual void translationInitiated(const QString &src_text) = 0 ;
-//    virtual void translationFinished(const QString &src_text, const QString &res_text) = 0;
-
-
-
-    virtual void sourceLanguageChanged() = 0;
-    virtual void resultLanguageChanged() = 0;
-    virtual void languagesSwapped() = 0;
-
-//slots:
-//    virtual void setSourceLanguage(const int i) = 0;
+    virtual QTextEdit   *srcText() = 0;
+    virtual QTextBrowser*resTExt() = 0;
+    virtual QPushButton *translateButton() = 0;
+    virtual QToolButton *swapButton() = 0;
+    virtual QMenuBar    *menuBar() = 0;
 };
 
 
 class SettingsAPI {
 public:
-    virtual void addPage(const SettingsInterface *iface);
+    virtual void addPage(const SettingsInterface *page);
+    virtual void removePage(const SettingsInterface *page);
 
+    virtual int count() const = 0;
 
 };
 

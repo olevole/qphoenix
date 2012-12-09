@@ -24,23 +24,22 @@ set(QT_USE_QTXML TRUE)
 include_directories(
 ${CMAKE_CURRENT_BINARY_DIR}
 ${CMAKE_INCLUDE_PATH}
-src/gui/settings
-src/gui/3rdparty/fancytab-widgets
+src/core/settings
+src/core/3rdparty/fancytab-widgets
 src/core
 src/include
-src/gui)
+)
 
 
 
 
-configure_file(src/core/common/defines.h.in src/core/common/defines.h)
+configure_file(src/include/defines.h.in src/include/defines.h)
 
 
 set(HEADERS
-src/gui/mainwindow.h
-src/gui/settings/settings.h
-src/gui/settings/settingsbase.h
-src/core/pluginloader.h
+src/core/mainwindow.h
+src/core/settings/settings.h
+src/core/settings/settingsbase.h
 src/include/settingsinterface.h
 src/include/plugininterface.h
 src/include/pluginapi.h
@@ -51,14 +50,13 @@ src/include/pluginapi.h
 
 set(SOURCES
 src/main.cpp
-src/gui/mainwindow.cpp
-src/gui/settings/settings.cpp
-src/core/pluginloader.h
+src/core/mainwindow.cpp
+src/core/settings/settings.cpp
 )
 
 set(FORMS
-src/gui/mainwindow.ui
-src/gui/settings/settings.ui
+src/core/mainwindow.ui
+src/core/settings/settings.ui
 )
 
 

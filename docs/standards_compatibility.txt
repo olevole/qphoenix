@@ -12,6 +12,8 @@
      (if translation service follow this standard) should be used.
 
 
+  -- XDG Dir specification (for FDO-compatible systems):
+     http://standards.freedesktop.org/basedir-spec/basedir-spec-0.6.html
 
 
 
