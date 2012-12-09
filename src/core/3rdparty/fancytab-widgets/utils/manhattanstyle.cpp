@@ -32,8 +32,8 @@
 
 #include "manhattanstyle.h"
 #include "styleanimator.h"
-#include <utils/stylehelper.h>
-#include <utils/fancymainwindow.h>
+#include <stylehelper.h>
+#include <fancymainwindow.h>
 
 #include <QtCore/QLibrary>
 #include <QtGui/QApplication>

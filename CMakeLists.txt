@@ -19,6 +19,7 @@ find_package(Qt4 REQUIRED)
 include(${QT_USE_FILE} )
 set(QT_USE_QTXML TRUE)
 
+add_subdirectory(src/core/3rdparty/fancytab-widgets)
 
 
 include_directories(
@@ -92,6 +93,6 @@ if (Q_WS_X11)
 endif (Q_WS_X11)
 
 
-target_link_libraries(qphoenix ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES} ${QT_QTXML_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES})
+target_link_libraries(qphoenix ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES} ${QT_QTXML_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES} fancytabwidget)
 
 

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "pluginapi.h"
+#include "fancytabwidget.h"
 
 class QTextEdit;
 class QTextBrowser;
