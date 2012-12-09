@@ -14,5 +14,6 @@ int main(int argc, char *argv[])
 
     Gui::Settings s;s.show();
 
+
     return a.exec();
 }
