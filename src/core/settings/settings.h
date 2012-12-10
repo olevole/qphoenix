@@ -2,14 +2,13 @@
 #define SETTINGS_H
 
 #include <QDialog>
+#include "pluginapi.h"
+#include "settingsinterface.h"
 
 
 
 
 
-
-class Ui_Settings;
-class SettingsBase;
 
 namespace Gui {
 
@@ -19,31 +18,25 @@ namespace Gui {
  *  All settings pages MUST include SettingsInteface.
  */
 
-class Settings : public QDialog
+class Settings : public QDialog,  Api::SettingsWidgetAPI
 {
     Q_OBJECT
+    Q_INTERFACES(Api::SettingsWidgetAPI)
+
 public:
     explicit Settings(QWidget *parent = 0);
+
 
     /*  Inserting Settings page into the lmain
      *  settings dialog. All settings pages are
      *  presented by the following interface:
      */
-    void insertPage( SettingsBase &page);
-    void deletePage(const SettingsBase &page);
-    SettingsBase *pageAt(const int i) const;
-signals:
-    void currentPageChanged(const int i);
-private:
-    Ui_Settings *ui;
-    QList<SettingsBase *> mSettingsPages;
-    
 
-    void createConnections();
+    void addPage(const SettingsInterface *page){}
+    void removePage(const SettingsInterface *page){}
+    void pageAt(const int i){}
+    int count() const {}
 
-//     Load default setting pages
-    void loadSettings();
-public slots:
     
 };
 

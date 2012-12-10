@@ -7,6 +7,10 @@
 #include <QMainWindow>
 #include "settingsinterface.h"
 
+
+
+namespace Api {
+
 class QToolBar;
 class QStatusBar;
 class QComboBox;
@@ -15,9 +19,7 @@ class QPushButton;
 class QTextEdit;
 class QTextBrowser;
 class QMenuBar;
-
-namespace Api {
-
+class QLineEdit;
 
 /*!
  * This is an API for QPhoenix plugins. This  interface class
@@ -31,8 +33,12 @@ namespace Api {
  * \brief The MainWindowAPI class
  */
 
-class MainWindowAPI {
+
+
+// Inherited by TranslatorWidget
+class TranslatorWidgetAPI {
 public:
+
     /*
      * Yes, I know, this is not a best solution,
      * but it the easiest way to take plugins full
@@ -43,23 +49,40 @@ public:
      * a race condition effect.
      */
 
+    virtual ~TranslatorWidgetAPI() {}
 
-    virtual QToolBar    *toolbar() = 0;
-    virtual QStatusBar  *statusbar()  = 0;
+
     virtual QComboBox   *srcComboBox() = 0;
     virtual QComboBox   *resComboBox() = 0;
     virtual QTextEdit   *srcText() = 0;
     virtual QTextBrowser*resTExt() = 0;
     virtual QPushButton *translateButton() = 0;
     virtual QToolButton *swapButton() = 0;
-    virtual QMenuBar    *menuBar() = 0;
 };
 
 
-class SettingsAPI {
+
+
+
+// Inherited by DictionaryWidget
+class DictionaryWidgetAPI {
 public:
-    virtual void addPage(const SettingsInterface *page);
-    virtual void removePage(const SettingsInterface *page);
+    virtual ~DictionaryWidgetAPI() {}
+
+    virtual QComboBox   *srcComboBox() = 0;
+    virtual QComboBox   *resComboBox() = 0;
+    virtual QLineEdit   *srcText() = 0;
+    virtual QTextBrowser*resTExt() = 0;
+    virtual QToolButton *swapButton() = 0;
+};
+
+class SettingsWidgetAPI {
+public:
+    virtual ~SettingsWidgetAPI() {}
+
+    virtual void addPage(const SettingsInterface *page) = 0;
+    virtual void removePage(const SettingsInterface *page) = 0;
+    virtual void pageAt(const int i) = 0;
 
     virtual int count() const = 0;
 
@@ -67,7 +90,12 @@ public:
 
 
 
+
+
 } // end Api namespace
+Q_DECLARE_INTERFACE(Api::TranslatorWidgetAPI, "com.qphoenix.interfaces.translatorwidget/1.0")
+Q_DECLARE_INTERFACE(Api::DictionaryWidgetAPI, "com.qphoenix.interfaces.dictionarywidget/1.0")
+Q_DECLARE_INTERFACE(Api::SettingsWidgetAPI, "com.qphoenix.interfaces.settingswidget/1.0")
 
 
 #endif // PLUGINAPI_H

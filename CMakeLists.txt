@@ -40,13 +40,13 @@ configure_file(src/include/defines.h.in src/include/defines.h)
 set(HEADERS
 src/core/mainwindow.h
 src/core/settings/settings.h
-src/core/settings/settingsbase.h
 src/include/settingsinterface.h
 src/include/plugininterface.h
 src/include/pluginapi.h
-
-
 )
+
+
+
 
 
 set(SOURCES
@@ -55,10 +55,7 @@ src/core/mainwindow.cpp
 src/core/settings/settings.cpp
 )
 
-set(FORMS
-src/core/mainwindow.ui
-src/core/settings/settings.ui
-)
+
 
 
 set(DOCUMENTS
@@ -71,7 +68,6 @@ docs/standards_capability.txt)
 
 
 qt4_wrap_cpp(MOC_SOURCES ${HEADERS})
-qt4_wrap_ui(UI_HEADERS ${FORMS})
 
 
 #qt4_add_resources(QRC_SOURCES ${RESOURCES})
@@ -84,7 +80,7 @@ qt4_wrap_ui(UI_HEADERS ${FORMS})
 
 
 add_executable(qphoenix ${SOURCES}
-	       ${MOC_SOURCES} ${UI_HEADERS} ${QM_FILES} ${QRC_SOURCES})
+               ${MOC_SOURCES}  ${QM_FILES} ${QRC_SOURCES})
 
 
 if (Q_WS_X11)
@@ -93,6 +89,7 @@ if (Q_WS_X11)
 endif (Q_WS_X11)
 
 
-target_link_libraries(qphoenix ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES} ${QT_QTXML_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES} fancytabwidget)
+target_link_libraries(qphoenix ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES}
+ ${QT_QTXML_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES} fancytabwidget)
 
 

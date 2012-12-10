@@ -5,13 +5,10 @@
 #include "pluginapi.h"
 #include "fancytabwidget.h"
 
-class QTextEdit;
-class QTextBrowser;
-class QLayout;
-class QGroupBox;
+
 class QStatusBar;
 class QToolBar;
-class Ui_MainWindow;
+class QMenuBar;
 
 namespace Gui {
 
@@ -30,8 +27,11 @@ public:
     QString resText() const { return "en";}
 private:
 
+    QStatusBar  *mStatusBar;
+    QToolBar    *mToolBar;
+    QMenuBar    *mMenuBar;
 
-    Ui_MainWindow *ui;
+//    Ui_MainWindow *ui;
 
 
 
