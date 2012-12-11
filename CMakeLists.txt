@@ -28,6 +28,7 @@ src/core/settings
 src/core/3rdparty/fancytab-widgets
 src/core
 src/include
+src/core/tools
 )
 
 
@@ -42,6 +43,7 @@ src/core/settings/settings.h
 src/include/settingsinterface.h
 src/include/plugininterface.h
 src/include/pluginapi.h
+src/core/tools/info.h
 )
 
 
@@ -52,6 +54,7 @@ set(SOURCES
 src/main.cpp
 src/core/mainwindow.cpp
 src/core/settings/settings.cpp
+src/core/tools/info.cpp
 )
 
 

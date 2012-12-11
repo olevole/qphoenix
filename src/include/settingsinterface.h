@@ -2,41 +2,27 @@
 #define SETTINGSBASE_H
 
 #include <QGroupBox>
+#include "info.h"
 
-class SettingsInterface : public QGroupBox
+namespace Api {
+
+class SettingsInterface// : public Tools::Info
 {
-    Q_OBJECT
 public:
-    explicit SettingsInterface(QWidget *parent = 0);
-//    virtual ~SettingsInterface();
+    virtual ~SettingsInterface(){}
 
     // Read and save the settings
     virtual void save() = 0;
     virtual void read() = 0;
+    virtual void defaults() = 0;
 
-//    inline void setPageTitle(const QString &t) {
-//        mPageTitle = t;
-//    }
 
-//    inline QString pageTitle() const {
-//        return mPageTitle;
-//    }
-
-//    inline void setPageDescription(const QString &d) {
-//        mPageDescription = d;
-//    }
-
-//    inline QString pageDescription() const {
-//        return mPageDescription;
-//    }
-
-//private:
-//    QString mPageTitle,
-//            mPageDescription;
 signals:
     
 public slots:
     
 };
+
+}// end APi namespace
 
 #endif // SETTINGSBASE_H

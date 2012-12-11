@@ -8,15 +8,22 @@
 
 
 
+using namespace Api;
 
 
 namespace Gui {
-
 
 /*
  *  This is an implementation of main settings dialog.
  *  All settings pages MUST include SettingsInteface.
  */
+
+
+/*
+ * A list with Settings pages interfaces
+ */
+typedef QList<SettingsInterface *>SettingPageList;
+
 
 class Settings : public QDialog,  Api::SettingsWidgetAPI
 {
@@ -35,8 +42,13 @@ public:
     void addPage(const SettingsInterface *page){}
     void removePage(const SettingsInterface *page){}
     void pageAt(const int i){}
-    int count() const {}
+//    int count() const {}
+private:
+    SettingPageList mPagesList;
 
+    void save();
+    void read();
+    void defaults();
     
 };
 
