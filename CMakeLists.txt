@@ -1,22 +1,21 @@
 cmake_minimum_required( VERSION 2.6 )
 project("QPhoenix ")
 
-SET (CMAKE_BUILD_TYPE Release)
+SET (CMAKE_BUILD_TYPE Debug)
 
 IF(NOT MSVC)
     IF("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
-        SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
     ENDIF("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
 ENDIF()
 
 
 ADD_DEFINITIONS(${QT_DEFINITIONS})
-
 ADD_DEFINITIONS(-DUNICODE)
-
 find_package(Qt4 REQUIRED)
 
-include(${QT_USE_FILE} )
+include(${QT_USE_FILE})
+
 set(QT_USE_QTXML TRUE)
 
 add_subdirectory(src/core/3rdparty/fancytab-widgets)
