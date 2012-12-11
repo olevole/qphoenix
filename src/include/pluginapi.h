@@ -84,7 +84,7 @@ public:
     virtual void removePage(const SettingsInterface *page) = 0;
     virtual void pageAt(const int i) = 0;
 
-    virtual int count() const = 0;
+//virtual int count() const = 0;
 
 };
 

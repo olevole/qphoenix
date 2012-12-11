@@ -13,6 +13,8 @@ int main(int argc, char *argv[])
     mw->show();
 
 
+    Gui::Settings s;s.show();
+
 
     return a.exec();
 }

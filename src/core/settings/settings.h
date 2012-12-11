@@ -4,12 +4,21 @@
 #include <QDialog>
 #include "pluginapi.h"
 #include "settingsinterface.h"
+#include <QTreeWidget>
+#include <QDialogButtonBox>
 
 
 
 
 using namespace Api;
+using namespace Tools;
 
+class QListWidget;
+class QStackedWidget;
+class QVBoxLayout;
+class QHBoxLayout;
+class QGroupBox;
+class QTreeWidgetItem;
 
 namespace Gui {
 
@@ -23,6 +32,8 @@ namespace Gui {
  * A list with Settings pages interfaces
  */
 typedef QList<SettingsInterface *>SettingPageList;
+
+
 
 
 class Settings : public QDialog,  Api::SettingsWidgetAPI
@@ -39,18 +50,34 @@ public:
      *  presented by the following interface:
      */
 
-    void addPage(const SettingsInterface *page){}
+    void addPage(const SettingsInterface *page);
     void removePage(const SettingsInterface *page){}
     void pageAt(const int i){}
-//    int count() const {}
 private:
-    SettingPageList mPagesList;
-
     void save();
     void read();
     void defaults();
+
+
+
+    SettingPageList mPagesList;
+    QList<QGroupBox *> mGroupboxList;
+    QList<QTreeWidgetItem *> mItemsList;
+
+
+    // GUI elements
+
+    QVBoxLayout *mMainLayout;
+    QHBoxLayout *mHorizontalLayout;
+    QStackedWidget *mStackedWidget;
+    QTreeWidget *mTree;
+    QDialogButtonBox *mButtons;
+
     
 };
 
+
 } // end Gui namespace
+
+
 #endif // SETTINGS_H

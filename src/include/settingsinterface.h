@@ -6,6 +6,8 @@
 
 namespace Api {
 
+
+
 class SettingsInterface// : public Tools::Info
 {
 public:
@@ -15,6 +17,7 @@ public:
     virtual void save() = 0;
     virtual void read() = 0;
     virtual void defaults() = 0;
+    virtual Tools::Info *info() const = 0;
 
 
 signals:
