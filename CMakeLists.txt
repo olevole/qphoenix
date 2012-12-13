@@ -1,7 +1,7 @@
 cmake_minimum_required( VERSION 2.6 )
 project("QPhoenix ")
 
-SET (CMAKE_BUILD_TYPE Debug)
+SET(CMAKE_BUILD_TYPE Debug)
 
 IF(NOT MSVC)
     IF("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
@@ -40,6 +40,7 @@ configure_file(src/include/defines.h.in src/include/defines.h)
 set(HEADERS
 src/core/mainwindow.h
 src/core/settings/settings.h
+src/core/settings/testpage.h
 src/include/settingsinterface.h
 src/include/plugininterface.h
 src/include/pluginapi.h
@@ -54,6 +55,7 @@ set(SOURCES
 src/main.cpp
 src/core/mainwindow.cpp
 src/core/settings/settings.cpp
+src/core/settings/testpage.cpp
 src/core/tools/info.cpp
 )
 

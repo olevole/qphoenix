@@ -34,7 +34,7 @@ Settings::Settings(QWidget *parent) :
 
 
 
-void Settings::addPage(const SettingsInterface *page) {
+void Settings::addPage(SettingsInterface *page) {
     const QString &name  = page->info()->name();
 
 
@@ -47,8 +47,30 @@ void Settings::addPage(const SettingsInterface *page) {
     mTree->addTopLevelItem(item);
 
     mStackedWidget->addWidget(gb);
+    mPagesList.append(page);
 }
 
+void Settings::removePage(const SettingsInterface *page) {
+//    mStackedWidget
+    for(int i = 0; i < mPagesList.count(); i++) {
+        SettingsInterface *iface = mPagesList.at(i);
+        const QString nameA = iface->info()->name();
+        const QString nameB = page->info()->name();
+
+
+        if(nameA == nameB) {
+            delete mPagesList.at(i);
+            delete mGroupboxList.at(i);
+            delete mItemsList.at(i);
+
+        }
+    }
+
+}
+
+SettingsInterface *Settings::pageAt(const int i) {
+    return mPagesList.at(i);
+}
 
 
 

@@ -80,9 +80,9 @@ class SettingsWidgetAPI {
 public:
     virtual ~SettingsWidgetAPI() {}
 
-    virtual void addPage(const SettingsInterface *page) = 0;
+    virtual void addPage(SettingsInterface *page) = 0;
     virtual void removePage(const SettingsInterface *page) = 0;
-    virtual void pageAt(const int i) = 0;
+    virtual SettingsInterface *pageAt(const int i) = 0;
 
 //virtual int count() const = 0;
 

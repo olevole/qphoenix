@@ -50,9 +50,9 @@ public:
      *  presented by the following interface:
      */
 
-    void addPage(const SettingsInterface *page);
-    void removePage(const SettingsInterface *page){}
-    void pageAt(const int i){}
+    void addPage(SettingsInterface *page);
+    void removePage(const SettingsInterface *page);
+    SettingsInterface *pageAt(const int i);
 private:
     void save();
     void read();
