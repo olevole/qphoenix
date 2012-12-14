@@ -21,10 +21,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    QString srcLang() const { return "ru";}
-    QString resLang() const { return "en";}
-    QString srcText() const { return "en";}
-    QString resText() const { return "en";}
+
 private:
 
     QStatusBar  *mStatusBar;

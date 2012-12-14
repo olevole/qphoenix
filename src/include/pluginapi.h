@@ -93,18 +93,25 @@ public:
 
     // Signals
 
-    void tabChanged(const int i);
-    void dictionaryQueryFinished();
-    void translationQueryFinished();
+    virtual void tabChanged(const int i) = 0;
+
+    virtual void qictionaryQueryInitiated() = 0;
+    virtual void translationQueryInitiated() = 0;
+    virtual void dictionaryQueryFinished() = 0;
+    virtual void translationQueryFinished() = 0;
 
 
     // Slots
+
+    virtual void setCurrentTab(const int i) = 0;
+
 
 };
 
 
 
 } // end Api namespace
+
 Q_DECLARE_INTERFACE(Api::TranslatorWidgetAPI, "com.qphoenix.interfaces.translatorwidget/1.0")
 Q_DECLARE_INTERFACE(Api::DictionaryWidgetAPI, "com.qphoenix.interfaces.dictionarywidget/1.0")
 Q_DECLARE_INTERFACE(Api::SettingsWidgetAPI, "com.qphoenix.interfaces.settingswidget/1.0")
