@@ -50,8 +50,8 @@ public:
      *  presented by the following interface:
      */
 
-    void addPage(SettingsInterface *page);
-    void removePage(const SettingsInterface *page);
+    void addPage(QObject *page);
+    void removePage(const QObject *page);
     SettingsInterface *pageAt(const int i);
 private:
     void save();
@@ -61,8 +61,8 @@ private:
 
 
     SettingPageList mPagesList;
-    QList<QGroupBox *> mGroupboxList;
-    QList<QTreeWidgetItem *> mItemsList;
+//    QList<QGroupBox *> mGroupboxList;
+//    QList<QTreeWidgetItem *> mItemsList;
 
 
     // GUI elements
@@ -72,6 +72,8 @@ private:
     QStackedWidget *mStackedWidget;
     QTreeWidget *mTree;
     QDialogButtonBox *mButtons;
+private slots:
+    void itemChangeHandle();
 
     
 };

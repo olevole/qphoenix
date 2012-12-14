@@ -4,11 +4,12 @@
 
 
 /*
- * This is a bacis interface for ALL kind of plugins.
- * Any kind-specific plugin MUST inherit PluginInterface
- *
+ * This is a basic interface for ALL plugins
  */
 
+#include <QString>
+
+namespace Api {
 
 class PluginInterface
 {
@@ -18,12 +19,12 @@ public:
     virtual QString name() const = 0;
     virtual QString version() const = 0;
     virtual QString description() const = 0;
-
-
 };
 
- Q_DECLARE_INTERFACE(PluginInterface,
-                     "com.trolltech.Plugin.PluginInterface/1.0");
+
+} // end Api namespace
+
+Q_DECLARE_INTERFACE(PluginInterface,"com.qphoenix.interfaces.plugin/1.0");
 
 
 

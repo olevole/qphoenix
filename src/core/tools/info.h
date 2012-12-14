@@ -44,7 +44,7 @@ public:
     void setVersion(const QString &v)       {mVersion = v;      }
     void setUrl(const QString &u)           {mUrl = u;          }
     void setDescription(const QString &t)   {mDecription = t;   }
-    void setIcon(QIcon *icon)         {mIcon = icon;      }
+    void setIcon(QIcon *icon)               {mIcon = icon;      }
 
 
     QString name() const                    {return mName;      }

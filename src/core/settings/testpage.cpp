@@ -21,7 +21,29 @@
 
 #include "testpage.h"
 
+#include <QLabel>
+#include <QHBoxLayout>
+
 TestPage::TestPage(QWidget *parent) :
     QWidget(parent)
 {
+
+    QLabel *lb = new QLabel("Test222", this);
+
+
+    QHBoxLayout *l = new QHBoxLayout;
+
+    l->addWidget(lb);
+
+
+    this->setLayout(l);
+
+
+//    information.setName("Blablabla");
+
+
+
+
+
+
 }

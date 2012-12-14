@@ -28,8 +28,17 @@
 class TestPage : public QWidget, Api::SettingsInterface
 {
     Q_OBJECT
+    Q_INTERFACES(Api::SettingsInterface)
 public:
     explicit TestPage(QWidget *parent = 0);
+     void save(){}
+     void read(){}
+     void defaults(){}
+//     Tools::Info info()  {}
+private:
+//     Tools::Info information;
+//     Tools::Info infor;
+     Tools::Info *info() const {return new Tools::Info(0, "Test", "bla", "bla", "url");}
     
 signals:
     

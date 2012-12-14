@@ -2,9 +2,12 @@
 #include <QStackedWidget>
 #include <QGroupBox>
 #include <QLayout>
+#include <QDebug>
 
 using namespace  Gui;
 using namespace Api;
+
+#include "testpage.h"
 
 
 Settings::Settings(QWidget *parent) :
@@ -28,44 +31,67 @@ Settings::Settings(QWidget *parent) :
     mStackedWidget->addWidget(new QGroupBox(this));
 
 
+    TestPage *t = new TestPage();
+
+
+    this->addPage(t);
+    this->addPage(t);
+
+//    this->removePage(t);
+
+//    this->removePage(iface);
+
+
+    this->save();
+    this->read();
+    this->defaults();
+
+
+
+
+    /*!
+     * Connections (put all in this section)
+     */
+
+    connect(mTree, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
+                          this, SLOT(itemChangeHandle()));
 
 
 }
 
 
 
-void Settings::addPage(SettingsInterface *page) {
-    const QString &name  = page->info()->name();
+void Settings::addPage(QObject *page) {
+    SettingsInterface *iface = qobject_cast<SettingsInterface *>(page);
 
-
+    const QString name  = iface->info()->name();
 
     QTreeWidgetItem *item = new QTreeWidgetItem();
-    QGroupBox       *gb = new QGroupBox(name, this);
-
-//    QGr
     item->setText(0, name);
-    mTree->addTopLevelItem(item);
 
+    QGroupBox       *gb = new QGroupBox(name, this);
+    gb->setLayout(new QHBoxLayout);
+    gb->layout()->addWidget(qobject_cast<QWidget *>(page));
+
+
+    mPagesList.append(iface);
+    mTree->insertTopLevelItem(0,item);
     mStackedWidget->addWidget(gb);
-    mPagesList.append(page);
+
 }
 
-void Settings::removePage(const SettingsInterface *page) {
-//    mStackedWidget
+void Settings::removePage(const QObject *page) {
     for(int i = 0; i < mPagesList.count(); i++) {
-        SettingsInterface *iface = mPagesList.at(i);
-        const QString nameA = iface->info()->name();
-        const QString nameB = page->info()->name();
+        SettingsInterface *iface = qobject_cast<SettingsInterface *>(page);
 
+        const QString nameA = mPagesList.at(i)->info()->name();
+        const QString nameB = iface->info()->name();
 
         if(nameA == nameB) {
-            delete mPagesList.at(i);
-            delete mGroupboxList.at(i);
-            delete mItemsList.at(i);
-
+            qDebug() << "<<<<";
+              delete mPagesList.at(i);
         }
     }
-
 }
 
 SettingsInterface *Settings::pageAt(const int i) {
@@ -91,4 +117,11 @@ void Settings::defaults() {
     foreach(SettingsInterface *i, mPagesList) {
         i->defaults();
     }
+}
+
+
+
+void Settings::itemChangeHandle() {
+    const int cur = mTree->currentIndex().row();
+    mStackedWidget->setCurrentIndex(cur + 1);
 }

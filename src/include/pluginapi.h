@@ -21,33 +21,32 @@ class QTextBrowser;
 class QMenuBar;
 class QLineEdit;
 
-/*!
- * This is an API for QPhoenix plugins. This  interface class
+/*! \brief The MainWindowAPI class
+ *
+ * This is a MainWindow API for QPhoenix plugins. This  interface class
  * MUST be inherited by MainWindow and all methods should be
  * re-implemented and actualised.
  */
 
 
 
+
+
 /*!
- * \brief The MainWindowAPI class
+ * Yes, I know, this is not a best solution,
+ * but it the easiest way to take plugins full
+ * controll on the widgets. Plugin developers
+ * should be carefull using these objects
+ * pointers. Do not forget, other plugins
+ * can use those objects too, it could take
+ * a race condition effect.
  */
-
-
 
 // Inherited by TranslatorWidget
 class TranslatorWidgetAPI {
 public:
 
-    /*
-     * Yes, I know, this is not a best solution,
-     * but it the easiest way to take plugins full
-     * controll on the widgets. Plugin developers
-     * should be carefull using these objects
-     * pointers. Do not forget, other plugins
-     * can use those objects too, it could take
-     * a race condition effect.
-     */
+
 
     virtual ~TranslatorWidgetAPI() {}
 
@@ -80,15 +79,28 @@ class SettingsWidgetAPI {
 public:
     virtual ~SettingsWidgetAPI() {}
 
-    virtual void addPage(SettingsInterface *page) = 0;
-    virtual void removePage(const SettingsInterface *page) = 0;
+    virtual void addPage(QObject *page) = 0;
+    virtual void removePage(const QObject *page) = 0;
     virtual SettingsInterface *pageAt(const int i) = 0;
-
-//virtual int count() const = 0;
-
 };
 
 
+class MainWindowAPI {
+public:
+    virtual DictionaryWidgetAPI *dictionary() = 0;
+    virtual TranslatorWidgetAPI *translator() = 0;
+
+
+    // Signals
+
+    void tabChanged(const int i);
+    void dictionaryQueryFinished();
+    void translationQueryFinished();
+
+
+    // Slots
+
+};
 
 
 
@@ -96,6 +108,8 @@ public:
 Q_DECLARE_INTERFACE(Api::TranslatorWidgetAPI, "com.qphoenix.interfaces.translatorwidget/1.0")
 Q_DECLARE_INTERFACE(Api::DictionaryWidgetAPI, "com.qphoenix.interfaces.dictionarywidget/1.0")
 Q_DECLARE_INTERFACE(Api::SettingsWidgetAPI, "com.qphoenix.interfaces.settingswidget/1.0")
+Q_DECLARE_INTERFACE(Api::MainWindowAPI, "com.qphoenix.interfaces.mainwindow/1.0")
+
 
 
 #endif // PLUGINAPI_H
