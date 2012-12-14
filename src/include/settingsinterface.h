@@ -19,7 +19,7 @@ public:
     // Read and save the settings
     virtual void save() = 0;
     virtual void read() = 0;
-    virtual void defaults() = 0;
+    virtual void reset() = 0;
 //    virtual Tools::Info info()  = 0;
     virtual Tools::Info *info() const = 0;
 

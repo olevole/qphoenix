@@ -23,12 +23,9 @@ Settings::Settings(QWidget *parent) :
     mDefaultsButton(new QPushButton(tr("Defaults"),this))
 {
 
-
-//    mDefaultsButton->setText(tr("Defaults"));
-
+    // Gui Init
     mHorizontalLayout->addWidget(mTree);
     mHorizontalLayout->addWidget(mStackedWidget);
-
 
     mBottomLayout->addWidget(mDefaultsButton);
     mBottomLayout->addStretch();
@@ -39,18 +36,17 @@ Settings::Settings(QWidget *parent) :
 
     mTree->setHeaderHidden(true);
 
-
-
-//    mMainLayout->addWidget(mButtons);
-
     mButtons->setStandardButtons(QDialogButtonBox::Apply |
-                                 QDialogButtonBox::Cancel);
+                                 QDialogButtonBox::Cancel|
+                                 QDialogButtonBox::Ok);
 
-    this->setLayout(mMainLayout);
+    setLayout(mMainLayout);
 
+    mTree->setFixedWidth(150);
+    mTree->setSizePolicy(QSizePolicy::Fixed, mTree->sizePolicy().verticalPolicy());
+    resize(800, 600);
 
-    mStackedWidget->addWidget(new QGroupBox(this));
-
+    // Then, loading settings pages
 
     TestPage *t = new TestPage();
     TestPage *t2 = new TestPage();
@@ -59,36 +55,34 @@ Settings::Settings(QWidget *parent) :
     this->addPage(t);
     this->addPage(t2);
 
-//    this->removePage(t);
 
-//    this->removePage(iface);
-
-
-    this->save();
-    this->read();
-    this->defaults();
-
-
-//    mTree->setFixedSize( mTree->size().height(), 100);
-    mTree->setFixedWidth(150);
-    mTree->setSizePolicy(QSizePolicy::Fixed, mTree->sizePolicy().verticalPolicy());
-    this->resize(800, 600);
+    // Okay, let's tell them to read configurations
+    read();
 
 
 
 
-    /*!
+
+
+
+    /*
      * Connections (put all in this section)
      */
 
     connect(mTree, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
                           this, SLOT(itemChangeHandle()));
 
+    connect(mButtons, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(mButtons, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(mDefaultsButton, SIGNAL(clicked()), this, SLOT(reset()));
+    connect(mButtons, SIGNAL(clicked(QDialogButtonBox::Apply)), this, SLOT(save()));
+
+
 
 }
 
 
-
+//! Add SettingsPage to interface and @mPagesList
 void Settings::addPage(QObject *page) {
     SettingsInterface *iface = qobject_cast<SettingsInterface *>(page);
 
@@ -127,6 +121,10 @@ SettingsInterface *Settings::pageAt(const int i) {
     return mPagesList.at(i);
 }
 
+void Settings::itemChangeHandle() {
+    const int cur = mTree->currentIndex().row();
+    mStackedWidget->setCurrentIndex(cur + 1);
+}
 
 
 
@@ -142,15 +140,17 @@ void Settings::read() {
     }
 }
 
-void Settings::defaults() {
+void Settings::reset() {
     foreach(SettingsInterface *i, mPagesList) {
-        i->defaults();
+        i->reset();
     }
+
 }
 
 
+//void Settings::accept() {
+//    save();
+//    QDialog::accept();
+//}
 
-void Settings::itemChangeHandle() {
-    const int cur = mTree->currentIndex().row();
-    mStackedWidget->setCurrentIndex(cur + 1);
-}
+

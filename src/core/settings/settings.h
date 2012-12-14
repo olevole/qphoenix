@@ -77,11 +77,11 @@ private slots:
 
     void save();
     void read();
-    void defaults();
-
-    void accept();
-    void reject();
     void reset();
+
+//    void accept();
+//    void reject();
+//    void reset();
 
 };
 

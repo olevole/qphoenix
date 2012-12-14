@@ -33,7 +33,7 @@ public:
     explicit TestPage(QWidget *parent = 0);
      void save(){}
      void read(){}
-     void defaults(){}
+     void reset(){}
 //     Tools::Info info()  {}
 private:
 //     Tools::Info information;
