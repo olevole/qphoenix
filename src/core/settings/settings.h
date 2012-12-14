@@ -18,11 +18,11 @@ class QVBoxLayout;
 class QHBoxLayout;
 class QGroupBox;
 class QTreeWidgetItem;
+class QPushButton;
 
 
 namespace Gui {
 
-class QPushButton;
 /*
  *  This is an implementation of main settings dialog.
  *  All settings pages MUST include SettingsInteface.
@@ -55,9 +55,6 @@ public:
     void removePage(const QObject *page);
     SettingsInterface *pageAt(const int i);
 private:
-    void save();
-    void read();
-    void defaults();
 
 
 
@@ -78,7 +75,14 @@ private:
 private slots:
     void itemChangeHandle();
 
-    
+    void save();
+    void read();
+    void defaults();
+
+    void accept();
+    void reject();
+    void reset();
+
 };
 
 

@@ -19,9 +19,8 @@ Settings::Settings(QWidget *parent) :
     mBottomLayout(new QHBoxLayout),
     mStackedWidget(new QStackedWidget(this)),
     mTree(new QTreeWidget(this)),
-    mButtons(new QDialogButtonBox(this))
-//    mDefaultsButton(new QPushButton(this))
-//    mDefaultsButton(new QPushButton(tr("Defaults"), this))
+    mButtons(new QDialogButtonBox(this)),
+    mDefaultsButton(new QPushButton(tr("Defaults"),this))
 {
 
 
@@ -31,12 +30,14 @@ Settings::Settings(QWidget *parent) :
     mHorizontalLayout->addWidget(mStackedWidget);
 
 
-//    mBottomLayout->addWidget(&mDefaultsButton);
+    mBottomLayout->addWidget(mDefaultsButton);
     mBottomLayout->addStretch();
     mBottomLayout->addWidget(mButtons);
 
     mMainLayout->addLayout(mHorizontalLayout);
     mMainLayout->addLayout(mBottomLayout);
+
+    mTree->setHeaderHidden(true);
 
 
 
@@ -52,10 +53,11 @@ Settings::Settings(QWidget *parent) :
 
 
     TestPage *t = new TestPage();
+    TestPage *t2 = new TestPage();
 
 
     this->addPage(t);
-    this->addPage(t);
+    this->addPage(t2);
 
 //    this->removePage(t);
 
