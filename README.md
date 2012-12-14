@@ -13,12 +13,12 @@ QPhoenix linguistic toolkit
 Main Features
 ----------------
 
-      -- Extendability (very rich plugin api)
-      -- Usability (best GUI solutions)
-      -- Killer features (selection buffer, etc)
-      -- Support for any kind of translation or dictionary services
+      - Extendability (very rich plugin api)
+      - Usability (best GUI solutions)
+      - Killer features (selection buffer, etc)
+      - Support for any kind of translation or dictionary services
          could be implemented with a provided feature-rich API.
-      -- GNU GPL software with open sources and development infrastructure
+      - GNU GPL software with open sources and development infrastructure
       
       
 
