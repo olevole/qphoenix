@@ -11,7 +11,8 @@ QPhoenix linguistic toolkit
       
       
 Main Features
-----------------
+--------------------
+
 
       - Extendability (very rich plugin api)
       - Usability (best GUI solutions)
@@ -23,13 +24,14 @@ Main Features
       
 
 Project Status
-----------------
+--------------------
 
 	Deep alpha version
 	
 	
 Contribute
-----------------
+--------------------
+
 
       contact flareguner at gmail dotcom
       to get any instructions.
@@ -37,6 +39,7 @@ Contribute
       
 Build Dependencies
 --------------------
+
   - Qt Libraries
   - cmake 2.8 or higher
   - gcc (not tested with other compilers, yet (FIXME))

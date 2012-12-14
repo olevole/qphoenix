@@ -56,6 +56,11 @@ Settings::Settings(QWidget *parent) :
     this->addPage(t2);
 
 
+    QObject *o = new QObject();
+
+    this->addPage(o);
+
+
     // Okay, let's tell them to read configurations
     read();
 
@@ -86,6 +91,12 @@ Settings::Settings(QWidget *parent) :
 void Settings::addPage(QObject *page) {
     SettingsInterface *iface = qobject_cast<SettingsInterface *>(page);
 
+    if(iface == NULL) {
+        qDebug() << "Unable to cast SettingsPage! Critical error, function terminated!";
+        return;
+    }
+
+
     const QString name  = iface->info()->name();
 
     QTreeWidgetItem *item = new QTreeWidgetItem();
@@ -106,6 +117,7 @@ void Settings::addPage(QObject *page) {
 void Settings::removePage(const QObject *page) {
     for(int i = 0; i < mPagesList.count(); i++) {
         SettingsInterface *iface = qobject_cast<SettingsInterface *>(page);
+
 
         const QString nameA = mPagesList.at(i)->info()->name();
         const QString nameB = iface->info()->name();
