@@ -9,7 +9,6 @@
 
 
 
-
 using namespace Api;
 using namespace Tools;
 
@@ -20,8 +19,10 @@ class QHBoxLayout;
 class QGroupBox;
 class QTreeWidgetItem;
 
+
 namespace Gui {
 
+class QPushButton;
 /*
  *  This is an implementation of main settings dialog.
  *  All settings pages MUST include SettingsInteface.
@@ -69,9 +70,11 @@ private:
 
     QVBoxLayout *mMainLayout;
     QHBoxLayout *mHorizontalLayout;
+    QHBoxLayout *mBottomLayout;
     QStackedWidget *mStackedWidget;
     QTreeWidget *mTree;
     QDialogButtonBox *mButtons;
+    QPushButton *mDefaultsButton;
 private slots:
     void itemChangeHandle();
 

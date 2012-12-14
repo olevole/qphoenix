@@ -7,10 +7,6 @@
 #include <QMainWindow>
 #include "settingsinterface.h"
 
-
-
-namespace Api {
-
 class QToolBar;
 class QStatusBar;
 class QComboBox;
@@ -20,6 +16,10 @@ class QTextEdit;
 class QTextBrowser;
 class QMenuBar;
 class QLineEdit;
+
+namespace Api {
+
+
 
 /*! \brief The MainWindowAPI class
  *

@@ -3,6 +3,8 @@
 #include <QGroupBox>
 #include <QLayout>
 #include <QDebug>
+#include <QPushButton>
+
 
 using namespace  Gui;
 using namespace Api;
@@ -14,16 +16,34 @@ Settings::Settings(QWidget *parent) :
     QDialog(parent),
     mMainLayout(new QVBoxLayout),
     mHorizontalLayout(new QHBoxLayout),
+    mBottomLayout(new QHBoxLayout),
     mStackedWidget(new QStackedWidget(this)),
     mTree(new QTreeWidget(this)),
     mButtons(new QDialogButtonBox(this))
+//    mDefaultsButton(new QPushButton(this))
+//    mDefaultsButton(new QPushButton(tr("Defaults"), this))
 {
+
+
+//    mDefaultsButton->setText(tr("Defaults"));
 
     mHorizontalLayout->addWidget(mTree);
     mHorizontalLayout->addWidget(mStackedWidget);
 
+
+//    mBottomLayout->addWidget(&mDefaultsButton);
+    mBottomLayout->addStretch();
+    mBottomLayout->addWidget(mButtons);
+
     mMainLayout->addLayout(mHorizontalLayout);
-    mMainLayout->addWidget(mButtons);
+    mMainLayout->addLayout(mBottomLayout);
+
+
+
+//    mMainLayout->addWidget(mButtons);
+
+    mButtons->setStandardButtons(QDialogButtonBox::Apply |
+                                 QDialogButtonBox::Cancel);
 
     this->setLayout(mMainLayout);
 
@@ -45,6 +65,12 @@ Settings::Settings(QWidget *parent) :
     this->save();
     this->read();
     this->defaults();
+
+
+//    mTree->setFixedSize( mTree->size().height(), 100);
+    mTree->setFixedWidth(150);
+    mTree->setSizePolicy(QSizePolicy::Fixed, mTree->sizePolicy().verticalPolicy());
+    this->resize(800, 600);
 
 
 
@@ -71,6 +97,7 @@ void Settings::addPage(QObject *page) {
 
     QGroupBox       *gb = new QGroupBox(name, this);
     gb->setLayout(new QHBoxLayout);
+    gb->setFlat(true);
     gb->layout()->addWidget(qobject_cast<QWidget *>(page));
 
 
