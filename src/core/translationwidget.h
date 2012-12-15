@@ -35,22 +35,25 @@ class QVBoxLayout;
 class QHBoxLayout;
 
 
+using namespace Tools;
+using namespace Api;
 
 
-class TranslationWidget : public QWidget, Api::TranslatorWidgetAPI, Api::MainWindowTabAPI
+
+class TranslationWidget : public QWidget, TranslatorWidgetAPI, MainWindowTabAPI
 {
     Q_OBJECT
     Q_INTERFACES(Api::TranslatorWidgetAPI)
 public:
     explicit TranslationWidget(QWidget *parent = 0);
 
-    virtual QComboBox   *srcComboBox()  { return mSrcComboBox;      }
-    virtual QComboBox   *resComboBox()  { return mResComboBox;   }
-    virtual QTextEdit   *srcText()      { return mSrcText;          }
-    virtual QTextBrowser*resText()      { return mResText;          }
-    virtual QPushButton *translateButton(){ return mTranslateButton;}
-    virtual QToolButton *swapButton()   { return mSwapButton;       }
-    virtual Tools::Info info() {}
+    virtual QComboBox   *srcComboBox()      { return mSrcComboBox;      }
+    virtual QComboBox   *resComboBox()      { return mResComboBox;      }
+    virtual QTextEdit   *srcText()          { return mSrcText;          }
+    virtual QTextBrowser*resText()          { return mResText;          }
+    virtual QPushButton *translateButton()  { return mTranslateButton;}
+    virtual QToolButton *swapButton()       { return mSwapButton;       }
+    virtual Info info() {}
 private:
     QComboBox
     *mSrcComboBox,

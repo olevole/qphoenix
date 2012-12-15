@@ -36,14 +36,21 @@ src/core/tools
 
 configure_file(src/include/defines.h.in src/include/defines.h)
 
+set(GLOBAL_HEADERS
+src/include/global.h
+src/include/defines.h)
+
+set(IFACES
+src/include/settingsinterface.h
+src/include/plugininterface.h
+src/include/pluginapi.h)
+
 
 set(HEADERS
 src/core/mainwindow.h
 src/core/settings/settings.h
 src/core/settings/testpage.h
-src/include/settingsinterface.h
-src/include/plugininterface.h
-src/include/pluginapi.h
+
 src/core/tools/info.h
 src/core/translationwidget.h
 )
@@ -86,7 +93,7 @@ qt4_wrap_cpp(MOC_SOURCES ${HEADERS})
 
 
 add_executable(qphoenix ${SOURCES}
-               ${MOC_SOURCES}  ${QM_FILES} ${QRC_SOURCES})
+               ${MOC_SOURCES}  ${QM_FILES} ${QRC_SOURCES} ${GLOBAL_HEADERS} ${IFACES})
 
 
 #if (Q_WS_X11)
