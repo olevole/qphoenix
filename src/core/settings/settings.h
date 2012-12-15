@@ -44,6 +44,7 @@ class Settings : public QDialog,  Api::SettingsWidgetAPI
 
 public:
     explicit Settings(QWidget *parent = 0);
+    ~Settings();
 
 
     /*  Inserting Settings page into the lmain

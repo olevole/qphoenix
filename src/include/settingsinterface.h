@@ -7,8 +7,10 @@
 
 //#define QP_SETTINGS_CAST(a, b) a = qobject_cast<SettingsInterface *>(b)
 
+
 namespace Api {
 
+using namespace Tools;
 
 
 class SettingsInterface// : public Tools::Info
@@ -21,7 +23,7 @@ public:
     virtual void read() = 0;
     virtual void reset() = 0;
 //    virtual Tools::Info info()  = 0;
-    virtual Tools::Info *info() const = 0;
+    virtual Info *info() const = 0;
 
 
 signals:

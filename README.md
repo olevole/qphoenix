@@ -4,6 +4,8 @@ QPhoenix linguistic toolkit
 
 
 
+About
+--------------------
 
       QPhoenix is an advanced translation and linguistic toolkit. 
       This is a graphical interface for much dictionaries  and 
@@ -17,8 +19,7 @@ Main Features
       - Extendability (very rich plugin api)
       - Usability (best GUI solutions)
       - Killer features (selection buffer, etc)
-      - Support for any kind of translation or dictionary services
-         could be implemented with a provided feature-rich API.
+      - Support for any kind of translation or dictionary services could be implemented with a provided feature-rich API.
       - GNU GPL software with open sources and development infrastructure
       
       

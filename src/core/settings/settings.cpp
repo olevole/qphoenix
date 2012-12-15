@@ -86,6 +86,9 @@ Settings::Settings(QWidget *parent) :
 
 }
 
+Settings::~Settings() {
+
+}
 
 //! Add SettingsPage to interface and @mPagesList
 void Settings::addPage(QObject *page) {
