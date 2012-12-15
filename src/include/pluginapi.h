@@ -54,7 +54,7 @@ public:
     virtual QComboBox   *srcComboBox() = 0;
     virtual QComboBox   *resComboBox() = 0;
     virtual QTextEdit   *srcText() = 0;
-    virtual QTextBrowser*resTExt() = 0;
+    virtual QTextBrowser*resText() = 0;
     virtual QPushButton *translateButton() = 0;
     virtual QToolButton *swapButton() = 0;
 };
@@ -71,7 +71,7 @@ public:
     virtual QComboBox   *srcComboBox() = 0;
     virtual QComboBox   *resComboBox() = 0;
     virtual QLineEdit   *srcText() = 0;
-    virtual QTextBrowser*resTExt() = 0;
+    virtual QTextBrowser*resText() = 0;
     virtual QToolButton *swapButton() = 0;
 };
 

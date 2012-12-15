@@ -21,7 +21,35 @@
 
 #include "translationwidget.h"
 
+#include <QComboBox>
+#include <QTextEdit>
+#include <QTextBrowser>
+#include <QToolButton>
+#include <QPushButton>
+#include <QComboBox>
+#include <QLayout>
+
 TranslationWidget::TranslationWidget(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent),
+    mSrcComboBox(new QComboBox(this)),
+    mResComboBox(new QComboBox(this)),
+    mSrcText(new QTextEdit(this)),
+    mResText(new QTextBrowser(this)),
+    mTranslateButton(new QPushButton(tr("Translate"),this)),
+    mSwapButton(new QToolButton(this)),
+    mMainLayout(new QVBoxLayout()),
+    mButtonsLayout(new QHBoxLayout())
+
 {
+    mButtonsLayout->addWidget(mSrcComboBox);
+    mButtonsLayout->addWidget(mSwapButton);
+    mButtonsLayout->addWidget(mResComboBox);
+    mButtonsLayout->addStretch();
+    mButtonsLayout->addWidget(mTranslateButton);
+
+    mMainLayout->addWidget(srcText());
+    mMainLayout->addLayout(mButtonsLayout);
+    mMainLayout->addWidget(mResText);
+
+    setLayout(mMainLayout);
 }

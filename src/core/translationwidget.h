@@ -30,6 +30,12 @@ class QTextBrowser;
 class QToolButton;
 class QPushButton;
 class QComboBox;
+class QLabel;
+class QVBoxLayout;
+class QHBoxLayout;
+
+
+
 
 class TranslationWidget : public QWidget, Api::TranslatorWidgetAPI
 {
@@ -38,17 +44,26 @@ class TranslationWidget : public QWidget, Api::TranslatorWidgetAPI
 public:
     explicit TranslationWidget(QWidget *parent = 0);
 
-    virtual QComboBox   *srcComboBox(){}
-    virtual QComboBox   *resComboBox(){}
-    virtual QTextEdit   *srcText(){}
-    virtual QTextBrowser*resTExt(){}
-    virtual QPushButton *translateButton(){}
-    virtual QToolButton *swapButton(){}
-    
-signals:
-    
-public slots:
-    
+    virtual QComboBox   *srcComboBox()  { return mSrcComboBox;      }
+    virtual QComboBox   *resComboBox()  { return mResComboBox;   }
+    virtual QTextEdit   *srcText()      { return mSrcText;          }
+    virtual QTextBrowser*resText()      { return mResText;          }
+    virtual QPushButton *translateButton(){ return mTranslateButton;}
+    virtual QToolButton *swapButton()   { return mSwapButton;       }
+private:
+    QComboBox
+    *mSrcComboBox,
+    *mResComboBox;
+
+    QTextEdit *mSrcText;
+    QTextBrowser *mResText;
+
+    QPushButton *mTranslateButton;
+    QToolButton *mSwapButton;
+
+
+    QVBoxLayout *mMainLayout;
+    QHBoxLayout *mButtonsLayout;
 };
 
 #endif // TRANSLATIONWIDGET_H
