@@ -45,6 +45,7 @@ src/include/settingsinterface.h
 src/include/plugininterface.h
 src/include/pluginapi.h
 src/core/tools/info.h
+src/core/translationwidget.h
 )
 
 
@@ -57,6 +58,7 @@ src/core/mainwindow.cpp
 src/core/settings/settings.cpp
 src/core/settings/testpage.cpp
 src/core/tools/info.cpp
+src/core/translationwidget.cpp
 )
 
 
