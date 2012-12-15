@@ -53,6 +53,8 @@ src/core/settings/testpage.h
 
 src/core/tools/info.h
 src/core/translationwidget.h
+src/core/dictionarywidget.h
+
 )
 
 
@@ -66,6 +68,7 @@ src/core/settings/settings.cpp
 src/core/settings/testpage.cpp
 src/core/tools/info.cpp
 src/core/translationwidget.cpp
+src/core/dictionarywidget.cpp
 )
 
 

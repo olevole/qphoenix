@@ -29,6 +29,8 @@
 #include <QComboBox>
 #include <QLayout>
 
+//#include "global.h"
+
 TranslationWidget::TranslationWidget(QWidget *parent) :
     QWidget(parent),
     mSrcComboBox(new QComboBox(this)),
@@ -55,5 +57,5 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
 
     mInfo.setName(tr("Translate"));
 
-//    Info i = mInfo;
+
 }
