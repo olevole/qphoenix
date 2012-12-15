@@ -25,8 +25,8 @@
 using namespace Tools;
 
 Info::Info(QObject *parent) :
-    QObject(parent),
-    mIcon(new QIcon())
+    QObject(parent)//,
+//    mIcon(new QIcon())
 {
 }
 
@@ -45,6 +45,7 @@ Info::Info(QObject *parent,
     setVersion(ver);
     setUrl(url);
     setDescription(desc);
+//    setIcon(icon);
 }
 
 
@@ -53,6 +54,7 @@ Info::Info(QObject *parent,
     setVersion(i.version());
     setUrl(i.url());
     setDescription(i.description());
+    setIcon(i.icon());
 
     return *this;
 }

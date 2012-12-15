@@ -5,7 +5,6 @@
 #include "info.h"
 
 
-//#define QP_SETTINGS_CAST(a, b) a = qobject_cast<SettingsInterface *>(b)
 
 
 namespace Api {
@@ -22,14 +21,9 @@ public:
     virtual void save() = 0;
     virtual void read() = 0;
     virtual void reset() = 0;
-//    virtual Tools::Info info()  = 0;
+
     virtual Info *info() const = 0;
 
-
-signals:
-    
-public slots:
-    
 };
 
 }// end APi namespace

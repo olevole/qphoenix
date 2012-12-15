@@ -38,16 +38,7 @@ public:
      void save(){}
      void read(){}
      void reset(){}
-//     Tools::Info info()  {}
-private:
-//     Tools::Info information;
-//     Tools::Info infor;
-    Info *info() const {return new Tools::Info(0, "Test", "bla", "bla", "url");}
-    
-signals:
-    
-public slots:
-    
+     Info *info() const {return new Tools::Info(0, "Test", "bla", "bla", "url");}
 };
 
 #endif // TESTPAGE_H

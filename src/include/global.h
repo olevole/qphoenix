@@ -22,6 +22,9 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+#include "defines.h"
+
+
 
 
 #endif // GLOBAL_H

@@ -90,17 +90,26 @@ Settings::~Settings() {
 
 }
 
-//! Add SettingsPage to interface and @mPagesList
 void Settings::addPage(QObject *page) {
     SettingsInterface *iface = qobject_cast<SettingsInterface *>(page);
+
+
+    QString name;
+
 
     if(iface == NULL) {
         qDebug() << "Unable to cast SettingsPage! Critical error, function terminated!";
         return;
+    } else if (iface->info() == NULL) {
+        qDebug() << "Unable to get an page info!";
+        name = tr("<UNKNOW>");
+    } else {
+        //TODO: Fix this dangerous code!
+        name = iface->info()->name();
     }
 
 
-    const QString name  = iface->info()->name();
+
 
     QTreeWidgetItem *item = new QTreeWidgetItem();
     item->setText(0, name);

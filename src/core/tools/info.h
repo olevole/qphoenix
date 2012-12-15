@@ -44,19 +44,19 @@ public:
     void setVersion(const QString &v)       {mVersion = v;      }
     void setUrl(const QString &u)           {mUrl = u;          }
     void setDescription(const QString &t)   {mDecription = t;   }
-    void setIcon(QIcon *icon)               {mIcon = icon;      }
+    void setIcon( const QIcon &icon)        {mIcon = icon;      }
 
 
     QString name() const                    {return mName;      }
     QString version() const                 {return mVersion;   }
     QString url() const                     {return mUrl;       }
     QString description() const             {return mDecription;}
-    QIcon   *icon() const                   {return mIcon;      }
+    QIcon   icon() const                    {return mIcon;      }
 
      Info & operator=(const Info &i);
 protected:
     QString mName, mVersion, mUrl, mDecription;
-    QIcon *mIcon;
+    QIcon mIcon;
 };
 
 } // end Tools namespace

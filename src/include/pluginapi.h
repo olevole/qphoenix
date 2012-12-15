@@ -6,6 +6,7 @@
 #include <QString>
 #include <QMainWindow>
 #include "settingsinterface.h"
+#include "translatorinterface.h"
 
 class QToolBar;
 class QStatusBar;
@@ -85,29 +86,23 @@ public:
 };
 
 
+
+
+class MainWindowTabInterface {
+public:
+    virtual Info *info() = 0;
+};
+
 class MainWindowAPI {
 public:
-//    virtual DictionaryWidgetAPI *dictionary() = 0;
-//    virtual TranslatorWidgetAPI *translator() = 0;
-
-
     // Signals
 
     virtual void tabChanged(const int i) = 0;
-
-//    virtual void qictionaryQueryInitiated() = 0;
-//    virtual void translationQueryInitiated() = 0;
-//    virtual void dictionaryQueryFinished() = 0;
-//    virtual void translationQueryFinished() = 0;
-
-    // Slots
-
     virtual void setCurrentTab(const int i) = 0;
-};
-
-class MainWindowTabAPI {
-public:
-    virtual Info info() = 0;
+    // Methods
+    virtual void addPage(QWidget *page) = 0;
+    virtual void removePage(const QWidget *page) = 0;
+    virtual MainWindowTabInterface *pageAt(const int i) = 0;
 };
 
 
@@ -118,6 +113,7 @@ Q_DECLARE_INTERFACE(Api::TranslatorWidgetAPI, "com.qphoenix.interfaces.translato
 Q_DECLARE_INTERFACE(Api::DictionaryWidgetAPI, "com.qphoenix.interfaces.dictionarywidget/1.0")
 Q_DECLARE_INTERFACE(Api::SettingsWidgetAPI, "com.qphoenix.interfaces.settingswidget/1.0")
 Q_DECLARE_INTERFACE(Api::MainWindowAPI, "com.qphoenix.interfaces.mainwindow/1.0")
+Q_DECLARE_INTERFACE(Api::MainWindowTabInterface, "com.qphoenix.interfaces.mainwindowtab/1.0")
 
 
 

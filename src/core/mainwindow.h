@@ -10,33 +10,43 @@ class QStatusBar;
 class QToolBar;
 class QMenuBar;
 
+
+
+
 namespace Gui {
 
 
-class MainWindow : public  QMainWindow
+using namespace Api;
+
+
+
+class MainWindow : public  QMainWindow//, MainWindowAPI
 {
     Q_OBJECT
+
+//    typedef QList<MainWindowTabInterface *>TabsList;
+
     
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
 
-private:
 
+    virtual void addPage(QWidget *page);
+    virtual void removePage(const QWidget *page);
+    virtual MainWindowTabInterface *pageAt(const int i);
+
+
+
+private:
     QStatusBar  *mStatusBar;
     QToolBar    *mToolBar;
     QMenuBar    *mMenuBar;
-
-//    Ui_MainWindow *ui;
-
-
-
+    Core::Internal::FancyTabWidget *mFancyWidget;
 signals:
-//    void languageChange();
-public slots:
-//    void setSou
-
+    void tabChanged(const int i);
+    void setCurrentTab(const int i);
 };
 
 }// end Gui namespace

@@ -52,4 +52,8 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mMainLayout->addWidget(mResText);
 
     setLayout(mMainLayout);
+
+    mInfo.setName(tr("Translate"));
+
+//    Info i = mInfo;
 }
