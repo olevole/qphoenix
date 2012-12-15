@@ -87,25 +87,27 @@ public:
 
 class MainWindowAPI {
 public:
-    virtual DictionaryWidgetAPI *dictionary() = 0;
-    virtual TranslatorWidgetAPI *translator() = 0;
+//    virtual DictionaryWidgetAPI *dictionary() = 0;
+//    virtual TranslatorWidgetAPI *translator() = 0;
 
 
     // Signals
 
     virtual void tabChanged(const int i) = 0;
 
-    virtual void qictionaryQueryInitiated() = 0;
-    virtual void translationQueryInitiated() = 0;
-    virtual void dictionaryQueryFinished() = 0;
-    virtual void translationQueryFinished() = 0;
-
+//    virtual void qictionaryQueryInitiated() = 0;
+//    virtual void translationQueryInitiated() = 0;
+//    virtual void dictionaryQueryFinished() = 0;
+//    virtual void translationQueryFinished() = 0;
 
     // Slots
 
     virtual void setCurrentTab(const int i) = 0;
+};
 
-
+class MainWindowTabAPI {
+public:
+    virtual Info info() = 0;
 };
 
 

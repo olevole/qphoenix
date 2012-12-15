@@ -37,7 +37,7 @@ class QHBoxLayout;
 
 
 
-class TranslationWidget : public QWidget, Api::TranslatorWidgetAPI
+class TranslationWidget : public QWidget, Api::TranslatorWidgetAPI, Api::MainWindowTabAPI
 {
     Q_OBJECT
     Q_INTERFACES(Api::TranslatorWidgetAPI)
@@ -50,6 +50,7 @@ public:
     virtual QTextBrowser*resText()      { return mResText;          }
     virtual QPushButton *translateButton(){ return mTranslateButton;}
     virtual QToolButton *swapButton()   { return mSwapButton;       }
+    virtual Tools::Info info() {}
 private:
     QComboBox
     *mSrcComboBox,
