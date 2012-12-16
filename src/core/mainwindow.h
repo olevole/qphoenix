@@ -9,7 +9,8 @@
 class QStatusBar;
 class QToolBar;
 class QMenuBar;
-
+class QMenu;
+class QAction;
 
 
 
@@ -44,6 +45,17 @@ private:
     QToolBar    *mToolBar;
     QMenuBar    *mMenuBar;
     Core::Internal::FancyTabWidget *mFancyWidget;
+
+    QMenu   *mFileMenu, *mEditMenu, *mHelpMenu;
+
+    // File menu
+    QAction *mExitAction;
+
+    // Edit Menu
+    QAction *mCopyAction;
+
+    // Help menu
+    QAction *mAboutAction;
 signals:
     void tabChanged(const int i);
     void setCurrentTab(const int i);
