@@ -109,6 +109,9 @@ void Settings::addPage(QObject *page) {
         icon = iface->icon();
     }
 
+    if(name.isEmpty())
+        name = "<UNKNOW>";
+
 
 
 
