@@ -14,17 +14,17 @@ namespace Api {
 class PluginInterface
 {
 public:
-    virtual ~EchoInterface() {}
+    virtual ~PluginInterface() {}
 
-    virtual QString name() const = 0;
-    virtual QString version() const = 0;
-    virtual QString description() const = 0;
+//    virtual QString name() const = 0;
+//    virtual QString version() const = 0;
+//    virtual QString description() const = 0;
 };
 
 
 } // end Api namespace
 
-Q_DECLARE_INTERFACE(PluginInterface,"com.qphoenix.interfaces.plugin/1.0");
+Q_DECLARE_INTERFACE(Api::PluginInterface, "com.qphoenix.interfaces.plugin/1.0");
 
 
 

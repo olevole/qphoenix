@@ -10,7 +10,7 @@
 
 
 using namespace Api;
-using namespace Tools;
+//using namespace Tools;
 
 class QListWidget;
 class QStackedWidget;
@@ -21,7 +21,6 @@ class QTreeWidgetItem;
 class QPushButton;
 
 
-namespace Gui {
 
 /*
  *  This is an implementation of main settings dialog.
@@ -37,10 +36,10 @@ typedef QList<SettingsInterface *>SettingPageList;
 
 
 
-class Settings : public QDialog,  Api::SettingsWidgetAPI
+class Settings : public QDialog,  Api::SettingsAPI
 {
     Q_OBJECT
-    Q_INTERFACES(Api::SettingsWidgetAPI)
+    Q_INTERFACES(Api::SettingsAPI)
 
 public:
     explicit Settings(QWidget *parent = 0);
@@ -87,7 +86,6 @@ private slots:
 };
 
 
-} // end Gui namespace
 
 
 #endif // SETTINGS_H

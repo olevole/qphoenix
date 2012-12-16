@@ -34,14 +34,11 @@
 DictionaryWidget::DictionaryWidget(QWidget *parent) :
     QWidget(parent),
     mLanguagesComboBox(new QComboBox(this)),
-//    mResComboBox(new QComboBox(this)),
     mSrcText(new QLineEdit(this)),
     mResText(new QTextBrowser(this)),
-//    mSwapButton(new QToolButton(this)),
     mGroupbox(new QGroupBox(this)),
     mQueryLabel(new QLabel(tr("Query"), this)),
     mLineLayout(new QHBoxLayout),
-//    mLanguagesLayout(new QHBoxLayout),
     mMainLayout(new QVBoxLayout)
 {
 
@@ -49,6 +46,8 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mGroupbox->setLayout(new QHBoxLayout);
     mGroupbox->layout()->addWidget(mResText);
 
+    setName(tr("Dictionary"));
+    setIcon(QIcon::fromTheme("accessoriesbgb-dictionary"));
 
 
     mLineLayout->addWidget(mLanguagesComboBox);

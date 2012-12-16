@@ -22,9 +22,12 @@
 #ifndef TRANSLATORINTERFACE_H
 #define TRANSLATORINTERFACE_H
 
+
+#include "global.h"
+
 namespace Api {
 
-class TranslatorInterface {
+class TranslatorInterface : public AbstractInfoContainer{
 public:
     ~TranslatorInterface(){}
 

@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 
-using namespace Gui;
+
 
 #include <QStatusBar>
 #include <QToolBar>
@@ -13,10 +13,10 @@ using namespace Gui;
 #include <QAction>
 
 
+#include "abstractinfocontainer.h"
 
-
-//#include "translationwidget.h"
-//#include "dictionarywidget.h"
+#include "translationwidget.h"
+#include "dictionarywidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -58,26 +58,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setCentralWidget(mFancyWidget);
 
-//    Utils::StyledBar sb;sb.show();
 
-//mFancyWidget->addCornerWidget(&sb);
 
     this->setStatusBar(mStatusBar);
     this->setMenuBar(mMenuBar);
     this->addToolBar(Qt::RightToolBarArea, mToolBar);
-//    mToolBar->setDisab;
 
-//    TranslationWidget *tw = new TranslationWidget;
-//    DictionaryWidget *dw = new DictionaryWidget;
-//    this->addPage(tw);
-//    this->addPage(dw);
+    TranslationWidget *tw = new TranslationWidget;
+    DictionaryWidget *dw = new DictionaryWidget;
+    this->addPage(tw);
+    this->addPage(dw);
+
+    if(mFancyWidget->count() > 0)
+        mFancyWidget->setCurrentIndex(0);
 
 
-    QPushButton *pb = new QPushButton(this);
-
-
-    mFancyWidget->addCornerWidget(pb);
-    mFancyWidget->setCurrentIndex(0);
 }
 
 MainWindow::~MainWindow()
@@ -87,8 +82,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::addPage(QWidget *page) {
 
-    MainWindowTabInterface *i =
-            qobject_cast<MainWindowTabInterface *>(page);
+    AbstractInfoContainer *i =
+            qobject_cast<Api::AbstractInfoContainer *>(page);
 
 
     if(i == NULL) {
@@ -97,8 +92,8 @@ void MainWindow::addPage(QWidget *page) {
     }
 
 
-    QIcon icon = i->info()->icon();
-    QString name = i->info()->name();
+    QIcon icon = i->icon();
+    QString name = i->name();
 
     QGroupBox *gb = new QGroupBox(this);
 
@@ -118,6 +113,6 @@ void MainWindow::removePage(const QWidget *page) {
 
 }
 
-MainWindowTabInterface *MainWindow::pageAt(const int i) {
+QWidget *MainWindow::pageAt(const int i) {
 
 }

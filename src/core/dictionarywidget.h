@@ -24,8 +24,9 @@
 
 #include <QWidget>
 #include "pluginapi.h"
+#include "abstractinfocontainer.h"
 
-using namespace Tools;
+//using namespace Tools;
 
 class QComboBox;
 class QLineEdit;
@@ -37,29 +38,23 @@ class QHBoxLayout;
 class QVBoxLayout;
 
 
-class DictionaryWidget : public QWidget, Api::DictionaryWidgetAPI, Api::MainWindowTabInterface
+class DictionaryWidget : public QWidget, Api::DictionaryWidgetAPI, Api::AbstractInfoContainer
 {
     Q_OBJECT
     Q_INTERFACES(Api::DictionaryWidgetAPI)
-    Q_INTERFACES(Api::MainWindowTabInterface)
+    Q_INTERFACES(Api::AbstractInfoContainer)
 public:
     explicit DictionaryWidget(QWidget *parent = 0);
 
     virtual QComboBox   *languagesComboBox() {return mLanguagesComboBox;   }
-//    virtual QComboBox   *resComboBox()  {return mResComboBox;   }
     virtual QLineEdit   *srcText()      {return mSrcText;       }
     virtual QTextBrowser*resText()      {return mResText;       }
-//    virtual QToolButton *swapButton()   {return mSwapButton;    }
 
-    virtual Info *info() {
-//        return mInfo;
-//        return new Info(0, tr("Dictionary"), "", "", "");
-    }
+
 private:
     QComboBox *mLanguagesComboBox;
     QLineEdit *mSrcText;
     QTextBrowser *mResText;
-//    QToolButton *mSwapButton;
     QGroupBox   *mGroupbox;
     QLabel      *mQueryLabel;
 

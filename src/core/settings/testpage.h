@@ -25,7 +25,7 @@
 #include <QWidget>
 #include "settingsinterface.h"
 
-using namespace Tools;
+//using namespace Tools;
 
 class TestPage : public QWidget, Api::SettingsInterface
 {

@@ -2,17 +2,15 @@
 #define SETTINGSBASE_H
 
 #include <QGroupBox>
-#include "info.h"
-
+#include "global.h"
 
 
 
 namespace Api {
 
-using namespace Tools;
 
 
-class SettingsInterface : public Info
+class SettingsInterface : public Api::AbstractInfoContainer
 {
 public:
     virtual ~SettingsInterface(){}

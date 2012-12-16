@@ -37,6 +37,7 @@ TestPage::TestPage(QWidget *parent) :
 
     setName(tr("Test Options"));
     setIcon(QIcon::fromTheme("application-exit"));
+//    setN
 
     this->setLayout(l);
 //    this.

@@ -6,8 +6,7 @@
 #include <QPushButton>
 
 
-using namespace  Gui;
-using namespace Api;
+
 
 #include "testpage.h"
 
@@ -176,10 +175,5 @@ void Settings::reset() {
 
 }
 
-
-//void Settings::accept() {
-//    save();
-//    QDialog::accept();
-//}
 
 

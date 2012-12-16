@@ -34,7 +34,7 @@ src/core/tools
 
 
 
-configure_file(src/include/defines.h.in src/include/defines.h)
+configure_file(src/include/defines.h src/include/defines.h)
 
 set(GLOBAL_HEADERS
 src/include/global.h
@@ -44,14 +44,15 @@ set(IFACES
 src/include/settingsinterface.h
 src/include/plugininterface.h
 src/include/pluginapi.h
-src/include/translatorinterface.h)
+src/include/translatorinterface.h
+src/include/abstractinfocontainer.h
+)
 
 
 set(HEADERS
 src/core/mainwindow.h
 src/core/settings/settings.h
 src/core/settings/testpage.h
-src/core/tools/info.h
 src/core/translationwidget.h
 src/core/dictionarywidget.h
 
@@ -66,7 +67,7 @@ src/main.cpp
 src/core/mainwindow.cpp
 src/core/settings/settings.cpp
 src/core/settings/testpage.cpp
-src/core/tools/info.cpp
+#src/core/tools/info.cpp
 src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
 )

@@ -14,20 +14,15 @@ class QAction;
 
 
 
-namespace Gui {
-
-
-using namespace Api;
 
 
 
-class MainWindow : public  QMainWindow//, MainWindowAPI
+
+
+class MainWindow : public  QMainWindow, Api::MainWindowAPI
 {
     Q_OBJECT
-
-//    typedef QList<MainWindowTabInterface *>TabsList;
-
-    
+    Q_INTERFACES(Api::MainWindowAPI)
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -36,7 +31,7 @@ public:
 
     virtual void addPage(QWidget *page);
     virtual void removePage(const QWidget *page);
-    virtual MainWindowTabInterface *pageAt(const int i);
+    virtual QWidget *pageAt(const int i);
 
 
 
@@ -61,6 +56,5 @@ signals:
     void setCurrentTab(const int i);
 };
 
-}// end Gui namespace
 
 #endif // MAINWINDOW_H

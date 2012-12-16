@@ -23,6 +23,11 @@
 #define GLOBAL_H
 
 #include "defines.h"
+#include "abstractinfocontainer.h"
+
+#ifdef QP_DEBUG
+#include <QDebug>
+#endif
 
 
 

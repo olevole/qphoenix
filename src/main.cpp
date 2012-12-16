@@ -14,12 +14,9 @@ int main(int argc, char *argv[])
 
 
 //    DictionaryWidget dw; dw.show();
-    Gui::Settings s;
-    s.show();
+    Settings s;s.show();
 
-
-//    Utils::FancyMainWindow mw;mw.show();
-//    Gui::MainWindow mw;mw.show();
+//    MainWindow mw;mw.show();
 
 
     return a.exec();

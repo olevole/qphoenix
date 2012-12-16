@@ -19,16 +19,22 @@
  *    Years: 2012-2013
  */
 
-#ifndef INFO_H
-#define INFO_H
+#ifndef ABSTRACTINFOCONTAINER_H
+#define ABSTRACTINFOCONTAINER_H
 
 
+
+#include <QString>
 #include <QIcon>
 
 
-namespace Tools {
+namespace Api {
 
-class Info
+
+
+//class QIcon;
+
+class AbstractInfoContainer
 {
 public:
 
@@ -44,14 +50,15 @@ protected:
     void setDescription(const QString &t)   {mDecription = t;   }
     void setIcon( const QIcon &icon)        {mIcon = icon;      }
 
-
-
-
-//     Info & operator=(const Info &i);
     QString mName, mVersion, mUrl, mDecription;
     QIcon mIcon;
 };
 
-} // end Tools namespace
 
-#endif // INFO_H
+}
+
+
+Q_DECLARE_INTERFACE(Api::AbstractInfoContainer, "com.qphoenix.interfaces.infocontainer/1.0");
+
+
+#endif // ABSTRACTINFOCONTAINER_H
