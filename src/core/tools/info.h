@@ -29,16 +29,16 @@
 
 namespace Tools {
 
-class Info : public QObject
+class Info/* : public QObject*/
 {
-    Q_OBJECT
+//    Q_OBJECT
 public:
-    explicit Info(QObject *parent = 0);
-    explicit Info(QObject *parent,
-                  const QString &name,
-                  const QString &v ,
-                  const QString &url,
-                  const QString &desc);
+//    explicit Info(QObject *parent = 0);
+//    explicit Info(QObject *parent,
+//                  const QString &name,
+//                  const QString &v ,
+//                  const QString &url,
+//                  const QString &desc);
 
     void setName(const QString &n)          {mName = n;         }
     void setVersion(const QString &v)       {mVersion = v;      }
@@ -53,7 +53,7 @@ public:
     QString description() const             {return mDecription;}
     QIcon   icon() const                    {return mIcon;      }
 
-     Info & operator=(const Info &i);
+//     Info & operator=(const Info &i);
 protected:
     QString mName, mVersion, mUrl, mDecription;
     QIcon mIcon;

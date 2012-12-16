@@ -91,6 +91,11 @@ public:
 class MainWindowTabInterface {
 public:
     virtual Info *info() = 0;
+    void setValue(const QString &str) {mStr = str;}
+    QString value() const { return mStr;}
+
+private:
+    QString mStr;
 };
 
 class MainWindowAPI {
@@ -104,6 +109,8 @@ public:
     virtual void addPage(QWidget *page) = 0;
     virtual void removePage(const QWidget *page) = 0;
     virtual MainWindowTabInterface *pageAt(const int i) = 0;
+
+
 };
 
 

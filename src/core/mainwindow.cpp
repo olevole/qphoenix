@@ -15,8 +15,8 @@ using namespace Gui;
 
 
 
-#include "translationwidget.h"
-#include "dictionarywidget.h"
+//#include "translationwidget.h"
+//#include "dictionarywidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -67,10 +67,10 @@ MainWindow::MainWindow(QWidget *parent) :
     this->addToolBar(Qt::RightToolBarArea, mToolBar);
 //    mToolBar->setDisab;
 
-    TranslationWidget *tw = new TranslationWidget;
-    DictionaryWidget *dw = new DictionaryWidget;
-    this->addPage(tw);
-    this->addPage(dw);
+//    TranslationWidget *tw = new TranslationWidget;
+//    DictionaryWidget *dw = new DictionaryWidget;
+//    this->addPage(tw);
+//    this->addPage(dw);
 
 
     QPushButton *pb = new QPushButton(this);
@@ -89,6 +89,7 @@ void MainWindow::addPage(QWidget *page) {
 
     MainWindowTabInterface *i =
             qobject_cast<MainWindowTabInterface *>(page);
+
 
     if(i == NULL) {
         qDebug() << "Problem here!"; //TODO: fix it!

@@ -38,7 +38,7 @@ public:
      void save(){}
      void read(){}
      void reset(){}
-     Info *info() const {return new Tools::Info(0, "Test", "bla", "bla", "url");}
+//     Info *info() const {return new Tools::Info(0, "Test", "bla", "bla", "url");}
 };
 
 #endif // TESTPAGE_H

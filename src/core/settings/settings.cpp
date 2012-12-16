@@ -52,13 +52,15 @@ Settings::Settings(QWidget *parent) :
     TestPage *t2 = new TestPage();
 
 
-    this->addPage(t);
-    this->addPage(t2);
+    addPage(t);
+    addPage(t2);
+//    this->addPage(qobject_cast<QWidget *>(t));
+//    this->addPage(t2);
 
 
     QObject *o = new QObject();
 
-    this->addPage(o);
+//    this->addPage(o);
 
 
     // Okay, let's tell them to read configurations
@@ -95,17 +97,16 @@ void Settings::addPage(QObject *page) {
 
 
     QString name;
+    QIcon icon;
 
 
     if(iface == NULL) {
         qDebug() << "Unable to cast SettingsPage! Critical error, function terminated!";
         return;
-    } else if (iface->info() == NULL) {
-        qDebug() << "Unable to get an page info!";
-        name = tr("<UNKNOW>");
     } else {
         //TODO: Fix this dangerous code!
-        name = iface->info()->name();
+        name = iface->name();
+        icon = iface->icon();
     }
 
 
@@ -113,6 +114,7 @@ void Settings::addPage(QObject *page) {
 
     QTreeWidgetItem *item = new QTreeWidgetItem();
     item->setText(0, name);
+    item->setIcon(0, icon);
 
     QGroupBox       *gb = new QGroupBox(name, this);
     gb->setLayout(new QHBoxLayout);
@@ -131,8 +133,8 @@ void Settings::removePage(const QObject *page) {
         SettingsInterface *iface = qobject_cast<SettingsInterface *>(page);
 
 
-        const QString nameA = mPagesList.at(i)->info()->name();
-        const QString nameB = iface->info()->name();
+        const QString nameA = mPagesList.at(i)->name();
+        const QString nameB = iface->name();
 
         if(nameA == nameB) {
             qDebug() << "<<<<";

@@ -53,7 +53,7 @@ public:
 
     virtual Info *info() {
 //        return mInfo;
-        return new Info(0, tr("Dictionary"), "", "", "");
+//        return new Info(0, tr("Dictionary"), "", "", "");
     }
 private:
     QComboBox *mLanguagesComboBox;

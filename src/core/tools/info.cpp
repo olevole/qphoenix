@@ -24,37 +24,37 @@
 
 using namespace Tools;
 
-Info::Info(QObject *parent) :
-    QObject(parent)//,
-//    mIcon(new QIcon())
-{
-}
+//Info::Info(QObject *parent) :
+//    QObject(parent)//,
+////    mIcon(new QIcon())
+//{
+//}
 
 
-Info::Info(QObject *parent,
-           const QString &name,
-           const QString &ver,
-           const QString &url,
-           const QString &desc)
-    :QObject(parent)
+//Info::Info(QObject *parent,
+//           const QString &name,
+//           const QString &ver,
+//           const QString &url,
+//           const QString &desc)
+//    :QObject(parent)
 
-{
-
-
-    setName(name);
-    setVersion(ver);
-    setUrl(url);
-    setDescription(desc);
-//    setIcon(icon);
-}
+//{
 
 
- Info & Info::operator=(const Info &i)  {
-    setName(i.name());
-    setVersion(i.version());
-    setUrl(i.url());
-    setDescription(i.description());
-    setIcon(i.icon());
+//    setName(name);
+//    setVersion(ver);
+//    setUrl(url);
+//    setDescription(desc);
+////    setIcon(icon);
+//}
 
-    return *this;
-}
+
+// Info & Info::operator=(const Info &i)  {
+//    setName(i.name());
+//    setVersion(i.version());
+//    setUrl(i.url());
+//    setDescription(i.description());
+//    setIcon(i.icon());
+
+//    return *this;
+//}

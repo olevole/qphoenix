@@ -57,7 +57,7 @@ public:
     virtual QToolButton *swapButton()       { return mSwapButton;       }
     virtual Info *info() {
 //        return mInfo;
-        return new Info(0, tr("Translate"), "", "", "");
+//        return new Info(0, tr("Translate"), "", "", "");
     }
 private:
     QComboBox

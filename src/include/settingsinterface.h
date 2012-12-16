@@ -12,7 +12,7 @@ namespace Api {
 using namespace Tools;
 
 
-class SettingsInterface// : public Tools::Info
+class SettingsInterface : public Info
 {
 public:
     virtual ~SettingsInterface(){}
@@ -22,7 +22,7 @@ public:
     virtual void read() = 0;
     virtual void reset() = 0;
 
-    virtual Info *info() const = 0;
+//    virtual Info *info() const = 0;
 
 };
 
