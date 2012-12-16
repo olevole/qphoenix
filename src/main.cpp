@@ -11,11 +11,11 @@ int main(int argc, char *argv[])
 
 
 
-    DictionaryWidget dw; dw.show();
+//    DictionaryWidget dw; dw.show();
 //    Gui::Settings s;
 //    s.show();
 
-//    Gui::MainWindow mw;mw.show();
+    Gui::MainWindow mw;mw.show();
 
 
     return a.exec();

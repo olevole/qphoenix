@@ -10,6 +10,7 @@ using namespace Gui;
 #include <QDebug>
 
 #include "translationwidget.h"
+#include "dictionarywidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -29,7 +30,9 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setMenuBar(mMenuBar);
 
     TranslationWidget *tw = new TranslationWidget;
+    DictionaryWidget *dw = new DictionaryWidget;
     this->addPage(tw);
+    this->addPage(dw);
 
 //    mFancyWidget->insertTab(0, new QWidget(this),QIcon::fromTheme("accessories-text-editor"),"Translator" );
 //      mFancyWidget->insertTab(1, new QWidget(this),QIcon::fromTheme("accessories-dictionary"),"Dictionary" );
@@ -62,7 +65,7 @@ void MainWindow::addPage(QWidget *page) {
     QString name = i->info()->name();
 
     mFancyWidget->insertTab(0, page, icon, name);
-    mFancyWidget->setTabEnabled(0, true);
+//    mFancyWidget->setTabEnabled(0, true);
 
     resize(800, 600);
 

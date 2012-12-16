@@ -33,15 +33,15 @@
 
 DictionaryWidget::DictionaryWidget(QWidget *parent) :
     QWidget(parent),
-    mSrcComboBox(new QComboBox(this)),
-    mResComboBox(new QComboBox(this)),
+    mLanguagesComboBox(new QComboBox(this)),
+//    mResComboBox(new QComboBox(this)),
     mSrcText(new QLineEdit(this)),
     mResText(new QTextBrowser(this)),
-    mSwapButton(new QToolButton(this)),
+//    mSwapButton(new QToolButton(this)),
     mGroupbox(new QGroupBox(this)),
     mQueryLabel(new QLabel(tr("Query"), this)),
     mLineLayout(new QHBoxLayout),
-    mLanguagesLayout(new QHBoxLayout),
+//    mLanguagesLayout(new QHBoxLayout),
     mMainLayout(new QVBoxLayout)
 {
 
@@ -49,17 +49,18 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mGroupbox->setLayout(new QHBoxLayout);
     mGroupbox->layout()->addWidget(mResText);
 
-    mLanguagesLayout->addWidget(mSrcComboBox);
-    mLanguagesLayout->addWidget(mSwapButton);
-    mLanguagesLayout->addWidget(mResComboBox);
 
 
+    mLineLayout->addWidget(mLanguagesComboBox);
     mLineLayout->addWidget(mQueryLabel);
     mLineLayout->addWidget(mSrcText);
+    mLineLayout->addStretch();
 
     mMainLayout->addLayout(mLineLayout);
-    mMainLayout->addLayout(mLanguagesLayout);
     mMainLayout->addWidget(mGroupbox);
+
+
+    mSrcText->setText("Put your query word here");
 
     setLayout(mMainLayout);
 }

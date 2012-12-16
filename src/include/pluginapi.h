@@ -69,11 +69,11 @@ class DictionaryWidgetAPI {
 public:
     virtual ~DictionaryWidgetAPI() {}
 
-    virtual QComboBox   *srcComboBox() = 0;
-    virtual QComboBox   *resComboBox() = 0;
+    virtual QComboBox   *languagesComboBox() = 0;
+//    virtual QComboBox   *resComboBox() = 0;
     virtual QLineEdit   *srcText() = 0;
     virtual QTextBrowser*resText() = 0;
-    virtual QToolButton *swapButton() = 0;
+//    virtual QToolButton *swapButton() = 0;
 };
 
 class SettingsWidgetAPI {
@@ -99,6 +99,7 @@ public:
 
     virtual void tabChanged(const int i) = 0;
     virtual void setCurrentTab(const int i) = 0;
+
     // Methods
     virtual void addPage(QWidget *page) = 0;
     virtual void removePage(const QWidget *page) = 0;

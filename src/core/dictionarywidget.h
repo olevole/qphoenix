@@ -45,22 +45,25 @@ class DictionaryWidget : public QWidget, Api::DictionaryWidgetAPI, Api::MainWind
 public:
     explicit DictionaryWidget(QWidget *parent = 0);
 
-    virtual QComboBox   *srcComboBox()  {return mSrcComboBox;   }
-    virtual QComboBox   *resComboBox()  {return mResComboBox;   }
+    virtual QComboBox   *languagesComboBox() {return mLanguagesComboBox;   }
+//    virtual QComboBox   *resComboBox()  {return mResComboBox;   }
     virtual QLineEdit   *srcText()      {return mSrcText;       }
     virtual QTextBrowser*resText()      {return mResText;       }
-    virtual QToolButton *swapButton()   {return mSwapButton;    }
+//    virtual QToolButton *swapButton()   {return mSwapButton;    }
 
-    Info *info(){}
+    virtual Info *info() {
+//        return mInfo;
+        return new Info(0, tr("Dictionary"), "", "", "");
+    }
 private:
-    QComboBox *mSrcComboBox, *mResComboBox;
+    QComboBox *mLanguagesComboBox;
     QLineEdit *mSrcText;
     QTextBrowser *mResText;
-    QToolButton *mSwapButton;
+//    QToolButton *mSwapButton;
     QGroupBox   *mGroupbox;
     QLabel      *mQueryLabel;
 
-    QHBoxLayout *mLineLayout, *mLanguagesLayout;
+    QHBoxLayout *mLineLayout;
     QVBoxLayout *mMainLayout;
     
 };
