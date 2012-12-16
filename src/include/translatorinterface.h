@@ -22,4 +22,15 @@
 #ifndef TRANSLATORINTERFACE_H
 #define TRANSLATORINTERFACE_H
 
+namespace Api {
+
+class TranslatorInterface {
+public:
+    ~TranslatorInterface(){}
+
+};
+
+
+} // end Api namespace
+
 #endif // TRANSLATORINTERFACE_H

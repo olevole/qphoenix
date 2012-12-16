@@ -43,14 +43,14 @@ src/include/defines.h)
 set(IFACES
 src/include/settingsinterface.h
 src/include/plugininterface.h
-src/include/pluginapi.h)
+src/include/pluginapi.h
+src/include/translatorinterface.h)
 
 
 set(HEADERS
 src/core/mainwindow.h
 src/core/settings/settings.h
 src/core/settings/testpage.h
-
 src/core/tools/info.h
 src/core/translationwidget.h
 src/core/dictionarywidget.h

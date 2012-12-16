@@ -77,6 +77,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     mFancyWidget->addCornerWidget(pb);
+    mFancyWidget->setCurrentIndex(0);
 }
 
 MainWindow::~MainWindow()
