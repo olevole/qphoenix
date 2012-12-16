@@ -65,9 +65,7 @@ void MainWindow::addPage(QWidget *page) {
     mFancyWidget->setTabEnabled(0, true);
 
     resize(800, 600);
-//    QWidget *w = qobject_cast<QWidget *>(page);
 
-//    mFancyWidget->insertTab();
 }
 
 void MainWindow::removePage(const QWidget *page) {

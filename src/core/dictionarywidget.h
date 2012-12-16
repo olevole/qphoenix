@@ -27,6 +27,16 @@
 
 using namespace Tools;
 
+class QComboBox;
+class QLineEdit;
+class QTextBrowser;
+class QToolButton;
+class QGroupBox;
+class QLabel;
+class QHBoxLayout;
+class QVBoxLayout;
+
+
 class DictionaryWidget : public QWidget, Api::DictionaryWidgetAPI, Api::MainWindowTabInterface
 {
     Q_OBJECT
@@ -34,18 +44,24 @@ class DictionaryWidget : public QWidget, Api::DictionaryWidgetAPI, Api::MainWind
     Q_INTERFACES(Api::MainWindowTabInterface)
 public:
     explicit DictionaryWidget(QWidget *parent = 0);
-    Info *info() = 0;
 
-    virtual QComboBox   *srcComboBox();
-    virtual QComboBox   *resComboBox();
-    virtual QLineEdit   *srcText();
-    virtual QTextBrowser*resText();
-    virtual QToolButton *swapButton();
+    virtual QComboBox   *srcComboBox()  {return mSrcComboBox;   }
+    virtual QComboBox   *resComboBox()  {return mResComboBox;   }
+    virtual QLineEdit   *srcText()      {return mSrcText;       }
+    virtual QTextBrowser*resText()      {return mResText;       }
+    virtual QToolButton *swapButton()   {return mSwapButton;    }
 
-    
-signals:
-    
-public slots:
+    Info *info(){}
+private:
+    QComboBox *mSrcComboBox, *mResComboBox;
+    QLineEdit *mSrcText;
+    QTextBrowser *mResText;
+    QToolButton *mSwapButton;
+    QGroupBox   *mGroupbox;
+    QLabel      *mQueryLabel;
+
+    QHBoxLayout *mLineLayout, *mLanguagesLayout;
+    QVBoxLayout *mMainLayout;
     
 };
 
