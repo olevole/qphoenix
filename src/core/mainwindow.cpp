@@ -64,7 +64,7 @@ void MainWindow::addPage(QWidget *page) {
     QIcon icon = i->info()->icon();
     QString name = i->info()->name();
 
-    mFancyWidget->insertTab(0, page, icon, name);
+    mFancyWidget->insertTab(mFancyWidget->count(), page, icon, name);
 //    mFancyWidget->setTabEnabled(0, true);
 
     resize(800, 600);

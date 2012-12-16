@@ -159,6 +159,10 @@ public:
     int currentIndex() const;
     QStatusBar *statusBar() const;
 
+    int count() const {
+        m_tabBar->count();
+    }
+
     void setTabEnabled(int index, bool enable);
     bool isTabEnabled(int index) const;
 
