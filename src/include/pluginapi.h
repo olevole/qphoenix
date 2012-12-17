@@ -71,9 +71,9 @@ class SettingsAPI {
 public:
     virtual ~SettingsAPI() {}
 
-    virtual void addPage(QObject *page) = 0;
-    virtual void removePage(const QObject *page) = 0;
-    virtual SettingsInterface *pageAt(const int i) = 0;
+    virtual void addPage(QWidget *page) = 0;
+    virtual void removePage(const QWidget *page) = 0;
+    virtual QWidget *pageAt(const int i) = 0;
 };
 
 

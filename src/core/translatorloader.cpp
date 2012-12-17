@@ -19,14 +19,9 @@
  *    Years: 2012-2013
  */
 
-#ifndef GLOBAL_H
-#define GLOBAL_H
+#include "translatorloader.h"
 
-#include "defines.h"
-#include "abstractinfocontainer.h"
-
-
-
-
-
-#endif // GLOBAL_H
+TranslatorLoader::TranslatorLoader(QObject *parent) :
+    QObject(parent)
+{
+}

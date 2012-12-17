@@ -91,7 +91,7 @@ Settings::~Settings() {
 
 }
 
-void Settings::addPage(QObject *page) {
+void Settings::addPage(QWidget *page) {
     SettingsInterface *iface = qobject_cast<SettingsInterface *>(page);
 
 
@@ -130,7 +130,7 @@ void Settings::addPage(QObject *page) {
 
 }
 
-void Settings::removePage(const QObject *page) {
+void Settings::removePage(const QWidget *page) {
     for(int i = 0; i < mPagesList.count(); i++) {
         SettingsInterface *iface = qobject_cast<SettingsInterface *>(page);
 
@@ -145,8 +145,8 @@ void Settings::removePage(const QObject *page) {
     }
 }
 
-SettingsInterface *Settings::pageAt(const int i) {
-    return mPagesList.at(i);
+QWidget *Settings::pageAt(const int i) {
+    return mStackedWidget->widget(i);
 }
 
 void Settings::itemChangeHandle() {

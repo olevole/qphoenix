@@ -13,9 +13,7 @@ ENDIF()
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 ADD_DEFINITIONS(-DUNICODE)
 find_package(Qt4 REQUIRED)
-
 include(${QT_USE_FILE})
-
 set(QT_USE_QTXML TRUE)
 
 add_subdirectory(src/core/3rdparty/fancytab-widgets)
@@ -55,10 +53,8 @@ src/core/settings/settings.h
 src/core/settings/testpage.h
 src/core/translationwidget.h
 src/core/dictionarywidget.h
-
+src/core/translatorloader.h
 )
-
-
 
 
 
@@ -67,44 +63,17 @@ src/main.cpp
 src/core/mainwindow.cpp
 src/core/settings/settings.cpp
 src/core/settings/testpage.cpp
-#src/core/tools/info.cpp
 src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
+src/core/translatorloader.cpp
 )
-
-
-
-
-set(DOCUMENTS
-docs/standards_capability.txt)
-
-
-
-
-
 
 
 qt4_wrap_cpp(MOC_SOURCES ${HEADERS})
 
 
-#qt4_add_resources(QRC_SOURCES ${RESOURCES})
-
-
-
-
-
-
-
-
 add_executable(qphoenix ${SOURCES}
                ${MOC_SOURCES}  ${QM_FILES} ${QRC_SOURCES} ${GLOBAL_HEADERS} ${IFACES})
-
-
-#if (Q_WS_X11)
-#    include_directories(${X11_Xlib_INCLUDE_PATH} )
-#    target_link_libraries(qphoenix ${X11_LIBRARIES})
-#endif (Q_WS_X11)
-
 
 target_link_libraries(qphoenix ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES}
  ${QT_QTXML_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES} fancytabwidget)

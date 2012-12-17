@@ -51,9 +51,9 @@ public:
      *  presented by the following interface:
      */
 
-    void addPage(QObject *page);
-    void removePage(const QObject *page);
-    SettingsInterface *pageAt(const int i);
+    void addPage(QWidget *page);
+    void removePage(const QWidget *page);
+    QWidget *pageAt(const int i);
 private:
 
 

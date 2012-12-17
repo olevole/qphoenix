@@ -19,14 +19,45 @@
  *    Years: 2012-2013
  */
 
-#ifndef GLOBAL_H
-#define GLOBAL_H
+#ifndef TRANSLATORLOADER_H
+#define TRANSLATORLOADER_H
 
-#include "defines.h"
-#include "abstractinfocontainer.h"
+#include <QObject>
+#include <QList>
+#include <QPair>
+
+#include "translatorinterface.h"
+
+using namespace Api;
+
+typedef QPair<QString, QString> TranslatorItem;
+typedef QList<TranslatorItem *> TranslatorItemList;
 
 
 
+class TranslatorLoader : public QObject
+{
+    Q_OBJECT
+public:
+    explicit TranslatorLoader(QObject *parent = 0);
+
+    void init();
+    void unloadAll();
+
+    void setCurrentTranslator(const int i);
+
+    // Current selected instance
+    TranslatorInterface *instance();
+
+    // List of available for load instances.
+    TranslatorItemList list() const;
 
 
-#endif // GLOBAL_H
+    
+signals:
+    
+public slots:
+    
+};
+
+#endif // TRANSLATORLOADER_H
