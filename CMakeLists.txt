@@ -17,7 +17,7 @@ include(${QT_USE_FILE})
 set(QT_USE_QTXML TRUE)
 
 add_subdirectory(src/core/3rdparty/fancytab-widgets)
-
+add_subdirectory(src/plugins/trayicon)
 
 include_directories(
 ${CMAKE_CURRENT_BINARY_DIR}

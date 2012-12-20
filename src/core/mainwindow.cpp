@@ -11,6 +11,7 @@
 #include <QPushButton>
 #include <QMenu>
 #include <QAction>
+#include <QPluginLoader>
 
 
 #include "abstractinfocontainer.h"
@@ -48,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mMenuBar->addMenu(mEditMenu);
     mMenuBar->addMenu(mHelpMenu);
 
+#include <QPluginLoader>
 
     QList<QAction *> ActionsList;
     ActionsList << mExitAction << mCopyAction << mAboutAction;
@@ -71,6 +73,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     if(mFancyWidget->count() > 0)
         mFancyWidget->setCurrentIndex(0);
+
+
+    QPluginLoader *loader =
+   new QPluginLoader("/home/flareguner/Development/projects/qphoenix/src/plugins/trayicon/build/libtrayicon.so");
+
+    bool state = loader->load();
+
+
+    QObject *instance = loader->instance();
+
+    PluginInterface *iface = qobject_cast<PluginInterface *>(instance);
+
+    qDebug() << state << loader->errorString();
+    iface->setMainWindowPTR(this);
+
+
 
 
 }
@@ -115,4 +133,10 @@ void MainWindow::removePage(const QWidget *page) {
 
 QWidget *MainWindow::pageAt(const int i) {
 
+}
+
+void MainWindow::setCurrentTab(const int i) {
+    mFancyWidget->setCurrentIndex(i);
+
+    qDebug() << "BLLLL";
 }

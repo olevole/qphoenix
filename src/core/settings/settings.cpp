@@ -131,6 +131,7 @@ void Settings::addPage(QWidget *page) {
 }
 
 void Settings::removePage(const QWidget *page) {
+    SettingsInterface *iface2;
     for(int i = 0; i < mPagesList.count(); i++) {
         SettingsInterface *iface = qobject_cast<SettingsInterface *>(page);
 

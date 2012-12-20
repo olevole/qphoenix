@@ -19,24 +19,29 @@
  *    Years: 2012-2013
  */
 
-#ifndef TRANSLATORINTERFACE_H
-#define TRANSLATORINTERFACE_H
+#ifndef TRAYICON_H
+#define TRAYICON_H
 
+#include <QObject>
+#include "../../include/pluginapi.h"
+#include "../../include/plugininterface.h"
 
-#include "global.h"
+using namespace Api;
 
-namespace Api {
-
-class TranslatorInterface : public AbstractInfoContainer {
+class TrayIcon : public QObject, PluginInterface
+{
+    Q_OBJECT
+    Q_INTERFACES(Api::PluginInterface)
 public:
-    ~TranslatorInterface(){}
+    explicit TrayIcon(QObject *parent = 0);
 
-
-    QWidget *configWidget();
-
+    void setMainWindowPTR(QObject *ptr);
+    void setSettingsPTR(QObject *ptr);
+    
+signals:
+    
+public slots:
+    
 };
 
-
-} // end Api namespace
-
-#endif // TRANSLATORINTERFACE_H
+#endif // TRAYICON_H

@@ -8,17 +8,27 @@
  */
 
 #include <QString>
+#include "abstractinfocontainer.h"
+#include "pluginapi.h"
+#include "settingsinterface.h"
+
+
 
 namespace Api {
 
-class PluginInterface
+class PluginInterface : public AbstractInfoContainer
 {
 public:
     virtual ~PluginInterface() {}
 
-//    virtual QString name() const = 0;
-//    virtual QString version() const = 0;
-//    virtual QString description() const = 0;
+//    virtual void load() = 0;
+//    virtual void unload() = 0;
+
+    virtual void setMainWindowPTR(QObject *ptr) = 0;
+    virtual void setSettingsPTR(QObject *ptr) = 0;
+private:
+
+
 };
 
 

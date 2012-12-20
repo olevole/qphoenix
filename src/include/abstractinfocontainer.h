@@ -45,6 +45,7 @@ public:
     QIcon   icon() const                    {return mIcon;      }
 protected:
     void setName(const QString &n)          {mName = n;         }
+
     void setVersion(const QString &v)       {mVersion = v;      }
     void setUrl(const QString &u)           {mUrl = u;          }
     void setDescription(const QString &t)   {mDecription = t;   }

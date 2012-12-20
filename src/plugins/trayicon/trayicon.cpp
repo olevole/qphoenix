@@ -19,24 +19,27 @@
  *    Years: 2012-2013
  */
 
-#ifndef TRANSLATORINTERFACE_H
-#define TRANSLATORINTERFACE_H
+#include "trayicon.h"
+#include <QtGui>
+
+TrayIcon::TrayIcon(QObject *parent) :
+    QObject(parent)
+{
+    this->setName("TrayIcon");
+}
+
+void TrayIcon::setMainWindowPTR(QObject *ptr) {
+    Api::MainWindowAPI *iface = qobject_cast<Api::MainWindowAPI *>(ptr);
+    iface->setCurrentTab(1);
+    iface->setCurrentTab(0);
 
 
-#include "global.h"
+}
 
-namespace Api {
+void TrayIcon::setSettingsPTR(QObject *ptr) {
 
-class TranslatorInterface : public AbstractInfoContainer {
-public:
-    ~TranslatorInterface(){}
+}
 
 
-    QWidget *configWidget();
 
-};
-
-
-} // end Api namespace
-
-#endif // TRANSLATORINTERFACE_H
+Q_EXPORT_PLUGIN2(trayicon, TrayIcon);

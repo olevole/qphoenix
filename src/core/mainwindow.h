@@ -5,7 +5,6 @@
 #include "pluginapi.h"
 #include "fancytabwidget.h"
 
-
 class QStatusBar;
 class QToolBar;
 class QMenuBar;
@@ -33,7 +32,13 @@ public:
     virtual void removePage(const QWidget *page);
     virtual QWidget *pageAt(const int i);
 
+    void echo(QString &str) {
+        qDebug() << "ECHO: " << str;
+    }
+    void setCurrentTab(const int i);
 
+
+public slots:
 
 private:
     QStatusBar  *mStatusBar;
@@ -53,7 +58,6 @@ private:
     QAction *mAboutAction;
 signals:
     void tabChanged(const int i);
-    void setCurrentTab(const int i);
 };
 
 

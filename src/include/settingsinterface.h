@@ -4,7 +4,7 @@
 #include <QGroupBox>
 #include "global.h"
 
-
+#include "pluginapi.h"
 
 namespace Api {
 
@@ -20,7 +20,7 @@ public:
     virtual void read() = 0;
     virtual void reset() = 0;
 
-//    virtual Info *info() const = 0;
+
 
 };
 

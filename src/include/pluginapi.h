@@ -7,7 +7,6 @@
 #include <QMainWindow>
 #include "settingsinterface.h"
 #include "translatorinterface.h"
-//#include "mainwindowtabinterface.h"
 #include "plugininterface.h"
 
 class QToolBar;
@@ -90,6 +89,8 @@ public:
     virtual void addPage(QWidget *page) = 0;
     virtual void removePage(const QWidget *page) = 0;
     virtual QWidget *pageAt(const int i) = 0;
+
+
 
 
 };

@@ -435,7 +435,7 @@ void FancyTabWidget::insertTab(int index, QWidget *tab, const QIcon &icon, const
     m_modesStack->insertWidget(index, tab);
     m_tabBar->insertTab(index, icon, label);
 
-    //FIXME: Set tab enamble by default
+    //NOTE: My fix, could be dangerous!
     setTabEnabled(index, true);
 }
 

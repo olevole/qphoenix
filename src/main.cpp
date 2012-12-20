@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 
 
 
+
 //    DictionaryWidget dw; dw.show();
 //    Settings s;s.show();
 
