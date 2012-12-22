@@ -23,14 +23,14 @@
 #define TESTPAGE_H
 
 #include <QWidget>
-#include "settingsinterface.h"
+#include "settingspageinterface.h"
 
 //using namespace Tools;
 
-class TestPage : public QWidget, Api::SettingsInterface
+class TestPage : public QWidget, SettingsPageInterface
 {
     Q_OBJECT
-    Q_INTERFACES(Api::SettingsInterface)
+    Q_INTERFACES(SettingsPageInterface)
 
 public:
 

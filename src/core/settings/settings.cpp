@@ -92,7 +92,7 @@ Settings::~Settings() {
 }
 
 void Settings::addPage(QWidget *page) {
-    SettingsInterface *iface = qobject_cast<SettingsInterface *>(page);
+    SettingsPageInterface *iface = qobject_cast<SettingsPageInterface *>(page);
 
 
     QString name;
@@ -124,16 +124,16 @@ void Settings::addPage(QWidget *page) {
     gb->layout()->addWidget(qobject_cast<QWidget *>(page));
 
 
-    mPagesList.append(iface);
+//    mPagesList.append(iface);
     mTree->insertTopLevelItem(0,item);
     mStackedWidget->addWidget(gb);
 
 }
 
 void Settings::removePage(const QWidget *page) {
-    SettingsInterface *iface2;
+    SettingsPageInterface *iface2;
     for(int i = 0; i < mPagesList.count(); i++) {
-        SettingsInterface *iface = qobject_cast<SettingsInterface *>(page);
+        SettingsPageInterface *iface = qobject_cast<SettingsPageInterface *>(page);
 
 
         const QString nameA = mPagesList.at(i)->name();
@@ -158,19 +158,19 @@ void Settings::itemChangeHandle() {
 
 
 void Settings::save() {
-    foreach (SettingsInterface *i, mPagesList) {
+    foreach (SettingsPageInterface *i, mPagesList) {
         i->save();
     }
 }
 
 void Settings::read() {
-    foreach(SettingsInterface *i, mPagesList) {
+    foreach(SettingsPageInterface *i, mPagesList) {
         i->read();
     }
 }
 
 void Settings::reset() {
-    foreach(SettingsInterface *i, mPagesList) {
+    foreach(SettingsPageInterface *i, mPagesList) {
         i->reset();
     }
 

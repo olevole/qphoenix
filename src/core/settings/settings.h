@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "pluginapi.h"
 #include "settingsinterface.h"
+#include "settingspageinterface.h"
 #include <QTreeWidget>
 #include <QDialogButtonBox>
 
@@ -31,15 +32,15 @@ class QPushButton;
 /*
  * A list with Settings pages interfaces
  */
-typedef QList<SettingsInterface *>SettingPageList;
+typedef QList<SettingsPageInterface *>SettingPageList;
 
 
 
 
-class Settings : public QDialog,  SettingsAPI
+class Settings : public QDialog,  SettingsInterface
 {
     Q_OBJECT
-    Q_INTERFACES(SettingsAPI)
+    Q_INTERFACES(SettingsInterface)
 
 public:
     explicit Settings(QWidget *parent = 0);

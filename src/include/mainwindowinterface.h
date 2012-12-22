@@ -22,6 +22,8 @@
 #ifndef MAINWINDOWINTERFACE_H
 #define MAINWINDOWINTERFACE_H
 
+#include "translatorwidgetinterface.h"
+#include "dictionarywidgetinterface.h"
 
 class MainWindowInterface {
 public:
@@ -39,8 +41,8 @@ public:
 
     // Instances
     virtual QToolBar *toolbar() = 0;
-    virtual TranslatorWidgetAPI *translationWidget() = 0;
-    virtual DictionaryWidgetAPI *dictionaryWidget() = 0;
+    virtual TranslatorWidgetInterface *translationWidget() = 0;
+    virtual DictionaryWidgetInterface *dictionaryWidget() = 0;
 };
 
 Q_DECLARE_INTERFACE(MainWindowInterface, "com.qphoenix.interfaces.mainwindow/1.0")

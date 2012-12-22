@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
 
 //    DictionaryWidget dw; dw.show();
-//    Settings s;s.show();
+    Settings s;s.show();
 
     MainWindow mw;mw.show();
     QP_DBG("Message!");

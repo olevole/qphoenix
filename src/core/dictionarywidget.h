@@ -25,6 +25,7 @@
 #include <QWidget>
 #include "pluginapi.h"
 #include "abstractinfocontainer.h"
+#include "dictionarywidgetinterface.h"
 
 //using namespace Tools;
 
@@ -38,10 +39,10 @@ class QHBoxLayout;
 class QVBoxLayout;
 
 
-class DictionaryWidget : public QWidget, Api::DictionaryWidgetAPI, AbstractInfoContainer
+class DictionaryWidget : public QWidget, DictionaryWidgetInterface, AbstractInfoContainer
 {
     Q_OBJECT
-    Q_INTERFACES(Api::DictionaryWidgetAPI)
+    Q_INTERFACES(DictionaryWidgetInterface)
     Q_INTERFACES(AbstractInfoContainer)
 public:
     explicit DictionaryWidget(QWidget *parent = 0);

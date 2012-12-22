@@ -24,6 +24,7 @@
 
 #include <QWidget>
 #include "pluginapi.h"
+#include "translatorwidgetinterface.h"
 
 class QTextEdit;
 class QTextBrowser;
@@ -41,10 +42,10 @@ using namespace Api;
 
 
 
-class TranslationWidget : public QWidget, TranslatorWidgetAPI, AbstractInfoContainer
+class TranslationWidget : public QWidget, TranslatorWidgetInterface, AbstractInfoContainer
 {
     Q_OBJECT
-    Q_INTERFACES(Api::TranslatorWidgetAPI)
+    Q_INTERFACES(TranslatorWidgetInterface)
     Q_INTERFACES(AbstractInfoContainer)
 public:
     explicit TranslationWidget(QWidget *parent = 0);

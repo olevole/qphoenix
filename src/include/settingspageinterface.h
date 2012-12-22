@@ -22,16 +22,24 @@
 #ifndef SETTINGSPAGEINTERFACE_H
 #define SETTINGSPAGEINTERFACE_H
 
-class SettingsPageInterface {
-public:
-    virtual ~SettingsPageInterface() {}
+#include "abstractinfocontainer.h"
 
-    virtual void addPage(QWidget *page) = 0;
-    virtual void removePage(const QWidget *page) = 0;
-    virtual QWidget *pageAt(const int i) = 0;
+class SettingsPageInterface : public AbstractInfoContainer
+{
+public:
+    virtual ~SettingsPageInterface(){}
+
+    // Read and save the settings
+    virtual void save() = 0;
+    virtual void read() = 0;
+    virtual void reset() = 0;
+
+
+
 };
 
-Q_DECLARE_INTERFACE(SettingsPageInterface, "com.qphoenix.interfaces.settingspage/1.0")
+Q_DECLARE_INTERFACE(SettingsPageInterface, "com.qphoenix.interfaces.settings/1.0");
+
 
 
 

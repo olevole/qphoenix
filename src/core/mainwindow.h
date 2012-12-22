@@ -36,11 +36,11 @@ public:
     void removePage(const QWidget *page);
     QWidget *pageAt(const int i);
 
-    Api::DictionaryWidgetAPI *dictionaryWidget() {
+    DictionaryWidgetInterface *dictionaryWidget() {
         mDictionaryWidget;
     }
 
-    Api::TranslatorWidgetAPI *translationWidget() {
+    TranslatorWidgetInterface *translationWidget() {
         mTranslationWidget;
     }
 
