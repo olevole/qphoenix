@@ -34,7 +34,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //Actions
     mExitAction(new QAction(QIcon::fromTheme("application-exit"), tr("Exit"), this)),
     mCopyAction(new QAction(QIcon::fromTheme("edit-copy"), tr("Copy"), this)),
-    mAboutAction(new QAction(QIcon::fromTheme("help-about"), tr("About"), this))
+    mAboutAction(new QAction(QIcon::fromTheme("help-about"), tr("About"), this)),
+    mTranslationWidget(new TranslationWidget(this)),
+    mDictionaryWidget(new DictionaryWidget(this))
 {
 
 //    mMenuBar->setDisabled();
@@ -66,10 +68,9 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setMenuBar(mMenuBar);
     this->addToolBar(Qt::RightToolBarArea, mToolBar);
 
-    TranslationWidget *tw = new TranslationWidget;
-    DictionaryWidget *dw = new DictionaryWidget;
-    this->addPage(tw);
-    this->addPage(dw);
+
+    this->addPage(mTranslationWidget);
+    this->addPage(mDictionaryWidget);
 
     if(mFancyWidget->count() > 0)
         mFancyWidget->setCurrentIndex(0);
@@ -86,7 +87,9 @@ MainWindow::MainWindow(QWidget *parent) :
     PluginInterface *iface = qobject_cast<PluginInterface *>(instance);
 
     qDebug() << state << loader->errorString();
+
     iface->setMainWindowPTR(this);
+//    iface->setMainWindowPTR(this);
 
 
 

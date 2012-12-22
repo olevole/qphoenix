@@ -21,18 +21,22 @@
 
 #include "trayicon.h"
 #include <QtGui>
+#include <QPushButton>
 
 TrayIcon::TrayIcon(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    button(new QPushButton)
 {
-    this->setName("TrayIcon");
+//    this->setName("TrayIcon");
 }
 
 void TrayIcon::setMainWindowPTR(QObject *ptr) {
     Api::MainWindowAPI *iface = qobject_cast<Api::MainWindowAPI *>(ptr);
     iface->setCurrentTab(1);
-    iface->setCurrentTab(0);
 
+//    QLabel l;
+
+//    iface->toolbar()->addWidget(button);
 
 }
 

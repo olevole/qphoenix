@@ -90,10 +90,17 @@ public:
     virtual void removePage(const QWidget *page) = 0;
     virtual QWidget *pageAt(const int i) = 0;
 
+    // Instances
+    virtual QToolBar *toolbar() = 0;
+    virtual TranslatorWidgetAPI *translationWidget() = 0;
+    virtual DictionaryWidgetAPI *dictionaryWidget() = 0;
 
 
 
 };
+
+
+
 
 
 
@@ -105,6 +112,6 @@ Q_DECLARE_INTERFACE(Api::SettingsAPI, "com.qphoenix.interfaces.settingswidget/1.
 Q_DECLARE_INTERFACE(Api::MainWindowAPI, "com.qphoenix.interfaces.mainwindow/1.0")
 //Q_DECLARE_INTERFACE(Api::MainWindowTabInterface, "com.qphoenix.interfaces.mainwindowtab/1.0")
 
-
+\
 
 #endif // PLUGINAPI_H

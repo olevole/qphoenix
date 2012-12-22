@@ -26,22 +26,25 @@
 #include "../../include/pluginapi.h"
 #include "../../include/plugininterface.h"
 
-using namespace Api;
+
+class QPushButton;
 
 class TrayIcon : public QObject, PluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(Api::PluginInterface)
+    Q_INTERFACES(PluginInterface)
 public:
-    explicit TrayIcon(QObject *parent = 0);
-
+    explicit TrayIcon(QObject *parent = 0);    
     void setMainWindowPTR(QObject *ptr);
+
     void setSettingsPTR(QObject *ptr);
-    
-signals:
-    
-public slots:
-    
+
+
+
+    void setAPTR(AbstractIface *ptr){}
+
+private:
+    QPushButton *button;
 };
 
 #endif // TRAYICON_H

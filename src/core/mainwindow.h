@@ -11,6 +11,8 @@ class QMenuBar;
 class QMenu;
 class QAction;
 
+class TranslationWidget;
+class DictionaryWidget;
 
 
 
@@ -27,15 +29,27 @@ public:
     ~MainWindow();
 
 
+    void setCurrentTab(const int i);
 
-    virtual void addPage(QWidget *page);
-    virtual void removePage(const QWidget *page);
-    virtual QWidget *pageAt(const int i);
+    void addPage(QWidget *page);
+    void removePage(const QWidget *page);
+    QWidget *pageAt(const int i);
+
+    Api::DictionaryWidgetAPI *dictionaryWidget() {
+        mDictionaryWidget;
+    }
+
+    Api::TranslatorWidgetAPI *translationWidget() {
+        mTranslationWidget;
+    }
+
+    QToolBar *toolbar() {
+        mToolBar;
+    }
 
     void echo(QString &str) {
         qDebug() << "ECHO: " << str;
     }
-    void setCurrentTab(const int i);
 
 
 public slots:
@@ -56,6 +70,9 @@ private:
 
     // Help menu
     QAction *mAboutAction;
+
+    TranslationWidget *mTranslationWidget;
+    DictionaryWidget *mDictionaryWidget;
 signals:
     void tabChanged(const int i);
 };

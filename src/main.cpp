@@ -7,13 +7,13 @@
 #include "global.h"
 #include "translatorloader.h"
 
+#include "pluginapi.h"
+
 //#include "utils/fancymainwindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
-
 
 
 

@@ -14,27 +14,32 @@
 
 
 
-namespace Api {
+class AbstractIface {
+public:
+    virtual void say() =0;
+    virtual void setWidget(QWidget *ptr)=0;
+};
 
-class PluginInterface : public AbstractInfoContainer
+
+
+class PluginInterface : public Api::AbstractInfoContainer
 {
 public:
     virtual ~PluginInterface() {}
 
-//    virtual void load() = 0;
-//    virtual void unload() = 0;
 
     virtual void setMainWindowPTR(QObject *ptr) = 0;
     virtual void setSettingsPTR(QObject *ptr) = 0;
+
+    virtual void setAPTR(AbstractIface *ptr)=0;
 private:
 
 
 };
 
 
-} // end Api namespace
 
-Q_DECLARE_INTERFACE(Api::PluginInterface, "com.qphoenix.interfaces.plugin/1.0");
+Q_DECLARE_INTERFACE(PluginInterface, "com.qphoenix.interfaces.plugin/1.0");
 
 
 
