@@ -1,24 +1,26 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QDialog>
 #include "settingsinterface.h"
 #include "settingspageinterface.h"
+
 #include <QTreeWidget>
 #include <QDialogButtonBox>
+#include <QDialog>
+
 
 
 
 
 
 class QListWidget;
-class QStackedWidget;
+class QStackedLayout;
 class QVBoxLayout;
 class QHBoxLayout;
 class QGroupBox;
 class QTreeWidgetItem;
 class QPushButton;
-
+//class Settings;
 
 
 /*
@@ -58,30 +60,23 @@ private:
 
 
     SettingPageList mPagesList;
-//    QList<QGroupBox *> mGroupboxList;
-//    QList<QTreeWidgetItem *> mItemsList;
-
 
     // GUI elements
-
     QVBoxLayout *mMainLayout;
     QHBoxLayout *mHorizontalLayout;
     QHBoxLayout *mBottomLayout;
-    QStackedWidget *mStackedWidget;
+    QStackedLayout *mStackedLayout;
     QTreeWidget *mTree;
     QDialogButtonBox *mButtons;
     QPushButton *mDefaultsButton;
+
+//    Settings *mSettingsDialog;
 private slots:
     void itemChangeHandle();
 
     void save();
     void read();
     void reset();
-
-//    void accept();
-//    void reject();
-//    void reset();
-
 };
 
 

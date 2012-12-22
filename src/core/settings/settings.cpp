@@ -1,5 +1,5 @@
 #include "settings.h"
-#include <QStackedWidget>
+#include <QStackedLayout>
 #include <QGroupBox>
 #include <QLayout>
 #include <QDebug>
@@ -16,15 +16,16 @@ Settings::Settings(QWidget *parent) :
     mMainLayout(new QVBoxLayout),
     mHorizontalLayout(new QHBoxLayout),
     mBottomLayout(new QHBoxLayout),
-    mStackedWidget(new QStackedWidget(this)),
+    mStackedLayout(new QStackedLayout),
     mTree(new QTreeWidget(this)),
     mButtons(new QDialogButtonBox(this)),
     mDefaultsButton(new QPushButton(tr("Defaults"),this))
+//    mSettingsDialog(new Settings(this))
 {
 
     // Gui Init
     mHorizontalLayout->addWidget(mTree);
-    mHorizontalLayout->addWidget(mStackedWidget);
+    mHorizontalLayout->addLayout(mStackedLayout);
 
     mBottomLayout->addWidget(mDefaultsButton);
     mBottomLayout->addStretch();
@@ -83,6 +84,8 @@ Settings::Settings(QWidget *parent) :
     connect(mDefaultsButton, SIGNAL(clicked()), this, SLOT(reset()));
     connect(mButtons, SIGNAL(clicked(QDialogButtonBox::Apply)), this, SLOT(save()));
 
+//    connect()
+
 
 
 }
@@ -126,7 +129,7 @@ void Settings::addPage(QWidget *page) {
 
 //    mPagesList.append(iface);
     mTree->insertTopLevelItem(0,item);
-    mStackedWidget->addWidget(gb);
+    mStackedLayout->addWidget(gb);
 
 }
 
@@ -147,12 +150,12 @@ void Settings::removePage(const QWidget *page) {
 }
 
 QWidget *Settings::pageAt(const int i) {
-    return mStackedWidget->widget(i);
+    return mStackedLayout->widget(i);
 }
 
 void Settings::itemChangeHandle() {
     const int cur = mTree->currentIndex().row();
-    mStackedWidget->setCurrentIndex(cur + 1);
+    mStackedLayout->setCurrentIndex(cur + 1);
 }
 
 

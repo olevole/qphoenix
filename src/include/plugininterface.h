@@ -19,13 +19,8 @@ class PluginInterface : public AbstractInfoContainer
 public:
     virtual ~PluginInterface() {}
 
-
     virtual void setMainWindowPTR(MainWindowInterface *ptr) = 0;
     virtual void setSettingsPTR(SettingsInterface *ptr) = 0;
-
-private:
-
-
 };
 
 

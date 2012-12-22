@@ -16,16 +16,19 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setApplicationName(QP_APP_NAME);
     QCoreApplication::setApplicationVersion(QP_APP_VERSION);
+    QCoreApplication::setOrganizationName(QP_ORG_NAME);
+    QCoreApplication::setOrganizationDomain(QP_ORG_DOMAIN);
 
 
 
 
-//    DictionaryWidget dw; dw.show();
-    Settings s;s.show();
+    QP_DBG("Trying to create MainWindow object....");
 
-    MainWindow mw;mw.show();
-    QP_DBG("Message!");
+    MainWindow *mw = new MainWindow();
 
+    mw->show();
+
+    QP_DBG("Success!");
 
     return a.exec();
 }

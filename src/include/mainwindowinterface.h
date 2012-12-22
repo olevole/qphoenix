@@ -40,10 +40,10 @@ class MainWindowInterface {
 public:
     ~MainWindowInterface(){}
     // Signals
-    virtual void tabChanged(const int i) = 0;
+    virtual void pageChanged(const int i) = 0;
 
     //Slots
-    virtual void setCurrentTab(const int i) = 0;
+    virtual void setCurrentPage(const int i) = 0;
 
     // Methods
     virtual void addPage(QWidget *page) = 0;

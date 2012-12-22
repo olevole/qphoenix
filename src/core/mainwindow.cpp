@@ -13,6 +13,7 @@
 #include <QAction>
 #include <QPluginLoader>
 #include <QPushButton>
+#include <QApplication>
 
 #include "abstractinfocontainer.h"
 #include "plugininterface.h"
@@ -37,16 +38,19 @@ MainWindow::MainWindow(QWidget *parent) :
     //Actions
     mExitAction(new QAction(QIcon::fromTheme("application-exit"), tr("Exit"), this)),
     mCopyAction(new QAction(QIcon::fromTheme("edit-copy"), tr("Copy"), this)),
+    mOptionsAction(new QAction("Options", this)),
     mAboutAction(new QAction(QIcon::fromTheme("help-about"), tr("About"), this)),
     mTranslationWidget(new TranslationWidget(this)),
-    mDictionaryWidget(new DictionaryWidget(this))
+    mDictionaryWidget(new DictionaryWidget(this)),
+    mSettingsDialog(new Settings(this))
 {
 
-    setWindowTitle(QP_APP_NAME);
+    setWindowTitle(qApp->applicationName());
 
 
     mFileMenu->addAction(mExitAction);
     mEditMenu->addAction(mCopyAction);
+    mEditMenu->addAction(mOptionsAction);
     mHelpMenu->addAction(mAboutAction);
 
 
@@ -77,22 +81,7 @@ MainWindow::MainWindow(QWidget *parent) :
         mFancyWidget->setCurrentIndex(0);
 
 
-    QPluginLoader *loader =
-   new QPluginLoader("/home/flareguner/Development/projects/qphoenix/src/plugins/trayicon/build/libtrayicon.so");
-
-    bool state = loader->load();
-
-
-    QObject *instance = loader->instance();
-
-    PluginInterface *iface = qobject_cast<PluginInterface *>(instance);
-
-    qDebug() << state << loader->errorString();
-
-    iface->setMainWindowPTR(this);
-
-
-
+    connect(mOptionsAction, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
 }
 
 MainWindow::~MainWindow()
@@ -134,7 +123,7 @@ QWidget *MainWindow::pageAt(const int i) {
 
 }
 
-void MainWindow::setCurrentTab(const int i) {
+void MainWindow::setCurrentPage(const int i) {
     mFancyWidget->setCurrentIndex(i);
 
     qDebug() << "BLLLL";

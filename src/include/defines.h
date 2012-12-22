@@ -6,6 +6,8 @@
 
 #define QP_APP_VERSION "0.01a"
 #define QP_APP_NAME "QPhoenix"
+#define QP_ORG_NAME "QPhoenix developers"
+#define QP_ORG_DOMAIN "http://qphoenix.org"
 
 
 #define QP_PREFIX "${CMAKE_INSTALL_PREFIX}" + QDir::separator()
@@ -16,7 +18,7 @@
 
 #define QP_DEBUG_MODE
 
-#define QP_PLUGIN_SIGNATURE "__qphoenix-1.0plugin___"uj
+#define QP_PLUGIN_SIGNATURE "__qphoenix-1.0plugin___"
 
 
 #ifdef QP_DEBUG_MODE

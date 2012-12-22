@@ -14,6 +14,7 @@ class QAction;
 
 class TranslationWidget;
 class DictionaryWidget;
+class Settings;
 
 
 
@@ -30,7 +31,7 @@ public:
     ~MainWindow();
 
 
-    void setCurrentTab(const int i);
+    void setCurrentPage(const int i);
 
     void addPage(QWidget *page);
     void removePage(const QWidget *page);
@@ -44,17 +45,9 @@ public:
 //        return (TranslatorWidgetInterface *)mTranslationWidget;
     }
 
-    QToolBar *toolbar() {
-        return mToolBar;
-    }
-
-    QStatusBar *statusbar() {
-        return mStatusBar;
-    }
-
-    QMenuBar *menubar() {
-        return mMenuBar;
-    }
+    QToolBar *toolbar() { return mToolBar; }
+    QStatusBar *statusbar() { return mStatusBar; }
+    QMenuBar *menubar() { return mMenuBar; }
 
 public slots:
 
@@ -70,15 +63,17 @@ private:
     QAction *mExitAction;
 
     // Edit Menu
-    QAction *mCopyAction;
+    QAction *mCopyAction, *mOptionsAction;
 
     // Help menu
     QAction *mAboutAction;
 
     TranslationWidget *mTranslationWidget;
     DictionaryWidget *mDictionaryWidget;
+
+    Settings *mSettingsDialog;
 signals:
-    void tabChanged(const int i);
+    void pageChanged(const int i);
 };
 
 

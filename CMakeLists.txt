@@ -29,9 +29,6 @@ src/include
 src/core/tools
 )
 
-
-
-
 configure_file(src/include/defines.h src/include/defines.h)
 
 set(GLOBAL_HEADERS
@@ -69,6 +66,14 @@ src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
 src/core/translatorloader.cpp
 )
+
+# Not implemented yet
+set(L18N
+src/l18n/Russian.ts
+src/l18n/English.ts)
+
+
+
 
 
 qt4_wrap_cpp(MOC_SOURCES ${HEADERS})

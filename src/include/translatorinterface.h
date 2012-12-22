@@ -23,16 +23,31 @@
 #define TRANSLATORINTERFACE_H
 
 #include "abstractinfocontainer.h"
+#include <QMap>
 
+class QWidget;
+class QString;
+
+typedef QMap <QString, QStringList> LangTable;
 
 class TranslatorInterface : public AbstractInfoContainer {
 public:
-    ~TranslatorInterface(){}
+    virtual ~TranslatorInterface(){}
+    virtual QWidget *configWidget() = 0;
 
 
-    QWidget *configWidget();
+    virtual bool isLinear() const = 0;
+    virtual LangTable *table() const = 0;
+
+    virtual QString *translate(const QString &src_text, const QString &src_lang,
+                               const QString &dest_lang) = 0;
+
 
 };
+
+
+Q_DECLARE_INTERFACE(TranslatorInterface, "com.qphoenix.interfaces.translator/1.0");
+
 
 
 
