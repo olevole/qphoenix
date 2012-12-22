@@ -22,6 +22,13 @@
 #ifndef DICTIONARYWIDGETINTERFACE_H
 #define DICTIONARYWIDGETINTERFACE_H
 
+
+class QComboBox;
+class QLineEdit;
+class QTextBrowser;
+
+
+
 class DictionaryWidgetInterface {
 public:
     virtual ~DictionaryWidgetInterface() {}

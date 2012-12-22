@@ -30,7 +30,7 @@ TrayIcon::TrayIcon(QObject *parent) :
 //    this->setName("TrayIcon");
 }
 
-void TrayIcon::setMainWindowPTR(QObject *ptr) {
+void TrayIcon::setMainWindowPTR(MainWindowInterface *ptr) {
 //    Api::MainWindowAPI *iface = qobject_cast<Api::MainWindowAPI *>(ptr);
 //    iface->setCurrentTab(1);
 

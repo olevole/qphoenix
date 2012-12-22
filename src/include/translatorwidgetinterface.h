@@ -23,6 +23,12 @@
 #define TRANSLATORWIDGETINTERFACE_H
 
 
+class QComboBox;
+class QTextEdit;
+class QTextBrowser;
+class QPushButton;
+class QToolButton;
+
 // Inherited by TranslatorWidget
 class TranslatorWidgetInterface {
 public:

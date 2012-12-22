@@ -11,15 +11,7 @@
 #include "abstractinfocontainer.h"
 #include "pluginapi.h"
 #include "settingspageinterface.h"
-
-
-
-class AbstractIface {
-public:
-    virtual void say() =0;
-    virtual void setWidget(QWidget *ptr)=0;
-};
-
+#include "mainwindowinterface.h"
 
 
 
@@ -30,10 +22,9 @@ public:
     virtual ~PluginInterface() {}
 
 
-    virtual void setMainWindowPTR(QObject *ptr) = 0;
+    virtual void setMainWindowPTR(MainWindowInterface *ptr) = 0;
     virtual void setSettingsPTR(QObject *ptr) = 0;
 
-//    virtual void setAPTR(SettingsPageInterface *ptr)=0;
 private:
 
 
