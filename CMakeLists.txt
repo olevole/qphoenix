@@ -35,7 +35,6 @@ src/core/tools
 configure_file(src/include/defines.h src/include/defines.h)
 
 set(GLOBAL_HEADERS
-src/include/global.h
 src/include/defines.h)
 
 set(IFACES
@@ -45,7 +44,6 @@ src/include/translatorwidgetinterface.h
 src/include/dictionarywidgetinterface.h
 src/include/settingsinterface.h
 src/include/plugininterface.h
-src/include/pluginapi.h
 src/include/translatorinterface.h
 src/include/abstractinfocontainer.h
 )

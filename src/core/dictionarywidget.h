@@ -23,7 +23,6 @@
 #define DICTIONARYWIDGET_H
 
 #include <QWidget>
-#include "pluginapi.h"
 #include "abstractinfocontainer.h"
 #include "dictionarywidgetinterface.h"
 

@@ -7,10 +7,8 @@
  * This is a basic interface for ALL plugins
  */
 
-#include <QString>
 #include "abstractinfocontainer.h"
-#include "pluginapi.h"
-#include "settingspageinterface.h"
+#include "settingsinterface.h"
 #include "mainwindowinterface.h"
 
 
@@ -23,7 +21,7 @@ public:
 
 
     virtual void setMainWindowPTR(MainWindowInterface *ptr) = 0;
-    virtual void setSettingsPTR(QObject *ptr) = 0;
+    virtual void setSettingsPTR(SettingsInterface *ptr) = 0;
 
 private:
 

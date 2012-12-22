@@ -2,7 +2,6 @@
 #define SETTINGS_H
 
 #include <QDialog>
-#include "pluginapi.h"
 #include "settingsinterface.h"
 #include "settingspageinterface.h"
 #include <QTreeWidget>
@@ -10,8 +9,7 @@
 
 
 
-using namespace Api;
-//using namespace Tools;
+
 
 class QListWidget;
 class QStackedWidget;

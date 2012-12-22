@@ -23,7 +23,7 @@
 #define TRAYICON_H
 
 #include <QObject>
-#include "../../include/pluginapi.h"
+//#include "../../include/plugininterface.h"
 #include "../../include/plugininterface.h"
 
 
@@ -37,10 +37,7 @@ public:
     explicit TrayIcon(QObject *parent = 0);    
     void setMainWindowPTR(MainWindowInterface *ptr);
 
-    void setSettingsPTR(QObject *ptr);
-
-
-
+    void setSettingsPTR(SettingsInterface *ptr);
 
 private:
     QPushButton *button;

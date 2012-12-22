@@ -12,12 +12,14 @@
 #include <QMenu>
 #include <QAction>
 #include <QPluginLoader>
-
+#include <QPushButton>
 
 #include "abstractinfocontainer.h"
+#include "plugininterface.h"
 
 #include "translationwidget.h"
 #include "dictionarywidget.h"
+#include "settings.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -39,7 +41,6 @@ MainWindow::MainWindow(QWidget *parent) :
     mDictionaryWidget(new DictionaryWidget(this))
 {
 
-//    mMenuBar->setDisabled();
 
 
     mFileMenu->addAction(mExitAction);
@@ -51,7 +52,6 @@ MainWindow::MainWindow(QWidget *parent) :
     mMenuBar->addMenu(mEditMenu);
     mMenuBar->addMenu(mHelpMenu);
 
-#include <QPluginLoader>
 
     QList<QAction *> ActionsList;
     ActionsList << mExitAction << mCopyAction << mAboutAction;
@@ -62,7 +62,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setCentralWidget(mFancyWidget);
 
-
+//TODO
+//    this->statusBar()->addPermanentWidget(mButton);
 
     this->setStatusBar(mStatusBar);
     this->setMenuBar(mMenuBar);
@@ -89,8 +90,6 @@ MainWindow::MainWindow(QWidget *parent) :
     qDebug() << state << loader->errorString();
 
     iface->setMainWindowPTR(this);
-//    iface->setMainWindowPTR(this);
-
 
 
 
@@ -121,13 +120,10 @@ void MainWindow::addPage(QWidget *page) {
     gb->setTitle(name);
     gb->setLayout(new QHBoxLayout);
     gb->layout()->addWidget(page);
-//    gb->setFlat(true);
 
     mFancyWidget->insertTab(mFancyWidget->count(), gb, icon, name);
-//    mFancyWidget->setTabEnabled(0, true);
 
     resize(800, 600);
-
 }
 
 void MainWindow::removePage(const QWidget *page) {

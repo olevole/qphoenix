@@ -28,7 +28,6 @@
 
 #include "translatorinterface.h"
 
-using namespace Api;
 
 typedef QPair<QString, QString> TranslatorItem;
 typedef QList<TranslatorItem *> TranslatorItemList;

@@ -22,6 +22,8 @@
 #include "trayicon.h"
 #include <QtGui>
 #include <QPushButton>
+#include <QToolBar>
+#include <QAction>
 
 TrayIcon::TrayIcon(QObject *parent) :
     QObject(parent),
@@ -31,18 +33,37 @@ TrayIcon::TrayIcon(QObject *parent) :
 }
 
 void TrayIcon::setMainWindowPTR(MainWindowInterface *ptr) {
-//    Api::MainWindowAPI *iface = qobject_cast<Api::MainWindowAPI *>(ptr);
-//    iface->setCurrentTab(1);
 
-//    QLabel l;
 
-//    iface->toolbar()->addWidget(button);
+
+    QAction *a = new QAction("txt", this);
+    QPushButton *button = new QPushButton("text", ptr->statusbar());
+
+
+    ptr->menubar()->addAction("test");
+    ptr->menubar()->addAction("test3");
+    ptr->menubar()->addAction(a);
+
+    ptr->statusbar()->addPermanentWidget(button);
+
+    ptr->toolbar()->addAction(a);
+
+
+
 
 }
 
-void TrayIcon::setSettingsPTR(QObject *ptr) {
+void TrayIcon::setSettingsPTR(SettingsInterface *ptr) {
 
+
+//    QHBoxLayout *l = new QHBoxLayout();
+//    QPushButton b; b.setText("baba");
+
+//    l->addWidget(&b);
+//    QWidget *page = ptr->pageAt(0);
+//    page->setLayout(l);
 }
+
 
 
 

@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "pluginapi.h"
 #include "fancytabwidget.h"
 #include "mainwindowinterface.h"
 
@@ -11,6 +10,7 @@ class QToolBar;
 class QMenuBar;
 class QMenu;
 class QAction;
+//class QPushButton;
 
 class TranslationWidget;
 class DictionaryWidget;
@@ -45,17 +45,25 @@ public:
     }
 
     QToolBar *toolbar() {
-        mToolBar;
+        return mToolBar;
     }
 
-    void echo(QString &str) {
-        qDebug() << "ECHO: " << str;
+    QStatusBar *statusbar() {
+        return mStatusBar;
     }
+
+    QMenuBar *menubar() {
+        return mMenuBar;
+    }
+
+
 
 
 public slots:
 
 private:
+//    QPushButton *mButton;
+
     QStatusBar  *mStatusBar;
     QToolBar    *mToolBar;
     QMenuBar    *mMenuBar;

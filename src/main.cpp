@@ -4,12 +4,10 @@
 #include "settings.h"
 #include "translationwidget.h"
 #include "dictionarywidget.h"
-#include "global.h"
 #include "translatorloader.h"
+#include "defines.h"
 
-#include "pluginapi.h"
 
-//#include "utils/fancymainwindow.h"
 
 int main(int argc, char *argv[])
 {

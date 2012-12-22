@@ -23,8 +23,8 @@
 #define TRANSLATIONWIDGET_H
 
 #include <QWidget>
-#include "pluginapi.h"
 #include "translatorwidgetinterface.h"
+#include "abstractinfocontainer.h"
 
 class QTextEdit;
 class QTextBrowser;
@@ -37,8 +37,6 @@ class QHBoxLayout;
 
 
 
-//using namespace Tools;
-using namespace Api;
 
 
 

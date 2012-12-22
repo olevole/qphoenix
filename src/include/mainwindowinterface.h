@@ -25,6 +25,17 @@
 #include "translatorwidgetinterface.h"
 #include "dictionarywidgetinterface.h"
 
+
+class QToolBar;
+class QStatusBar;
+class QComboBox;
+class QToolButton;
+class QPushButton;
+class QTextEdit;
+class QTextBrowser;
+class QMenuBar;
+class QLineEdit;
+
 class MainWindowInterface {
 public:
     ~MainWindowInterface(){}
@@ -41,9 +52,12 @@ public:
 
     // Instances
     virtual QToolBar *toolbar() = 0;
+    virtual QStatusBar *statusbar() =0;
+    virtual QMenuBar   *menubar() = 0;
     virtual TranslatorWidgetInterface *translationWidget() = 0;
     virtual DictionaryWidgetInterface *dictionaryWidget() = 0;
 };
+
 
 Q_DECLARE_INTERFACE(MainWindowInterface, "com.qphoenix.interfaces.mainwindow/1.0")
 

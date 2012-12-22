@@ -2,9 +2,7 @@
 #define SETTINGSBASE_H
 
 #include <QGroupBox>
-#include "global.h"
 
-#include "pluginapi.h"
 
 
 class SettingsInterface {
