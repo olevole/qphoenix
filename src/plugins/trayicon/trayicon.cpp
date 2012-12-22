@@ -33,35 +33,13 @@ TrayIcon::TrayIcon(QObject *parent) :
 }
 
 void TrayIcon::setMainWindowPTR(MainWindowInterface *ptr) {
-
-
-
-    QAction *a = new QAction("txt", this);
-    QPushButton *button = new QPushButton("text", ptr->statusbar());
-
-
-    ptr->menubar()->addAction("test");
-    ptr->menubar()->addAction("test3");
-    ptr->menubar()->addAction(a);
-
-    ptr->statusbar()->addPermanentWidget(button);
-
-    ptr->toolbar()->addAction(a);
-
-
-
+    connect(ptr->toolbar(), SIGNAL(actionTriggered(QAction*)), ptr->statusbar(), SLOT(clearMessage()));
+//    ptr->dictionaryWidget()->srcText()->setText("Test");
 
 }
 
 void TrayIcon::setSettingsPTR(SettingsInterface *ptr) {
 
-
-//    QHBoxLayout *l = new QHBoxLayout();
-//    QPushButton b; b.setText("baba");
-
-//    l->addWidget(&b);
-//    QWidget *page = ptr->pageAt(0);
-//    page->setLayout(l);
 }
 
 

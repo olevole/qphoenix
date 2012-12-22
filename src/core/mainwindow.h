@@ -37,11 +37,11 @@ public:
     QWidget *pageAt(const int i);
 
     DictionaryWidgetInterface *dictionaryWidget() {
-        mDictionaryWidget;
+//        return (DictionaryWidgetInterface *)mDictionaryWidget;
     }
 
     TranslatorWidgetInterface *translationWidget() {
-        mTranslationWidget;
+//        return (TranslatorWidgetInterface *)mTranslationWidget;
     }
 
     QToolBar *toolbar() {
@@ -56,14 +56,9 @@ public:
         return mMenuBar;
     }
 
-
-
-
 public slots:
 
 private:
-//    QPushButton *mButton;
-
     QStatusBar  *mStatusBar;
     QToolBar    *mToolBar;
     QMenuBar    *mMenuBar;

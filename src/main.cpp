@@ -14,6 +14,11 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
 
+    QCoreApplication::setApplicationName(QP_APP_NAME);
+    QCoreApplication::setApplicationVersion(QP_APP_VERSION);
+
+
+
 
 //    DictionaryWidget dw; dw.show();
     Settings s;s.show();

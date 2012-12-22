@@ -20,6 +20,7 @@
 #include "translationwidget.h"
 #include "dictionarywidget.h"
 #include "settings.h"
+#include "defines.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -41,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mDictionaryWidget(new DictionaryWidget(this))
 {
 
+    setWindowTitle(QP_APP_NAME);
 
 
     mFileMenu->addAction(mExitAction);
@@ -62,8 +64,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setCentralWidget(mFancyWidget);
 
-//TODO
-//    this->statusBar()->addPermanentWidget(mButton);
 
     this->setStatusBar(mStatusBar);
     this->setMenuBar(mMenuBar);
