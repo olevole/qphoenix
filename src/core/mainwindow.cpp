@@ -104,7 +104,7 @@ MainWindow::~MainWindow()
 void MainWindow::addPage(QWidget *page) {
 
     AbstractInfoContainer *i =
-            qobject_cast<Api::AbstractInfoContainer *>(page);
+            qobject_cast<AbstractInfoContainer *>(page);
 
 
     if(i == NULL) {

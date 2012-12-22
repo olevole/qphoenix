@@ -34,70 +34,19 @@ namespace Api {
 
 
 
-// Inherited by TranslatorWidget
-class TranslatorWidgetAPI {
-public:
 
-
-
-    virtual ~TranslatorWidgetAPI() {}
-
-
-    virtual QComboBox   *srcComboBox() = 0;
-    virtual QComboBox   *resComboBox() = 0;
-    virtual QTextEdit   *srcText() = 0;
-    virtual QTextBrowser*resText() = 0;
-    virtual QPushButton *translateButton() = 0;
-    virtual QToolButton *swapButton() = 0;
-};
 
 
 
 
 // Inherited by DictionaryWidget
-class DictionaryWidgetAPI {
-public:
-    virtual ~DictionaryWidgetAPI() {}
-
-    virtual QComboBox   *languagesComboBox() = 0;
-    virtual QLineEdit   *srcText() = 0;
-    virtual QTextBrowser*resText() = 0;
-};
 
 
 //Inherited by Settings
-class SettingsAPI {
-public:
-    virtual ~SettingsAPI() {}
-
-    virtual void addPage(QWidget *page) = 0;
-    virtual void removePage(const QWidget *page) = 0;
-    virtual QWidget *pageAt(const int i) = 0;
-};
 
 
 
-class MainWindowAPI {
-public:
-    // Signals
-    virtual void tabChanged(const int i) = 0;
 
-    //Slots
-    virtual void setCurrentTab(const int i) = 0;
-
-    // Methods
-    virtual void addPage(QWidget *page) = 0;
-    virtual void removePage(const QWidget *page) = 0;
-    virtual QWidget *pageAt(const int i) = 0;
-
-    // Instances
-    virtual QToolBar *toolbar() = 0;
-    virtual TranslatorWidgetAPI *translationWidget() = 0;
-    virtual DictionaryWidgetAPI *dictionaryWidget() = 0;
-
-
-
-};
 
 
 
@@ -106,10 +55,9 @@ public:
 
 } // end Api namespace
 
-Q_DECLARE_INTERFACE(Api::TranslatorWidgetAPI, "com.qphoenix.interfaces.translatorwidget/1.0")
-Q_DECLARE_INTERFACE(Api::DictionaryWidgetAPI, "com.qphoenix.interfaces.dictionarywidget/1.0")
-Q_DECLARE_INTERFACE(Api::SettingsAPI, "com.qphoenix.interfaces.settingswidget/1.0")
-Q_DECLARE_INTERFACE(Api::MainWindowAPI, "com.qphoenix.interfaces.mainwindow/1.0")
+
+
+
 //Q_DECLARE_INTERFACE(Api::MainWindowTabInterface, "com.qphoenix.interfaces.mainwindowtab/1.0")
 
 \

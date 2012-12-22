@@ -41,11 +41,11 @@ using namespace Api;
 
 
 
-class TranslationWidget : public QWidget, TranslatorWidgetAPI, Api::AbstractInfoContainer
+class TranslationWidget : public QWidget, TranslatorWidgetAPI, AbstractInfoContainer
 {
     Q_OBJECT
     Q_INTERFACES(Api::TranslatorWidgetAPI)
-    Q_INTERFACES(Api::AbstractInfoContainer)
+    Q_INTERFACES(AbstractInfoContainer)
 public:
     explicit TranslationWidget(QWidget *parent = 0);
 

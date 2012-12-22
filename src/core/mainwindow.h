@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "pluginapi.h"
 #include "fancytabwidget.h"
+#include "mainwindowinterface.h"
 
 class QStatusBar;
 class QToolBar;
@@ -20,10 +21,10 @@ class DictionaryWidget;
 
 
 
-class MainWindow : public  QMainWindow, Api::MainWindowAPI
+class MainWindow : public  QMainWindow, MainWindowInterface
 {
     Q_OBJECT
-    Q_INTERFACES(Api::MainWindowAPI)
+    Q_INTERFACES(MainWindowInterface)
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();

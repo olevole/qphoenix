@@ -22,17 +22,8 @@
 #ifndef ABSTRACTINFOCONTAINER_H
 #define ABSTRACTINFOCONTAINER_H
 
-
-
 #include <QString>
 #include <QIcon>
-
-
-namespace Api {
-
-
-
-//class QIcon;
 
 class AbstractInfoContainer
 {
@@ -55,11 +46,7 @@ protected:
     QIcon mIcon;
 };
 
-
-}
-
-
-Q_DECLARE_INTERFACE(Api::AbstractInfoContainer, "com.qphoenix.interfaces.infocontainer/1.0");
+Q_DECLARE_INTERFACE(AbstractInfoContainer, "com.qphoenix.interfaces.infocontainer/1.0");
 
 
 #endif // ABSTRACTINFOCONTAINER_H

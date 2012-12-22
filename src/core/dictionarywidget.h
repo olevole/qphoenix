@@ -38,11 +38,11 @@ class QHBoxLayout;
 class QVBoxLayout;
 
 
-class DictionaryWidget : public QWidget, Api::DictionaryWidgetAPI, Api::AbstractInfoContainer
+class DictionaryWidget : public QWidget, Api::DictionaryWidgetAPI, AbstractInfoContainer
 {
     Q_OBJECT
     Q_INTERFACES(Api::DictionaryWidgetAPI)
-    Q_INTERFACES(Api::AbstractInfoContainer)
+    Q_INTERFACES(AbstractInfoContainer)
 public:
     explicit DictionaryWidget(QWidget *parent = 0);
 

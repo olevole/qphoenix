@@ -10,7 +10,7 @@
 #include <QString>
 #include "abstractinfocontainer.h"
 #include "pluginapi.h"
-#include "settingsinterface.h"
+#include "settingspageinterface.h"
 
 
 
@@ -22,7 +22,9 @@ public:
 
 
 
-class PluginInterface : public Api::AbstractInfoContainer
+
+
+class PluginInterface : public AbstractInfoContainer
 {
 public:
     virtual ~PluginInterface() {}
@@ -31,7 +33,7 @@ public:
     virtual void setMainWindowPTR(QObject *ptr) = 0;
     virtual void setSettingsPTR(QObject *ptr) = 0;
 
-    virtual void setAPTR(AbstractIface *ptr)=0;
+//    virtual void setAPTR(SettingsPageInterface *ptr)=0;
 private:
 
 

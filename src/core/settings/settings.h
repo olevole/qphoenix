@@ -36,10 +36,10 @@ typedef QList<SettingsInterface *>SettingPageList;
 
 
 
-class Settings : public QDialog,  Api::SettingsAPI
+class Settings : public QDialog,  SettingsAPI
 {
     Q_OBJECT
-    Q_INTERFACES(Api::SettingsAPI)
+    Q_INTERFACES(SettingsAPI)
 
 public:
     explicit Settings(QWidget *parent = 0);

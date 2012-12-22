@@ -39,6 +39,8 @@ src/include/global.h
 src/include/defines.h)
 
 set(IFACES
+src/include/settingspageinterface.h
+src/include/mainwindowinterface.h
 src/include/settingsinterface.h
 src/include/plugininterface.h
 src/include/pluginapi.h

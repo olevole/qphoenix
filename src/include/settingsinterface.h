@@ -10,7 +10,7 @@ namespace Api {
 
 
 
-class SettingsInterface : public Api::AbstractInfoContainer
+class SettingsInterface : public AbstractInfoContainer
 {
 public:
     virtual ~SettingsInterface(){}
