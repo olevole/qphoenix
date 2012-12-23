@@ -20,8 +20,28 @@
  */
 
 #include "translatorloader.h"
+#include "defines.h"
+#include <QPluginLoader>
 
 TranslatorLoader::TranslatorLoader(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    mLoader(new QPluginLoader(this))
 {
+
+}
+
+
+bool TranslatorLoader::load(const int i) {
+
+}
+
+bool TranslatorLoader::load(const QString &name) {
+
+}
+
+
+
+void TranslatorLoader::update() {
+//    if(mPaths.isEmpty())
+//        QP_DBG("Error! Search paths doesn't")
 }

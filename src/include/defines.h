@@ -16,6 +16,7 @@
 #define QP_TRANSLATORS_PATH  QP_PREFIX + "translators"
 #define QP_DICTIONARIES_PATH QP_PREFIX + "dictionaries"
 
+
 #define QP_DEBUG_MODE
 
 #define QP_PLUGIN_SIGNATURE "__qphoenix-1.0plugin___"

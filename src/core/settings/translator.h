@@ -19,47 +19,38 @@
  *    Years: 2012-2013
  */
 
-#ifndef TRANSLATORLOADER_H
-#define TRANSLATORLOADER_H
+#ifndef TRANSLATOR_H
+#define TRANSLATOR_H
 
-#include <QObject>
-#include <QMap>
+#include <QWidget>
+#include "settingspageinterface.h"
+#include "translatorloader.h"
 
-#include "translatorinterface.h"
-#include "abstractloader.h"
+class QLabel;
+class QComboBox;
+class QHBoxLayout;
+class QVBoxLayout;
+class QGroupBox;
 
-class QPluginLoader;
-
-
-class TranslatorLoader : public QObject, AbstractLoader
+class Translator : public QWidget, SettingsPageInterface
 {
     Q_OBJECT
+    Q_INTERFACES(SettingsPageInterface)
 public:
-    explicit TranslatorLoader(QObject *parent = 0);
+    explicit Translator(QWidget *parent = 0);
+    void save() {}
+    void read() {}
+    void reset(){}
 
-    bool load(const int i);
-    bool load(const QString &name);
-
-    void addSearchPath(const QString &str){
-        mPaths << str;
-    }
-    void addSearchPaths(const QStringList &lst){
-        mPaths << lst;
-    }
-
-    // List of available for load instances.
-    QStringList list() const{}
-
-    TranslatorInterface *instance(){}
-
-
-protected:
-    void update();
+    void setLoader(const TranslatorLoader *ptr);
 private:
-    QStringList mPaths;
-    QPluginLoader *mLoader;
+    QLabel *mTranslatorLabel;
+    QComboBox *mTranslatorComboBox;
+    QGroupBox *mTranslatorGroupBox;
+    QHBoxLayout *mTranslatorLayout;
+
+    QGroupBox *mOptionsGroupBox;
+    QHBoxLayout *mOptionsLayout;
 };
 
-
-
-#endif // TRANSLATORLOADER_H
+#endif // TRANSLATOR_H

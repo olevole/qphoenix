@@ -19,47 +19,23 @@
  *    Years: 2012-2013
  */
 
-#ifndef TRANSLATORLOADER_H
-#define TRANSLATORLOADER_H
+#ifndef ABSTRACTLOADER_H
+#define ABSTRACTLOADER_H
 
-#include <QObject>
-#include <QMap>
+class QStringList;
 
-#include "translatorinterface.h"
-#include "abstractloader.h"
-
-class QPluginLoader;
-
-
-class TranslatorLoader : public QObject, AbstractLoader
-{
-    Q_OBJECT
+class AbstractLoader {
 public:
-    explicit TranslatorLoader(QObject *parent = 0);
+    virtual ~AbstractLoader(){}
 
-    bool load(const int i);
-    bool load(const QString &name);
+    virtual bool load(const int i)=0;
+    virtual bool load(const QString &name)=0;
 
-    void addSearchPath(const QString &str){
-        mPaths << str;
-    }
-    void addSearchPaths(const QStringList &lst){
-        mPaths << lst;
-    }
+    virtual void addSearchPath(const QString &str)=0;
+    virtual void addSearchPaths(const QStringList &lst)=0;
 
     // List of available for load instances.
-    QStringList list() const{}
-
-    TranslatorInterface *instance(){}
-
-
-protected:
-    void update();
-private:
-    QStringList mPaths;
-    QPluginLoader *mLoader;
+    virtual QStringList list() const=0;
 };
 
-
-
-#endif // TRANSLATORLOADER_H
+#endif // ABSTRACTLOADER_H

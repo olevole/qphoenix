@@ -9,7 +9,7 @@
 
 
 #include "testpage.h"
-
+#include "translator.h"
 
 Settings::Settings(QWidget *parent) :
     QDialog(parent),
@@ -51,9 +51,12 @@ Settings::Settings(QWidget *parent) :
     TestPage *t = new TestPage();
     TestPage *t2 = new TestPage();
 
+    Translator t3;
+
 
     addPage(t);
-    addPage(t2);
+//    addPage(t2);
+    addPage(&t3);
 //    this->addPage(qobject_cast<QWidget *>(t));
 //    this->addPage(t2);
 
@@ -128,7 +131,7 @@ void Settings::addPage(QWidget *page) {
 
 
 //    mPagesList.append(iface);
-    mTree->insertTopLevelItem(0,item);
+    mTree->insertTopLevelItem(mTree->topLevelItemCount(),item);
     mStackedLayout->addWidget(gb);
 
 }

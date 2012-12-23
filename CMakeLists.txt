@@ -43,6 +43,7 @@ src/include/settingsinterface.h
 src/include/plugininterface.h
 src/include/translatorinterface.h
 src/include/abstractinfocontainer.h
+src/core/abstractloader.h
 )
 
 
@@ -50,6 +51,7 @@ set(HEADERS
 src/core/mainwindow.h
 src/core/settings/settings.h
 src/core/settings/testpage.h
+src/core/settings/translator.h
 src/core/translationwidget.h
 src/core/dictionarywidget.h
 src/core/translatorloader.h
@@ -61,6 +63,7 @@ set(SOURCES
 src/main.cpp
 src/core/mainwindow.cpp
 src/core/settings/settings.cpp
+src/core/settings/translator.cpp
 src/core/settings/testpage.cpp
 src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
