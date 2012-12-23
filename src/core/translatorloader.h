@@ -24,6 +24,8 @@
 
 #include <QObject>
 #include <QMap>
+#include <QPair>
+
 
 #include "translatorinterface.h"
 #include "abstractloader.h"
@@ -33,6 +35,11 @@ class QPluginLoader;
 
 class TranslatorLoader : public QObject, AbstractLoader
 {
+    /* First key - name, second key - absolute path to
+     * translator .so library
+     */
+    typedef QPair<QString, QString> TranslatorEntry;
+    typedef QList<TranslatorEntry> TranslatorEntryList;
     Q_OBJECT
 public:
     explicit TranslatorLoader(QObject *parent = 0);
@@ -40,15 +47,19 @@ public:
     bool load(const int i);
     bool load(const QString &name);
 
-    void addSearchPath(const QString &str){
-        mPaths << str;
+    void addSearchPath(const QString &str) {
+        addSearchPaths(QStringList() << str);
     }
-    void addSearchPaths(const QStringList &lst){
+
+    void addSearchPaths(const QStringList &lst) {
         mPaths << lst;
+        update();
     }
 
     // List of available for load instances.
-    QStringList list() const{}
+    QStringList list() const {
+
+    }
 
     TranslatorInterface *instance(){}
 
@@ -57,6 +68,7 @@ protected:
     void update();
 private:
     QStringList mPaths;
+    TranslatorEntryList mDetectedList;
     QPluginLoader *mLoader;
 };
 

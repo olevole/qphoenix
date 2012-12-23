@@ -39,9 +39,42 @@ bool TranslatorLoader::load(const QString &name) {
 
 }
 
-
-
 void TranslatorLoader::update() {
-//    if(mPaths.isEmpty())
-//        QP_DBG("Error! Search paths doesn't")
+    QStringList dump;
+    QString path;
+    QDir dir;
+
+    /*
+     * Gettings list of all available plugins in following directories.
+     */
+    foreach(path, mPaths) {
+        dir.setPath(path);
+        dump << dir.entryList(QStringList() << QP_PLUGIN_EXT);
+    }
+
+    /*
+     * Okay, then, let's get their names
+     */
+
+    foreach(path, dump) {
+        mLoader->setFileName(path);
+        if(!mLoader->load()) {
+            QP_DBG("Unable to load translator!");
+        } else {
+            QObject *obj = mLoader->instance();
+            TranslatorInterface *iface = qobject_cast<TranslatorInterface *>(obj);
+
+            if(iface == NULL) {
+                QP_DBG("Unable to cast interface.");
+                break; // TODO: Check it!
+            }
+            TranslatorEntry e;
+            e.first = iface->name();
+            e.second = path;
+
+            mDetectedList << e;
+
+            mLoader->unload();
+        }
+    }
 }
