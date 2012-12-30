@@ -24,18 +24,31 @@
 
 class QStringList;
 
+
 class AbstractLoader {
 public:
     virtual ~AbstractLoader(){}
 
+
+
+    //! List of available for load instances.
+    virtual QStringList list() const=0;
+
+
+
+    //! Load instance by index or name (index is faster)
     virtual bool load(const int i)=0;
     virtual bool load(const QString &name)=0;
 
+    //! Paths where to search for translators
     virtual void addSearchPath(const QString &str)=0;
     virtual void addSearchPaths(const QStringList &lst)=0;
 
-    // List of available for load instances.
-    virtual QStringList list() const=0;
+
+    virtual void clearPaths() = 0;
+
+    //! Update all mldules
+    virtual void update() = 0;
 };
 
 #endif // ABSTRACTLOADER_H

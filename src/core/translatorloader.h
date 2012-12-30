@@ -33,13 +33,14 @@
 class QPluginLoader;
 
 
+/* First key - name, second key - absolute path to
+ * translator .so library
+ */
+
+
+
 class TranslatorLoader : public QObject, AbstractLoader
 {
-    /* First key - name, second key - absolute path to
-     * translator .so library
-     */
-    typedef QPair<QString, QString> TranslatorEntry;
-    typedef QList<TranslatorEntry> TranslatorEntryList;
     Q_OBJECT
 public:
     explicit TranslatorLoader(QObject *parent = 0);
@@ -61,14 +62,12 @@ public:
 
     }
 
-    TranslatorInterface *instance(){}
+    TranslatorInterface *instance();
 
 
-protected:
     void update();
 private:
-    QStringList mPaths;
-    TranslatorEntryList mDetectedList;
+    QStringList mPaths, mTranslatorsPaths, mTranslatorsNames;
     QPluginLoader *mLoader;
 };
 
