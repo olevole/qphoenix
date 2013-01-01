@@ -25,6 +25,7 @@
 #include <QStringList>
 #include <QPluginLoader>
 #include <QList>
+#include <QMap>
 
 #include "defines.h"
 #include "abstractinfocontainer.h"
@@ -109,7 +110,7 @@ public:
     T *instanceAt(const int i);
     T *instanceAt(const QString &str);
 
-    T *load(const int i);
+    T *load(const int i) {return qobject_cast<T *>(mPluginList.at(i)->loader()->instance());}
     T *load(const QString &name) { return load(this->indexOf(name));}
 
     void loadAll();
@@ -118,20 +119,20 @@ public:
     void unload(const QString &str);
     void unloadAll();
 
-    inline bool isLoaded(const int i) { return mLoaderList.at(i)->isLoaded();}
+    inline bool isLoaded(const int i) { return mPluginList.at(i)->loader()->isLoaded();}
 
     bool isLoaded(const QString &name);
     int count() const                               { return mPluginList.count(); }
     int countLoaded() const                         { return mLoadedCount;  }
     int currentInstance() const                     { return mCurrentInstance;}
-    QStringList list() const                        { return mNames;        }
+    QStringList list() const;
 
     void addSearchPath(const QString &path)         { mSearchPaths << QStringList(path); }
     void addSearchPath(const QStringList &paths)    { mSearchPaths << paths;}
     void clearSearchPaths()                         { mSearchPaths.clear(); }
     QStringList searchPaths() const                 { return mSearchPaths;  }
 
-    void update(){}
+    void update();
 protected:
     int indexOf(QString &str);
 private:
@@ -171,7 +172,7 @@ MultiLoader<T>::MultiLoader() {
 template<typename T>
 bool MultiLoader<T>::isLoaded(const QString &name)  {
 
-    const int i = this->indexOf("name");
+    const int i = this->indexOf(name);
 
     if(i < 0){
         QP_DBG("Item " + name + "does not exists!");
@@ -181,22 +182,17 @@ bool MultiLoader<T>::isLoaded(const QString &name)  {
 }
 
 template<typename T>
-T *MultiLoader<T>::load(const int i)  {
-    QPluginLoader *ldr = mLoaderList.at(i);
-    if(!ldr->load()) {
-        QP_DBG(ldr->errorString());
-        return NULL;
-    }
-    return qobject_cast<T *>(ldr->instance());
-}
-
-template<typename T>
 int MultiLoader<T>::indexOf(QString &str) {
     for(int i = 0; i < mPluginList.count(); i++)
-        if(mPluginList.at(i) == str)
+        if(mPluginList.at(i)->name() == str)
             return i;
 
     return -1;
+}
+
+template<typename T>
+void MultiLoader<T>::update() {
+
 }
 
 #endif // MULTILOADER_H

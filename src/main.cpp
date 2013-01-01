@@ -9,9 +9,6 @@
 #include "multiloader.h"
 
 
-
-
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -22,11 +19,6 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName(QP_ORG_NAME);
     QCoreApplication::setOrganizationDomain(QP_ORG_DOMAIN);
 
-
-
-//    Foo b();
-
-
     QP_DBG("Trying to create MainWindow object....");
 
     MainWindow *mw = new MainWindow();
@@ -34,9 +26,6 @@ int main(int argc, char *argv[])
     mw->show();
 
     QP_DBG("Success!");
-
-
-
 
     return a.exec();
 }
