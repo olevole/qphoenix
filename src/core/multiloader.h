@@ -26,6 +26,8 @@
 #include <QPluginLoader>
 #include <QList>
 
+#include "defines.h"
+
 typedef QList <QPluginLoader *> QPluginLoaderList;
 
 
@@ -49,6 +51,16 @@ typedef QList <QPluginLoader *> QPluginLoaderList;
 //    QPluginLoader *loader;
 //};
 
+//class Plugin {
+//public:
+//    Plugin(const QString &path);
+//    QString name() const;
+//    QString path() const;
+
+//    void setName(const QString &str);
+
+//};
+
 
 template<typename T>
 class MultiLoader
@@ -56,23 +68,25 @@ class MultiLoader
 public:
     explicit MultiLoader(){}
     
-    T *instance();
+    T *instance() { return instanceAt(mCurrentInstance); }
     T *instanceAt(const int i);
+    T *instanceAt(const QString &str);
 
     T *load(const int i);
-    T *load(const QString &name);
+    T *load(const QString &name) { return load(mNames.indexOf(name));}
+
     void loadAll();
 
     void unload(const int i);
     void unload(const QString &str);
     void unloadAll();
 
-    bool isLoaded(const int i);
-    bool isLoaded(const QString &name);
+    inline bool isLoaded(const int i) { return mLoaderList.at(i)->isLoaded();}
 
+    bool isLoaded(const QString &name);
     int count() const                               { return mNames.size(); }
-    int countLoaded() const;
-    int currentInstance() const;
+    int countLoaded() const                         { return mLoadedCount;  }
+    int currentInstance() const                     { return mCurrentInstance;}
     QStringList list() const                        { return mNames;        }
 
     void addSearchPath(const QString &path)         { mSearchPaths << QStringList(path); }
@@ -84,16 +98,40 @@ public:
 
 protected:
     int mCurrentInstance;
+    int mLoadedCount;
     QStringList mNames;
     QStringList mPaths;
     QStringList mPluginsPaths;
     QStringList mSearchPaths;
 
     QPluginLoaderList mLoaderList;
-private:
-//    void update();
-//    void
+    QList<QObject *> mInstancesList;
 
 };
+
+/*
+ * Implementation.Your captain obivious.
+ */
+
+template<typename T>
+bool MultiLoader<T>::isLoaded(const QString &name)  {
+    const int i = mNames.indexOf(name);
+
+    if(i < 0){
+        QP_DBG("Item " + name + "does not exists!");
+        return false;
+    }
+    return mLoaderList.at(i)->isLoaded();
+}
+
+template<typename T>
+T *MultiLoader<T>::load(const int i)  {
+    QPluginLoader *ldr = mLoaderList.at(i);
+    if(!ldr->load()) {
+        QP_DBG(ldr->errorString());
+        return NULL;
+    }
+    return qobject_cast<T *>(ldr->instance());
+}
 
 #endif // MULTILOADER_H

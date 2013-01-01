@@ -1,5 +1,5 @@
-cmake_minimum_required( VERSION 2.6 )
-project("QPhoenix ")
+CMAKE_MINIMUM_REQUIRED( VERSION 2.6 )
+PROJECT("QPhoenix ")
 
 SET(CMAKE_BUILD_TYPE Debug)
 
@@ -12,14 +12,14 @@ ENDIF()
 
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 ADD_DEFINITIONS(-DUNICODE)
-find_package(Qt4 REQUIRED)
-include(${QT_USE_FILE})
-set(QT_USE_QTXML TRUE)
+FIND_PACKAGE(Qt4 REQUIRED)
+INCLUDE(${QT_USE_FILE})
+SET(QT_USE_QTXML TRUE)
 
-add_subdirectory(src/core/3rdparty/fancytab-widgets)
-add_subdirectory(src/plugins/trayicon)
+ADD_SUBDIRECTORY(src/core/3rdparty/fancytab-widgets)
+ADD_SUBDIRECTORY(src/plugins/trayicon)
 
-include_directories(
+INCLUDE_DIRECTORIES(
 ${CMAKE_CURRENT_BINARY_DIR}
 ${CMAKE_INCLUDE_PATH}
 src/core/settings
@@ -29,12 +29,12 @@ src/include
 src/core/tools
 )
 
-configure_file(src/include/defines.h src/include/defines.h)
+CONFIGURE_FILE(src/include/defines.h src/include/defines.h)
 
-set(GLOBAL_HEADERS
+SET(GLOBAL_HEADERS
 src/include/defines.h)
 
-set(IFACES
+SET(IFACES
 src/include/settingspageinterface.h
 src/include/mainwindowinterface.h
 src/include/translatorwidgetinterface.h
@@ -47,7 +47,7 @@ src/core/abstractloader.h
 )
 
 
-set(HEADERS
+SET(HEADERS
 src/core/mainwindow.h
 src/core/settings/settings.h
 src/core/settings/testpage.h
@@ -60,7 +60,7 @@ src/core/multiloader.h
 
 
 
-set(SOURCES
+SET(SOURCES
 src/main.cpp
 src/core/mainwindow.cpp
 src/core/settings/settings.cpp
@@ -73,7 +73,7 @@ src/core/multiloader.cpp
 )
 
 # Not implemented yet
-set(L18N
+SET(L18N
 src/l18n/Russian.ts
 src/l18n/English.ts)
 
@@ -81,13 +81,13 @@ src/l18n/English.ts)
 
 
 
-qt4_wrap_cpp(MOC_SOURCES ${HEADERS})
+QT4_WRAP_CPP(MOC_SOURCES ${HEADERS})
 
 
-add_executable(qphoenix ${SOURCES}
+ADD_EXECUTABLE(qphoenix ${SOURCES}
                ${MOC_SOURCES}  ${QM_FILES} ${QRC_SOURCES} ${GLOBAL_HEADERS} ${IFACES})
 
-target_link_libraries(qphoenix ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES}
+TARGET_LINK_LIBRARIES(qphoenix ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES}
  ${QT_QTXML_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES} fancytabwidget)
 
 
