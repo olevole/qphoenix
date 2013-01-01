@@ -30,7 +30,7 @@
 #include "abstractinfocontainer.h"
 #include "plugininterface.h"
 
-typedef QList <QPluginLoader *> QPluginLoaderList;
+
 
 
 
@@ -53,7 +53,6 @@ typedef QList <QPluginLoader *> QPluginLoaderList;
 //    QPluginLoader *loader;
 //};
 
-namespace __private__ {
 
 class Plugin {
 public:
@@ -93,8 +92,11 @@ Plugin::Plugin(const QString &path) {
 
 
 
-} // __private__
 
+
+//--------------------------------------------------------------------------------
+
+typedef QList <Plugin *> PluginList;
 
 
 template<typename T>
@@ -108,7 +110,7 @@ public:
     T *instanceAt(const QString &str);
 
     T *load(const int i);
-    T *load(const QString &name) { return load(mNames.indexOf(name));}
+    T *load(const QString &name) { return load(this->indexOf(name));}
 
     void loadAll();
 
@@ -119,7 +121,7 @@ public:
     inline bool isLoaded(const int i) { return mLoaderList.at(i)->isLoaded();}
 
     bool isLoaded(const QString &name);
-    int count() const                               { return mNames.size(); }
+    int count() const                               { return mPluginList.count(); }
     int countLoaded() const                         { return mLoadedCount;  }
     int currentInstance() const                     { return mCurrentInstance;}
     QStringList list() const                        { return mNames;        }
@@ -130,8 +132,9 @@ public:
     QStringList searchPaths() const                 { return mSearchPaths;  }
 
     void update(){}
-
 protected:
+    int indexOf(QString &str);
+private:
 
     // Last loaded instance
     int mCurrentInstance;
@@ -139,26 +142,19 @@ protected:
     // Count of loaded instances
     int mLoadedCount;
 
-    /*
-     * Names of plugins. All information taken
-     * from plugin interface.
-     */
-    QStringList mNames;
-
-    /*
-     * Paths where to search plugins
-     */
-    QStringList mPaths;
 
     /*
      * Absolute paths to all plugins
      */
     QStringList mPluginsPaths;
+
+    /*
+     * Paths where to search for plugins
+     */
     QStringList mSearchPaths;
 
-    QPluginLoaderList mLoaderList;
-    QList<QObject *> mInstancesList;
 
+    PluginList mPluginList;
 };
 
 /*
@@ -174,13 +170,14 @@ MultiLoader<T>::MultiLoader() {
 
 template<typename T>
 bool MultiLoader<T>::isLoaded(const QString &name)  {
-    const int i = mNames.indexOf(name);
+
+    const int i = this->indexOf("name");
 
     if(i < 0){
         QP_DBG("Item " + name + "does not exists!");
         return false;
     }
-    return mLoaderList.at(i)->isLoaded();
+    return mPluginList.at(i)->loader()->isLoaded();
 }
 
 template<typename T>
@@ -191,6 +188,15 @@ T *MultiLoader<T>::load(const int i)  {
         return NULL;
     }
     return qobject_cast<T *>(ldr->instance());
+}
+
+template<typename T>
+int MultiLoader<T>::indexOf(QString &str) {
+    for(int i = 0; i < mPluginList.count(); i++)
+        if(mPluginList.at(i) == str)
+            return i;
+
+    return -1;
 }
 
 #endif // MULTILOADER_H
