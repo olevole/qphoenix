@@ -55,6 +55,7 @@ src/core/settings/translator.h
 src/core/translationwidget.h
 src/core/dictionarywidget.h
 src/core/translatorloader.h
+src/core/multiloader.h
 )
 
 
@@ -68,6 +69,7 @@ src/core/settings/testpage.cpp
 src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
 src/core/translatorloader.cpp
+src/core/multiloader.cpp
 )
 
 # Not implemented yet

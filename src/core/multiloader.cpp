@@ -18,31 +18,3 @@
  *    E-Mail: development@qphoenix.org
  *    Years: 2012-2013
  */
-
-#include "trayicon.h"
-#include <QtGui>
-#include <QPushButton>
-#include <QToolBar>
-#include <QAction>
-
-TrayIcon::TrayIcon(QObject *parent) :
-    QObject(parent),
-    button(new QPushButton)
-{
-//    this->setName("TrayIcon");
-}
-
-void TrayIcon::setMainWindowPTR(MainWindowInterface *ptr) {
-    connect(ptr->toolbar(), SIGNAL(actionTriggered(QAction*)), ptr->statusbar(), SLOT(clearMessage()));
-    ptr->dictionaryWidget()->srcText()->setText("Test");
-
-}
-
-void TrayIcon::setSettingsPTR(SettingsInterface *ptr) {
-
-}
-
-
-
-
-Q_EXPORT_PLUGIN2(trayicon, TrayIcon);

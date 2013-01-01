@@ -6,6 +6,9 @@
 #include "dictionarywidget.h"
 #include "translatorloader.h"
 #include "defines.h"
+#include "multiloader.h"
+
+
 
 
 
@@ -29,6 +32,9 @@ int main(int argc, char *argv[])
     mw->show();
 
     QP_DBG("Success!");
+
+
+    MultiLoader<QWidget> ml;
 
     return a.exec();
 }

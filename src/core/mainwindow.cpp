@@ -81,7 +81,22 @@ MainWindow::MainWindow(QWidget *parent) :
         mFancyWidget->setCurrentIndex(0);
 
 
+
     connect(mOptionsAction, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
+
+    QPluginLoader *loader = new QPluginLoader("/home/flareguner/Development/projects/qphoenix/src/plugins/trayicon/build/libtrayicon.so", this);
+
+
+
+
+    QObject *ptr = loader->instance();
+
+
+    PluginInterface *iface = qobject_cast<PluginInterface *>(ptr);
+
+//    loader->unload();
+
+    iface->setMainWindowPTR(this);
 }
 
 MainWindow::~MainWindow()
