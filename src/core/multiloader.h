@@ -27,6 +27,8 @@
 #include <QList>
 
 #include "defines.h"
+#include "abstractinfocontainer.h"
+#include "plugininterface.h"
 
 typedef QList <QPluginLoader *> QPluginLoaderList;
 
@@ -51,23 +53,56 @@ typedef QList <QPluginLoader *> QPluginLoaderList;
 //    QPluginLoader *loader;
 //};
 
-//class Plugin {
-//public:
-//    Plugin(const QString &path);
-//    QString name() const;
-//    QString path() const;
+namespace __private__ {
 
-//    void setName(const QString &str);
+class Plugin {
+public:
+    explicit Plugin(const QString &path);
+    QString name() const { return mName; }
+    QString path() const { return mLoader.fileName(); }
+    QPluginLoader *loader(){ return &mLoader;         }
+private:
+    Plugin();
+    Plugin( const Plugin& );
+    void operator=( const Plugin& );
 
-//};
+    QString mName;
+    QPluginLoader mLoader;
+};
+
+Plugin::Plugin(const QString &path) {
+    mLoader.setFileName(path);
+
+
+    if(!(mLoader.load())) {
+        QP_DBG(mLoader.errorString());
+        return;
+    }
+
+    QObject *obj = mLoader.instance();
+
+    PluginInterface *iface =
+            qobject_cast<PluginInterface *>(obj);
+
+    if(iface != NULL)
+        mName = iface->name();
+    else
+        QP_DBG("Plugin invalid!");
+}
+
+
+
+
+} // __private__
+
 
 
 template<typename T>
 class MultiLoader
 {
 public:
-    explicit MultiLoader(){}
-    
+
+    explicit MultiLoader();
     T *instance() { return instanceAt(mCurrentInstance); }
     T *instanceAt(const int i);
     T *instanceAt(const QString &str);
@@ -94,13 +129,30 @@ public:
     void clearSearchPaths()                         { mSearchPaths.clear(); }
     QStringList searchPaths() const                 { return mSearchPaths;  }
 
-    void update();
+    void update(){}
 
 protected:
+
+    // Last loaded instance
     int mCurrentInstance;
+
+    // Count of loaded instances
     int mLoadedCount;
+
+    /*
+     * Names of plugins. All information taken
+     * from plugin interface.
+     */
     QStringList mNames;
+
+    /*
+     * Paths where to search plugins
+     */
     QStringList mPaths;
+
+    /*
+     * Absolute paths to all plugins
+     */
     QStringList mPluginsPaths;
     QStringList mSearchPaths;
 
@@ -112,6 +164,13 @@ protected:
 /*
  * Implementation.Your captain obivious.
  */
+
+template<typename T>
+
+MultiLoader<T>::MultiLoader() {
+    this->addSearchPath(QP_PLUGINS_PATH);
+    this->update();
+}
 
 template<typename T>
 bool MultiLoader<T>::isLoaded(const QString &name)  {

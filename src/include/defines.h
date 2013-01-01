@@ -3,6 +3,7 @@
 
 
 #include <QDir>
+#include <QString>
 
 #define QP_APP_VERSION "0.01a"
 #define QP_APP_NAME "QPhoenix"
@@ -10,7 +11,7 @@
 #define QP_ORG_DOMAIN "http://qphoenix.org"
 
 
-#define QP_PREFIX "${CMAKE_INSTALL_PREFIX}" + QDir::separator()
+#define QP_PREFIX QString("%1/%2").arg("${CMAKE_INSTALL_PREFIX}").arg(QDir::separator())
 
 #define QP_PLUGINS_PATH QP_PREFIX  + "plugins"
 #define QP_TRANSLATORS_PATH  QP_PREFIX + "translators"

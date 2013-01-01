@@ -29,13 +29,13 @@ TrayIcon::TrayIcon(QObject *parent) :
     QObject(parent),
     button(new QPushButton)
 {
-//    this->setName("TrayIcon");
+    this->setName("TrayIcon");
 }
 
 void TrayIcon::setMainWindowPTR(MainWindowInterface *ptr) {
     connect(ptr->toolbar(), SIGNAL(actionTriggered(QAction*)), ptr->statusbar(), SLOT(clearMessage()));
-    ptr->dictionaryWidget()->srcText()->setText("Test");
-
+//    ptr->dictionaryWidget()->srcText()->setText("Test");
+//    ptr->setCurrentPage(1);
 }
 
 void TrayIcon::setSettingsPTR(SettingsInterface *ptr) {

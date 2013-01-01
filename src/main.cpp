@@ -24,6 +24,8 @@ int main(int argc, char *argv[])
 
 
 
+//    Foo b();
+
 
     QP_DBG("Trying to create MainWindow object....");
 
@@ -34,7 +36,7 @@ int main(int argc, char *argv[])
     QP_DBG("Success!");
 
 
-    MultiLoader<QWidget> ml;
+
 
     return a.exec();
 }
