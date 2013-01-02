@@ -21,15 +21,26 @@
 #include "multiloader.h"
 #include "defines.h"
 #include "abstractinfocontainer.h"
+#include "plugininterface.h"
 
 QStringList MultiLoader::loadPlugins(const QStringList &paths, PluginList &lst){
     QStringList names;
     foreach(QString str, paths) {
+
+        QP_DBG(str);
         QPluginLoader *ldr = new QPluginLoader(str);
         QObject *obj;
+
         if(ldr->load() && (obj = ldr->instance()) != NULL) {
-            AbstractInfoContainer *iface =
-                    qobject_cast<AbstractInfoContainer *>(ldr);
+            PluginInterface *iface =
+                    qobject_cast<PluginInterface *>(obj);
+
+            if(iface == NULL){
+                QP_DBG("Unable to cast interface!");
+                QP_DBG(ldr->errorString());
+                QP_DBG(ldr->isLoaded());
+                return QStringList();
+            }
             QString name = iface->name();
             lst[name] = ldr;
             names << name;
@@ -39,6 +50,8 @@ QStringList MultiLoader::loadPlugins(const QStringList &paths, PluginList &lst){
     }
 
     return names;
+
+
 }
 
 

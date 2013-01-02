@@ -22,6 +22,7 @@
 #include "dictionarywidget.h"
 #include "settings.h"
 #include "defines.h"
+#include "multiloader.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -83,6 +84,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     connect(mOptionsAction, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
+
+
+    QString str = QString("/home/flareguner/Development/projects/qphoenix/src/plugins/trayicon/build/libtrayicon.so");
+
+
+    PluginList lst;
+    qDebug() << MultiLoader::loadPlugins(QStringList() << str, lst);
+
+
 
 //    QPluginLoader *loader = new QPluginLoader("/home/flareguner/Development/projects/qphoenix/src/plugins/trayicon/build/libtrayicon.so", this);
 

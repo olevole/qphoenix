@@ -35,24 +35,12 @@ class MultiLoader {
 public:
     /*!
      * \brief loadPlugins
-     * \param paths - paths to a plugins
-     * \param lst   - list where to place a plugins
-     * \return      - list of plugins names
+     * \param paths paths to a plugins
+     * \param lst list where to place a plugins
+     * \return list of plugins names
      */
     static QStringList loadPlugins(const QStringList &paths, PluginList &lst);
 
-//    /*!
-//     * \brief unloadPlugins
-//     * \param ptr
-//     * Unload all plugins in list.
-//     */
-//    static void unloadPlugins(PluginList *ptr);
-
-//    /*!
-//     * \brief getPluginNames
-//     * \param ptr
-//     */
-//    void getPluginNames(PluginList *ptr);
 private:
     //! This is only static class
     MultiLoader();
