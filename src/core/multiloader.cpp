@@ -18,3 +18,27 @@
  *    E-Mail: development@qphoenix.org
  *    Years: 2012-2013
  */
+#include "multiloader.h"
+#include "defines.h"
+#include "abstractinfocontainer.h"
+
+QStringList MultiLoader::loadPlugins(const QStringList &paths, PluginList &lst){
+    QStringList names;
+    foreach(QString str, paths) {
+        QPluginLoader *ldr = new QPluginLoader(str);
+        QObject *obj;
+        if(ldr->load() && (obj = ldr->instance()) != NULL) {
+            AbstractInfoContainer *iface =
+                    qobject_cast<AbstractInfoContainer *>(ldr);
+            QString name = iface->name();
+            lst[name] = ldr;
+            names << name;
+        } else {
+            QP_DBG("Cannot load plugin: " + str + " Plugin invalid or not exists!");
+        }
+    }
+
+    return names;
+}
+
+

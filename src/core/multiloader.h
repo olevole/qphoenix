@@ -27,172 +27,40 @@
 #include <QList>
 #include <QMap>
 
-#include "defines.h"
-#include "abstractinfocontainer.h"
-#include "plugininterface.h"
+typedef QMap<QString, QPluginLoader*> PluginList;
 
 
+class MultiLoader {
 
-
-
-//template<typename T>
-//class Loader {
-//public:
-//    Loader() {
-
-//    }
-
-//    bool load();
-//    void unload();
-
-//    T *instance();
-
-////    QString name() const { return mName; }
-//    QString path() const { return mPath; }
-//private:
-//    QString mPath;
-//    QPluginLoader *loader;
-//};
-
-
-class Plugin {
 public:
-    explicit Plugin(const QString &path);
-    QString name() const { return mName; }
-    QString path() const { return mLoader.fileName(); }
-    QPluginLoader *loader(){ return &mLoader;         }
-private:
-    Plugin();
-    Plugin( const Plugin& );
-    void operator=( const Plugin& );
+    /*!
+     * \brief loadPlugins
+     * \param paths - paths to a plugins
+     * \param lst   - list where to place a plugins
+     * \return      - list of plugins names
+     */
+    static QStringList loadPlugins(const QStringList &paths, PluginList &lst);
 
-    QString mName;
-    QPluginLoader mLoader;
+//    /*!
+//     * \brief unloadPlugins
+//     * \param ptr
+//     * Unload all plugins in list.
+//     */
+//    static void unloadPlugins(PluginList *ptr);
+
+//    /*!
+//     * \brief getPluginNames
+//     * \param ptr
+//     */
+//    void getPluginNames(PluginList *ptr);
+private:
+    //! This is only static class
+    MultiLoader();
+
 };
 
-Plugin::Plugin(const QString &path) {
-    mLoader.setFileName(path);
-
-
-    if(!(mLoader.load())) {
-        QP_DBG(mLoader.errorString());
-        return;
-    }
-
-    QObject *obj = mLoader.instance();
-
-    PluginInterface *iface =
-            qobject_cast<PluginInterface *>(obj);
-
-    if(iface != NULL)
-        mName = iface->name();
-    else
-        QP_DBG("Plugin invalid!");
-}
 
 
 
-
-
-
-//--------------------------------------------------------------------------------
-
-typedef QList <Plugin *> PluginList;
-
-
-template<typename T>
-class MultiLoader
-{
-public:
-
-    explicit MultiLoader();
-    T *instance() { return instanceAt(mCurrentInstance); }
-    T *instanceAt(const int i);
-    T *instanceAt(const QString &str);
-
-    T *load(const int i) {return qobject_cast<T *>(mPluginList.at(i)->loader()->instance());}
-    T *load(const QString &name) { return load(this->indexOf(name));}
-
-    void loadAll();
-
-    void unload(const int i);
-    void unload(const QString &str);
-    void unloadAll();
-
-    inline bool isLoaded(const int i) { return mPluginList.at(i)->loader()->isLoaded();}
-
-    bool isLoaded(const QString &name);
-    int count() const                               { return mPluginList.count(); }
-    int countLoaded() const                         { return mLoadedCount;  }
-    int currentInstance() const                     { return mCurrentInstance;}
-    QStringList list() const;
-
-    void addSearchPath(const QString &path)         { mSearchPaths << QStringList(path); }
-    void addSearchPath(const QStringList &paths)    { mSearchPaths << paths;}
-    void clearSearchPaths()                         { mSearchPaths.clear(); }
-    QStringList searchPaths() const                 { return mSearchPaths;  }
-
-    void update();
-protected:
-    int indexOf(QString &str);
-private:
-
-    // Last loaded instance
-    int mCurrentInstance;
-
-    // Count of loaded instances
-    int mLoadedCount;
-
-
-    /*
-     * Absolute paths to all plugins
-     */
-    QStringList mPluginsPaths;
-
-    /*
-     * Paths where to search for plugins
-     */
-    QStringList mSearchPaths;
-
-
-    PluginList mPluginList;
-};
-
-/*
- * Implementation.Your captain obivious.
- */
-
-template<typename T>
-
-MultiLoader<T>::MultiLoader() {
-    this->addSearchPath(QP_PLUGINS_PATH);
-    this->update();
-}
-
-template<typename T>
-bool MultiLoader<T>::isLoaded(const QString &name)  {
-
-    const int i = this->indexOf(name);
-
-    if(i < 0){
-        QP_DBG("Item " + name + "does not exists!");
-        return false;
-    }
-    return mPluginList.at(i)->loader()->isLoaded();
-}
-
-template<typename T>
-int MultiLoader<T>::indexOf(QString &str) {
-    for(int i = 0; i < mPluginList.count(); i++)
-        if(mPluginList.at(i)->name() == str)
-            return i;
-
-    return -1;
-}
-
-template<typename T>
-void MultiLoader<T>::update() {
-
-}
 
 #endif // MULTILOADER_H
