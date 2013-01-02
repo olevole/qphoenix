@@ -23,6 +23,7 @@
 #include "abstractinfocontainer.h"
 #include "plugininterface.h"
 
+
 QStringList MultiLoader::loadPlugins(const QStringList &paths, PluginList &lst){
     QStringList names;
     foreach(QString str, paths) {
@@ -32,8 +33,8 @@ QStringList MultiLoader::loadPlugins(const QStringList &paths, PluginList &lst){
         QObject *obj;
 
         if(ldr->load() && (obj = ldr->instance()) != NULL) {
-            PluginInterface *iface =
-                    qobject_cast<PluginInterface *>(obj);
+            AbstractInfoContainer *iface =
+                    qobject_cast<AbstractInfoContainer *>(obj);
 
             if(iface == NULL){
                 QP_DBG("Unable to cast interface!");
@@ -48,10 +49,22 @@ QStringList MultiLoader::loadPlugins(const QStringList &paths, PluginList &lst){
             QP_DBG("Cannot load plugin: " + str + " Plugin invalid or not exists!");
         }
     }
-
     return names;
-
-
 }
 
 
+QStringList MultiLoader::loadPlugins(const QString &path, PluginList &lst) {
+
+    QDir dir(path);
+    QP_DBG(dir.entryList(QStringList(QP_PLUGIN_SIGNATURE)));
+
+    QStringList full, names;
+    names = dir.entryList(QStringList() << QP_PLUGIN_SIGNATURE, QDir::Files);
+
+    foreach(QString name, names)
+        full << dir.
+                absoluteFilePath(name);
+
+
+    return loadPlugins(full, lst);
+}

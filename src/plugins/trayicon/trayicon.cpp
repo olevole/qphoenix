@@ -33,9 +33,9 @@ TrayIcon::TrayIcon(QObject *parent) :
 }
 
 void TrayIcon::setMainWindowPTR(MainWindowInterface *ptr) {
-    connect(ptr->toolbar(), SIGNAL(actionTriggered(QAction*)), ptr->statusbar(), SLOT(clearMessage()));
+//    connect(ptr->toolbar(), SIGNAL(actionTriggered(QAction*)), ptr->statusbar(), SLOT(clearMessage()));
 //    ptr->dictionaryWidget()->srcText()->setText("Test");
-//    ptr->setCurrentPage(1);
+    ptr->setCurrentPage(1);
 }
 
 void TrayIcon::setSettingsPTR(SettingsInterface *ptr) {

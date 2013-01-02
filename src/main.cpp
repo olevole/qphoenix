@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
     mw->show();
 
     QP_DBG("Success!");
+    QP_DBG(QP_PLUGINS_PATH);
 
     return a.exec();
 }

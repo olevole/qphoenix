@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "fancytabwidget.h"
 #include "mainwindowinterface.h"
+#include "multiloader.h"
 
 class QStatusBar;
 class QToolBar;
@@ -72,6 +73,8 @@ private:
     DictionaryWidget *mDictionaryWidget;
 
     Settings *mSettingsDialog;
+
+    PluginList mPluginsList;
 signals:
     void pageChanged(const int i);
 };

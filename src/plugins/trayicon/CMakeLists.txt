@@ -36,3 +36,8 @@ qt4_wrap_cpp(MOC_SOURCES ${HEADERS})
 
 add_library( trayicon SHARED ${HEDARS} ${SOURCES}  ${MOC_SOURCES})
 target_link_libraries(trayicon ${QT_LIBRARIES})
+
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL Linux)
+        install(TARGETS trayicon DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plugins)
+endif()

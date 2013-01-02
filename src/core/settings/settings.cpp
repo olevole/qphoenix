@@ -48,20 +48,22 @@ Settings::Settings(QWidget *parent) :
 
     // Then, loading settings pages
 
-    TestPage *t = new TestPage();
-    TestPage *t2 = new TestPage();
+//    TestPage *t = new TestPage();
+//    TestPage *t2 = new TestPage();
 
-    Translator t3;
+//    Translator t3;
+
+//    t3.show();
 
 
-    addPage(t);
+//    addPage(t);
 //    addPage(t2);
-    addPage(&t3);
+//    addPage(&t3);
 //    this->addPage(qobject_cast<QWidget *>(t));
 //    this->addPage(t2);
 
 
-    QObject *o = new QObject();
+//    QObject *o = new QObject();
 
 //    this->addPage(o);
 
@@ -158,7 +160,7 @@ QWidget *Settings::pageAt(const int i) {
 
 void Settings::itemChangeHandle() {
     const int cur = mTree->currentIndex().row();
-    mStackedLayout->setCurrentIndex(cur + 1);
+    mStackedLayout->setCurrentIndex(cur);
 }
 
 

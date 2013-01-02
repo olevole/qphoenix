@@ -22,6 +22,7 @@ ADD_SUBDIRECTORY(src/plugins/trayicon)
 INCLUDE_DIRECTORIES(
 ${CMAKE_CURRENT_BINARY_DIR}
 ${CMAKE_INCLUDE_PATH}
+${CMAKE_CURRENT_BINARY_DIR}/src/include
 src/core/settings
 src/core/3rdparty/fancytab-widgets
 src/core
@@ -29,10 +30,11 @@ src/include
 src/core/tools
 )
 
-CONFIGURE_FILE(src/include/defines.h src/include/defines.h)
+CONFIGURE_FILE(src/include/defines.h.in src/include/defines.h)
 
-SET(GLOBAL_HEADERS
-src/include/defines.h)
+
+#SET(GLOBAL_HEADERS
+#src/include/defines.h)
 
 SET(IFACES
 src/include/settingspageinterface.h
@@ -91,3 +93,7 @@ TARGET_LINK_LIBRARIES(qphoenix ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES}
  ${QT_QTXML_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES} fancytabwidget)
 
 
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL Linux)
+        install(TARGETS qphoenix DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+endif()

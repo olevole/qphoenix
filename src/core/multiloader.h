@@ -41,6 +41,15 @@ public:
      */
     static QStringList loadPlugins(const QStringList &paths, PluginList &lst);
 
+    /*!
+     * \brief loadPlugins
+     * \param paths a dicrectory where to SEARCH for plugins
+     * \param lst list where to place a plugins
+     * \return list with plugins names
+     */
+    static QStringList loadPlugins(const QString &path, PluginList &lst);
+
+
 private:
     //! This is only static class
     MultiLoader();

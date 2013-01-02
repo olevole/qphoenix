@@ -13,15 +13,15 @@
 
 #define QP_PREFIX QString("%1/%2").arg("${CMAKE_INSTALL_PREFIX}").arg(QDir::separator())
 
-#define QP_PLUGINS_PATH QP_PREFIX  + "plugins"
+#define QP_PLUGINS_PATH QP_PREFIX  + "share/plugins"
+//#define QP_PLUGINS_PATH "/home/flareguner/Development/projects/qphoenix/src/plugins/trayicon/build/"
 #define QP_TRANSLATORS_PATH  QP_PREFIX + "translators"
 #define QP_DICTIONARIES_PATH QP_PREFIX + "dictionaries"
 
 
 #define QP_DEBUG_MODE
 
-#define QP_PLUGIN_SIGNATURE "__qphoenix-1.0plugin___"
-
+#define QP_PLUGIN_SIGNATURE "lib*.so"
 
 #ifdef QP_DEBUG_MODE
     #include <QDebug>

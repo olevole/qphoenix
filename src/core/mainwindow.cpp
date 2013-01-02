@@ -21,6 +21,8 @@
 #include "translationwidget.h"
 #include "dictionarywidget.h"
 #include "settings.h"
+#include "translator.h"
+#include "testpage.h"
 #include "defines.h"
 #include "multiloader.h"
 
@@ -63,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QList<QAction *> ActionsList;
     ActionsList << mExitAction << mCopyAction << mAboutAction;
     mToolBar->addActions(ActionsList);
-    mToolBar->setMovable(false);
+//    mToolBar->setMovable(false);
 
 
 
@@ -82,33 +84,21 @@ MainWindow::MainWindow(QWidget *parent) :
         mFancyWidget->setCurrentIndex(0);
 
 
+    mSettingsDialog->addPage(new Translator(this));
+    mSettingsDialog->addPage(new TestPage(this));
 
     connect(mOptionsAction, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
 
+    MultiLoader::loadPlugins(QP_PLUGINS_PATH, mPluginsList);
 
-    QString str = QString("/home/flareguner/Development/projects/qphoenix/src/plugins/trayicon/build/libtrayicon.so");
+    foreach(QPluginLoader *ldr, mPluginsList) {
+        QObject *ptr = ldr->instance();
+        PluginInterface *iface = qobject_cast<PluginInterface *>(ptr);
 
+        iface->setMainWindowPTR(this);
 
-    PluginList lst;
-    qDebug() << MultiLoader::loadPlugins(QStringList() << str, lst);
+    }
 
-
-
-//    QPluginLoader *loader = new QPluginLoader("/home/flareguner/Development/projects/qphoenix/src/plugins/trayicon/build/libtrayicon.so", this);
-
-
-
-
-//    QObject *ptr = loader->instance();
-
-
-//    PluginInterface *iface = qobject_cast<PluginInterface *>(ptr);
-
-
-//    qDebug() << "My name is: " << iface->name();
-////    loader->unload();
-
-//    iface->setMainWindowPTR(this);
 }
 
 MainWindow::~MainWindow()

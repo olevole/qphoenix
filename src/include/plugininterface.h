@@ -16,6 +16,7 @@
 
 class PluginInterface : public AbstractInfoContainer
 {
+
 public:
     virtual ~PluginInterface() {}
 
