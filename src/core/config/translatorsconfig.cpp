@@ -19,9 +19,9 @@
  *    Years: 2012-2013
  */
 
-#include "translator.h"
+#include "translatorsconfig.h"
 
-Translator::Translator(QWidget *parent) :
+TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     QWidget(parent)
 {
     setName(tr("Translators"));

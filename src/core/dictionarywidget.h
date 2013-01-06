@@ -26,7 +26,6 @@
 #include "abstractinfocontainer.h"
 #include "dictionarywidgetinterface.h"
 
-//using namespace Tools;
 
 class QComboBox;
 class QLineEdit;

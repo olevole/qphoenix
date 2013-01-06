@@ -21,7 +21,7 @@
 #include "translationwidget.h"
 #include "dictionarywidget.h"
 #include "config.h"
-#include "translator.h"
+#include "translatorsconfig.h"
 #include "testpage.h"
 #include "defines.h"
 #include "multiloader.h"
@@ -84,7 +84,7 @@ MainWindow::MainWindow(QWidget *parent) :
         mFancyWidget->setCurrentIndex(0);
 
 
-    mSettingsDialog->addPage(new Translator(this));
+    mSettingsDialog->addPage(new TranslatorsConfig(this));
     mSettingsDialog->addPage(new TestPage(this));
 
     connect(mOptionsAction, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));

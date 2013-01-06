@@ -32,12 +32,12 @@ class QHBoxLayout;
 class QVBoxLayout;
 class QGroupBox;
 
-class Translator : public QWidget, ConfigPageInterface
+class TranslatorsConfig : public QWidget, ConfigPageInterface
 {
     Q_OBJECT
     Q_INTERFACES(ConfigPageInterface)
 public:
-    explicit Translator(QWidget *parent = 0);
+    explicit TranslatorsConfig(QWidget *parent = 0);
     void save() {}
     void read() {}
     void reset(){}

@@ -7,7 +7,7 @@
 #include "config.h"
 #include "configpageinterface.h"
 #include "testpage.h"
-#include "translator.h"
+#include "translatorsconfig.h"
 
 Config::Config(QWidget *parent) :
     QDialog(parent),
@@ -18,7 +18,6 @@ Config::Config(QWidget *parent) :
     mTree(new QTreeWidget(this)),
     mButtons(new QDialogButtonBox(this)),
     mDefaultsButton(new QPushButton(tr("Defaults"),this))
-//    mSettingsDialog(new Settings(this))
 {
 
     // Gui Init
@@ -44,36 +43,9 @@ Config::Config(QWidget *parent) :
     mTree->setSizePolicy(QSizePolicy::Fixed, mTree->sizePolicy().verticalPolicy());
     resize(800, 600);
 
-    // Then, loading settings pages
-
-//    TestPage *t = new TestPage();
-//    TestPage *t2 = new TestPage();
-
-//    Translator t3;
-
-//    t3.show();
-
-
-//    addPage(t);
-//    addPage(t2);
-//    addPage(&t3);
-//    this->addPage(qobject_cast<QWidget *>(t));
-//    this->addPage(t2);
-
-
-//    QObject *o = new QObject();
-
-//    this->addPage(o);
-
 
     // Okay, let's tell them to read configurations
     read();
-
-
-
-
-
-
 
     /*
      * Connections (put all in this section)
@@ -86,11 +58,6 @@ Config::Config(QWidget *parent) :
     connect(mButtons, SIGNAL(rejected()), this, SLOT(reject()));
     connect(mDefaultsButton, SIGNAL(clicked()), this, SLOT(reset()));
     connect(mButtons, SIGNAL(clicked(QDialogButtonBox::Apply)), this, SLOT(save()));
-
-//    connect()
-
-
-
 }
 
 Config::~Config() {
@@ -130,7 +97,7 @@ void Config::addPage(QWidget *page) {
     gb->layout()->addWidget(qobject_cast<QWidget *>(page));
 
 
-//    mPagesList.append(iface);
+    mPagesList.append(iface);
     mTree->insertTopLevelItem(mTree->topLevelItemCount(),item);
     mStackedLayout->addWidget(gb);
 

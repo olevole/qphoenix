@@ -53,7 +53,7 @@ SET(HEADERS
 src/core/mainwindow.h
 src/core/config/config.h
 src/core/config/testpage.h
-src/core/config/translator.h
+src/core/config/translatorsconfig.h
 src/core/translationwidget.h
 src/core/dictionarywidget.h
 src/core/translatorloader.h
@@ -66,7 +66,7 @@ SET(SOURCES
 src/main.cpp
 src/core/mainwindow.cpp
 src/core/config/config.cpp
-src/core/config/translator.cpp
+src/core/config/translatorsconfig.cpp
 src/core/config/testpage.cpp
 src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
