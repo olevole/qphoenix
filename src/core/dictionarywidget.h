@@ -55,7 +55,7 @@ private:
     QLineEdit *mSrcText;
     QTextBrowser *mResText;
     QGroupBox   *mGroupbox;
-    QLabel      *mQueryLabel;
+    QLabel      *mQueryLabel, *mDirectionLabel;
 
     QHBoxLayout *mLineLayout;
     QVBoxLayout *mMainLayout;

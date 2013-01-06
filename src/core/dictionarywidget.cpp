@@ -38,6 +38,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mResText(new QTextBrowser(this)),
     mGroupbox(new QGroupBox(this)),
     mQueryLabel(new QLabel(tr("Query"), this)),
+    mDirectionLabel(new QLabel(tr("Languages"), this)),
     mLineLayout(new QHBoxLayout),
     mMainLayout(new QVBoxLayout)
 {
@@ -49,7 +50,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     setName(tr("Dictionary"));
     setIcon(QIcon::fromTheme("accessoriesbgb-dictionary"));
 
-
+    mLineLayout->addWidget(mDirectionLabel);
     mLineLayout->addWidget(mLanguagesComboBox);
     mLineLayout->addWidget(mQueryLabel);
     mLineLayout->addWidget(mSrcText);
@@ -59,7 +60,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mMainLayout->addWidget(mGroupbox);
 
 
-    mSrcText->setText("Put your query word here");
+//    mSrcText->setText("Put your query word here");
 
     setLayout(mMainLayout);
 }

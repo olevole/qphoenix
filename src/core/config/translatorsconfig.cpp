@@ -42,10 +42,12 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     setName(tr("Translators"));
 
 
+    mTranslatorComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     // First layout
     mTranslatorLayout->addWidget(mTranslatorLabel);
     mTranslatorLayout->addWidget(mTranslatorComboBox);
+//    mTranslatorLayout->addStretch();
     mTranslatorGroupBox->setLayout(mTranslatorLayout);
 
 

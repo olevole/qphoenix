@@ -88,7 +88,10 @@ MainWindow::MainWindow(QWidget *parent) :
     mSettingsDialog->addPage(new TestPage(this));
 
     connect(mOptionsAction, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
+    connect(mExitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 
+
+    // Dealing with a plugins
     MultiLoader::loadPlugins(QP_PLUGINS_PATH, mPluginsList);
 
     foreach(QPluginLoader *ldr, mPluginsList) {
@@ -96,8 +99,10 @@ MainWindow::MainWindow(QWidget *parent) :
         PluginInterface *iface = qobject_cast<PluginInterface *>(ptr);
 
         iface->setMainWindowPTR(this);
-
     }
+
+
+
 
 }
 
