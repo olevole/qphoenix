@@ -39,7 +39,7 @@ public:
     explicit TrayIcon(QObject *parent = 0);    
     void setMainWindowPTR(MainWindowInterface *ptr);
 
-    void setSettingsPTR(SettingsInterface *ptr);
+    void setSettingsPTR(ConfigInterface *ptr);
 
 private:
     QPushButton *button;

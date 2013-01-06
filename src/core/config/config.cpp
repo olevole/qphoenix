@@ -1,17 +1,15 @@
-#include "settings.h"
 #include <QStackedLayout>
 #include <QGroupBox>
 #include <QLayout>
 #include <QDebug>
 #include <QPushButton>
 
-
-
-
+#include "config.h"
+#include "configpageinterface.h"
 #include "testpage.h"
 #include "translator.h"
 
-Settings::Settings(QWidget *parent) :
+Config::Config(QWidget *parent) :
     QDialog(parent),
     mMainLayout(new QVBoxLayout),
     mHorizontalLayout(new QHBoxLayout),
@@ -95,12 +93,12 @@ Settings::Settings(QWidget *parent) :
 
 }
 
-Settings::~Settings() {
+Config::~Config() {
 
 }
 
-void Settings::addPage(QWidget *page) {
-    SettingsPageInterface *iface = qobject_cast<SettingsPageInterface *>(page);
+void Config::addPage(QWidget *page) {
+    ConfigPageInterface *iface = qobject_cast<ConfigPageInterface *>(page);
 
 
     QString name;
@@ -138,10 +136,10 @@ void Settings::addPage(QWidget *page) {
 
 }
 
-void Settings::removePage(const QWidget *page) {
-    SettingsPageInterface *iface2;
+void Config::removePage(const QWidget *page) {
+    ConfigPageInterface *iface2;
     for(int i = 0; i < mPagesList.count(); i++) {
-        SettingsPageInterface *iface = qobject_cast<SettingsPageInterface *>(page);
+        ConfigPageInterface *iface = qobject_cast<ConfigPageInterface *>(page);
 
 
         const QString nameA = mPagesList.at(i)->name();
@@ -154,31 +152,31 @@ void Settings::removePage(const QWidget *page) {
     }
 }
 
-QWidget *Settings::pageAt(const int i) {
+QWidget *Config::pageAt(const int i) {
     return mStackedLayout->widget(i);
 }
 
-void Settings::itemChangeHandle() {
+void Config::itemChangeHandle() {
     const int cur = mTree->currentIndex().row();
     mStackedLayout->setCurrentIndex(cur);
 }
 
 
 
-void Settings::save() {
-    foreach (SettingsPageInterface *i, mPagesList) {
+void Config::save() {
+    foreach (ConfigPageInterface *i, mPagesList) {
         i->save();
     }
 }
 
-void Settings::read() {
-    foreach(SettingsPageInterface *i, mPagesList) {
+void Config::read() {
+    foreach(ConfigPageInterface *i, mPagesList) {
         i->read();
     }
 }
 
-void Settings::reset() {
-    foreach(SettingsPageInterface *i, mPagesList) {
+void Config::reset() {
+    foreach(ConfigPageInterface *i, mPagesList) {
         i->reset();
     }
 

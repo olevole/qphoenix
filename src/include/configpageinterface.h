@@ -19,26 +19,28 @@
  *    Years: 2012-2013
  */
 
-#ifndef TESTPAGE_H
-#define TESTPAGE_H
+#ifndef SETTINGSPAGEINTERFACE_H
+#define SETTINGSPAGEINTERFACE_H
 
-#include <QWidget>
-#include "settingspageinterface.h"
+#include "abstractinfocontainer.h"
 
-//using namespace Tools;
-
-class TestPage : public QWidget, SettingsPageInterface
+class ConfigPageInterface : public AbstractInfoContainer
 {
-    Q_OBJECT
-    Q_INTERFACES(SettingsPageInterface)
-
 public:
+    virtual ~ConfigPageInterface(){}
 
-    explicit TestPage(QWidget *parent = 0);
-     void save(){}
-     void read(){}
-     void reset(){}
-//     Info *info() const {return new Tools::Info(0, "Test", "bla", "bla", "url");}
+    // Read and save the settings
+    virtual void save() = 0;
+    virtual void read() = 0;
+    virtual void reset() = 0;
+
+
+
 };
 
-#endif // TESTPAGE_H
+Q_DECLARE_INTERFACE(ConfigPageInterface, "com.qphoenix.interfaces.settings/1.0");
+
+
+
+
+#endif // SETTINGSPAGEINTERFACE_H

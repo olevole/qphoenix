@@ -20,7 +20,7 @@
 
 #include "translationwidget.h"
 #include "dictionarywidget.h"
-#include "settings.h"
+#include "config.h"
 #include "translator.h"
 #include "testpage.h"
 #include "defines.h"
@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mAboutAction(new QAction(QIcon::fromTheme("help-about"), tr("About"), this)),
     mTranslationWidget(new TranslationWidget(this)),
     mDictionaryWidget(new DictionaryWidget(this)),
-    mSettingsDialog(new Settings(this))
+    mSettingsDialog(new Config(this))
 {
 
     setWindowTitle(qApp->applicationName());

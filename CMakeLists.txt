@@ -23,7 +23,7 @@ INCLUDE_DIRECTORIES(
 ${CMAKE_CURRENT_BINARY_DIR}
 ${CMAKE_INCLUDE_PATH}
 ${CMAKE_CURRENT_BINARY_DIR}/src/include
-src/core/settings
+src/core/config
 src/core/3rdparty/fancytab-widgets
 src/core
 src/include
@@ -37,11 +37,11 @@ CONFIGURE_FILE(src/include/defines.h.in src/include/defines.h)
 #src/include/defines.h)
 
 SET(IFACES
-src/include/settingspageinterface.h
+src/include/configpageinterface.h
 src/include/mainwindowinterface.h
 src/include/translatorwidgetinterface.h
 src/include/dictionarywidgetinterface.h
-src/include/settingsinterface.h
+src/include/configinterface.h
 src/include/plugininterface.h
 src/include/translatorinterface.h
 src/include/abstractinfocontainer.h
@@ -51,9 +51,9 @@ src/core/abstractloader.h
 
 SET(HEADERS
 src/core/mainwindow.h
-src/core/settings/settings.h
-src/core/settings/testpage.h
-src/core/settings/translator.h
+src/core/config/config.h
+src/core/config/testpage.h
+src/core/config/translator.h
 src/core/translationwidget.h
 src/core/dictionarywidget.h
 src/core/translatorloader.h
@@ -65,9 +65,9 @@ src/core/multiloader.h
 SET(SOURCES
 src/main.cpp
 src/core/mainwindow.cpp
-src/core/settings/settings.cpp
-src/core/settings/translator.cpp
-src/core/settings/testpage.cpp
+src/core/config/config.cpp
+src/core/config/translator.cpp
+src/core/config/testpage.cpp
 src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
 src/core/translatorloader.cpp

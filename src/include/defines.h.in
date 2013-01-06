@@ -11,10 +11,11 @@
 #define QP_ORG_DOMAIN "http://qphoenix.org"
 
 
-#define QP_PREFIX QString("%1/%2").arg("${CMAKE_INSTALL_PREFIX}").arg(QDir::separator())
 
-#define QP_PLUGINS_PATH QP_PREFIX  + "share/plugins"
-//#define QP_PLUGINS_PATH "/home/flareguner/Development/projects/qphoenix/src/plugins/trayicon/build/"
+
+
+
+#define QP_PLUGINS_PATH QP_PREFIX  + "lib/qphoenix/plugins"
 #define QP_TRANSLATORS_PATH  QP_PREFIX + "translators"
 #define QP_DICTIONARIES_PATH QP_PREFIX + "dictionaries"
 
@@ -33,11 +34,15 @@
 
 #ifdef Q_OS_UNIX
     #define QP_PLUGIN_EXT ".so"
+    #define QP_PREFIX QString("%1/%2").arg("${CMAKE_INSTALL_PREFIX}").arg(QDir::separator())
 #endif
 
 #ifdef Q_OS_WIN32
     #define QP_PLUGIN_EXT ".dll"
+    #define QP_PREFIX ""
 #endif
+
+
 
 
 #endif // DEFINES_H

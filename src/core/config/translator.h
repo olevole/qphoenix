@@ -19,28 +19,38 @@
  *    Years: 2012-2013
  */
 
-#ifndef SETTINGSPAGEINTERFACE_H
-#define SETTINGSPAGEINTERFACE_H
+#ifndef TRANSLATOR_H
+#define TRANSLATOR_H
 
-#include "abstractinfocontainer.h"
+#include <QWidget>
+#include "configpageinterface.h"
+#include "translatorloader.h"
 
-class SettingsPageInterface : public AbstractInfoContainer
+class QLabel;
+class QComboBox;
+class QHBoxLayout;
+class QVBoxLayout;
+class QGroupBox;
+
+class Translator : public QWidget, ConfigPageInterface
 {
+    Q_OBJECT
+    Q_INTERFACES(ConfigPageInterface)
 public:
-    virtual ~SettingsPageInterface(){}
+    explicit Translator(QWidget *parent = 0);
+    void save() {}
+    void read() {}
+    void reset(){}
 
-    // Read and save the settings
-    virtual void save() = 0;
-    virtual void read() = 0;
-    virtual void reset() = 0;
+    void setLoader(const TranslatorLoader *ptr);
+private:
+    QLabel *mTranslatorLabel;
+    QComboBox *mTranslatorComboBox;
+    QGroupBox *mTranslatorGroupBox;
+    QHBoxLayout *mTranslatorLayout;
 
-
-
+    QGroupBox *mOptionsGroupBox;
+    QHBoxLayout *mOptionsLayout;
 };
 
-Q_DECLARE_INTERFACE(SettingsPageInterface, "com.qphoenix.interfaces.settings/1.0");
-
-
-
-
-#endif // SETTINGSPAGEINTERFACE_H
+#endif // TRANSLATOR_H

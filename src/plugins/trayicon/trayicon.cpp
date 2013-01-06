@@ -38,7 +38,7 @@ void TrayIcon::setMainWindowPTR(MainWindowInterface *ptr) {
     ptr->setCurrentPage(1);
 }
 
-void TrayIcon::setSettingsPTR(SettingsInterface *ptr) {
+void TrayIcon::setSettingsPTR(ConfigInterface *ptr) {
 
 }
 

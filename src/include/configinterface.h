@@ -5,16 +5,16 @@
 
 
 
-class SettingsInterface {
+class ConfigInterface {
 public:
-    virtual ~SettingsInterface() {}
+    virtual ~ConfigInterface() {}
 
     virtual void addPage(QWidget *page) = 0;
     virtual void removePage(const QWidget *page) = 0;
     virtual QWidget *pageAt(const int i) = 0;
 };
 
-Q_DECLARE_INTERFACE(SettingsInterface, "com.qphoenix.interfaces.settingspage/1.0")
+Q_DECLARE_INTERFACE(ConfigInterface, "com.qphoenix.interfaces.settingspage/1.0")
 
 
 

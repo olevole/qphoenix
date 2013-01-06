@@ -1,8 +1,8 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include "settingsinterface.h"
-#include "settingspageinterface.h"
+#include "configinterface.h"
+#include "configpageinterface.h"
 
 #include <QTreeWidget>
 #include <QDialogButtonBox>
@@ -32,19 +32,19 @@ class QPushButton;
 /*
  * A list with Settings pages interfaces
  */
-typedef QList<SettingsPageInterface *>SettingPageList;
+typedef QList<ConfigPageInterface *>ConfigPageList;
 
 
 
 
-class Settings : public QDialog,  SettingsInterface
+class Config : public QDialog,  ConfigInterface
 {
     Q_OBJECT
-    Q_INTERFACES(SettingsInterface)
+    Q_INTERFACES(ConfigInterface)
 
 public:
-    explicit Settings(QWidget *parent = 0);
-    ~Settings();
+    explicit Config(QWidget *parent = 0);
+    ~Config();
 
 
     /*  Inserting Settings page into the lmain
@@ -59,7 +59,7 @@ private:
 
 
 
-    SettingPageList mPagesList;
+    ConfigPageList mPagesList;
 
     // GUI elements
     QVBoxLayout *mMainLayout;

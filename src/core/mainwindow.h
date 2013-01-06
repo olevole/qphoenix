@@ -15,7 +15,7 @@ class QAction;
 
 class TranslationWidget;
 class DictionaryWidget;
-class Settings;
+class Config;
 
 
 
@@ -72,7 +72,7 @@ private:
     TranslationWidget *mTranslationWidget;
     DictionaryWidget *mDictionaryWidget;
 
-    Settings *mSettingsDialog;
+    Config *mSettingsDialog;
 
     PluginList mPluginsList;
 signals:

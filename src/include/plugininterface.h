@@ -8,9 +8,8 @@
  */
 
 #include "abstractinfocontainer.h"
-#include "settingsinterface.h"
 #include "mainwindowinterface.h"
-
+#include "configinterface.h"
 
 
 
@@ -21,7 +20,7 @@ public:
     virtual ~PluginInterface() {}
 
     virtual void setMainWindowPTR(MainWindowInterface *ptr) = 0;
-    virtual void setSettingsPTR(SettingsInterface *ptr) = 0;
+    virtual void setSettingsPTR(ConfigInterface *ptr) = 0;
 };
 
 

@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include <QApplication>
 
-#include "settings.h"
+#include "config.h"
 #include "translationwidget.h"
 #include "dictionarywidget.h"
 #include "translatorloader.h"

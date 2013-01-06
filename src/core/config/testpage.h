@@ -19,38 +19,26 @@
  *    Years: 2012-2013
  */
 
-#ifndef TRANSLATOR_H
-#define TRANSLATOR_H
+#ifndef TESTPAGE_H
+#define TESTPAGE_H
 
 #include <QWidget>
-#include "settingspageinterface.h"
-#include "translatorloader.h"
+#include "configpageinterface.h"
 
-class QLabel;
-class QComboBox;
-class QHBoxLayout;
-class QVBoxLayout;
-class QGroupBox;
+//using namespace Tools;
 
-class Translator : public QWidget, SettingsPageInterface
+class TestPage : public QWidget, ConfigPageInterface
 {
     Q_OBJECT
-    Q_INTERFACES(SettingsPageInterface)
+    Q_INTERFACES(ConfigPageInterface)
+
 public:
-    explicit Translator(QWidget *parent = 0);
-    void save() {}
-    void read() {}
-    void reset(){}
 
-    void setLoader(const TranslatorLoader *ptr);
-private:
-    QLabel *mTranslatorLabel;
-    QComboBox *mTranslatorComboBox;
-    QGroupBox *mTranslatorGroupBox;
-    QHBoxLayout *mTranslatorLayout;
-
-    QGroupBox *mOptionsGroupBox;
-    QHBoxLayout *mOptionsLayout;
+    explicit TestPage(QWidget *parent = 0);
+     void save(){}
+     void read(){}
+     void reset(){}
+//     Info *info() const {return new Tools::Info(0, "Test", "bla", "bla", "url");}
 };
 
-#endif // TRANSLATOR_H
+#endif // TESTPAGE_H
