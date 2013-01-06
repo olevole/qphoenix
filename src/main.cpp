@@ -4,7 +4,6 @@
 #include "config.h"
 #include "translationwidget.h"
 #include "dictionarywidget.h"
-#include "translatorloader.h"
 #include "defines.h"
 #include "multiloader.h"
 

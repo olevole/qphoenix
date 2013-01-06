@@ -24,7 +24,6 @@
 
 #include <QWidget>
 #include "configpageinterface.h"
-#include "translatorloader.h"
 
 class QLabel;
 class QComboBox;
@@ -38,11 +37,11 @@ class TranslatorsConfig : public QWidget, ConfigPageInterface
     Q_INTERFACES(ConfigPageInterface)
 public:
     explicit TranslatorsConfig(QWidget *parent = 0);
+
     void save() {}
     void read() {}
     void reset(){}
 
-    void setLoader(const TranslatorLoader *ptr);
 private:
     QLabel *mTranslatorLabel;
     QComboBox *mTranslatorComboBox;
@@ -51,6 +50,8 @@ private:
 
     QGroupBox *mOptionsGroupBox;
     QHBoxLayout *mOptionsLayout;
+
+    QVBoxLayout *mMainLayout;
 };
 
 #endif // TRANSLATOR_H

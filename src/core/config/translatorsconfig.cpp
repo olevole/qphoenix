@@ -21,8 +21,44 @@
 
 #include "translatorsconfig.h"
 
+#include <QLabel>
+#include <QComboBox>
+#include <QGroupBox>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+
+
 TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent),
+    mTranslatorLabel(new QLabel(tr("Translator"), this)),
+    mTranslatorComboBox(new QComboBox(this)),
+    mTranslatorGroupBox(new QGroupBox(tr("Translators"), this)),
+    mTranslatorLayout(new QHBoxLayout),
+
+    mOptionsGroupBox(new QGroupBox(tr("Config"), this)),
+    mOptionsLayout(new QHBoxLayout),
+    mMainLayout(new QVBoxLayout)
 {
     setName(tr("Translators"));
+
+
+
+    // First layout
+    mTranslatorLayout->addWidget(mTranslatorLabel);
+    mTranslatorLayout->addWidget(mTranslatorComboBox);
+    mTranslatorGroupBox->setLayout(mTranslatorLayout);
+
+
+
+    // Second layout
+    mOptionsGroupBox->setLayout(mOptionsLayout);
+
+    // Finally, main layout
+    mMainLayout->addWidget(mTranslatorGroupBox);
+    mMainLayout->addWidget(mOptionsGroupBox);
+
+
+    mTranslatorGroupBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+
+    this->setLayout(mMainLayout);
 }
