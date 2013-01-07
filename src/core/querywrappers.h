@@ -62,8 +62,6 @@ private:
     QString mSrcText, mSrcLang, mDestLang, mResult;
 signals:
     void reply(QString);
-
-
 };
 
 

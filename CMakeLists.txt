@@ -18,6 +18,8 @@ SET(QT_USE_QTXML TRUE)
 
 ADD_SUBDIRECTORY(src/core/3rdparty/fancytab-widgets)
 ADD_SUBDIRECTORY(src/plugins/trayicon)
+ADD_SUBDIRECTORY(src/translators/mymemory)
+
 
 INCLUDE_DIRECTORIES(
 ${CMAKE_CURRENT_BINARY_DIR}
