@@ -56,7 +56,9 @@ src/core/config/testpage.h
 src/core/config/translatorsconfig.h
 src/core/translationwidget.h
 src/core/dictionarywidget.h
+
 src/core/multiloader.h
+src/core/querywrappers.h
 )
 
 
@@ -70,6 +72,7 @@ src/core/config/testpage.cpp
 src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
 src/core/multiloader.cpp
+src/core/querywrappers.cpp
 )
 
 # Not implemented yet

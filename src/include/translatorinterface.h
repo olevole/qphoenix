@@ -39,7 +39,7 @@ public:
     virtual bool isLinear() const = 0;
     virtual LangTable *table() const = 0;
 
-    virtual QString *translate(const QString &src_text, const QString &src_lang,
+    virtual QString translate(const QString &src_text, const QString &src_lang,
                                const QString &dest_lang) = 0;
 
 

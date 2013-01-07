@@ -60,7 +60,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mMainLayout->addWidget(mGroupbox);
 
 
-//    mSrcText->setText("Put your query word here");
+    mSrcText->setText("Put your query word here");
 
     setLayout(mMainLayout);
 }

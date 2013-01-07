@@ -6,6 +6,7 @@
 #include "dictionarywidget.h"
 #include "defines.h"
 #include "multiloader.h"
+#include "querywrappers.h"
 
 
 int main(int argc, char *argv[])
@@ -26,6 +27,8 @@ int main(int argc, char *argv[])
 
     QP_DBG("Success!");
     QP_DBG(QP_PLUGINS_PATH);
+
+    TranslatorWrapper w;
 
     return a.exec();
 }
