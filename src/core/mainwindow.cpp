@@ -25,6 +25,7 @@
 #include "testpage.h"
 #include "defines.h"
 #include "multiloader.h"
+#include "pluginsconfig.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -86,6 +87,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mSettingsDialog->addPage(new TranslatorsConfig(this));
     mSettingsDialog->addPage(new TestPage(this));
+    mSettingsDialog->addPage(new PluginsConfig(this));
 
     connect(mOptionsAction, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
     connect(mExitAction, SIGNAL(triggered()), qApp, SLOT(quit()));

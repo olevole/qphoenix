@@ -56,6 +56,7 @@ src/core/mainwindow.h
 src/core/config/config.h
 src/core/config/testpage.h
 src/core/config/translatorsconfig.h
+src/core/config/pluginsconfig.h
 src/core/translationwidget.h
 src/core/dictionarywidget.h
 
@@ -71,6 +72,7 @@ src/core/mainwindow.cpp
 src/core/config/config.cpp
 src/core/config/translatorsconfig.cpp
 src/core/config/testpage.cpp
+src/core/config/pluginsconfig.cpp
 src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
 src/core/multiloader.cpp
