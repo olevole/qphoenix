@@ -51,7 +51,7 @@ void PluginsConfig::read() {
 //        }
 
 //        AbstractInfoContainer *iface = qobject_cast<mPluginsList[]
-    }
+//    }
 
 
 }
