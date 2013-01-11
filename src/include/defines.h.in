@@ -18,7 +18,7 @@
 
 
 
-//#define QP_DEBUG_MODE
+#define QP_DEBUG_MODE
 
 #define QP_PLUGIN_SIGNATURE "lib*.so"
 
@@ -26,9 +26,8 @@
 
 #ifdef QP_DEBUG_MODE
     #include <QDebug>
-#define QP_DBG(x) qDebug() << "In function: " << Q_FUNC_INFO << "Line: " << QString(__LINE__) << "\nMessage: " << x << "\n-------------------------------------------------------------------"
+    #define QP_DBG(x) qDebug() << "In function: " << Q_FUNC_INFO << "Line: " << QString(__LINE__) << "\nMessage: " << x << "\n-------------------------------------------------------------------"
 #else
-
     #define QP_DBG(x) Q_UNUSED(x)
 #endif
 

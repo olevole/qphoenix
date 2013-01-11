@@ -46,7 +46,9 @@ QStringList MultiLoader::loadPlugins(const QStringList &paths, PluginList &lst){
             lst[name] = ldr;
             names << name;
         } else {
-            QP_DBG("Cannot load plugin: " + str + " Plugin invalid or not exists!");
+
+            QP_DBG("Cannot load plugin: ");
+            QP_DBG(str);
         }
     }
     return names;
