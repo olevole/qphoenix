@@ -24,13 +24,14 @@
 
 #include "abstractinfocontainer.h"
 #include <QMap>
+#include "basemodule.h"
 
 class QWidget;
 class QString;
 
 typedef QMap <QString, QStringList> LangTable;
 
-class TranslatorInterface : public AbstractInfoContainer {
+class TranslatorInterface : public BaseModule {
 public:
     virtual ~TranslatorInterface(){}
     virtual QWidget *configWidget() = 0;

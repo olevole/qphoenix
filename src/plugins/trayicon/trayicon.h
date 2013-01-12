@@ -26,6 +26,8 @@
 //#include "../../include/plugininterface.h"
 #include "../../include/plugininterface.h"
 
+#include "../../include/basemodule.h"
+
 
 class QPushButton;
 
@@ -33,13 +35,16 @@ class TrayIcon : public QObject, PluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PluginInterface)
-    Q_INTERFACES(AbstractInfoContainer)
+    Q_INTERFACES(BaseModule)
 
 public:
     explicit TrayIcon(QObject *parent = 0);    
     void setMainWindowPTR(MainWindowInterface *ptr);
 
     void setSettingsPTR(ConfigInterface *ptr);
+
+    bool init();
+    QString errorString() const {}
 
 private:
     QPushButton *button;

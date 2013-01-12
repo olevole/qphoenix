@@ -26,10 +26,14 @@
 #include <QAction>
 
 TrayIcon::TrayIcon(QObject *parent) :
-    QObject(parent),
-    button(new QPushButton)
+    QObject(parent)
 {
     this->setName("TrayIcon");
+}
+
+
+bool TrayIcon::init() {
+    button = new QPushButton;
 }
 
 void TrayIcon::setMainWindowPTR(MainWindowInterface *ptr) {

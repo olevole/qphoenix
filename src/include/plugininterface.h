@@ -10,10 +10,11 @@
 #include "abstractinfocontainer.h"
 #include "mainwindowinterface.h"
 #include "configinterface.h"
+#include "basemodule.h"
 
 
 
-class PluginInterface : public AbstractInfoContainer
+class PluginInterface : public BaseModule
 {
 
 public:

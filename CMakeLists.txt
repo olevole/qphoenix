@@ -48,6 +48,8 @@ src/include/plugininterface.h
 src/include/translatorinterface.h
 src/include/abstractinfocontainer.h
 src/core/abstractloader.h
+src/include/basemodule.h
+
 )
 
 
