@@ -29,7 +29,6 @@ public:
 private:
     PluginList mPluginsList;
     QTableWidget *mTable;
-//    QHBoxLayout *mLayout;
 };
 
 #endif // PLUGINSCONFIG_H

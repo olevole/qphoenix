@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
     QP_DBG("Success!");
     QP_DBG(QP_PLUGINS_PATH);
 
+
     TranslatorWrapper w;
 
     return a.exec();

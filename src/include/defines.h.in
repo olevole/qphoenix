@@ -26,9 +26,16 @@
 
 #ifdef QP_DEBUG_MODE
     #include <QDebug>
-    #define QP_DBG(x) qDebug() << "In function: " << Q_FUNC_INFO << "Line: " << QString(__LINE__) << "\nMessage: " << x << "\n-------------------------------------------------------------------"
+    #define QP_DBG(x) qDebug()          \
+    << "In function: "  << Q_FUNC_INFO  \
+    << "Line: "         << __LINE__     \
+    << "\nMessage: "    << x            \
+    << "\n--------------------------------------------------------------------------------"
+
+
+
 #else
-    #define QP_DBG(x) Q_UNUSED(x)
+    #define QP_DBG
 #endif
 
 
