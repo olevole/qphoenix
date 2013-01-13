@@ -9,7 +9,6 @@ class MyMemoryTranslator : public QObject, TranslatorInterface
 {
     Q_OBJECT
     Q_INTERFACES(TranslatorInterface)
-//    Q_INTERFACES(Info)
 public:
     MyMemoryTranslator(QObject *parent = 0);
 

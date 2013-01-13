@@ -3,6 +3,12 @@
 
 #include <QGroupBox>
 
+/*!
+ * \brief The ConfigInterface class
+ *
+ * This interface allow plugins to access main
+ * config dialog (add their own setting pages)
+ */
 
 
 class ConfigInterface {
