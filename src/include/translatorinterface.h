@@ -34,6 +34,7 @@ typedef QMap <QString, QStringList> LangTable;
 class TranslatorInterface : public BaseModule {
 public:
     virtual ~TranslatorInterface(){}
+
     virtual QWidget *configWidget() = 0;
 
 

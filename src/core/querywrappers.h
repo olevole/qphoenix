@@ -40,7 +40,7 @@ public:
 
     void setTranslator(TranslatorInterface *ptr);
 
-
+public slots:
     void execQuery(const QString &src_text, const QString &src_lang,
                       const QString &dest_lang) {
         mSrcText = src_text;
@@ -52,7 +52,7 @@ public:
 
     virtual bool isReady() const { return mReady; }
     // Not implemented yet
-    virtual QString errorString() const {}
+    virtual QString errorString() const {return QString();}
 protected:
     virtual void run();
 private:

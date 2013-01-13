@@ -154,6 +154,4 @@ QWidget *MainWindow::pageAt(const int i) {
 
 void MainWindow::setCurrentPage(const int i) {
     mFancyWidget->setCurrentIndex(i);
-
-    qDebug() << "BLLLL";
 }
