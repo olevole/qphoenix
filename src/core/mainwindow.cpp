@@ -94,17 +94,24 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     // Dealing with a plugins
-    MultiLoader::loadPlugins(QP_PLUGINS_PATH, mPluginsList);
+//    MultiLoader::loadPlugins(QP_PLUGINS_PATH, mPluginsList);
 
-    foreach(QPluginLoader *ldr, mPluginsList) {
-        QObject *ptr = ldr->instance();
-        PluginInterface *iface = qobject_cast<PluginInterface *>(ptr);
+//    foreach(QObject *ptr, mPluginsList) {
 
-        iface->setMainWindowPTR(this);
-    }
+//        PluginInterface *iface = qobject_cast<PluginInterface *>(ptr);
 
+//        iface->setMainWindowPTR(this);
+//    }
 
+    MultiLoader loader;
+    loader.addSearchPath("/tmp/qphoenix-build/src/plugins/trayicon");
 
+    loader.updateInfo();
+
+    ModuleList lst = loader.moduleList();
+    QObject *obj = lst["TrayIcon"];
+
+    PluginInterface *iface = qobject_cast<PluginInterface *>(obj);
 
 }
 

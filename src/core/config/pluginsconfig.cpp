@@ -36,7 +36,7 @@ void PluginsConfig::read() {
 
 
     // Loading all plugins (for information)
-    QStringList names = MultiLoader::loadPlugins(QP_PLUGINS_PATH, mPluginsList);
+//    QStringList names = MultiLoader::loadPlugins(QP_PLUGINS_PATH, mPluginsList);
 
 
     // Updating information about plugins

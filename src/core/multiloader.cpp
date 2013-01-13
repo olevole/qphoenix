@@ -22,51 +22,48 @@
 #include "defines.h"
 #include "abstractinfocontainer.h"
 #include "plugininterface.h"
+#include <QDir>
 
 
-QStringList MultiLoader::loadPlugins(const QStringList &paths, PluginList &lst){
-    QStringList names;
-    foreach(QString str, paths) {
+void MultiLoader::updateInfo() {
 
-        QP_DBG(str);
-        QPluginLoader *ldr = new QPluginLoader(str);
+
+    //! Getting paths for ALL modules
+    mSearchPaths.removeDuplicates();
+    foreach(QString path, mSearchPaths) {
+        QDir dir(path);
+
+//        mModulesPath << dir.entryList(QStringList() << QP_MODULE_SIGNATURE);
+
+        QStringList files =  dir.entryList(QStringList() << QP_MODULE_SIGNATURE);
+        QStringList abs;
+        for(int i = 0; i < files.count(); i++)
+            abs << dir.absoluteFilePath(files.at(i));
+
+    }
+    QP_DBG(mModulesPath);
+
+
+    foreach(QString module, mModulesPath) {
+        QPluginLoader *l = new QPluginLoader(module);
+
         QObject *obj;
 
-        if(ldr->load() && (obj = ldr->instance()) != NULL) {
-            AbstractInfoContainer *iface =
+        if(l->load() && (obj = l->instance()) != NULL) {
+            AbstractInfoContainer *info =
                     qobject_cast<AbstractInfoContainer *>(obj);
 
-            if(iface == NULL){
-                QP_DBG("Unable to cast interface!");
-                QP_DBG(ldr->errorString());
-                QP_DBG(ldr->isLoaded());
-                return QStringList();
+            mInfoList.insert(info->name(), info);
+            mList.insert(info->name(), obj);
+            if(info == NULL) {
+                QP_DBG("Unalbe to cast interface!");
+                return;
             }
-            QString name = iface->name();
-            lst[name] = ldr;
-            names << name;
         } else {
-
-            QP_DBG("Cannot load plugin: ");
-            QP_DBG(str);
+            QP_DBG("Unable to load module!");
+            QP_DBG(l->errorString());
+            QP_DBG(l->fileName());
+            delete l;
         }
     }
-    return names;
-}
-
-
-QStringList MultiLoader::loadPlugins(const QString &path, PluginList &lst) {
-
-    QDir dir(path);
-    QP_DBG(dir.entryList(QStringList(QP_PLUGIN_SIGNATURE)));
-
-    QStringList full, names;
-    names = dir.entryList(QStringList() << QP_PLUGIN_SIGNATURE, QDir::Files);
-
-    foreach(QString name, names)
-        full << dir.
-                absoluteFilePath(name);
-
-
-    return loadPlugins(full, lst);
 }

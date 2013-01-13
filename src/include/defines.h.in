@@ -20,7 +20,7 @@
 
 #define QP_DEBUG_MODE
 
-#define QP_PLUGIN_SIGNATURE "lib*.so"
+#define QP_MODULE_SIGNATURE "lib*.so"
 
 
 

@@ -21,13 +21,13 @@ public:
     PluginsConfig(QWidget *parent = 0);
 
 
-    PluginList *getEnabledPlugins();
+    ModuleList *getEnabledPlugins();
 
     void save();
     void read();
     void reset();
 private:
-    PluginList mPluginsList;
+    ModuleList mPluginsList;
     QTableWidget *mTable;
 };
 

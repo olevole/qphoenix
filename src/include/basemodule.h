@@ -9,6 +9,8 @@ public:
     virtual ~BaseModule() {}
 
     virtual bool init() = 0;
+//    virtual bool load() = 0;
+//    virtual bool unload() = 0;
     virtual QString errorString() const = 0;
 };
 

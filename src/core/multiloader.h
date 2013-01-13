@@ -27,37 +27,57 @@
 #include <QList>
 #include <QMap>
 
-typedef QMap<QString, QPluginLoader*> PluginList;
+#include "abstractinfocontainer.h"
 
 
+typedef AbstractInfoContainer Info;
+typedef QMap<QString, QObject*> ModuleList;
+typedef QMap<QString, AbstractInfoContainer*> InfoList;
+
+
+
+/*!
+ * \brief The MultiLoader class
+ *
+ * This class provide information and basic
+ * load for modules.
+ */
 class MultiLoader {
 
 public:
-    /*!
-     * \brief loadPlugins
-     * \param paths paths to a plugins
-     * \param lst list where to place a plugins
-     * \return list of plugins names
-     */
-    static QStringList loadPlugins(const QStringList &paths, PluginList &lst);
+    MultiLoader(){}
+    MultiLoader(const QStringList &paths) {
+        addSearchPath(paths);
+    }
 
-    /*!
-     * \brief loadPlugins
-     * \param paths a dicrectory where to SEARCH for plugins
-     * \param lst list where to place a plugins
-     * \return list with plugins names
-     */
-    static QStringList loadPlugins(const QString &path, PluginList &lst);
+//    --------------------------------------------
 
+    void addSearchPath(const QString &path)
+    { addSearchPath(QStringList() << path); }
 
+    void addSearchPath(const QStringList &paths)
+    { mSearchPaths += paths;    }
+
+    QStringList searchPaths() const
+    { return mSearchPaths; }
+
+    void clearSearchPaths()
+    { mSearchPaths.clear(); }
+
+    void updateInfo();
+
+//    --------------------------------------------
+
+    ModuleList moduleList() {
+        return mList;
+    }
+
+    InfoList infoList() const;
 private:
-    //! This is only static class
-    MultiLoader();
-
+    ModuleList mList;
+    InfoList mInfoList;
+    QStringList mModulesPath, mSearchPaths;
 };
-
-
-
 
 
 #endif // MULTILOADER_H

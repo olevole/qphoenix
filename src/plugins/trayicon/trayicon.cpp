@@ -39,7 +39,7 @@ bool TrayIcon::init() {
 void TrayIcon::setMainWindowPTR(MainWindowInterface *ptr) {
 //    connect(ptr->toolbar(), SIGNAL(actionTriggered(QAction*)), ptr->statusbar(), SLOT(clearMessage()));
 //    ptr->dictionaryWidget()->srcText()->setText("Test");
-    ptr->setCurrentPage(1);
+//    ptr->setCurrentPage(1);
 }
 
 void TrayIcon::setSettingsPTR(ConfigInterface *ptr) {

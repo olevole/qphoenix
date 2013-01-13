@@ -74,7 +74,7 @@ private:
 
     Config *mSettingsDialog;
 
-    PluginList mPluginsList;
+    ModuleList mPluginsList;
 signals:
     void pageChanged(const int i);
 };
