@@ -35,9 +35,6 @@ class TrayIcon : public QObject, PluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PluginInterface)
-    Q_INTERFACES(BaseModule)
-    Q_INTERFACES(Info)
-
 public:
     explicit TrayIcon(QObject *parent = 0);    
     void setMainWindowPTR(MainWindowInterface *ptr);

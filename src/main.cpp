@@ -7,6 +7,8 @@
 #include "defines.h"
 #include "querywrappers.h"
 #include "plugininterface.h"
+#include "loader.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -26,6 +28,7 @@ int main(int argc, char *argv[])
 
     QP_DBG("Success!");
     QP_DBG(QP_PLUGINS_PATH);
+
 
 
 

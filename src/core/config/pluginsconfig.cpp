@@ -31,7 +31,7 @@ void PluginsConfig::read() {
     QStringList enabled;
 
     s.beginGroup("Plugins");
-    enabled = s.value("EnabledList").toStringList();
+    enabled = s.value("EnabledPlugins").toStringList();
     s.endGroup();
 
 

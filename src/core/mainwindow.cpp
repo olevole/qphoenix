@@ -24,6 +24,8 @@
 #include "testpage.h"
 #include "defines.h"
 #include "pluginsconfig.h"
+#include "loader.h"
+#include "translatorinterface.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -91,16 +93,23 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mExitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 
 
-//    QPluginLoader loader("/tmp/qphoenix-build/src/plugins/trayicon/libtrayicon.so");
-//    loader.load();
-//    QObject *obj = loader.instance();
 
-//    PluginInterface *iface = qobject_cast<PluginInterface *>(obj);
+    Loader ldr("/tmp/qphoenix-build/src/plugins/trayicon");
+    ldr.addSearchPath("/tmp");
+//    ldr.addSearchPath("/tmp/qphoenix-build/src/translators/mymemory");
+    ModuleList lst = ldr.modules();
 
 
-//    qDebug() << "Name iszzzzzz: ---- " <<iface->name();
+    for(int i = 0; i < lst.count(); i++) {
+        QObject *obj = lst.at(i);
+        PluginInterface *iface =  qobject_cast<PluginInterface *>(lst.at(i));
+        iface->load();
+        iface->setMainWindowPTR(this);
+        qDebug() << "Name: " << iface->name();
+    }
 
-//    iface->setMainWindowPTR(this);
+
+
 
 }
 

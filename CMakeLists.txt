@@ -62,6 +62,8 @@ src/core/translationwidget.h
 src/core/dictionarywidget.h
 
 src/core/querywrappers.h
+src/core/loader.h
+
 )
 
 
@@ -76,6 +78,7 @@ src/core/config/pluginsconfig.cpp
 src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
 src/core/querywrappers.cpp
+src/core/loader.cpp
 )
 
 # Not implemented yet
