@@ -50,7 +50,7 @@ void PluginsConfig::read() {
 //            mPluginsList.remove(cur_name);
 //        }
 
-//        AbstractInfoContainer *iface = qobject_cast<mPluginsList[]
+//        Info *iface = qobject_cast<mPluginsList[]
 //    }
 
 

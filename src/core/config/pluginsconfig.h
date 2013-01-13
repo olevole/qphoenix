@@ -3,8 +3,7 @@
 
 
 #include "configpageinterface.h"
-#include "abstractinfocontainer.h"
-#include "multiloader.h"
+#include "info.h"
 
 #include <QWidget>
 
@@ -21,13 +20,11 @@ public:
     PluginsConfig(QWidget *parent = 0);
 
 
-    ModuleList *getEnabledPlugins();
 
     void save();
     void read();
     void reset();
 private:
-    ModuleList mPluginsList;
     QTableWidget *mTable;
 };
 

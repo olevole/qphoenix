@@ -24,7 +24,7 @@
 
 #include <QWidget>
 #include "translatorwidgetinterface.h"
-#include "abstractinfocontainer.h"
+#include "info.h"
 
 class QTextEdit;
 class QTextBrowser;
@@ -40,11 +40,11 @@ class QHBoxLayout;
 
 
 
-class TranslationWidget : public QWidget, TranslatorWidgetInterface, AbstractInfoContainer
+class TranslationWidget : public QWidget, TranslatorWidgetInterface, Info
 {
     Q_OBJECT
     Q_INTERFACES(TranslatorWidgetInterface)
-    Q_INTERFACES(AbstractInfoContainer)
+    Q_INTERFACES(Info)
 public:
     explicit TranslationWidget(QWidget *parent = 0);
 

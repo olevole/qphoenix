@@ -22,9 +22,9 @@
 #ifndef SETTINGSPAGEINTERFACE_H
 #define SETTINGSPAGEINTERFACE_H
 
-#include "abstractinfocontainer.h"
+#include "info.h"
 
-class ConfigPageInterface : public AbstractInfoContainer
+class ConfigPageInterface : public Info
 {
 public:
     virtual ~ConfigPageInterface(){}
@@ -44,3 +44,4 @@ Q_DECLARE_INTERFACE(ConfigPageInterface, "com.qphoenix.interfaces.settings/1.0")
 
 
 #endif // SETTINGSPAGEINTERFACE_H
+

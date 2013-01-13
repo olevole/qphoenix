@@ -1,16 +1,16 @@
 #ifndef ABSMODULE_H
 #define ABSMODULE_H
 
-#include "abstractinfocontainer.h"
+#include "info.h"
 #include <QString>
 
-class BaseModule : public AbstractInfoContainer {
+class BaseModule : public Info {
 public:
     virtual ~BaseModule() {}
 
-    virtual bool init() = 0;
-//    virtual bool load() = 0;
-//    virtual bool unload() = 0;
+//    virtual bool init() = 0;
+    virtual bool load() = 0;
+    virtual bool unload() = 0;
     virtual QString errorString() const = 0;
 };
 

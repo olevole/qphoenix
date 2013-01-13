@@ -23,7 +23,7 @@
 #define DICTIONARYWIDGET_H
 
 #include <QWidget>
-#include "abstractinfocontainer.h"
+#include "info.h"
 #include "dictionarywidgetinterface.h"
 
 
@@ -37,11 +37,11 @@ class QHBoxLayout;
 class QVBoxLayout;
 
 
-class DictionaryWidget : public QWidget, DictionaryWidgetInterface, AbstractInfoContainer
+class DictionaryWidget : public QWidget, DictionaryWidgetInterface, Info
 {
     Q_OBJECT
     Q_INTERFACES(DictionaryWidgetInterface)
-    Q_INTERFACES(AbstractInfoContainer)
+    Q_INTERFACES(Info)
 public:
     explicit DictionaryWidget(QWidget *parent = 0);
 

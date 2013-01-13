@@ -36,7 +36,7 @@ class TrayIcon : public QObject, PluginInterface
     Q_OBJECT
     Q_INTERFACES(PluginInterface)
     Q_INTERFACES(BaseModule)
-    Q_INTERFACES(AbstractInfoContainer)
+    Q_INTERFACES(Info)
 
 public:
     explicit TrayIcon(QObject *parent = 0);    
@@ -44,7 +44,8 @@ public:
 
     void setSettingsPTR(ConfigInterface *ptr);
 
-    bool init();
+    bool load();
+    bool unload();
     QString errorString() const {}
 
 private:

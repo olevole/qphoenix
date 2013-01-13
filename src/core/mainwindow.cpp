@@ -15,7 +15,6 @@
 #include <QPushButton>
 #include <QApplication>
 
-#include "abstractinfocontainer.h"
 #include "plugininterface.h"
 
 #include "translationwidget.h"
@@ -24,7 +23,6 @@
 #include "translatorsconfig.h"
 #include "testpage.h"
 #include "defines.h"
-#include "multiloader.h"
 #include "pluginsconfig.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -93,25 +91,16 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mExitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 
 
-    // Dealing with a plugins
-//    MultiLoader::loadPlugins(QP_PLUGINS_PATH, mPluginsList);
+//    QPluginLoader loader("/tmp/qphoenix-build/src/plugins/trayicon/libtrayicon.so");
+//    loader.load();
+//    QObject *obj = loader.instance();
 
-//    foreach(QObject *ptr, mPluginsList) {
+//    PluginInterface *iface = qobject_cast<PluginInterface *>(obj);
 
-//        PluginInterface *iface = qobject_cast<PluginInterface *>(ptr);
 
-//        iface->setMainWindowPTR(this);
-//    }
+//    qDebug() << "Name iszzzzzz: ---- " <<iface->name();
 
-    MultiLoader loader;
-    loader.addSearchPath("/tmp/qphoenix-build/src/plugins/trayicon");
-
-    loader.updateInfo();
-
-    ModuleList lst = loader.moduleList();
-    QObject *obj = lst["TrayIcon"];
-
-    PluginInterface *iface = qobject_cast<PluginInterface *>(obj);
+//    iface->setMainWindowPTR(this);
 
 }
 
@@ -122,8 +111,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::addPage(QWidget *page) {
 
-    AbstractInfoContainer *i =
-            qobject_cast<AbstractInfoContainer *>(page);
+    Info *i =
+            qobject_cast<Info *>(page);
 
 
     if(i == NULL) {

@@ -5,7 +5,6 @@
 #include "translationwidget.h"
 #include "dictionarywidget.h"
 #include "defines.h"
-#include "multiloader.h"
 #include "querywrappers.h"
 #include "plugininterface.h"
 

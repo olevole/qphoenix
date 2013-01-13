@@ -22,7 +22,7 @@
 #ifndef TRANSLATORINTERFACE_H
 #define TRANSLATORINTERFACE_H
 
-#include "abstractinfocontainer.h"
+#include "info.h"
 #include <QMap>
 #include "basemodule.h"
 

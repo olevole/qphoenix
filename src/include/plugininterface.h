@@ -7,7 +7,7 @@
  * This is a basic interface for ALL plugins
  */
 
-#include "abstractinfocontainer.h"
+#include "info.h"
 #include "mainwindowinterface.h"
 #include "configinterface.h"
 #include "basemodule.h"

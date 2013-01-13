@@ -2,12 +2,12 @@
 #define MYMEMORYTRANSLATOR_H
 
 #include "../../include/translatorinterface.h"
-#include "../../include/abstractinfocontainer.h"
+#include "../../include/info.h"
 
 class MyMemoryTranslator : public TranslatorInterface
 {
     Q_INTERFACES(TranslatorInterface)
-    Q_INTERFACES(AbstractInfoContainer)
+    Q_INTERFACES(Info)
 public:
     MyMemoryTranslator();
 };

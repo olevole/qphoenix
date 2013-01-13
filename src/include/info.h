@@ -19,14 +19,11 @@
  *    Years: 2012-2013
  */
 
-#ifndef INFO_H
-#define INFO_H
+#ifndef Info_H
+#define Info_H
 
-
+#include <QString>
 #include <QIcon>
-
-
-namespace Tools {
 
 class Info
 {
@@ -39,19 +36,17 @@ public:
     QIcon   icon() const                    {return mIcon;      }
 protected:
     void setName(const QString &n)          {mName = n;         }
+
     void setVersion(const QString &v)       {mVersion = v;      }
     void setUrl(const QString &u)           {mUrl = u;          }
     void setDescription(const QString &t)   {mDecription = t;   }
     void setIcon( const QIcon &icon)        {mIcon = icon;      }
 
-
-
-
-//     Info & operator=(const Info &i);
     QString mName, mVersion, mUrl, mDecription;
     QIcon mIcon;
 };
 
-} // end Tools namespace
+Q_DECLARE_INTERFACE(Info, "com.qphoenix.interfaces.info/1.0");
 
-#endif // INFO_H
+
+#endif // Info_H

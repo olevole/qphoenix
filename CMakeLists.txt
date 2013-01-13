@@ -46,8 +46,7 @@ src/include/dictionarywidgetinterface.h
 src/include/configinterface.h
 src/include/plugininterface.h
 src/include/translatorinterface.h
-src/include/abstractinfocontainer.h
-src/core/abstractloader.h
+src/include/info.h
 src/include/basemodule.h
 
 )
@@ -62,7 +61,6 @@ src/core/config/pluginsconfig.h
 src/core/translationwidget.h
 src/core/dictionarywidget.h
 
-src/core/multiloader.h
 src/core/querywrappers.h
 )
 
@@ -77,7 +75,6 @@ src/core/config/testpage.cpp
 src/core/config/pluginsconfig.cpp
 src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
-src/core/multiloader.cpp
 src/core/querywrappers.cpp
 )
 

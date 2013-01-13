@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include "fancytabwidget.h"
 #include "mainwindowinterface.h"
-#include "multiloader.h"
+
 
 class QStatusBar;
 class QToolBar;
@@ -74,7 +74,6 @@ private:
 
     Config *mSettingsDialog;
 
-    ModuleList mPluginsList;
 signals:
     void pageChanged(const int i);
 };

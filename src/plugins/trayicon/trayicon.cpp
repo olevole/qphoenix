@@ -32,14 +32,19 @@ TrayIcon::TrayIcon(QObject *parent) :
 }
 
 
-bool TrayIcon::init() {
+bool TrayIcon::load() {
     button = new QPushButton;
+}
+
+bool TrayIcon::unload() {
+    delete button;
 }
 
 void TrayIcon::setMainWindowPTR(MainWindowInterface *ptr) {
 //    connect(ptr->toolbar(), SIGNAL(actionTriggered(QAction*)), ptr->statusbar(), SLOT(clearMessage()));
 //    ptr->dictionaryWidget()->srcText()->setText("Test");
-//    ptr->setCurrentPage(1);
+    ptr->setCurrentPage(1);
+    ptr->toolbar()->addWidget(button);
 }
 
 void TrayIcon::setSettingsPTR(ConfigInterface *ptr) {
