@@ -1,16 +1,15 @@
-cmake_minimum_required(VERSION 2.6)
-
-
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+SET (TARGET "trayicon")
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
 
-find_package(Qt4 REQUIRED)
-include(${QT_USE_FILE})
+FIND_PACKAGE(Qt4 REQUIRED)
+INCLUDE(${QT_USE_FILE})
 
-add_definitions(${QT_DEFINITIONS})
-add_definitions(-DQT_PLUGIN)
-add_definitions(-DQT_NO_DEBUG)
-add_definitions(-DQT_SHARED)
+ADD_DEFINITIONS(${QT_DEFINITIONS})
+ADD_DEFINITIONS(-DQT_PLUGIN)
+ADD_DEFINITIONS(-DQT_NO_DEBUG)
+ADD_DEFINITIONS(-DQT_SHARED)
 ADD_DEFINITIONS(-DQT_DLL)
 
 include_directories(
@@ -21,23 +20,16 @@ ${PROJECT_SOURCE_DIR}/../../include
 )
 
 
-set(SOURCES
-  trayicon.cpp
-)
+SET(SOURCES trayicon.cpp)
 
-set(HEADERS
-  trayicon.h
-)
+SET(HEADERS trayicon.h)
 
-qt4_wrap_cpp(MOC_SOURCES ${HEADERS})
+QT4_WRAP_CPP(MOC_SOURCES ${HEADERS})
 
 
+ADD_LIBRARY(${TARGET}  SHARED ${HEDARS} ${SOURCES}  ${MOC_SOURCES})
+TARGET_LINK_LIBRARIES(${TARGET}  ${QT_LIBRARIES})
 
 
-add_library( trayicon SHARED ${HEDARS} ${SOURCES}  ${MOC_SOURCES})
-target_link_libraries(trayicon ${QT_LIBRARIES})
+INSTALL(TARGETS ${TARGET} DESTINATION ${PLUGINS_PATH})
 
-
-if(${CMAKE_SYSTEM_NAME} STREQUAL Linux)
-        install(TARGETS trayicon DESTINATION ${PLUGINS_PATH})
-endif()

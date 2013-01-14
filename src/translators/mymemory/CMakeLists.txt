@@ -1,19 +1,19 @@
-cmake_minimum_required(VERSION 2.6)
-
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+SET(TARGET "mymemorytranslator")
 
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
 
-find_package(Qt4 REQUIRED)
-include(${QT_USE_FILE})
+FIND_PACKAGE(Qt4 REQUIRED)
+INCLUDE(${QT_USE_FILE})
 
-add_definitions(${QT_DEFINITIONS})
-add_definitions(-DQT_PLUGIN)
-add_definitions(-DQT_NO_DEBUG)
-add_definitions(-DQT_SHARED)
+ADD_DEFINITIONS(${QT_DEFINITIONS})
+ADD_DEFINITIONS(-DQT_PLUGIN)
+ADD_DEFINITIONS(-DQT_NO_DEBUG)
+ADD_DEFINITIONS(-DQT_SHARED)
 ADD_DEFINITIONS(-DQT_DLL)
 
-include_directories(
+INCLUDE_DIRECTORIES(
 ${CMAKE_CURRENT_BINARY_DIR}
 ${CMAKE_INCLUDE_PATH}
 ${PROJECT_SOURCE_DIR}
@@ -21,23 +21,17 @@ ${PROJECT_SOURCE_DIR}/../../include
 )
 
 
-set(SOURCES
-  mymemorytranslator.cpp
-)
+SET(SOURCES mymemorytranslator.cpp)
+SET(HEADERS mymemorytranslator.h)
 
-set(HEADERS
-  mymemorytranslator.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${HEADERS})
+QT4_WRAP_CPP(MOC_SOURCES ${HEADERS})
 
 
 
 
-add_library( mymemorytranslator SHARED ${HEDARS} ${SOURCES}  ${MOC_SOURCES})
-target_link_libraries(mymemorytranslator ${QT_LIBRARIES})
+ADD_LIBRARY( ${TARGET} SHARED ${HEDARS} ${SOURCES}  ${MOC_SOURCES})
+TARGET_LINK_LIBRARIES(${TARGET} ${QT_LIBRARIES})
 
 
-if(${CMAKE_SYSTEM_NAME} STREQUAL Linux)
-        install(TARGETS mymemorytranslator DESTINATION ${CMAKE_INSTALL_PREFIX}/share/translators)
-endif()
+INSTALL(TARGETS ${TARGET} DESTINATION ${TRANSLATORS_PATH})
+
