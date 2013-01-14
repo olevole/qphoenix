@@ -39,5 +39,5 @@ target_link_libraries(trayicon ${QT_LIBRARIES})
 
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL Linux)
-        install(TARGETS trayicon DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plugins)
+        install(TARGETS trayicon DESTINATION ${PLUGINS_PATH})
 endif()

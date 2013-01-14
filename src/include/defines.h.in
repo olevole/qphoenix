@@ -51,8 +51,8 @@
 #endif
 
 
-#define QP_PLUGINS_PATH QP_PREFIX  + "lib/qphoenix/plugins"
-#define QP_TRANSLATORS_PATH  QP_PREFIX + "translators"
-#define QP_DICTIONARIES_PATH QP_PREFIX + "dictionaries"
+#define QP_PLUGINS_PATH  "${PLUGINS_PATH}"
+#define QP_TRANSLATORS_PATH  "${TRANSLATORS_PATH}"
+#define QP_DICTIONARIES_PATH "${DICTIONARIES_PATH}"
 
 #endif // DEFINES_H
