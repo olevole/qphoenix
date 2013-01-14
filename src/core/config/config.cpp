@@ -68,8 +68,6 @@ void Config::addPage(QWidget *page) {
     ConfigPageInterface *iface = qobject_cast<ConfigPageInterface *>(page);
 
 
-    QWidget *widget = (QWidget*)iface;
-    widget->show();
 
     QString name;
     QIcon icon;

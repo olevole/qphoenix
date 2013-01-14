@@ -13,6 +13,8 @@ PluginsConfig::PluginsConfig(QWidget *parent)
     this->setLayout(new QHBoxLayout);
     this->layout()->addWidget(mTable);
 
+    this->setName("Plugins");
+
 
     mTable->setColumnCount(3);
 

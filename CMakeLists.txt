@@ -9,7 +9,6 @@ IF(NOT MSVC)
     ENDIF("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
 ENDIF()
 
-
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 ADD_DEFINITIONS(-DUNICODE)
 FIND_PACKAGE(Qt4 REQUIRED)
@@ -34,9 +33,6 @@ src/core/tools
 
 CONFIGURE_FILE(src/include/defines.h.in src/include/defines.h)
 
-
-#SET(GLOBAL_HEADERS
-#src/include/defines.h)
 
 SET(IFACES
 src/include/configpageinterface.h
@@ -79,13 +75,13 @@ src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
 src/core/querywrappers.cpp
 src/core/loader.cpp
+
 )
 
 # Not implemented yet
 SET(L18N
 src/l18n/Russian.ts
 src/l18n/English.ts)
-
 
 
 
@@ -98,7 +94,6 @@ ADD_EXECUTABLE(qphoenix ${SOURCES}
 
 TARGET_LINK_LIBRARIES(qphoenix ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES}
  ${QT_QTXML_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES} fancytabwidget)
-
 
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL Linux)
