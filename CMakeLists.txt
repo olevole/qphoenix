@@ -22,15 +22,18 @@ ADD_SUBDIRECTORY(src/plugins/trayicon)
 ADD_SUBDIRECTORY(src/translators/mymemory)
 
 
+
+
+
+
 INCLUDE_DIRECTORIES(
 ${CMAKE_CURRENT_BINARY_DIR}
 ${CMAKE_INCLUDE_PATH}
 ${CMAKE_CURRENT_BINARY_DIR}/src/include
+src/core
 src/core/config
 src/core/3rdparty/fancytab-widgets
-src/core
 src/include
-src/core/tools
 )
 
 CONFIGURE_FILE(src/include/defines.h.in src/include/defines.h)
@@ -58,10 +61,8 @@ src/core/config/translatorsconfig.h
 src/core/config/pluginsconfig.h
 src/core/translationwidget.h
 src/core/dictionarywidget.h
-
 src/core/querywrappers.h
 src/core/loader.h
-
 )
 
 
@@ -77,7 +78,6 @@ src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
 src/core/querywrappers.cpp
 src/core/loader.cpp
-
 )
 
 # Not implemented yet
@@ -91,7 +91,7 @@ src/l18n/English.ts)
 QT4_WRAP_CPP(MOC_SOURCES ${HEADERS})
 
 
-ADD_EXECUTABLE(qphoenix ${SOURCES}
+ADD_EXECUTABLE(${EXECUTABLE_NAME} ${SOURCES}
                ${MOC_SOURCES}  ${QM_FILES} ${QRC_SOURCES} ${GLOBAL_HEADERS} ${IFACES})
 
 TARGET_LINK_LIBRARIES(qphoenix ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES}
@@ -99,5 +99,5 @@ TARGET_LINK_LIBRARIES(qphoenix ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES}
 
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL Linux)
-        install(TARGETS qphoenix DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+        install(TARGETS ${EXECUTABLE_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
 endif()
