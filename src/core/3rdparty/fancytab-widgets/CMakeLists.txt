@@ -32,6 +32,9 @@ utils/styledbar.h
 utils/stylehelper.h
 utils/utils_global.h)
 
+
+
+
 QT4_WRAP_CPP(MOC_SOURCES ${HEADERS})
 
 
