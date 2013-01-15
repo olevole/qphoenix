@@ -21,6 +21,7 @@ INCLUDE(${QT_USE_FILE})
 ADD_SUBDIRECTORY(src/core/3rdparty/fancytab-widgets)
 ADD_SUBDIRECTORY(src/plugins/trayicon)
 ADD_SUBDIRECTORY(src/translators/mymemory)
+ADD_SUBDIRECTORY(src/tests)
 
 
 
@@ -32,8 +33,7 @@ ${CMAKE_CURRENT_BINARY_DIR}/src/include
 src/core
 src/core/config
 src/core/3rdparty/fancytab-widgets
-src/include
-src/tests)
+src/include)
 
 
 
