@@ -3,6 +3,7 @@ PROJECT(QPhoenix)
 
 SET(EXECUTABLE_NAME "qphoenix")
 SET(PROJECT_VERSION "0.999999")
+SET(STATICLIB "qphoenix_static")
 
 SET(CMAKE_BUILD_TYPE Debug)
 
@@ -24,8 +25,6 @@ ADD_SUBDIRECTORY(src/translators/mymemory)
 
 
 
-
-
 INCLUDE_DIRECTORIES(
 ${CMAKE_CURRENT_BINARY_DIR}
 ${CMAKE_INCLUDE_PATH}
@@ -33,8 +32,7 @@ ${CMAKE_CURRENT_BINARY_DIR}/src/include
 src/core
 src/core/config
 src/core/3rdparty/fancytab-widgets
-src/include
-)
+src/include)
 
 
 
@@ -47,9 +45,7 @@ src/include/configinterface.h
 src/include/plugininterface.h
 src/include/translatorinterface.h
 src/include/info.h
-src/include/basemodule.h
-
-)
+src/include/basemodule.h)
 
 
 SET(HEADERS
@@ -61,13 +57,12 @@ src/core/config/pluginsconfig.h
 src/core/translationwidget.h
 src/core/dictionarywidget.h
 src/core/querywrappers.h
-src/core/loader.h
-)
+src/core/loader.h)
 
 
 
 SET(SOURCES
-src/main.cpp
+#src/main.cpp
 src/core/mainwindow.cpp
 src/core/config/config.cpp
 src/core/config/translatorsconfig.cpp
@@ -76,8 +71,11 @@ src/core/config/pluginsconfig.cpp
 src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
 src/core/querywrappers.cpp
-src/core/loader.cpp
-)
+src/core/loader.cpp)
+
+
+SET(TESTS
+src/tests/tst_plugintesttest.cpp)
 
 # Not implemented yet
 SET(L18N
@@ -106,17 +104,16 @@ SET(RESOURCES_PATH      ${MPREFIX}/resources      CACHE INTERNAL "")
 
 CONFIGURE_FILE(src/include/defines.h.in src/include/defines.h)
 
-
-
 QT4_WRAP_CPP(MOC_SOURCES ${HEADERS})
 
 
-ADD_EXECUTABLE(${EXECUTABLE_NAME}
-${SOURCES} ${MOC_SOURCES}  ${QM_FILES} ${QRC_SOURCES} ${GLOBAL_HEADERS} ${IFACES})
+# TODO: Fx this ugly code
+ADD_LIBRARY(${STATICLIB} STATIC ${SOURCES} ${MOC_SOURCES}  ${QM_FILES} ${QRC_SOURCES} ${GLOBAL_HEADERS} ${IFACES} )
+TARGET_LINK_LIBRARIES(${STATICLIB} ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES}
+ ${QT_QTXML_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES}  fancytabwidget)
 
-TARGET_LINK_LIBRARIES(${EXECUTABLE_NAME} ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES}
- ${QT_QTXML_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES} fancytabwidget)
-
+ADD_EXECUTABLE(${EXECUTABLE_NAME} src/main.cpp)
+TARGET_LINK_LIBRARIES(${EXECUTABLE_NAME}  ${STATICLIB})
 
 
 INSTALL(TARGETS ${EXECUTABLE_NAME} DESTINATION ${INSTALLPATH})
