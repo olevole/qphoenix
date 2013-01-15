@@ -1,20 +1,7 @@
 #include <QString>
 #include <QtTest/QtTest>
+#include "plugintest.h"
 
-class PluginTest : public QObject
-{
-    Q_OBJECT
-    
-public:
-    PluginTest();
-    
-private Q_SLOTS:
-    void testCase1();
-};
-
-PluginTest::PluginTest()
-{
-}
 
 void PluginTest::testCase1()
 {
@@ -23,4 +10,3 @@ void PluginTest::testCase1()
 
 QTEST_APPLESS_MAIN(PluginTest)
 
-//#include "moc_plugintest.cxx"

@@ -13,6 +13,7 @@ IF(NOT MSVC)
     ENDIF("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
 ENDIF()
 
+ENABLE_TESTING(TRUE)
 
 FIND_PACKAGE(Qt4 REQUIRED QtCore QtGui)
 INCLUDE(${QT_USE_FILE})
@@ -34,8 +35,6 @@ src/core
 src/core/config
 src/core/3rdparty/fancytab-widgets
 src/include)
-
-
 
 SET(IFACES
 src/include/configpageinterface.h
@@ -75,9 +74,6 @@ src/core/querywrappers.cpp
 src/core/loader.cpp)
 
 
-SET(TESTS
-src/tests/tst_plugintesttest.cpp)
-
 # Not implemented yet
 SET(L18N
 src/l18n/Russian.ts
@@ -108,7 +104,6 @@ CONFIGURE_FILE(src/include/defines.h.in src/include/defines.h)
 QT4_WRAP_CPP(MOC_SOURCES ${HEADERS})
 
 
-# TODO: Fx this ugly code
 ADD_LIBRARY(${STATICLIB} STATIC ${SOURCES} ${MOC_SOURCES}  ${QM_FILES} ${QRC_SOURCES} ${GLOBAL_HEADERS} ${IFACES} )
 TARGET_LINK_LIBRARIES(${STATICLIB} ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES}
  ${QT_QTXML_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES}  fancytabwidget)
