@@ -3,7 +3,7 @@ PROJECT(QPhoenix)
 
 SET(EXECUTABLE_NAME "qphoenix")
 SET(PROJECT_VERSION "0.999999")
-SET(STATICLIB "qphoenix_static")
+SET(STATICLIB "qphoenix_static" CACHE INTERNAL "")
 
 SET(CMAKE_BUILD_TYPE Debug)
 
@@ -32,7 +32,8 @@ ${CMAKE_CURRENT_BINARY_DIR}/src/include
 src/core
 src/core/config
 src/core/3rdparty/fancytab-widgets
-src/include)
+src/include
+src/tests)
 
 
 
