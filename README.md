@@ -32,14 +32,13 @@ Project Status
 Contribute
 --------------------
 
-      contact flareguner at gmail dotcom
-      to get any instructions.
+      Contact flareguner at gmail dotcom to get any instructions.
       
       
 Build Dependencies
 --------------------
 
-  - Qt4 Libraries
+  - Qt 4
   - cmake 2.8 or higher
   - gcc (not tested with other compilers, yet (FIXME))
       
