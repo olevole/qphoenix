@@ -1,5 +1,4 @@
-#ifndef LOADER_H
-#define LOADER_H
+
 
 #include <QObject>
 
@@ -17,4 +16,3 @@ private slots:
 };
 
 
-#endif

@@ -2,7 +2,8 @@
 #include <QtTest/QtTest>
 #include "plugintest.h"
 #include "loader.h"
-
+#include "plugininterface.h"
+#include "translatorinterface.h"
 
 PluginTest::PluginTest()
 {
@@ -12,7 +13,14 @@ PluginTest::PluginTest()
 }
 
 void PluginTest::testCase1() {
-//    Loader ldr;
+    Loader ldr;
+    ldr.addSearchPath("/tmp/qphoenix-build/src/translators/mymemory");
+
+    ModuleList list = ldr.modules();
+
+    TranslatorInterface *iface = qobject_cast<TranslatorInterface *>(list.first());
+
+    QVERIFY(iface->load());
 }
 
 void PluginTest::testCase2() {

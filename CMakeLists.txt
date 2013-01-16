@@ -33,10 +33,7 @@ src/core/config
 src/core/3rdparty/fancytab-widgets
 src/include)
 
-ADD_SUBDIRECTORY(src/core/3rdparty/fancytab-widgets)
-ADD_SUBDIRECTORY(src/plugins/trayicon)
-ADD_SUBDIRECTORY(src/translators/mymemory)
-ADD_SUBDIRECTORY(src/tests)
+
 
 SET(IFACES
 src/include/configpageinterface.h
@@ -100,6 +97,11 @@ SET(TRANSLATORS_PATH    ${MPREFIX}/translators    CACHE INTERNAL "")
 SET(DICTIONARIES_PATH   ${MPREFIX}/dictionaries   CACHE INTERNAL "")
 SET(L18N_PATH           ${MPREFIX}/l18n           CACHE INTERNAL "")
 SET(RESOURCES_PATH      ${MPREFIX}/resources      CACHE INTERNAL "")
+
+ADD_SUBDIRECTORY(src/core/3rdparty/fancytab-widgets)
+ADD_SUBDIRECTORY(src/plugins/trayicon)
+ADD_SUBDIRECTORY(src/translators/mymemory)
+ADD_SUBDIRECTORY(src/tests)
 
 CONFIGURE_FILE(src/include/defines.h.in src/include/defines.h)
 
