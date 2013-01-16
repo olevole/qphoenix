@@ -62,6 +62,7 @@ void PluginsConfig::updateTable() {
 //    mTable->clear();
 
 
+
     for (int i = 0; i < mPlugins.count(); ++i) {
         PluginInterface *iface = qobject_cast<PluginInterface *>(mPlugins.at(i));
 
