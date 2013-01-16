@@ -19,10 +19,7 @@ FIND_PACKAGE(Qt4 REQUIRED QtCore QtGui)
 INCLUDE(${QT_USE_FILE})
 
 
-ADD_SUBDIRECTORY(src/core/3rdparty/fancytab-widgets)
-ADD_SUBDIRECTORY(src/plugins/trayicon)
-ADD_SUBDIRECTORY(src/translators/mymemory)
-ADD_SUBDIRECTORY(src/tests)
+
 
 
 
@@ -35,6 +32,11 @@ src/core
 src/core/config
 src/core/3rdparty/fancytab-widgets
 src/include)
+
+ADD_SUBDIRECTORY(src/core/3rdparty/fancytab-widgets)
+ADD_SUBDIRECTORY(src/plugins/trayicon)
+ADD_SUBDIRECTORY(src/translators/mymemory)
+ADD_SUBDIRECTORY(src/tests)
 
 SET(IFACES
 src/include/configpageinterface.h
@@ -104,6 +106,7 @@ CONFIGURE_FILE(src/include/defines.h.in src/include/defines.h)
 QT4_WRAP_CPP(MOC_SOURCES ${HEADERS})
 
 
+# TODO: Fx this ugly code
 ADD_LIBRARY(${STATICLIB} STATIC ${SOURCES} ${MOC_SOURCES}  ${QM_FILES} ${QRC_SOURCES} ${GLOBAL_HEADERS} ${IFACES} )
 TARGET_LINK_LIBRARIES(${STATICLIB} ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES}
  ${QT_QTXML_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES}  fancytabwidget)

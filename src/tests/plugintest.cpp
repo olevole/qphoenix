@@ -13,7 +13,6 @@ PluginTest::PluginTest()
 
 void PluginTest::testCase1() {
 
-
 }
 
 void PluginTest::testCase2() {
