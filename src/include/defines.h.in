@@ -41,14 +41,14 @@
 
 
 #ifdef Q_OS_UNIX
-    #define QP_PLUGIN_EXT ".so"
     #define QP_PREFIX QString("%1/%2").arg("${CMAKE_INSTALL_PREFIX}").arg(QDir::separator())
 #endif
 
 #ifdef Q_OS_WIN32
     #define QP_PLUGIN_EXT ".dll"
-    #define QP_PREFIX ""
 #endif
+
+#define QP_PREFIX "${PREFIX}"
 
 
 #define QP_PLUGINS_PATH  "${PLUGINS_PATH}"

@@ -22,7 +22,6 @@
 #ifndef TRANSLATORINTERFACE_H
 #define TRANSLATORINTERFACE_H
 
-#include "info.h"
 #include <QMap>
 #include "basemodule.h"
 

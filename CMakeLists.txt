@@ -43,6 +43,7 @@ src/include/dictionarywidgetinterface.h
 src/include/configinterface.h
 src/include/plugininterface.h
 src/include/translatorinterface.h
+src/include/dictionaryinterface.h
 src/include/info.h
 src/include/basemodule.h)
 
@@ -80,7 +81,7 @@ src/l18n/English.ts)
 
 SET(PREFIX ${CMAKE_INSTALL_PREFIX})
 
-IF(UNIX)
+IF(UNIX AND NOT APPLE)
         SET(MPREFIX ${PREFIX}/share/qphoenix)
         SET(INSTALLPATH ${PREFIX}/bin)
 ENDIF()

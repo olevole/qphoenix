@@ -1,6 +1,7 @@
 #include "pluginsconfig.h"
 #include "defines.h"
-
+#include "info.h"
+#include "plugininterface.h"
 
 #include <QTableWidget>
 #include <QHBoxLayout>
@@ -16,9 +17,20 @@ PluginsConfig::PluginsConfig(QWidget *parent)
     this->setName("Plugins");
 
 
-    mTable->setColumnCount(3);
+    mTable->setColumnCount(4);
 
 
+    Loader loader("/tmp/qphoenix-build/src/plugins/trayicon");
+
+    mPlugins = loader.modules();
+
+
+    mTable->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Name")));
+    mTable->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("Description")));
+    mTable->setHorizontalHeaderItem(2, new QTableWidgetItem(tr("Version")));
+    mTable->setHorizontalHeaderItem(3, new QTableWidgetItem(""));
+
+    updateTable();
 }
 
 
@@ -37,27 +49,31 @@ void PluginsConfig::read() {
     s.endGroup();
 
 
-    // Loading all plugins (for information)
-//    QStringList names = MultiLoader::loadPlugins(QP_PLUGINS_PATH, mPluginsList);
 
-
-    // Updating information about plugins
-
-//    mTable->clear();
-
-//    for(int i = 0; i < mPluginsList.count(); i++) {
-//        const QString cur_name = names.at(i);
-//        if(!enabled.contains(cur_name)) {
-//            mPluginsList[cur_name]->unload();
-//            mPluginsList.remove(cur_name);
-//        }
-
-//        Info *iface = qobject_cast<mPluginsList[]
-//    }
 
 
 }
 
 void PluginsConfig::reset() {
 
+}
+
+void PluginsConfig::updateTable() {
+//    mTable->clear();
+
+
+    for (int i = 0; i < mPlugins.count(); ++i) {
+        PluginInterface *iface = qobject_cast<PluginInterface *>(mPlugins.at(i));
+
+        const int row = mTable->rowCount();
+        mTable->insertRow(row);
+
+        mTable->setItem(row, 0, new QTableWidgetItem(iface->name()));
+        mTable->setItem(row, 1, new QTableWidgetItem(iface->description()));
+        mTable->setItem(row, 2, new QTableWidgetItem(iface->version()));
+
+
+        QP_DBG("++++++++++++++++++++++++++++++");
+        QP_DBG(iface->name());
+    }
 }

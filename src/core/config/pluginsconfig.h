@@ -4,6 +4,7 @@
 
 #include "configpageinterface.h"
 #include "info.h"
+#include "loader.h"
 
 #include <QWidget>
 
@@ -19,13 +20,17 @@ class PluginsConfig : public QWidget, ConfigPageInterface
 public:
     PluginsConfig(QWidget *parent = 0);
 
-
+    ModuleList *pluginsList();
+    QStringList *enabledPluginsList() const;
 
     void save();
     void read();
     void reset();
+protected:
+    void updateTable();
 private:
     QTableWidget *mTable;
+    ModuleList mPlugins;
 };
 
 #endif // PLUGINSCONFIG_H

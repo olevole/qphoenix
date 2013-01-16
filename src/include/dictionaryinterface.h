@@ -19,42 +19,30 @@
  *    Years: 2012-2013
  */
 
-#include "trayicon.h"
-#include <QtGui>
-#include <QPushButton>
-#include <QToolBar>
-#include <QAction>
+#pragma once
 
-TrayIcon::TrayIcon(QObject *parent) :
-    QObject(parent)
-{
-    this->setName("TrayIcon");
-    this->setDescription("This is my best plugin!");
-    this->setVersion("0.666satan");
-}
+#include "basemodule.h"
+
+class QWidget;
+class QString;
 
 
-bool TrayIcon::load() {
-    button = new QPushButton;
-}
+class DictionaryInterface : public BaseModule {
+public:
+    virtual ~DictionaryInterface(){}
 
-bool TrayIcon::unload() {
-    delete button;
-}
-
-void TrayIcon::setMainWindowPTR(MainWindowInterface *ptr) {
-//    connect(ptr->toolbar(), SIGNAL(actionTriggered(QAction*)), ptr->statusbar(), SLOT(clearMessage()));
-//    ptr->dictionaryWidget()->srcText()->setText("Test");
-    ptr->setCurrentPage(1);
-    ptr->toolbar()->addWidget(button);
-}
-
-void TrayIcon::setSettingsPTR(ConfigInterface *ptr) {
-
-}
+    virtual QWidget *configWidget() = 0;
 
 
+    virtual bool isLinear() const = 0;
+    virtual LangTable *table() const = 0;
+
+    virtual QString translate(const QString &src_text, const QString &src_lang,
+                               const QString &dest_lang) = 0;
 
 
-Q_EXPORT_PLUGIN2(trayicon, TrayIcon);
+};
+
+
+Q_DECLARE_INTERFACE(DictionaryInterface, "com.qphoenix.interfaces.dictionary/1.0");
 
