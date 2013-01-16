@@ -12,7 +12,7 @@ PluginTest::PluginTest()
 }
 
 void PluginTest::testCase1() {
-
+    Loader ldr;
 }
 
 void PluginTest::testCase2() {

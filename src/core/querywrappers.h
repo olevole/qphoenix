@@ -65,6 +65,20 @@ signals:
 };
 
 
+//-------------------------------------------------------------------------------------
+
+
+class DictionaryWrapper : public AbstractWrapper {
+    Q_OBJECT
+public:
+    DictionaryWrapper(){}
+//    DictionaryWrapper(DictionaryWrapper)
+public slots:
+protected:
+
+};
+
+
 
 
 #endif // QUERYWRAPPERS_H

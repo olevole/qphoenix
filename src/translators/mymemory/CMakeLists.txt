@@ -3,7 +3,6 @@ SET(TARGET "mymemorytranslator")
 
 
 
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/../../include)
 
 
 SET(SOURCES mymemorytranslator.cpp)
