@@ -7,11 +7,13 @@
 class PluginTest : public QObject
 {
     Q_OBJECT
-
 public:
-
-private Q_SLOTS:
+    PluginTest();
+private slots:
     void testCase1();
+    void testCase2();
+    void testCase3();
+
 };
 
 

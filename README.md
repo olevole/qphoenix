@@ -1,5 +1,5 @@
 ================================
-QPhoenix linguistic toolkit
+QPhoenix
 ================================
 
 
@@ -7,14 +7,13 @@ QPhoenix linguistic toolkit
 About
 --------------------
 
-      QPhoenix is an advanced translation and linguistic toolkit. 
+      QPhoenix is an advanced translation tool.
       This is a graphical interface for much dictionaries  and 
       translation services. 
       
       
 Main Features
 --------------------
-
 
       - Extendability (very rich plugin api)
       - Usability (best GUI solutions)
@@ -33,7 +32,6 @@ Project Status
 Contribute
 --------------------
 
-
       contact flareguner at gmail dotcom
       to get any instructions.
       
@@ -41,7 +39,7 @@ Contribute
 Build Dependencies
 --------------------
 
-  - Qt Libraries
+  - Qt4 Libraries
   - cmake 2.8 or higher
   - gcc (not tested with other compilers, yet (FIXME))
       
