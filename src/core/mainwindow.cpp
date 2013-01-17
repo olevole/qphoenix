@@ -89,7 +89,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mSettingsDialog->addPage(new TranslatorsConfig(this));
     mSettingsDialog->addPage(new TestPage(this));
-    mSettingsDialog->addPage(new PluginsConfig(this));
+    mSettingsDialog->addPage(mPluginsConfig);
 
     connect(mOptionsAction, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
     connect(mExitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
@@ -145,34 +145,24 @@ void MainWindow::setCurrentPage(const int i) {
 
 
 void MainWindow::onConfigAccept() {
-
-    qDebug("Inside onConfig");
-
-    /*!s
+    /*!
      * Plugins processing
      */
 
     ModuleList *lst = mPluginsConfig->pluginsList();
 
+    for(int i = 0; i < lst->count(); i++) {
+        QObject *obj = lst->at(i);
+        PluginInterface *iface =  qobject_cast<PluginInterface *>(lst->at(i));
 
-//    qDebug() << "Enabled plugins: " << mPluginsConfig->isEnabled(0);
-
-//    for(int i = 0; i < lst->count(); i++) {
-//        QObject *obj = lst->at(i);
-//        PluginInterface *iface =  qobject_cast<PluginInterface *>(lst->at(i));
-
-//        if(mPluginsConfig->isEnabled(i)) {
-//            iface->load();
-//            iface->setMainWindowPTR(this);
-//            qDebug("Inside contains");
+        if(mPluginsConfig->isEnabled(i)) {
+            iface->load();
+            iface->setMainWindowPTR(this);
 
 
-//        }
-//        else {
+        } else {
 
-//            iface->unload();
-//            qDebug("Inside else");
-//        }
-////        qDebug() << "Name: " << iface->name();
-//    }
+            iface->unload();
+        }
+    }
 }

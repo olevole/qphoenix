@@ -42,24 +42,21 @@ PluginsConfig::PluginsConfig(QWidget *parent)
 QStringList PluginsConfig::enabledPluginsList()  {
 
 
-    mEnabledList.clear();
-    for (int i = 0; i < mTable->rowCount(); ++i) {
-        QWidget *widget = mTable->cellWidget(i, 3);
-        QCheckBox *checkbox = qobject_cast<QCheckBox *>(widget);
+    QStringList lst;
+    for (int i = 0; i < mTable->rowCount(); i++) {
 
 
-        if(checkbox->isChecked()) {
-            mEnabledList << mTable->itemAt(i, 0)->text();
-            qDebug() << "Checkbox is checked!";
+        if(mCheckboxList[i]->isChecked()) {
+            lst << mTable->itemAt(i, 0)->text();
 
         } else {
-            qDebug() << "Checkbox isn't' checked!";
         }
-
+        qDebug() << "Checkbox state: " << mCheckboxList[i]->isChecked();
     }
 
 
-    return mEnabledList;
+
+    return lst;
 }
 
 
@@ -68,9 +65,8 @@ bool PluginsConfig::isEnabled(const int index) const {
     if(index > mTable->rowCount() - 1)
         qFatal("OUT OF RANGE!");
 
-    QCheckBox *checkbox = qobject_cast<QCheckBox *>(mTable->cellWidget(index, 3));
 
-    return checkbox->isChecked();
+    return mCheckboxList[index]->isChecked();
 
 }
 
@@ -83,6 +79,7 @@ void PluginsConfig::save() {
     s.beginGroup("Plugins");
     s.setValue("EnabledPlugins", enabledPluginsList());
     s.endGroup();
+//    enabledPluginsList();enabledPluginsList();enabledPluginsList();enabledPluginsList();
 
 }
 
@@ -98,11 +95,10 @@ void PluginsConfig::read() {
 
 
     for (int i = 0; i < mTable->rowCount(); ++i) {
-        QWidget *widget = mTable->cellWidget(i, 3);
-        QCheckBox *checkbox = qobject_cast<QCheckBox *>(widget);
+
 
         bool contains = enabled.contains(mTable->itemAt(0, i)->text());
-        checkbox->setChecked(contains);
+        mCheckboxList[i]->setChecked(contains);
 
     }
 }
@@ -114,6 +110,7 @@ void PluginsConfig::reset() {
 void PluginsConfig::updateTable() {
     Loader loader("/tmp/qphoenix-build/src/plugins/trayicon");
 
+//    loader.addSearchPath("/tmp");
     mPlugins = loader.modules();
 
 
@@ -142,7 +139,9 @@ void PluginsConfig::updateTable() {
             mTable->setItem(row, i, item);
         }
 
-        mTable->setCellWidget(row, 3, new QCheckBox(mTable));
+        QCheckBox *cb = new QCheckBox(this);
+        mCheckboxList << cb;
+        mTable->setCellWidget(row, 3, cb);
 
     }
 }

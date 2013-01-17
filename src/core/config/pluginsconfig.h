@@ -25,6 +25,7 @@ public:
     ModuleList *pluginsList() {
         return &mPlugins;
     }
+
     QStringList enabledPluginsList();
 
 
@@ -42,6 +43,8 @@ private:
     QTableWidget *mTable;
     ModuleList mPlugins;
     QStringList mEnabledList;
+
+    QList<QCheckBox *>mCheckboxList;
 };
 
 #endif // PLUGINSCONFIG_H
