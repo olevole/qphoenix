@@ -8,6 +8,7 @@
 #include "configpageinterface.h"
 #include "testpage.h"
 #include "translatorsconfig.h"
+#include "defines.h"
 
 Config::Config(QWidget *parent) :
     QDialog(parent),
@@ -54,7 +55,7 @@ Config::Config(QWidget *parent) :
     connect(mTree, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
                           this, SLOT(itemChangeHandle()));
 
-    connect(mButtons, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(mButtons, SIGNAL(accepted()), this, SLOT(save()));
     connect(mButtons, SIGNAL(rejected()), this, SLOT(reject()));
     connect(mDefaultsButton, SIGNAL(clicked()), this, SLOT(reset()));
     connect(mButtons, SIGNAL(clicked(QDialogButtonBox::Apply)), this, SLOT(save()));
@@ -132,9 +133,10 @@ void Config::itemChangeHandle() {
 
 
 void Config::save() {
-    foreach (ConfigPageInterface *i, mPagesList) {
+s    foreach (ConfigPageInterface *i, mPagesList) {
         i->save();
     }
+    this->accept();
 }
 
 void Config::read() {

@@ -7,6 +7,8 @@
 #include "loader.h"
 
 #include <QWidget>
+#include <QList>
+#include <QCheckBox>
 
 
 class QTableWidget;
@@ -20,8 +22,11 @@ class PluginsConfig : public QWidget, ConfigPageInterface
 public:
     PluginsConfig(QWidget *parent = 0);
 
-    ModuleList *pluginsList();
-    QStringList *enabledPluginsList() const;
+    ModuleList *pluginsList() {
+        return &mPlugins;
+    }
+
+    QStringList enabledPluginsList() const;
 
     void save();
     void read();

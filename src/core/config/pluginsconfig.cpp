@@ -6,6 +6,7 @@
 #include <QTableWidget>
 #include <QHBoxLayout>
 #include <QSettings>
+#include <QHeaderView>
 
 PluginsConfig::PluginsConfig(QWidget *parent)
     :QWidget(parent),
@@ -18,23 +19,54 @@ PluginsConfig::PluginsConfig(QWidget *parent)
 
 
     mTable->setColumnCount(4);
+    mTable->verticalHeader()->hide();
 
 
-    Loader loader("/tmp/qphoenix-build/src/plugins/trayicon");
 
-    mPlugins = loader.modules();
 
 
     mTable->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Name")));
     mTable->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("Description")));
     mTable->setHorizontalHeaderItem(2, new QTableWidgetItem(tr("Version")));
-    mTable->setHorizontalHeaderItem(3, new QTableWidgetItem(""));
+    mTable->setHorizontalHeaderItem(3, new QTableWidgetItem("Enabled?"));
+
+    mTable->setColumnWidth(0, 70);
+    mTable->setColumnWidth(1, 300);
+    mTable->setColumnWidth(3, 70);
 
     updateTable();
+    read();
+}
+
+QStringList PluginsConfig::enabledPluginsList() const {
+    QStringList list;
+    for (int i = 0; i < mTable->rowCount(); ++i)
+        list << mTable->itemAt(0, i)->text();
+
+    return list;
 }
 
 
 void PluginsConfig::save() {
+    // Reading settings, yeah!
+    QSettings s;
+    QStringList enabled;
+
+    s.beginGroup("Plugins");
+
+
+    for (int i = 0; i < mTable->rowCount(); ++i) {
+        QWidget *widget = mTable->cellWidget(i, 3);
+        QCheckBox *checkbox = qobject_cast<QCheckBox *>(widget);
+
+
+        if(checkbox->isChecked())
+            enabled << mTable->itemAt(i, 0)->text();
+
+    }
+
+    s.setValue("EnabledPlugins", enabled);
+    s.endGroup();
 
 }
 
@@ -49,9 +81,14 @@ void PluginsConfig::read() {
     s.endGroup();
 
 
+    for (int i = 0; i < mTable->rowCount(); ++i) {
+        QWidget *widget = mTable->cellWidget(i, 3);
+        QCheckBox *checkbox = qobject_cast<QCheckBox *>(widget);
 
+        bool contains = enabled.contains(mTable->itemAt(0, i)->text());
+        checkbox->setChecked(contains);
 
-
+    }
 }
 
 void PluginsConfig::reset() {
@@ -59,8 +96,9 @@ void PluginsConfig::reset() {
 }
 
 void PluginsConfig::updateTable() {
-//    mTable->clear();
+    Loader loader("/tmp/qphoenix-build/src/plugins/trayicon");
 
+    mPlugins = loader.modules();
 
 
     for (int i = 0; i < mPlugins.count(); ++i) {
@@ -69,9 +107,27 @@ void PluginsConfig::updateTable() {
         const int row = mTable->rowCount();
         mTable->insertRow(row);
 
-        mTable->setItem(row, 0, new QTableWidgetItem(iface->name()));
-        mTable->setItem(row, 1, new QTableWidgetItem(iface->description()));
-        mTable->setItem(row, 2, new QTableWidgetItem(iface->version()));
+
+        mTable->resize(100, 100);
+        mTable->setRowHeight(row, 20);
+
+
+        QStringList data;
+        data << iface->name() << iface->description() << iface->version();
+
+
+
+        for (int i = 0; i < data.count(); ++i) {
+            QString item_data = data[i];
+
+            QTableWidgetItem *item = new QTableWidgetItem;
+            item->setText(item_data);
+            item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+            mTable->setItem(row, i, item);
+        }
+
+        mTable->setCellWidget(row, 3, new QCheckBox(this));
+
 
 
         QP_DBG("++++++++++++++++++++++++++++++");
