@@ -153,15 +153,15 @@ void MainWindow::onConfigAccept() {
      */
 
     ModuleList *lst = mPluginsConfig->pluginsList();
-//    const QStringList test = mPluginsConfig->enabledPluginsList();
 
-//    qDebug() << "Enabled plugins: " << test;
+
+//    qDebug() << "Enabled plugins: " << mPluginsConfig->isEnabled(0);
 
 //    for(int i = 0; i < lst->count(); i++) {
 //        QObject *obj = lst->at(i);
 //        PluginInterface *iface =  qobject_cast<PluginInterface *>(lst->at(i));
 
-//        if(enabled.contains(iface->name())) {
+//        if(mPluginsConfig->isEnabled(i)) {
 //            iface->load();
 //            iface->setMainWindowPTR(this);
 //            qDebug("Inside contains");

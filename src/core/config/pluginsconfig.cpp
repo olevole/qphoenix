@@ -36,6 +36,7 @@ PluginsConfig::PluginsConfig(QWidget *parent)
     mTable->setColumnWidth(3, 70);
 
     updateTable();
+
 }
 
 QStringList PluginsConfig::enabledPluginsList()  {
@@ -57,9 +58,21 @@ QStringList PluginsConfig::enabledPluginsList()  {
 
     }
 
+
     return mEnabledList;
 }
 
+
+bool PluginsConfig::isEnabled(const int index) const {
+
+    if(index > mTable->rowCount() - 1)
+        qFatal("OUT OF RANGE!");
+
+    QCheckBox *checkbox = qobject_cast<QCheckBox *>(mTable->cellWidget(index, 3));
+
+    return checkbox->isChecked();
+
+}
 
 
 

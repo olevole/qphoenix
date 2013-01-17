@@ -25,8 +25,12 @@ public:
     ModuleList *pluginsList() {
         return &mPlugins;
     }
-
     QStringList enabledPluginsList();
+
+
+    bool isEnabled(const int index) const ;
+
+
 
 
     void save();
@@ -34,7 +38,6 @@ public:
     void reset();
 protected:
     void updateTable();
-
 private:
     QTableWidget *mTable;
     ModuleList mPlugins;
