@@ -45,8 +45,6 @@ Config::Config(QWidget *parent) :
     resize(800, 600);
 
 
-    // Okay, let's tell them to read configurations
-    read();
 
     /*
      * Connections (put all in this section)
@@ -59,6 +57,10 @@ Config::Config(QWidget *parent) :
     connect(mButtons, SIGNAL(rejected()), this, SLOT(reject()));
     connect(mDefaultsButton, SIGNAL(clicked()), this, SLOT(reset()));
     connect(mButtons, SIGNAL(clicked(QDialogButtonBox::Apply)), this, SLOT(save()));
+
+    // Okay, let's tell them to read configurations
+    read();
+
 }
 
 Config::~Config() {
@@ -103,6 +105,8 @@ void Config::addPage(QWidget *page) {
     mTree->insertTopLevelItem(mTree->topLevelItemCount(),item);
     mStackedLayout->addWidget(gb);
 
+    read();
+
 }
 
 void Config::removePage(const QWidget *page) {
@@ -133,7 +137,7 @@ void Config::itemChangeHandle() {
 
 
 void Config::save() {
-s    foreach (ConfigPageInterface *i, mPagesList) {
+    foreach (ConfigPageInterface *i, mPagesList) {
         i->save();
     }
     this->accept();

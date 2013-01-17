@@ -47,6 +47,7 @@ public:
 
 private:
     QPushButton *button;
+    bool isLoaded;
 };
 
 #endif // TRAYICON_H

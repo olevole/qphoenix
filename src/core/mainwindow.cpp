@@ -46,7 +46,9 @@ MainWindow::MainWindow(QWidget *parent) :
     mAboutAction(new QAction(QIcon::fromTheme("help-about"), tr("About"), this)),
     mTranslationWidget(new TranslationWidget(this)),
     mDictionaryWidget(new DictionaryWidget(this)),
-    mSettingsDialog(new Config(this))
+    mSettingsDialog(new Config(this)),
+
+    mPluginsConfig(new PluginsConfig)
 {
 
     setWindowTitle(qApp->applicationName());
@@ -92,25 +94,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mOptionsAction, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
     connect(mExitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 
+    connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
 
 
-    Loader ldr("/tmp/qphoenix-build/src/plugins/trayicon");
-    ldr.addSearchPath("/tmp");
-//    ldr.addSearchPath("/tmp/qphoenix-build/src/translators/mymemory");
-    ModuleList lst = ldr.modules();
-
-
-    for(int i = 0; i < lst.count(); i++) {
-        QObject *obj = lst.at(i);
-        PluginInterface *iface =  qobject_cast<PluginInterface *>(lst.at(i));
-        iface->load();
-        iface->setMainWindowPTR(this);
-        qDebug() << "Name: " << iface->name();
-    }
-
-
-
-
+    onConfigAccept();
 }
 
 MainWindow::~MainWindow()
@@ -154,4 +141,38 @@ QWidget *MainWindow::pageAt(const int i) {
 
 void MainWindow::setCurrentPage(const int i) {
     mFancyWidget->setCurrentIndex(i);
+}
+
+
+void MainWindow::onConfigAccept() {
+
+    qDebug("Inside onConfig");
+
+    /*!s
+     * Plugins processing
+     */
+
+    ModuleList *lst = mPluginsConfig->pluginsList();
+//    const QStringList test = mPluginsConfig->enabledPluginsList();
+
+//    qDebug() << "Enabled plugins: " << test;
+
+//    for(int i = 0; i < lst->count(); i++) {
+//        QObject *obj = lst->at(i);
+//        PluginInterface *iface =  qobject_cast<PluginInterface *>(lst->at(i));
+
+//        if(enabled.contains(iface->name())) {
+//            iface->load();
+//            iface->setMainWindowPTR(this);
+//            qDebug("Inside contains");
+
+
+//        }
+//        else {
+
+//            iface->unload();
+//            qDebug("Inside else");
+//        }
+////        qDebug() << "Name: " << iface->name();
+//    }
 }

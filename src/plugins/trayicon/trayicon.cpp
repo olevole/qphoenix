@@ -26,7 +26,8 @@
 #include <QAction>
 
 TrayIcon::TrayIcon(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    isLoaded(false)
 {
     this->setName("TrayIcon");
     this->setDescription("This is my best plugin!");
@@ -35,11 +36,15 @@ TrayIcon::TrayIcon(QObject *parent) :
 
 
 bool TrayIcon::load() {
-    button = new QPushButton;
+    if(!isLoaded) {
+        button = new QPushButton;
+        isLoaded = true;
+    }
 }
 
 bool TrayIcon::unload() {
-    delete button;
+    if(isLoaded)
+        delete button;
 }
 
 void TrayIcon::setMainWindowPTR(MainWindowInterface *ptr) {

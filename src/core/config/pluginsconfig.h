@@ -26,16 +26,19 @@ public:
         return &mPlugins;
     }
 
-    QStringList enabledPluginsList() const;
+    QStringList enabledPluginsList();
+
 
     void save();
     void read();
     void reset();
 protected:
     void updateTable();
+
 private:
     QTableWidget *mTable;
     ModuleList mPlugins;
+    QStringList mEnabledList;
 };
 
 #endif // PLUGINSCONFIG_H

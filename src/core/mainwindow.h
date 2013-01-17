@@ -17,6 +17,8 @@ class TranslationWidget;
 class DictionaryWidget;
 class Config;
 
+class PluginsConfig;
+
 
 
 
@@ -50,7 +52,10 @@ public:
     QStatusBar *statusbar() { return mStatusBar; }
     QMenuBar *menubar() { return mMenuBar; }
 
-public slots:
+private slots:
+
+    //! Update plugins, etc information from config dialog.
+    void onConfigAccept();
 
 private:
     QStatusBar  *mStatusBar;
@@ -73,6 +78,8 @@ private:
     DictionaryWidget *mDictionaryWidget;
 
     Config *mSettingsDialog;
+
+    PluginsConfig *mPluginsConfig;
 
 signals:
     void pageChanged(const int i);

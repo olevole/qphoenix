@@ -7,6 +7,7 @@
 #include <QHBoxLayout>
 #include <QSettings>
 #include <QHeaderView>
+#include <QDebug>
 
 PluginsConfig::PluginsConfig(QWidget *parent)
     :QWidget(parent),
@@ -35,37 +36,39 @@ PluginsConfig::PluginsConfig(QWidget *parent)
     mTable->setColumnWidth(3, 70);
 
     updateTable();
-    read();
 }
 
-QStringList PluginsConfig::enabledPluginsList() const {
-    QStringList list;
-    for (int i = 0; i < mTable->rowCount(); ++i)
-        list << mTable->itemAt(0, i)->text();
-
-    return list;
-}
+QStringList PluginsConfig::enabledPluginsList()  {
 
 
-void PluginsConfig::save() {
-    // Reading settings, yeah!
-    QSettings s;
-    QStringList enabled;
-
-    s.beginGroup("Plugins");
-
-
+    mEnabledList.clear();
     for (int i = 0; i < mTable->rowCount(); ++i) {
         QWidget *widget = mTable->cellWidget(i, 3);
         QCheckBox *checkbox = qobject_cast<QCheckBox *>(widget);
 
 
-        if(checkbox->isChecked())
-            enabled << mTable->itemAt(i, 0)->text();
+        if(checkbox->isChecked()) {
+            mEnabledList << mTable->itemAt(i, 0)->text();
+            qDebug() << "Checkbox is checked!";
+
+        } else {
+            qDebug() << "Checkbox isn't' checked!";
+        }
 
     }
 
-    s.setValue("EnabledPlugins", enabled);
+    return mEnabledList;
+}
+
+
+
+
+void PluginsConfig::save() {
+    // Reading settings, yeah!
+    QSettings s;
+
+    s.beginGroup("Plugins");
+    s.setValue("EnabledPlugins", enabledPluginsList());
     s.endGroup();
 
 }
@@ -126,11 +129,7 @@ void PluginsConfig::updateTable() {
             mTable->setItem(row, i, item);
         }
 
-        mTable->setCellWidget(row, 3, new QCheckBox(this));
+        mTable->setCellWidget(row, 3, new QCheckBox(mTable));
 
-
-
-        QP_DBG("++++++++++++++++++++++++++++++");
-        QP_DBG(iface->name());
     }
 }
