@@ -87,7 +87,7 @@ void PluginsConfig::reset() {
 }
 
 void PluginsConfig::updateTable() {
-    Loader loader("/tmp/qphoenix-build/src/plugins/trayicon");
+    Loader loader(QP_PLUGINS_PATH);
 
     mPlugins = loader.modules();
 

@@ -88,7 +88,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     mSettingsDialog->addPage(new TranslatorsConfig(this));
-    mSettingsDialog->addPage(new TestPage(this));
     mSettingsDialog->addPage(mPluginsConfig);
 
     connect(mOptionsAction, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));

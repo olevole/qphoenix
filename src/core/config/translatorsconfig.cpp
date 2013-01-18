@@ -21,6 +21,7 @@
 
 #include "translatorsconfig.h"
 #include "loader.h"
+#include "defines.h"
 
 #include <QLabel>
 #include <QComboBox>
@@ -66,7 +67,7 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onIndexChange(int)));
 
 
-    Loader ldr("/tmp/qphoenix-build/src/translators/mymemory");
+    Loader ldr(QP_TRANSLATORS_PATH);
 
     ModuleList list = ldr.modules();
 
