@@ -32,10 +32,10 @@ class QString;
 /*!
  * \brief LanguageTable
  *
- * Provie a table for translators without linear
+ * Provide a table for translators without linear
  * translation betwen languages. (for example, you
  * can translate English word to German or Russian,
- * but you can translate Russian word only to english
+ * but you can translate Russian word only to English
  * The key QString is a source langauge, the value -
  * possible result languages. This hash must contain
  * ONLY keys for LanguageList, not a values!
@@ -46,10 +46,10 @@ typedef QMap <QString, QStringList> LanguageTable;
 /*!
  * \brief LanguageList
  * The key is a language name (e.g. "English")
- * The value - language code used for query.
+ * The value - language code used for query (for example, "en").
  * See std/iso639.h for details.
  */
-typedef QMap <QString, QString> LanguageList;
+//typedef QMap <QString, QString> LanguageList;
 
 
 
@@ -74,15 +74,35 @@ public:
     virtual bool isLinear() const = 0;
 
 
-
+    /*!
+     * \brief table
+     * \return  a table with supported language directionsо
+     */
     virtual LanguageTable table() const = 0;
+
+
+    /*!
+     * \brief languages
+     * \return a map with a supported languages
+     */
 //    virtual LanguageList  languages() const = 0;
 
 
+    /*!
+     * \brief translate
+     * \param src_text Source text
+     * \param src_lang Source language name
+     * \param dest_lang Destination language name
+     * \return Translation result
+     */
     virtual QString translate(const QString &src_text, const QString &src_lang,
                                const QString &dest_lang) = 0;
 
-
+    /*!
+     * \brief errorString
+     * \return A string describe translation error.
+     */
+    virtual QString errorString() const { return QString(); }
 };
 
 

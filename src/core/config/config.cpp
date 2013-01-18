@@ -44,10 +44,10 @@ Config::Config(QWidget *parent) :
                                  QDialogButtonBox::Ok);
 
     setLayout(mMainLayout);
+    resize(900, 700);
 
     mTree->setFixedWidth(150);
     mTree->setSizePolicy(QSizePolicy::Fixed, mTree->sizePolicy().verticalPolicy());
-    resize(800, 600);
 
 
 

@@ -4,6 +4,8 @@
 #include "../../include/translatorinterface.h"
 #include "../../include/info.h"
 #include <QObject>
+#include <QCheckBox>
+#include <QHBoxLayout>
 
 class MyMemoryTranslator : public QObject, TranslatorInterface
 {
@@ -17,7 +19,13 @@ public:
     bool isLoaded() const {}
     QString errorString() const {}
 
-    QWidget *configWidget() {}
+    QWidget *configWidget() {
+        QCheckBox *cb = new QCheckBox;
+        cb->setText("Disable google?");
+
+        return cb;
+
+    }
 
     bool isLinear() const{}
     LanguageTable table() const {}

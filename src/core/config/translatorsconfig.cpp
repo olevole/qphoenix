@@ -20,6 +20,7 @@
  */
 
 #include "translatorsconfig.h"
+#include "loader.h"
 
 #include <QLabel>
 #include <QComboBox>
@@ -61,4 +62,28 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     mTranslatorGroupBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 
     this->setLayout(mMainLayout);
+
+    connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onIndexChange(int)));
+
+
+    Loader ldr("/tmp/qphoenix-build/src/translators/mymemory");
+
+    ModuleList list = ldr.modules();
+
+    foreach (QObject *obj, list) {
+        TranslatorInterface *iface = qobject_cast<TranslatorInterface *>(obj);
+        mTranslatorsList <<  iface;
+        mTranslatorComboBox->addItem(iface->name());
+    }
+}
+
+
+void TranslatorsConfig::onIndexChange(const int i) {
+    //! FIXME: optimisation: do not overload same widget!
+    QLayoutItem *child;
+    while ( (child = mOptionsLayout->takeAt(0)) != 0) {
+        delete child->widget();
+        delete child;
+    }
+    mOptionsLayout->addWidget(mTranslatorsList[i]->configWidget());
 }

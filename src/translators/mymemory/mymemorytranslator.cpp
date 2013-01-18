@@ -5,7 +5,7 @@
 MyMemoryTranslator::MyMemoryTranslator(QObject *parent)
     :QObject(parent)
 {
-    setName("MyMemory Plugin");
+    setName("Google translate");
 }
 
 

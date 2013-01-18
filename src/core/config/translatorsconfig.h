@@ -23,7 +23,9 @@
 #define TRANSLATOR_H
 
 #include <QWidget>
+#include <QList>
 #include "configpageinterface.h"
+#include "translatorinterface.h"
 
 class QLabel;
 class QComboBox;
@@ -41,7 +43,8 @@ public:
     void save() {}
     void read() {}
     void reset(){}
-
+private slots:
+    void onIndexChange(const int i);
 private:
     QLabel *mTranslatorLabel;
     QComboBox *mTranslatorComboBox;
@@ -52,6 +55,8 @@ private:
     QHBoxLayout *mOptionsLayout;
 
     QVBoxLayout *mMainLayout;
+
+    QList <TranslatorInterface *>mTranslatorsList;
 };
 
 #endif // TRANSLATOR_H
