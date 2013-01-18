@@ -7,10 +7,11 @@
 
 typedef QList<QObject *> ModuleList;
 
-class Loader
+class Loader : public QObject
 {
+    Q_OBJECT
 public:
-    Loader() {}
+    Loader(QObject *parent = 0) :QObject(parent){}
 
     Loader(const QString &path)
     { addSearchPath(path);  }
@@ -35,14 +36,10 @@ public:
 
     // ---------------------------------------------------------
 
-
     ModuleList modules();
 //    void update();
 private:
     QStringList mSearchPaths;
-
-
-
 };
 
 #endif // LOADER_H

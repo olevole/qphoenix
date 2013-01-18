@@ -34,15 +34,9 @@ public:
     virtual QWidget *configWidget() = 0;
 
 
-    virtual bool isLinear() const = 0;
-    virtual LangTable *table() const = 0;
-
-    virtual QString translate(const QString &src_text, const QString &src_lang,
-                              const QString &dest_lang) = 0;
 
 
 };
-
 
 Q_DECLARE_INTERFACE(DictionaryInterface, "com.qphoenix.interfaces.dictionary/1.0");
 

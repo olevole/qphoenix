@@ -102,7 +102,7 @@ public:
      * \brief errorString
      * \return A string describe translation error.
      */
-    virtual QString errorString() const { return QString(); }
+//    virtual QString errorString() const { return QString(); }
 };
 
 

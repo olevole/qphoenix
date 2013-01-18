@@ -34,12 +34,10 @@ class TranslatorWrapper : public AbstractWrapper
     Q_OBJECT
 public:
     TranslatorWrapper(){}
-    TranslatorWrapper(TranslatorInterface *ptr) {
-        setTranslator(ptr);
-    }
+    TranslatorWrapper(TranslatorInterface *ptr)
+    {setTranslator(ptr);}
 
     void setTranslator(TranslatorInterface *ptr);
-
 public slots:
     void execQuery(const QString &src_text, const QString &src_lang,
                       const QString &dest_lang) {
@@ -51,6 +49,7 @@ public slots:
     }
 
     virtual bool isReady() const { return mReady; }
+
     // Not implemented yet
     virtual QString errorString() const {return QString();}
 protected:

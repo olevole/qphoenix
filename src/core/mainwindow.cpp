@@ -48,7 +48,8 @@ MainWindow::MainWindow(QWidget *parent) :
     mDictionaryWidget(new DictionaryWidget(this)),
     mSettingsDialog(new Config(this)),
 
-    mPluginsConfig(new PluginsConfig)
+    mPluginsConfig(new PluginsConfig),
+    mTranslatorsConfig(new TranslatorsConfig(this))
 {
 
     setWindowTitle(qApp->applicationName());
@@ -87,7 +88,7 @@ MainWindow::MainWindow(QWidget *parent) :
         mFancyWidget->setCurrentIndex(0);
 
 
-    mSettingsDialog->addPage(new TranslatorsConfig(this));
+    mSettingsDialog->addPage(mTranslatorsConfig);
     mSettingsDialog->addPage(mPluginsConfig);
 
     connect(mOptionsAction, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
@@ -97,6 +98,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     onConfigAccept();
+
+    qDebug() << "Keys: " << mTranslatorsConfig->currentTranslator()->table().keys();
 }
 
 MainWindow::~MainWindow()

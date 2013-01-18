@@ -26,6 +26,7 @@
 #include <QList>
 #include "configpageinterface.h"
 #include "translatorinterface.h"
+#include <QComboBox>
 
 class QLabel;
 class QComboBox;
@@ -43,6 +44,12 @@ public:
     void save() {}
     void read() {}
     void reset(){}
+
+
+    TranslatorInterface *currentTranslator() {
+        return mTranslatorsList[mTranslatorComboBox->currentIndex()];
+    }
+
 private slots:
     void onIndexChange(const int i);
 private:

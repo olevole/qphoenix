@@ -20,7 +20,7 @@ class QAction;
 class Config;
 
 class PluginsConfig;
-
+class TranslatorsConfig;
 
 
 
@@ -81,7 +81,7 @@ private:
     Config *mSettingsDialog;
 
     PluginsConfig *mPluginsConfig;
-
+    TranslatorsConfig *mTranslatorsConfig;
 signals:
     void pageChanged(const int i);
 };

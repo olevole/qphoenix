@@ -67,7 +67,7 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onIndexChange(int)));
 
 
-    Loader ldr(QP_TRANSLATORS_PATH);
+    Loader ldr("/tmp/qphoenix-build/src/translators/mymemory");
 
     ModuleList list = ldr.modules();
 
@@ -86,5 +86,10 @@ void TranslatorsConfig::onIndexChange(const int i) {
         delete child->widget();
         delete child;
     }
-    mOptionsLayout->addWidget(mTranslatorsList[i]->configWidget());
+
+    TranslatorInterface *iface = mTranslatorsList[i];
+    if(!iface->isLoaded())
+        iface->load();
+
+    mOptionsLayout->addWidget(iface->configWidget());
 }

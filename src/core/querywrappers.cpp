@@ -23,3 +23,5 @@ void TranslatorWrapper::run() {
     mResult = mPtr->translate(mSrcText, mSrcLang, mDestLang);
 }
 
+
+

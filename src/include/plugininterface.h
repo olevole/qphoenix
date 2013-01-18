@@ -19,7 +19,16 @@ class PluginInterface : public BaseModule
 public:
     virtual ~PluginInterface() {}
 
+    /*!
+     * \brief setMainWindowPTR
+     * \param ptr a pointer to MainWindow class
+     */
     virtual void setMainWindowPTR(MainWindowInterface *ptr) = 0;
+
+    /*!
+     * \brief setSettingsPTR
+     * \param ptr a pointer to config dialog object
+     */
     virtual void setSettingsPTR(ConfigInterface *ptr) = 0;
 };
 
