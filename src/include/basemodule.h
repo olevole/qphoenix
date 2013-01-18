@@ -43,6 +43,9 @@ public:
      */
     virtual QString errorString() const
     {return QString();}
+
+
+    virtual bool isLoaded() const = 0;
 };
 
 Q_DECLARE_INTERFACE(BaseModule, "com.qphoenix.interfaces.basemodule/1.0")

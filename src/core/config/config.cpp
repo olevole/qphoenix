@@ -137,23 +137,21 @@ void Config::itemChangeHandle() {
 
 
 void Config::save() {
-    foreach (ConfigPageInterface *i, mPagesList) {
+    foreach (ConfigPageInterface *i, mPagesList)
         i->save();
-    }
+
+
     this->accept();
 }
 
 void Config::read() {
-    foreach(ConfigPageInterface *i, mPagesList) {
+    foreach(ConfigPageInterface *i, mPagesList)
         i->read();
-    }
 }
 
 void Config::reset() {
-    foreach(ConfigPageInterface *i, mPagesList) {
+    foreach(ConfigPageInterface *i, mPagesList)
         i->reset();
-    }
-
 }
 
 

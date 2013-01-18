@@ -38,7 +38,7 @@ public:
     virtual LangTable *table() const = 0;
 
     virtual QString translate(const QString &src_text, const QString &src_lang,
-                               const QString &dest_lang) = 0;
+                              const QString &dest_lang) = 0;
 
 
 };

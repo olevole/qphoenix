@@ -20,7 +20,7 @@ Main Features
   - Usability (best GUI solutions)
   - Killer features (selection buffer, etc)
   - Support for any kind of translation or dictionary services could be implemented with a provided feature-rich API.
-  - GNU GPL software with open sources and development infrastructure
+  - Open Source software with open sources and development infrastructure
 
 
 Project Status

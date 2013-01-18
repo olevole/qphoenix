@@ -43,11 +43,12 @@ public:
 
     bool load();
     bool unload();
+    bool isLoaded() const { return mIsLoaded; }
     QString errorString() const {}
 
 private:
     QPushButton *button;
-    bool isLoaded;
+    bool mIsLoaded;
 };
 
 #endif // TRAYICON_H

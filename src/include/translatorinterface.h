@@ -28,7 +28,8 @@
 class QWidget;
 class QString;
 
-typedef QMap <QString, QStringList> LangTable;
+typedef QMap <QString, QStringList> LanguageTable;
+typedef QMap <QString, QString> LanguageList;
 
 class TranslatorInterface : public BaseModule {
 public:
@@ -38,7 +39,10 @@ public:
 
 
     virtual bool isLinear() const = 0;
-    virtual LangTable *table() const = 0;
+
+    virtual LanguageTable table() const = 0;
+//    virtual LanguageList  languages() const = 0;
+
 
     virtual QString translate(const QString &src_text, const QString &src_lang,
                                const QString &dest_lang) = 0;

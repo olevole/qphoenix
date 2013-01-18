@@ -148,21 +148,19 @@ void MainWindow::onConfigAccept() {
     /*!
      * Plugins processing
      */
-
     ModuleList *lst = mPluginsConfig->pluginsList();
 
     for(int i = 0; i < lst->count(); i++) {
-        QObject *obj = lst->at(i);
+        qDebug() << "iteration #" << i;
         PluginInterface *iface =  qobject_cast<PluginInterface *>(lst->at(i));
 
-        if(mPluginsConfig->isEnabled(i)) {
+        bool enabled = mPluginsConfig->isEnabled(i);
+        if(enabled) {
             iface->load();
             iface->setMainWindowPTR(this);
-
-
-        } else {
-
-            iface->unload();
+        } else   {
+            if(iface->isLoaded())
+                iface->unload();
         }
     }
 }

@@ -40,34 +40,20 @@ PluginsConfig::PluginsConfig(QWidget *parent)
 }
 
 QStringList PluginsConfig::enabledPluginsList()  {
-
-
     QStringList lst;
-    for (int i = 0; i < mTable->rowCount(); i++) {
-
-
-        if(mCheckboxList[i]->isChecked()) {
+    for (int i = 0; i < mTable->rowCount(); i++)
+        if(mCheckboxList[i]->isChecked())
             lst << mTable->itemAt(i, 0)->text();
-
-        } else {
-        }
-        qDebug() << "Checkbox state: " << mCheckboxList[i]->isChecked();
-    }
-
-
 
     return lst;
 }
 
 
 bool PluginsConfig::isEnabled(const int index) const {
-
     if(index > mTable->rowCount() - 1)
         qFatal("OUT OF RANGE!");
 
-
     return mCheckboxList[index]->isChecked();
-
 }
 
 
@@ -79,8 +65,6 @@ void PluginsConfig::save() {
     s.beginGroup("Plugins");
     s.setValue("EnabledPlugins", enabledPluginsList());
     s.endGroup();
-//    enabledPluginsList();enabledPluginsList();enabledPluginsList();enabledPluginsList();
-
 }
 
 void PluginsConfig::read() {

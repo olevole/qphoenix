@@ -27,7 +27,7 @@
 
 TrayIcon::TrayIcon(QObject *parent) :
     QObject(parent),
-    isLoaded(false)
+    mIsLoaded(false)
 {
     this->setName("TrayIcon");
     this->setDescription("This is my best plugin!");
@@ -36,20 +36,20 @@ TrayIcon::TrayIcon(QObject *parent) :
 
 
 bool TrayIcon::load() {
-    if(!isLoaded) {
+    if(!isLoaded()) {
         button = new QPushButton;
-        isLoaded = true;
+        mIsLoaded = true;
     }
 }
 
 bool TrayIcon::unload() {
-    if(isLoaded)
+    if(isLoaded()) {
         delete button;
+        mIsLoaded = false;
+    }
 }
 
 void TrayIcon::setMainWindowPTR(MainWindowInterface *ptr) {
-//    connect(ptr->toolbar(), SIGNAL(actionTriggered(QAction*)), ptr->statusbar(), SLOT(clearMessage()));
-//    ptr->dictionaryWidget()->srcText()->setText("Test");
     ptr->setCurrentPage(1);
     ptr->toolbar()->addWidget(button);
 }

@@ -14,12 +14,13 @@ public:
 
     bool load() {}
     bool unload() {}
+    bool isLoaded() const {}
     QString errorString() const {}
 
     QWidget *configWidget() {}
 
     bool isLinear() const{}
-    LangTable *table() const {}
+    LanguageTable table() const {}
 
     QString translate(const QString &src_text, const QString &src_lang, const QString &dest_lang) {}
 };
