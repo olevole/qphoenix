@@ -31,6 +31,11 @@ class QString;
 typedef QMap <QString, QStringList> LanguageTable;
 typedef QMap <QString, QString> LanguageList;
 
+//enum Standards {
+//    ISO639 = 0x0001,
+
+//};
+
 class TranslatorInterface : public BaseModule {
 public:
     virtual ~TranslatorInterface(){}

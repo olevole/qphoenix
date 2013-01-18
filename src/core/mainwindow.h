@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include "fancytabwidget.h"
 #include "mainwindowinterface.h"
+#include "dictionarywidgetinterface.h"
+#include "dictionarywidget.h"
+#include "translationwidget.h"
 
 
 class QStatusBar;
@@ -13,8 +16,7 @@ class QMenu;
 class QAction;
 //class QPushButton;
 
-class TranslationWidget;
-class DictionaryWidget;
+
 class Config;
 
 class PluginsConfig;
@@ -40,17 +42,16 @@ public:
     void removePage(const QWidget *page);
     QWidget *pageAt(const int i);
 
-    DictionaryWidgetInterface *dictionaryWidget() {
-//        return (DictionaryWidgetInterface *)mDictionaryWidget;
-    }
+    DictionaryWidgetInterface *dictionaryWidget()
+    {return qobject_cast<DictionaryWidgetInterface *>(mDictionaryWidget);  }
 
-    TranslatorWidgetInterface *translationWidget() {
-//        return (TranslatorWidgetInterface *)mTranslationWidget;
-    }
+    TranslatorWidgetInterface *translationWidget()
+    {return qobject_cast<TranslatorWidgetInterface *>(mTranslationWidget);}
 
-    QToolBar *toolbar() { return mToolBar; }
-    QStatusBar *statusbar() { return mStatusBar; }
-    QMenuBar *menubar() { return mMenuBar; }
+
+    QToolBar *toolbar()     { return mToolBar;      }
+    QStatusBar *statusbar() { return mStatusBar;    }
+    QMenuBar *menubar()     { return mMenuBar;      }
 
 private slots:
 

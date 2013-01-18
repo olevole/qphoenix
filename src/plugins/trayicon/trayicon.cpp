@@ -30,7 +30,7 @@ TrayIcon::TrayIcon(QObject *parent) :
     mIsLoaded(false)
 {
     this->setName("TrayIcon");
-    this->setDescription("This is my best plugin!");
+    this->setDescription("This is my best plugin! Object::connect: No such signal QDialogButtonBox::");
     this->setVersion("0.666satan");
 }
 
@@ -52,6 +52,8 @@ bool TrayIcon::unload() {
 void TrayIcon::setMainWindowPTR(MainWindowInterface *ptr) {
     ptr->setCurrentPage(1);
     ptr->toolbar()->addWidget(button);
+
+    ptr->dictionaryWidget()->srcText()->setText("Test");
 }
 
 void TrayIcon::setSettingsPTR(ConfigInterface *ptr) {

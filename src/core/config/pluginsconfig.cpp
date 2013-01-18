@@ -22,8 +22,7 @@ PluginsConfig::PluginsConfig(QWidget *parent)
     mTable->setColumnCount(4);
     mTable->verticalHeader()->hide();
 
-
-
+    mTable->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
 
 
     mTable->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Name")));
@@ -94,9 +93,7 @@ void PluginsConfig::reset() {
 void PluginsConfig::updateTable() {
     Loader loader("/tmp/qphoenix-build/src/plugins/trayicon");
 
-//    loader.addSearchPath("/tmp");
     mPlugins = loader.modules();
-
 
     for (int i = 0; i < mPlugins.count(); ++i) {
         PluginInterface *iface = qobject_cast<PluginInterface *>(mPlugins.at(i));
@@ -119,7 +116,7 @@ void PluginsConfig::updateTable() {
 
             QTableWidgetItem *item = new QTableWidgetItem;
             item->setText(item_data);
-            item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+            item->setFlags(item->flags() & (~(Qt::ItemIsEditable | Qt::ItemIsSelectable)));
             mTable->setItem(row, i, item);
         }
 
