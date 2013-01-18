@@ -67,7 +67,6 @@ void PluginsConfig::save() {
 }
 
 void PluginsConfig::read() {
-
     // Reading settings, yeah!
     QSettings s;
     QStringList enabled;
@@ -76,10 +75,7 @@ void PluginsConfig::read() {
     enabled = s.value("EnabledPlugins").toStringList();
     s.endGroup();
 
-
     for (int i = 0; i < mTable->rowCount(); ++i) {
-
-
         bool contains = enabled.contains(mTable->itemAt(0, i)->text());
         mCheckboxList[i]->setChecked(contains);
 

@@ -28,22 +28,52 @@
 class QWidget;
 class QString;
 
+
+/*!
+ * \brief LanguageTable
+ *
+ * Provie a table for translators without linear
+ * translation betwen languages. (for example, you
+ * can translate English word to German or Russian,
+ * but you can translate Russian word only to english
+ * The key QString is a source langauge, the value -
+ * possible result languages. This hash must contain
+ * ONLY keys for LanguageList, not a values!
+ */
 typedef QMap <QString, QStringList> LanguageTable;
+
+
+/*!
+ * \brief LanguageList
+ * The key is a language name (e.g. "English")
+ * The value - language code used for query.
+ * See std/iso639.h for details.
+ */
 typedef QMap <QString, QString> LanguageList;
 
-//enum Standards {
-//    ISO639 = 0x0001,
 
-//};
 
 class TranslatorInterface : public BaseModule {
 public:
     virtual ~TranslatorInterface(){}
 
+
+    /*!
+     * \brief configWidget
+     * \return pointer to Translator config widget
+     */
     virtual QWidget *configWidget() = 0;
 
 
+    /*!
+     * \brief isLinear
+     * \return true if supported pairs are linear
+     * or false if not. See \brief LanguageTable
+     * for details
+     */
     virtual bool isLinear() const = 0;
+
+
 
     virtual LanguageTable table() const = 0;
 //    virtual LanguageList  languages() const = 0;
