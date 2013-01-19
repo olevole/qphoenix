@@ -46,6 +46,8 @@ protected:
     QIcon mIcon;
 };
 
+
+
 Q_DECLARE_INTERFACE(Info, "com.qphoenix.interfaces.info/1.0");
 
 

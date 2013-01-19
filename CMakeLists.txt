@@ -46,7 +46,6 @@ src/include/translatorinterface.h
 src/include/dictionaryinterface.h
 src/include/info.h
 src/include/basemodule.h
-src/include/std/iso639.h
 )
 
 
