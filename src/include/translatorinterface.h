@@ -23,10 +23,9 @@
 #define TRANSLATORINTERFACE_H
 
 #include <QMap>
+#include <QWidget>
 #include "basemodule.h"
 
-class QWidget;
-class QString;
 
 
 /*!
@@ -39,17 +38,12 @@ class QString;
  * The key QString is a source langauge, the value -
  * possible result languages. This hash must contain
  * ONLY keys for LanguageList, not a values!
+ * The key's MUST be an ISO 639-1 codes.
+ * More information: en.wikipedia.org/wiki/List_of_ISO_639-1_codes
  */
 typedef QMap <QString, QStringList> LanguageTable;
 
 
-/*!
- * \brief LanguageList
- * The key is a language name (e.g. "English")
- * The value - language code used for query (for example, "en").
- * See std/iso639.h for details.
- */
-//typedef QMap <QString, QString> LanguageList;
 
 
 
@@ -62,16 +56,8 @@ public:
      * \brief configWidget
      * \return pointer to Translator config widget
      */
-    virtual QWidget *configWidget() = 0;
-
-
-    /*!
-     * \brief isLinear
-     * \return true if supported pairs are linear
-     * or false if not. See \brief LanguageTable
-     * for details
-     */
-//    virtual bool isLinear() const = 0;
+    virtual QWidget *configWidget()
+    {return new QWidget();        }
 
 
     /*!
@@ -79,13 +65,6 @@ public:
      * \return  a table with supported language directionsо
      */
     virtual LanguageTable table() const = 0;
-
-
-    /*!
-     * \brief languages
-     * \return a map with a supported languages
-     */
-//    virtual LanguageList  languages() const = 0;
 
 
     /*!
@@ -97,12 +76,6 @@ public:
      */
     virtual QString translate(const QString &src_text, const QString &src_lang,
                                const QString &dest_lang) = 0;
-
-    /*!
-     * \brief errorString
-     * \return A string describe translation error.
-     */
-//    virtual QString errorString() const { return QString(); }
 };
 
 

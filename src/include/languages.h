@@ -8,13 +8,15 @@
 typedef QPair<QString, QString> Language;
 typedef QMap<QString, Language> LanguageList;
 
+
 class LanguageFactory {
 public:
-    static LanguageList list() {
-        LanguageList lst;
+    static  LanguageList list() {
+        LanguageList list;
 
-        lst["es"] = Language("Spanish", "Espaniol");
-        return lst;
+        list["es"] = Language("Spanish", "Espaniol");
+        list["ru"] = Language("Russian", "Русский");
+        return list;
     }
 };
 

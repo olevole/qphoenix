@@ -31,9 +31,11 @@ int main(int argc, char *argv[])
     QP_DBG(QP_PLUGINS_PATH);
 
 
-    qDebug() << "Name: " << LanguageFactory::list()["es"].first;
-    qDebug() << "Native name: " << LanguageFactory::list()["es"].second;
+    qDebug() << "Name: " << LanguageFactory::list()["ru"].first;
+    qDebug() << "Native name: " << LanguageFactory::list()["ru"].second.toUtf8();
 
+
+    mw->setWindowTitle(LanguageFactory::list()["ru"].second);
 
     return a.exec();
 }
