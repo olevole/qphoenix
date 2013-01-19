@@ -46,7 +46,8 @@ src/include/translatorinterface.h
 src/include/dictionaryinterface.h
 src/include/info.h
 src/include/basemodule.h
-src/include/std/iso639.h)
+src/include/std/iso639.h
+)
 
 
 SET(HEADERS
@@ -58,7 +59,8 @@ src/core/config/pluginsconfig.h
 src/core/translationwidget.h
 src/core/dictionarywidget.h
 src/core/querywrappers.h
-src/core/loader.h)
+src/core/loader.h
+)
 
 
 

@@ -90,6 +90,7 @@ void TranslatorsConfig::onIndexChange(const int i) {
     TranslatorInterface *iface = mTranslatorsList[i];
     if(!iface->isLoaded())
         iface->load();
+    //TODO: Segfault here, it's a dangerous fragment!
 
     mOptionsLayout->addWidget(iface->configWidget());
 }

@@ -8,6 +8,7 @@
 #include "querywrappers.h"
 #include "plugininterface.h"
 #include "loader.h"
+#include "include/std/iso639.h"
 
 
 int main(int argc, char *argv[])

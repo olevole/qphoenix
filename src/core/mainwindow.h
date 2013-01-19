@@ -56,7 +56,8 @@ public:
 private slots:
 
     //! Update plugins, etc information from config dialog.
-    void    onConfigAccept();
+    void onConfigAccept();
+
 
 private:
     QStatusBar  *mStatusBar;
@@ -84,6 +85,7 @@ private:
     TranslatorsConfig *mTranslatorsConfig;
 signals:
     void pageChanged(const int i);
+
 };
 
 

@@ -25,6 +25,7 @@
 #include <QWidget>
 #include "translatorwidgetinterface.h"
 #include "info.h"
+#include "translatorinterface.h"
 
 class QTextEdit;
 class QTextBrowser;
@@ -55,6 +56,17 @@ public:
     virtual QPushButton *translateButton()  { return mTranslateButton;  }
     virtual QToolButton *swapButton()       { return mSwapButton;       }
 
+    void setLangTable(const LanguageTable table) {
+        if(mTable != table) {
+            mTable = table;
+            onTableChanged();
+        }
+    }
+
+private slots:
+    void onSourceLanguageChanged();
+    void onTableChanged();
+    void onSwapButtonPressed();
 private:
     QComboBox
     *mSrcComboBox,
@@ -69,6 +81,10 @@ private:
 
     QVBoxLayout *mMainLayout;
     QHBoxLayout *mButtonsLayout;
+
+    LanguageTable mTable;
+
+    bool mIsLinear;
 
 };
 

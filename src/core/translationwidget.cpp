@@ -28,7 +28,7 @@
 #include <QPushButton>
 #include <QComboBox>
 #include <QLayout>
-
+#include <QDebug>
 //#include "global.h"
 
 TranslationWidget::TranslationWidget(QWidget *parent) :
@@ -58,6 +58,57 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
 
     setName("Translate");
 
+
+    connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onSourceLanguageChanged()));
+    connect(mSwapButton, SIGNAL(clicked()), this, SLOT(onSwapButtonPressed()));
+
+
+}
+
+
+void TranslationWidget::onSourceLanguageChanged() {
+    if(mTable.isEmpty() || mIsLinear)
+        return;
+
+
+    const QString cur = mSrcComboBox->currentText();
+
+    /*const QStringList results =*/
+
+    mResComboBox->clear();
+    mResComboBox->addItems(mTable[cur]);
+
+    /*!
+     * Detecting type of pairs
+     */
+
+}
+
+void TranslationWidget::onTableChanged() {
+    mIsLinear = true;
+
+    const QStringList keys = mTable.keys();
+    foreach(QString key, keys) {
+        if(mTable[key].count() > 1) {
+            mIsLinear = false;
+            break;
+        }
+    }
+
+//    mIsLinear =true;
+
+    mSrcComboBox->addItems(keys);
+
+    if(mIsLinear) {
+        mResComboBox->addItems(keys);
+    }
+    qDebug() << "Keys: " << keys << " IsLinear? " << mIsLinear;
+
+}
+
+void TranslationWidget::onSwapButtonPressed() {
+//    const int index = mSrcComboBox->currentIndex();
+//    mRs
 
 
 }

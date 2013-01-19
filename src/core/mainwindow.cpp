@@ -99,7 +99,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     onConfigAccept();
 
-    qDebug() << "Keys: " << mTranslatorsConfig->currentTranslator()->table().keys();
 }
 
 MainWindow::~MainWindow()
@@ -160,9 +159,17 @@ void MainWindow::onConfigAccept() {
         if(enabled) {
             iface->load();
             iface->setMainWindowPTR(this);
-        } else   {
-            if(iface->isLoaded())
+        } else if(iface->isLoaded()) {
                 iface->unload();
         }
     }
+
+
+    /*!
+     * Updating translators information...
+     */
+
+
+    // Updating table
+    mTranslationWidget->setLangTable(mTranslatorsConfig->currentTranslator()->table());
 }

@@ -71,7 +71,7 @@ public:
      * or false if not. See \brief LanguageTable
      * for details
      */
-    virtual bool isLinear() const = 0;
+//    virtual bool isLinear() const = 0;
 
 
     /*!
