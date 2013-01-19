@@ -8,8 +8,8 @@
 #include "querywrappers.h"
 #include "plugininterface.h"
 #include "loader.h"
-
-
+#include "languages.h"
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -31,7 +31,8 @@ int main(int argc, char *argv[])
     QP_DBG(QP_PLUGINS_PATH);
 
 
-
+    qDebug() << "Name: " << LanguageFactory::list()["es"].first;
+    qDebug() << "Native name: " << LanguageFactory::list()["es"].second;
 
 
     return a.exec();
