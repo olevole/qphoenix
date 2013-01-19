@@ -52,23 +52,23 @@ public:
     LanguageTable table() const {
         QStringList english;
 
-        english << "Russian" << "German" << "Spanish";
+        english << "ru" << "de" << "es";
 
         QStringList russian;
-        russian << "German" << "English";
+        russian << "de" << "en";
 
 
         QStringList german;
-        german << "Russian" << "English";
+        german << "ru" << "en";
 
         QStringList spanish;
-        spanish << "German" << "Russian";
+        spanish << "de" << "ru";
 
         LanguageTable myTable;
-        myTable["English"] = english;
-        myTable["Russian"] = russian;
-        myTable["German"] = german;
-        myTable["Spanish"] = spanish;
+        myTable["en"] = english;
+        myTable["ru"] = russian;
+        myTable["de"] = german;
+        myTable["es"] = spanish;
 
         return myTable;
 

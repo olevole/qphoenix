@@ -26,6 +26,8 @@
 #include "translatorwidgetinterface.h"
 #include "info.h"
 #include "translatorinterface.h"
+#include "languages.h"
+
 
 class QTextEdit;
 class QTextBrowser;
@@ -63,6 +65,10 @@ public:
         }
     }
 
+    void setNativeNames(const bool enabled) {
+        mNativeNames = enabled;
+    }
+
 private slots:
     void onSourceLanguageChanged();
     void onTableChanged();
@@ -84,8 +90,10 @@ private:
 
     LanguageTable mTable;
 
-    bool mIsLinear;
+    bool mIsLinear, mNativeNames;
 
+
+    LanguageList mLanguageList;
 };
 
 #endif // TRANSLATIONWIDGET_H

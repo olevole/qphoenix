@@ -40,7 +40,9 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mTranslateButton(new QPushButton(tr("Translate"),this)),
     mSwapButton(new QToolButton(this)),
     mMainLayout(new QVBoxLayout()),
-    mButtonsLayout(new QHBoxLayout())
+    mButtonsLayout(new QHBoxLayout()),
+    mLanguageList(LanguageFactory::list()),
+    mNativeNames(true)
 
 {
     mButtonsLayout->addWidget(mSrcComboBox);
@@ -70,45 +72,74 @@ void TranslationWidget::onSourceLanguageChanged() {
     if(mTable.isEmpty() || mIsLinear)
         return;
 
-
-    const QString cur = mSrcComboBox->currentText();
-
-    /*const QStringList results =*/
-
     mResComboBox->clear();
-    mResComboBox->addItems(mTable[cur]);
 
-    /*!
-     * Detecting type of pairs
-     */
+
+
+    QStringList keys = mTable[mTable.keys().at(mSrcComboBox->currentIndex())];
+
+    qDebug() << "Keys : " << keys;
+
+    keys = LanguageFactory::keysToNames(keys, QP_LANG_LIST, mNativeNames);
+    mResComboBox->addItems(keys);
 
 }
 
 void TranslationWidget::onTableChanged() {
-    mIsLinear = true;
 
-    const QStringList keys = mTable.keys();
-    foreach(QString key, keys) {
-        if(mTable[key].count() > 1) {
-            mIsLinear = false;
-            break;
-        }
+
+    /*
+     * Fill source combobox;
+     */
+
+    mSrcComboBox->clear();
+
+    QStringList keys = mTable.keys();
+
+    mIsLinear = false;
+    foreach (QString key , keys)
+        if(mTable[key].count() < 1)
+            mIsLinear = true;
+
+
+    foreach (QString key , keys) {
+        QString text = QP_LANG_LIST[key].first;
+        if(mNativeNames)
+            text = QP_LANG_LIST[key].second;
+
+        mSrcComboBox->addItem(text);
+        if(mIsLinear)
+            mResComboBox->addItem(text);
+
+
+
+
     }
 
-//    mIsLinear =true;
 
-    mSrcComboBox->addItems(keys);
 
-    if(mIsLinear) {
-        mResComboBox->addItems(keys);
-    }
-    qDebug() << "Keys: " << keys << " IsLinear? " << mIsLinear;
+
+
+//    mIsLinear = true;
+
+//    const QStringList keys = mTable.keys();
+//    foreach(QString key, keys) {
+//        if(mTable[key].count() > 1) {
+//            mIsLinear = false;
+//            break;
+//        }
+//    }
+
+////    mIsLinear =true;
+
+//    mSrcComboBox->addItems(keys);
+
+//    if(mIsLinear) {
+//        mResComboBox->addItems(keys);
+//    }
+//    qDebug() << "Keys: " << keys << " IsLinear? " << mIsLinear;
 
 }
 
 void TranslationWidget::onSwapButtonPressed() {
-//    const int index = mSrcComboBox->currentIndex();
-//    mRs
-
-
 }
