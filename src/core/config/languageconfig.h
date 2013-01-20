@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "configpageinterface.h"
 #include <QList>
+#include "languages.h"
 
 class QTableWidget;
 class QPushButton;
@@ -19,10 +20,28 @@ public:
     void save(){}
     void read(){}
     void reset(){}
+
+    QStringList keysForEnabled() const;
+
+    void setUseNativeNames(const bool b) {
+        mNativeNames = b;
+    }
+private slots:
+    void setAll();
+    void unsetAll();
 private:
+    void createTable();
+
+    void setCbState(const bool state);
+
+
+    LanguageList mLangList;
+
     QList<QCheckBox *> mCheckboxList;
     QTableWidget *mTable;
     QPushButton *mSetButton, *mUnsetButton;
+
+    bool mNativeNames;
 };
 
 #endif // LANGUAGECONFIG_H
