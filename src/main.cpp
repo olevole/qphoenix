@@ -1,16 +1,9 @@
 #include "mainwindow.h"
-#include <QApplication>
-
-#include "config.h"
-#include "translationwidget.h"
-#include "dictionarywidget.h"
 #include "defines.h"
-#include "querywrappers.h"
-#include "plugininterface.h"
-#include "loader.h"
-#include "languages.h"
+#include <QApplication>
 #include <QDebug>
 #include <QDir>
+#include "languages.h"
 
 int main(int argc, char *argv[])
 {
@@ -25,8 +18,6 @@ int main(int argc, char *argv[])
     QDir::addSearchPath("plugins", QP_PLUGINS_PATH);
     QDir::addSearchPath("translators", QP_TRANSLATORS_PATH);
     QDir::addSearchPath("dictionaries", QP_DICTIONARIES_PATH);
-//    QDir::addSearchPath("l18n", QP_L18N_PATH);
-//    QDir::addSearchPath("resources", QP_RESOURCES_PATH);
 
 
     MainWindow *mw = new MainWindow();
@@ -34,13 +25,10 @@ int main(int argc, char *argv[])
     mw->show();
 
 
+    LanguageEngine engine;
 
 
-    qDebug() << "Name: " << LanguageFactory::list()["ru"].first;
-    qDebug() << "Native name: " << LanguageFactory::list()["ru"].second.toUtf8();
-
-
-    mw->setWindowTitle(LanguageFactory::list()["ru"].second);
+    qDebug() << engine.languages()["de"].nativeName();
 
     return a.exec();
 }

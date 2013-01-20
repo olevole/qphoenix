@@ -26,7 +26,6 @@
 #include "translatorwidgetinterface.h"
 #include "info.h"
 #include "translatorinterface.h"
-#include "languages.h"
 
 
 class QTextEdit;
@@ -93,7 +92,6 @@ private:
     bool mIsLinear, mNativeNames;
 
 
-    LanguageList mLanguageList;
 };
 
 #endif // TRANSLATIONWIDGET_H

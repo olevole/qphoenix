@@ -59,15 +59,12 @@ src/core/translationwidget.h
 src/core/dictionarywidget.h
 src/core/querywrappers.h
 src/core/loader.h
-src/core/languages.h
-src/core/icons.h
-
-)
+src/core/languages.h)
 
 
 
 SET(SOURCES
-#src/main.cpp
+src/main.cpp
 src/core/mainwindow.cpp
 src/core/config/config.cpp
 src/core/config/translatorsconfig.cpp
@@ -77,10 +74,11 @@ src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
 src/core/querywrappers.cpp
 src/core/loader.cpp
-src/core/languages.cpp
-src/core/icons.cpp
-)
+src/core/languages.cpp)
 
+
+SET(RESOURCES resources.qrc)
+qt4_add_resources(RC_SOURCES ${RESOURCES})
 
 # Not implemented yet
 SET(L18N
@@ -104,8 +102,8 @@ ENDIF()
 SET(PLUGINS_PATH        ${MPREFIX}/plugins        CACHE INTERNAL "")
 SET(TRANSLATORS_PATH    ${MPREFIX}/translators    CACHE INTERNAL "")
 SET(DICTIONARIES_PATH   ${MPREFIX}/dictionaries   CACHE INTERNAL "")
-SET(L18N_PATH           ${MPREFIX}/l18n           CACHE INTERNAL "")
-SET(RESOURCES_PATH      ${MPREFIX}/resources      CACHE INTERNAL "")
+#SET(L18N_PATH           ${MPREFIX}/l18n           CACHE INTERNAL "")
+#SET(RESOURCES_PATH      ${MPREFIX}/resources      CACHE INTERNAL "")
 
 ADD_SUBDIRECTORY(src/core/3rdparty/fancytab-widgets)
 ADD_SUBDIRECTORY(src/plugins)
@@ -122,7 +120,7 @@ ADD_LIBRARY(${STATICLIB} STATIC ${SOURCES} ${MOC_SOURCES}  ${QM_FILES} ${QRC_SOU
 TARGET_LINK_LIBRARIES(${STATICLIB} ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES}
  ${QT_QTXML_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES}  fancytabwidget)
 
-ADD_EXECUTABLE(${EXECUTABLE_NAME} src/main.cpp)
+ADD_EXECUTABLE(${EXECUTABLE_NAME} src/main.cpp ${RC_SOURCES})
 TARGET_LINK_LIBRARIES(${EXECUTABLE_NAME}  ${STATICLIB})
 
 

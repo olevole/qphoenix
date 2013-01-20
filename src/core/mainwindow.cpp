@@ -69,7 +69,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QList<QAction *> ActionsList;
     ActionsList << mExitAction << mCopyAction << mAboutAction;
     mToolBar->addActions(ActionsList);
-//    mToolBar->setMovable(false);
 
 
 

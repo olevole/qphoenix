@@ -41,7 +41,6 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mSwapButton(new QToolButton(this)),
     mMainLayout(new QVBoxLayout()),
     mButtonsLayout(new QHBoxLayout()),
-    mLanguageList(LanguageFactory::list()),
     mNativeNames(true)
 
 {
@@ -72,16 +71,6 @@ void TranslationWidget::onSourceLanguageChanged() {
     if(mTable.isEmpty() || mIsLinear)
         return;
 
-    mResComboBox->clear();
-
-
-
-    QStringList keys = mTable[mTable.keys().at(mSrcComboBox->currentIndex())];
-
-    qDebug() << "Keys : " << keys;
-
-    keys = LanguageFactory::keysToNames(keys, QP_LANG_LIST, mNativeNames);
-    mResComboBox->addItems(keys);
 
 }
 
@@ -92,52 +81,7 @@ void TranslationWidget::onTableChanged() {
      * Fill source combobox;
      */
 
-    mSrcComboBox->clear();
 
-    QStringList keys = mTable.keys();
-
-    mIsLinear = false;
-    foreach (QString key , keys)
-        if(mTable[key].count() < 1)
-            mIsLinear = true;
-
-
-    foreach (QString key , keys) {
-        QString text = QP_LANG_LIST[key].first;
-        if(mNativeNames)
-            text = QP_LANG_LIST[key].second;
-
-        mSrcComboBox->addItem(text);
-        if(mIsLinear)
-            mResComboBox->addItem(text);
-
-
-
-
-    }
-
-
-
-
-
-//    mIsLinear = true;
-
-//    const QStringList keys = mTable.keys();
-//    foreach(QString key, keys) {
-//        if(mTable[key].count() > 1) {
-//            mIsLinear = false;
-//            break;
-//        }
-//    }
-
-////    mIsLinear =true;
-
-//    mSrcComboBox->addItems(keys);
-
-//    if(mIsLinear) {
-//        mResComboBox->addItems(keys);
-//    }
-//    qDebug() << "Keys: " << keys << " IsLinear? " << mIsLinear;
 
 }
 

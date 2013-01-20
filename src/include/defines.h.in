@@ -14,17 +14,13 @@
     #define QP_PLUGIN_EXT "so"
 #endif
 
-
 #ifdef Q_OS_WIN32
     #define QP_PLUGIN_EXT "dll"
 #endif
 
-
 #define QP_MODULE_SIGNATURE QString("%1%2").arg("lib*.").arg( QP_PLUGIN_EXT)
 
-
 #define QP_PREFIX "${PREFIX}"
-
 
 /*!
  * Paths. Do not use them! Use qt paths instead.
@@ -33,9 +29,5 @@
 #define QP_PLUGINS_PATH  "${PLUGINS_PATH}"
 #define QP_TRANSLATORS_PATH  "${TRANSLATORS_PATH}"
 #define QP_DICTIONARIES_PATH "${DICTIONARIES_PATH}"
-//#define QP_L18N_PATH "${L18N_PATH}"
-//#define QP_RESOURCES_PATH "${RESOURCES_PATH}"
-
-
 
 #endif // DEFINES_H

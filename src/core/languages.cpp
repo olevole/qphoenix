@@ -1,83 +1,49 @@
-#pragma once
-#ifndef LANGUAGES_H
-#define LANGUAGES_H
 
-#include <QMap>
-#include <QString>
-#include <QPair>
-#include <QStringList>
-
-typedef QPair<QString, QString> Language;
-typedef QMap<QString, Language> LanguageList;
+#include "languages.h"
+#include <QFile>
+#include <QTextStream>
 
 
-class LanguageFactory {
-public:
-    static  LanguageList list() {
-        LanguageList list;
+LanguageEngine::LanguageEngine(QObject *parent)
+    :QObject(parent)
+{
+    QFile file(":/langmap.csv");
 
-        list["es"] = Language("Spanish", "Espaniol");
-        list["ru"] = Language("Russian", "Русский");
-        list["de"] = Language("German", "Deutsche");
-        list["en"] = Language("English", "English");
-        return list;
+    if(!file.open(QFile::ReadOnly))
+        qFatal("Unable to open language map! ");
+
+    QTextStream in(&file);
+
+    while (!in.atEnd()) {
+        QString str = in.readLine();
+        QStringList result = str.split(",");
+
+        Language lang;
+        lang.setCode(result.first());
+        lang.setName(result.at(1));
+        lang.setNativeName(result.last());
+
+        mLangList[result.first()] = lang;
     }
 
-//    static QStringList keysToNativeNames(const QStringList &keys, const LanguageList &list) {
-//        QStringList nativeNames;
+    file.close();
 
-//        foreach (QString key, keys) {
-//            nativeNames << list[key].second;
-//        }
-//        return nativeNames;
-//    }
-    static QStringList keysToNames(const QStringList &keys,
-                                   const LanguageList &list,
-                                   const bool native = false) {
-        QStringList names;
 
-        foreach (QString key, keys) {
-            if(native)
-                names << list[key].second;
-            else
-                names << list[key].first;
-        }
-        return names;
+
+}
+
+
+
+QStringList LanguageEngine::keysToNames(const QStringList &keys, const bool native) {
+    QStringList names;
+
+    foreach (QString key, keys) {
+        if(native)
+            names << mLangList[key].nativeName();
+        else
+            names << mLangList[key].name();
     }
+    return names;
+}
 
 
-
-};
-
-
-static const LanguageList QP_LANG_LIST = LanguageFactory::list();
-
-
-class LanguageEngine {
-public:
-    /*!
-     * \brief keysForEnabled
-     * \return a keys for enabled languages
-     */
-    QStringList keysForEnabled() const;
-    LanguageList languages() const;
-
-    QStringList keysToNames(const QStringList &keys,
-                                   const bool native = false) {
-        QStringList names;
-
-        foreach (QString key, keys) {
-            if(native)
-                names << mLangList[key].second;
-            else
-                names << mLangList[key].first;
-        }
-        return names;
-    }
-
-private:
-    LanguageList mLangList;
-};
-
-
-#endif // LANGUAGES_H
