@@ -6,7 +6,6 @@
 
 #include "config.h"
 #include "configpageinterface.h"
-#include "testpage.h"
 #include "translatorsconfig.h"
 #include "defines.h"
 

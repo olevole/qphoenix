@@ -21,7 +21,6 @@
 #include "dictionarywidget.h"
 #include "config.h"
 #include "translatorsconfig.h"
-#include "testpage.h"
 #include "defines.h"
 #include "pluginsconfig.h"
 #include "loader.h"
