@@ -8,16 +8,14 @@
 #include <QStringList>
 #include <QObject>
 
-//typedef QPair<QString, QString> Language;
 
 class Language;
 
 typedef QMap<QString, Language> LanguageList;
 
 
-class Language/* : public QObject */{
+class Language {
 public:
-//    explicit Language(QObject *parent = 0) :QObject(parent){};
 
     explicit Language(const QString &name,
                       const QString &native,
@@ -47,15 +45,18 @@ private:
 class LanguageEngine : public QObject {
 public:
     explicit LanguageEngine(QObject *parent = 0);
+
+
     /*!
      * \brief keysForEnabled
      * \return a keys for enabled languages
      */
-    LanguageList languages() const
-    {return mLangList;}
+    LanguageList languages() const {return mLangList;}
 
-    QStringList keysToNames(const QStringList &keys,
-                                   const bool native = false);
+    QStringList keysToNames(const QStringList &keys, const bool native = false);
+
+
+    LanguageList intersect(const LanguageList &lst1, const LanguageList &lst2);
 
 private:
     LanguageList mLangList;

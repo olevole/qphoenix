@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/flags"/>
+    <qresource prefix="/l18n"/>
+    <qresource prefix="/icons"/>
+    <qresource prefix="/">
+        <file>langmap.csv</file>
+    </qresource>
+</RCC>

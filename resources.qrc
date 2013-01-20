@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>langmap.csv</file>
-    </qresource>
-</RCC>

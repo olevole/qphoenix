@@ -19,11 +19,6 @@ FIND_PACKAGE(Qt4 REQUIRED QtCore QtGui)
 INCLUDE(${QT_USE_FILE})
 
 
-
-
-
-
-
 INCLUDE_DIRECTORIES(
 ${CMAKE_CURRENT_BINARY_DIR}
 ${CMAKE_INCLUDE_PATH}
@@ -77,8 +72,8 @@ src/core/loader.cpp
 src/core/languages.cpp)
 
 
-SET(RESOURCES resources.qrc)
-qt4_add_resources(RC_SOURCES ${RESOURCES})
+SET(RESOURCES resources/resources.qrc)
+QT4_ADD_RESOURCES(RC_SOURCES ${RESOURCES})
 
 # Not implemented yet
 SET(L18N

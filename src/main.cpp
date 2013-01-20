@@ -28,7 +28,10 @@ int main(int argc, char *argv[])
     LanguageEngine engine;
 
 
-    qDebug() << engine.languages()["de"].nativeName();
+    QString text = engine.languages()["uz"].nativeName();
+
+    qDebug() <<  text;
+    mw->setWindowTitle(text);
 
     return a.exec();
 }

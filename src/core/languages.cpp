@@ -25,11 +25,7 @@ LanguageEngine::LanguageEngine(QObject *parent)
 
         mLangList[result.first()] = lang;
     }
-
     file.close();
-
-
-
 }
 
 
