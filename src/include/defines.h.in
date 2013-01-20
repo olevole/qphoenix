@@ -24,20 +24,6 @@
 
 
 
-#ifdef QP_DEBUG_MODE
-    #include <QDebug>
-    #define QP_DBG(x) qDebug()          \
-    << "In function: "  << Q_FUNC_INFO  \
-    << "Line: "         << __LINE__     \
-    << "\nMessage: "    << x            \
-    << "\n--------------------------------------------------------------------------------"
-
-
-
-
-#else
-    #define QP_DBG
-#endif
 
 
 #ifdef Q_OS_UNIX
@@ -54,7 +40,9 @@
 #define QP_PLUGINS_PATH  "${PLUGINS_PATH}"
 #define QP_TRANSLATORS_PATH  "${TRANSLATORS_PATH}"
 #define QP_DICTIONARIES_PATH "${DICTIONARIES_PATH}"
+#define QP_L18N_PATH "${L18N_PATH}"
 #define QP_RESOURCES_PATH "${RESOURCES_PATH}"
+
 
 
 #endif // DEFINES_H

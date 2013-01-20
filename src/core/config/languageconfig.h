@@ -2,17 +2,27 @@
 #define LANGUAGECONFIG_H
 
 #include <QWidget>
+#include "configpageinterface.h"
+#include <QList>
 
-class languageconfig : public QWidget
+class QTableWidget;
+class QPushButton;
+class QCheckBox;
+
+class LanguageConfig : public QWidget, ConfigPageInterface
 {
     Q_OBJECT
+    Q_INTERFACES(ConfigPageInterface)
 public:
-    explicit languageconfig(QWidget *parent = 0);
+    explicit LanguageConfig(QWidget *parent = 0);
     
-signals:
-    
-public slots:
-    
+    void save(){}
+    void read(){}
+    void reset(){}
+private:
+    QList<QCheckBox *> mCheckboxList;
+    QTableWidget *mTable;
+    QPushButton *mSetButton, *mUnsetButton;
 };
 
 #endif // LANGUAGECONFIG_H

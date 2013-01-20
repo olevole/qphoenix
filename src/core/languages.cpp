@@ -11,7 +11,6 @@ typedef QPair<QString, QString> Language;
 typedef QMap<QString, Language> LanguageList;
 
 
-
 class LanguageFactory {
 public:
     static  LanguageList list() {

@@ -10,6 +10,7 @@
 #include "loader.h"
 #include "languages.h"
 #include <QDebug>
+#include <QDir>
 
 int main(int argc, char *argv[])
 {
@@ -21,14 +22,18 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName(QP_ORG_NAME);
     QCoreApplication::setOrganizationDomain(QP_ORG_DOMAIN);
 
-    QP_DBG("Trying to create MainWindow object....");
+    QDir::addSearchPath("plugins", QP_PLUGINS_PATH);
+    QDir::addSearchPath("translators", QP_TRANSLATORS_PATH);
+    QDir::addSearchPath("dictionaries", QP_DICTIONARIES_PATH);
+    QDir::addSearchPath("l18n", QP_L18N_PATH);
+    QDir::addSearchPath("resources", QP_RESOURCES_PATH);
+
 
     MainWindow *mw = new MainWindow();
 
     mw->show();
 
-    QP_DBG("Success!");
-    QP_DBG(QP_PLUGINS_PATH);
+
 
 
     qDebug() << "Name: " << LanguageFactory::list()["ru"].first;

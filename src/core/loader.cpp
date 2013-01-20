@@ -44,8 +44,7 @@ ModuleList Loader::modules() {
         if(l->load() && (instance = l->instance()) != NULL) {
             list.append(instance);
         } else {
-            QP_DBG("Unable to load module!");
-            QP_DBG(l->errorString());
+//            /TODO: hadnle
 
         }
     }

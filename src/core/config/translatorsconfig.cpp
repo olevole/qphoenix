@@ -67,7 +67,7 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onIndexChange(int)));
 
 
-    Loader ldr("/tmp/qphoenix-build/src/translators/mymemory");
+    Loader ldr("translators:");
 
     ModuleList list = ldr.modules();
 

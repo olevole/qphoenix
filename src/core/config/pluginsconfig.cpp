@@ -87,7 +87,7 @@ void PluginsConfig::reset() {
 }
 
 void PluginsConfig::updateTable() {
-    Loader loader(QP_PLUGINS_PATH);
+    Loader loader("plugins:");
 
     mPlugins = loader.modules();
 

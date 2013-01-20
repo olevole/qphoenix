@@ -25,6 +25,7 @@
 #include "pluginsconfig.h"
 #include "loader.h"
 #include "translatorinterface.h"
+#include "languageconfig.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -83,12 +84,14 @@ MainWindow::MainWindow(QWidget *parent) :
     this->addPage(mTranslationWidget);
     this->addPage(mDictionaryWidget);
 
+
     if(mFancyWidget->count() > 0)
         mFancyWidget->setCurrentIndex(0);
 
 
     mSettingsDialog->addPage(mTranslatorsConfig);
     mSettingsDialog->addPage(mPluginsConfig);
+    mSettingsDialog->addPage(new LanguageConfig);
 
     connect(mOptionsAction, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
     connect(mExitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
