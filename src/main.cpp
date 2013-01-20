@@ -25,8 +25,8 @@ int main(int argc, char *argv[])
     QDir::addSearchPath("plugins", QP_PLUGINS_PATH);
     QDir::addSearchPath("translators", QP_TRANSLATORS_PATH);
     QDir::addSearchPath("dictionaries", QP_DICTIONARIES_PATH);
-    QDir::addSearchPath("l18n", QP_L18N_PATH);
-    QDir::addSearchPath("resources", QP_RESOURCES_PATH);
+//    QDir::addSearchPath("l18n", QP_L18N_PATH);
+//    QDir::addSearchPath("resources", QP_RESOURCES_PATH);
 
 
     MainWindow *mw = new MainWindow();
