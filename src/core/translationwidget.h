@@ -26,7 +26,7 @@
 #include "translatorwidgetinterface.h"
 #include "info.h"
 #include "translatorinterface.h"
-
+#include "languages.h"
 
 class QTextEdit;
 class QTextBrowser;
@@ -88,6 +88,7 @@ private:
     QHBoxLayout *mButtonsLayout;
 
     LanguageTable mTable;
+    LanguageList  mLangList;
 
     bool mIsLinear, mNativeNames;
 

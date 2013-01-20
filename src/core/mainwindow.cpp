@@ -49,7 +49,8 @@ MainWindow::MainWindow(QWidget *parent) :
     mSettingsDialog(new Config(this)),
 
     mPluginsConfig(new PluginsConfig),
-    mTranslatorsConfig(new TranslatorsConfig(this))
+    mTranslatorsConfig(new TranslatorsConfig(this)),
+    mLanguageConfig(new LanguageConfig(this))
 {
 
     setWindowTitle(qApp->applicationName());
@@ -90,7 +91,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mSettingsDialog->addPage(mTranslatorsConfig);
     mSettingsDialog->addPage(mPluginsConfig);
-    mSettingsDialog->addPage(new LanguageConfig);
+    mSettingsDialog->addPage(mLanguageConfig);
 
     connect(mOptionsAction, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
     connect(mExitAction, SIGNAL(triggered()), qApp, SLOT(quit()));

@@ -30,7 +30,7 @@
 #include <QLayout>
 #include <QDebug>
 //#include "global.h"
-
+#include <QMap>
 TranslationWidget::TranslationWidget(QWidget *parent) :
     QWidget(parent),
     mSrcComboBox(new QComboBox(this)),
@@ -60,6 +60,9 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     setName("Translate");
 
 
+    LanguageEngine engine;
+    mLangList = engine.languages();
+
     connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onSourceLanguageChanged()));
     connect(mSwapButton, SIGNAL(clicked()), this, SLOT(onSwapButtonPressed()));
 
@@ -82,7 +85,31 @@ void TranslationWidget::onTableChanged() {
      */
 
 
+    // Is Linear??
+    mIsLinear = true;
 
+
+    for(LanguageTable::iterator it = mTable.begin();it != mTable.end(); it++)  {
+        if(it.value().count() > 1)
+            mIsLinear = false;
+
+
+    }
+
+    QStringList keys = mTable.keys();
+
+    foreach (QString key, keys) {
+        QString icon = QString(":/flags/flags/%1.png").arg(key);
+        QString name;
+
+        Language entry = mLangList[key];
+        if(mNativeNames)
+            name = entry.nativeName();
+        else
+            name = entry.name();
+
+        mSrcComboBox->addItem(QIcon(icon), name);
+    }
 }
 
 void TranslationWidget::onSwapButtonPressed() {

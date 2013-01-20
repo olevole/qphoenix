@@ -18,25 +18,21 @@ class Language {
 public:
 
     explicit Language(const QString &name,
-                      const QString &native,
-                      const QString &code)
+                      const QString &native)
     {
        setName(name);
        setNativeName(native);
-       setCode(code);
     }
 
     explicit Language(){}
 
     QString name() const        {return mName;      }
     QString nativeName() const  {return mNativeName;}
-    QString code() const        {return mCode;      }
 
     void setName(const QString &name)           {mName = name;          }
     void setNativeName(const QString &native)   {mNativeName = native;  }
-    void setCode(const QString &code)           {mCode = code;          }
 private:
-    QString mName, mNativeName, mCode;
+    QString mName, mNativeName;
 };
 
 
@@ -56,7 +52,7 @@ public:
     QStringList keysToNames(const QStringList &keys, const bool native = false);
 
 
-    LanguageList intersect(const LanguageList &lst1, const LanguageList &lst2);
+    static LanguageList intersect(const LanguageList &lst1, const LanguageList &lst2);
 
 private:
     LanguageList mLangList;

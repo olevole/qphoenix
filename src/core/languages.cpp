@@ -19,7 +19,6 @@ LanguageEngine::LanguageEngine(QObject *parent)
         QStringList result = str.split(",");
 
         Language lang;
-        lang.setCode(result.first());
         lang.setName(result.at(1));
         lang.setNativeName(result.last());
 
@@ -42,4 +41,8 @@ QStringList LanguageEngine::keysToNames(const QStringList &keys, const bool nati
     return names;
 }
 
+
+LanguageList LanguageEngine::intersect(const LanguageList &lst1, const LanguageList &lst2) {
+
+}
 

@@ -17,8 +17,8 @@ class LanguageConfig : public QWidget, ConfigPageInterface
 public:
     explicit LanguageConfig(QWidget *parent = 0);
     
-    void save(){}
-    void read(){}
+    void save();
+    void read();
     void reset(){}
 
     QStringList keysForEnabled() const;

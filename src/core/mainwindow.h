@@ -9,6 +9,7 @@
 #include "translationwidget.h"
 
 
+
 class QStatusBar;
 class QToolBar;
 class QMenuBar;
@@ -18,14 +19,9 @@ class QAction;
 
 
 class Config;
-
 class PluginsConfig;
 class TranslatorsConfig;
-
-
-
-
-
+class LanguageConfig;
 
 class MainWindow : public  QMainWindow, MainWindowInterface
 {
@@ -83,6 +79,7 @@ private:
 
     PluginsConfig *mPluginsConfig;
     TranslatorsConfig *mTranslatorsConfig;
+    LanguageConfig *mLanguageConfig;
 signals:
     void pageChanged(const int i);
 

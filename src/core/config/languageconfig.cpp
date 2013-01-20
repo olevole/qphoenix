@@ -4,6 +4,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QHeaderView>
+#include <QSettings>
 #include <QDebug>
 #include "languageconfig.h"
 
@@ -40,6 +41,47 @@ LanguageConfig::LanguageConfig(QWidget *parent) :
 }
 
 
+void LanguageConfig::save() {
+    QSettings s;
+    s.beginGroup("Languages");
+    s.setValue("EnabledLanguages", keysForEnabled());
+    s.endGroup();
+}
+
+void LanguageConfig::read() {
+
+
+    QStringList keys = mLangList.keys();
+
+    QSettings s;
+    s.beginGroup("Languages");
+    QStringList enabled = s.value("EnabledLanguages", keys).toStringList();
+    s.endGroup();
+
+    if(enabled.isEmpty()) {
+        unsetAll();
+    } else if(enabled == keys) {
+        setAll();
+    } else {
+        for (int i = 0; i < keys.count(); ++i) {
+            bool b = enabled.contains(keys.at(i));
+            mCheckboxList.at(i)->setChecked(b);
+        }
+    }
+
+}
+
+QStringList LanguageConfig::keysForEnabled() const {
+    QStringList enabled;
+    const QStringList keys = mLangList.keys();
+
+    for (int i = 0; i < mTable->rowCount(); ++i)
+        if(mCheckboxList.at(i)->isChecked())
+            enabled << keys.at(i);
+    return enabled;
+}
+
+
 void LanguageConfig::setAll() {
     setCbState(true);
 }
@@ -58,24 +100,23 @@ void LanguageConfig::createTable() {
 
     mTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 
-    QStringList  keys = mLangList.keys();
 
     LanguageList::Iterator it = mLangList.begin();
 
-
-    for(int i = 0; i < keys.count(); i++) {
+    int i = 0;
+    for(; it != mLangList.end(); ++it) {
         qDebug() << "ITERATION";
 
-        QString key = keys.at(i);
         QString name;
 
         if(mNativeNames)
-            name = mLangList[key].nativeName();
+            name = it.value().nativeName();
         else
-            name = mLangList[key].name();
+            name = it.value().name();
 
 
-        QString icon = QString(":/flags/flags/%1.png").arg(key);
+
+        QString icon = QString(":/flags/flags/%1.png").arg(it.key());
         mTable->insertRow(i);
 
         QTableWidgetItem *item = new QTableWidgetItem;
@@ -91,8 +132,7 @@ void LanguageConfig::createTable() {
 
         mTable->setItem(i, 0, new QTableWidgetItem(QIcon(icon), name));
         mTable->setRowHeight(i, 20);
-
-
+        i++;
     }
 
 }
