@@ -46,7 +46,6 @@ src/include/translatorinterface.h
 src/include/dictionaryinterface.h
 src/include/info.h
 src/include/basemodule.h
-src/include/languages.h
 )
 
 
@@ -60,6 +59,9 @@ src/core/translationwidget.h
 src/core/dictionarywidget.h
 src/core/querywrappers.h
 src/core/loader.h
+src/core/languages.h
+src/core/icons.h
+
 )
 
 
@@ -74,7 +76,10 @@ src/core/config/pluginsconfig.cpp
 src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
 src/core/querywrappers.cpp
-src/core/loader.cpp)
+src/core/loader.cpp
+src/core/languages.cpp
+src/core/icons.cpp
+)
 
 
 # Not implemented yet
@@ -103,8 +108,8 @@ SET(L18N_PATH           ${MPREFIX}/l18n           CACHE INTERNAL "")
 SET(RESOURCES_PATH      ${MPREFIX}/resources      CACHE INTERNAL "")
 
 ADD_SUBDIRECTORY(src/core/3rdparty/fancytab-widgets)
-ADD_SUBDIRECTORY(src/plugins/trayicon)
-ADD_SUBDIRECTORY(src/translators/mymemory)
+ADD_SUBDIRECTORY(src/plugins)
+ADD_SUBDIRECTORY(src/translators)
 ADD_SUBDIRECTORY(src/tests)
 
 CONFIGURE_FILE(src/include/defines.h.in src/include/defines.h)
