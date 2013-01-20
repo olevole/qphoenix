@@ -60,6 +60,8 @@ void LanguageConfig::createTable() {
 
     QStringList  keys = mLangList.keys();
 
+    LanguageList::Iterator it = mLangList.begin();
+
 
     for(int i = 0; i < keys.count(); i++) {
         qDebug() << "ITERATION";
