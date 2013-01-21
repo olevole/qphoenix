@@ -72,6 +72,8 @@ private slots:
     void onSourceLanguageChanged();
     void onTableChanged();
     void onSwapButtonPressed();
+
+    void fillCombobox(QComboBox *cb, QStringList keys);
 private:
     QComboBox
     *mSrcComboBox,
@@ -91,8 +93,6 @@ private:
     LanguageList  mLangList;
 
     bool mIsLinear, mNativeNames;
-
-
 };
 
 #endif // TRANSLATIONWIDGET_H

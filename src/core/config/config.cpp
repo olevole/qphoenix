@@ -114,7 +114,6 @@ void Config::addPage(QWidget *page) {
 }
 
 void Config::removePage(const QWidget *page) {
-    ConfigPageInterface *iface2;
     for(int i = 0; i < mPagesList.count(); i++) {
         ConfigPageInterface *iface = qobject_cast<ConfigPageInterface *>(page);
 

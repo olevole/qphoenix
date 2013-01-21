@@ -57,6 +57,9 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     setLayout(mMainLayout);
 
 
+    mSrcComboBox->setSizePolicy(QSizePolicy::Preferred, mSrcComboBox->sizePolicy().verticalPolicy());
+    mResComboBox->setSizePolicy(QSizePolicy::Preferred, mSrcComboBox->sizePolicy().verticalPolicy());
+
     setName("Translate");
 
 
@@ -75,6 +78,11 @@ void TranslationWidget::onSourceLanguageChanged() {
         return;
 
 
+    mResComboBox->clear();
+    QList<QStringList> values = mTable.values();
+    fillCombobox(mResComboBox, values.at(mSrcComboBox->currentIndex()));
+//    mResComboBox->addItems());
+
 }
 
 void TranslationWidget::onTableChanged() {
@@ -88,6 +96,8 @@ void TranslationWidget::onTableChanged() {
     // Is Linear??
     mIsLinear = true;
 
+    mSrcComboBox->clear();
+
 
     for(LanguageTable::iterator it = mTable.begin();it != mTable.end(); it++)  {
         if(it.value().count() > 1)
@@ -96,7 +106,29 @@ void TranslationWidget::onTableChanged() {
 
     }
 
-    QStringList keys = mTable.keys();
+
+    fillCombobox(mSrcComboBox, mTable.keys());
+//    QStringList keys = mTable.keys();
+
+//    foreach (QString key, keys) {
+//        QString icon = QString(":/flags/flags/%1.png").arg(key);
+//        QString name;
+
+//        Language entry = mLangList[key];
+//        if(mNativeNames)
+//            name = entry.nativeName();
+//        else
+//            name = entry.name();
+
+//        mSrcComboBox->addItem(QIcon(icon), name);
+//    }
+}
+
+void TranslationWidget::onSwapButtonPressed() {
+}
+
+void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
+
 
     foreach (QString key, keys) {
         QString icon = QString(":/flags/flags/%1.png").arg(key);
@@ -108,9 +140,6 @@ void TranslationWidget::onTableChanged() {
         else
             name = entry.name();
 
-        mSrcComboBox->addItem(QIcon(icon), name);
+        cb->addItem(QIcon(icon), name);
     }
-}
-
-void TranslationWidget::onSwapButtonPressed() {
 }

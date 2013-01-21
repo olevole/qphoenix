@@ -14,6 +14,7 @@
 #include <QPluginLoader>
 #include <QPushButton>
 #include <QApplication>
+#include <QMap>
 
 #include "plugininterface.h"
 
@@ -172,6 +173,34 @@ void MainWindow::onConfigAccept() {
      */
 
 
+    QStringList enabledKeys = mLanguageConfig->keysForEnabled();
+    LanguageTable table = mTranslatorsConfig->currentTranslator()->table();
+
+
+    QStringList keys = table.keys();
+
+
+
+    for(LanguageTable::iterator i = table.begin(); i != table.end(); i++) {
+        const QString key = i.key();
+        if(!enabledKeys.contains(key)) {
+            table.remove(key);
+        } else {
+            QStringList values = i.value();
+            for (int j = 0; j < values.count(); ++j) {
+                if(!enabledKeys.contains(values.at(j)))
+                    values.removeAt(j);
+            }
+
+            table[key] = values;
+        }
+
+
+    }
+
+    qDebug() << "ALL KEYS: " << table.values();
+
+
     // Updating table
-    mTranslationWidget->setLangTable(mTranslatorsConfig->currentTranslator()->table());
+    mTranslationWidget->setLangTable(table);
 }

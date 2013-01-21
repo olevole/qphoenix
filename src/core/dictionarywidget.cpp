@@ -46,6 +46,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mGroupbox->setTitle(tr("Result"));
     mGroupbox->setLayout(new QHBoxLayout);
     mGroupbox->layout()->addWidget(mResText);
+    mGroupbox->setFlat(true);
 
     setName(tr("Dictionary"));
     setIcon(QIcon::fromTheme("accessoriesbgb-dictionary"));

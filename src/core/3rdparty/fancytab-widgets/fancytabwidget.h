@@ -160,7 +160,7 @@ public:
     QStatusBar *statusBar() const;
 
     int count() const {
-        m_tabBar->count();
+       return m_tabBar->count();
     }
 
     void setTabEnabled(int index, bool enable);
