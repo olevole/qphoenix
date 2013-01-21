@@ -80,6 +80,9 @@ private:
     PluginsConfig *mPluginsConfig;
     TranslatorsConfig *mTranslatorsConfig;
     LanguageConfig *mLanguageConfig;
+
+
+    QStringList mLastEnabledLanguages;
 signals:
     void pageChanged(const int i);
 

@@ -174,33 +174,31 @@ void MainWindow::onConfigAccept() {
 
 
     QStringList enabledKeys = mLanguageConfig->keysForEnabled();
-    LanguageTable table = mTranslatorsConfig->currentTranslator()->table();
 
+    if(enabledKeys != mLastEnabledLanguages) {
+        mLastEnabledLanguages = enabledKeys;
 
-    QStringList keys = table.keys();
+        LanguageTable table = mTranslatorsConfig->currentTranslator()->table();
 
+        QStringList keys = table.keys();
 
-
-    for(LanguageTable::iterator i = table.begin(); i != table.end(); i++) {
-        const QString key = i.key();
-        if(!enabledKeys.contains(key)) {
-            table.remove(key);
-        } else {
-            QStringList values = i.value();
-            for (int j = 0; j < values.count(); ++j) {
-                if(!enabledKeys.contains(values.at(j)))
-                    values.removeAt(j);
+        for(LanguageTable::iterator i = table.begin(); i != table.end(); i++) {
+            const QString key = i.key();
+            if(!enabledKeys.contains(key)) {
+                table.remove(key);
+            } else {
+                QStringList values = i.value();
+                for (int j = 0; j < values.count(); ++j) {
+                    if(!enabledKeys.contains(values.at(j)))
+                        values.removeAt(j);
+                }
+                table[key] = values;
             }
-
-            table[key] = values;
         }
-
-
+        qDebug() << "ALL KEYS: " << table.values();
+        mTranslationWidget->setLangTable(table);
     }
-
-    qDebug() << "ALL KEYS: " << table.values();
 
 
     // Updating table
-    mTranslationWidget->setLangTable(table);
 }
