@@ -55,6 +55,8 @@ private slots:
     void onConfigAccept();
 
 
+    void about();
+
 private:
     QStatusBar  *mStatusBar;
     QToolBar    *mToolBar;
@@ -64,13 +66,25 @@ private:
     QMenu   *mFileMenu, *mEditMenu, *mHelpMenu;
 
     // File menu
-    QAction *mExitAction;
+    QAction
+    *mActionExit,
+    *mActionOpen,
+    *mActionSave,
+    *mActionSaveAs,
+    *mActionPrint;
 
     // Edit Menu
-    QAction *mCopyAction, *mOptionsAction;
+    QAction
+    *mActionClear,
+    *mActionCopy,
+    *mActionUndo,
+    *mActionRedo,
+    *mActionSwap,
+
+    *mActionOptions;
 
     // Help menu
-    QAction *mAboutAction;
+    QAction *mActionAbout, *mActionAboutQt;
 
     TranslationWidget *mTranslationWidget;
     DictionaryWidget *mDictionaryWidget;

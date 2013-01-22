@@ -39,10 +39,10 @@
 TranslationToolBar::TranslationToolBar(QWidget *parent)
     :QToolBar(parent),
 
-      mSpeechAction(new QAction(QIcon::fromTheme("application-exit"), "Speech", this))
+      mSpeechAction(new QAction(/*QIcon::fromTheme("application-exit"),*/ "Speech", this))
 {
     this->addAction(mSpeechAction);
-setIconSize(QSize(15,15)),
+//    setIconSize(QSize(15,15)),
     connect(mSpeechAction,SIGNAL(triggered()), this, SIGNAL(speechRequest()));
 
 }

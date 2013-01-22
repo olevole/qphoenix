@@ -15,6 +15,7 @@
 #include <QPushButton>
 #include <QApplication>
 #include <QMap>
+#include <QMessageBox>
 
 #include "plugininterface.h"
 
@@ -41,10 +42,23 @@ MainWindow::MainWindow(QWidget *parent) :
     mHelpMenu(new QMenu(tr("Help"), this)),
 
     //Actions
-    mExitAction(new QAction(QIcon::fromTheme("application-exit"), tr("Exit"), this)),
-    mCopyAction(new QAction(QIcon::fromTheme("edit-copy"), tr("Copy"), this)),
-    mOptionsAction(new QAction("Options", this)),
-    mAboutAction(new QAction(QIcon::fromTheme("help-about"), tr("About"), this)),
+    mActionExit(new QAction(QIcon::fromTheme("application-exit"), tr("Exit"), this)),
+    mActionOpen(new QAction(tr("Open"), this)),
+    mActionSave(new QAction(tr("Save"), this)),
+    mActionSaveAs(new QAction(tr("Save As"), this)),
+    mActionPrint(new QAction(tr("Print"), this)),
+
+    mActionClear(new QAction(tr("Clear"), this)),
+    mActionCopy(new QAction(QIcon::fromTheme("edit-copy"),tr("Copy"), this)),
+    mActionUndo(new QAction(tr("Undo"), this)),
+    mActionRedo(new QAction(tr("Redo"), this)),
+    mActionSwap(new QAction(tr("Swap"), this)),
+    mActionOptions(new QAction(tr("Options"), this)),
+
+
+    mActionAbout(new QAction(QIcon::fromTheme("help-about"), tr("About"), this)),
+    mActionAboutQt(new QAction(tr("About Qt"), this)),
+
     mTranslationWidget(new TranslationWidget(this)),
     mDictionaryWidget(new DictionaryWidget(this)),
     mSettingsDialog(new Config(this)),
@@ -57,10 +71,31 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle(qApp->applicationName());
 
 
-    mFileMenu->addAction(mExitAction);
-    mEditMenu->addAction(mCopyAction);
-    mEditMenu->addAction(mOptionsAction);
-    mHelpMenu->addAction(mAboutAction);
+    mFileMenu->addAction(mActionOpen);
+    mFileMenu->addSeparator();
+    mFileMenu->addAction(mActionSave);
+    mFileMenu->addAction(mActionSaveAs);
+    mFileMenu->addAction(mActionPrint);
+    mFileMenu->addSeparator();
+    mFileMenu->addAction(mActionExit);
+
+
+
+    mEditMenu->addAction(mActionClear);
+    mEditMenu->addAction(mActionCopy);
+    mEditMenu->addSeparator();
+    mEditMenu->addAction(mActionUndo);
+    mEditMenu->addAction(mActionRedo);
+    mEditMenu->addAction(mActionSwap);
+    mEditMenu->addSeparator();
+    mEditMenu->addAction(mActionOptions);
+
+
+
+
+
+    mHelpMenu->addAction(mActionAbout);
+    mHelpMenu->addAction(mActionAboutQt);
 
 
     mMenuBar->addMenu(mFileMenu);
@@ -69,7 +104,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     QList<QAction *> ActionsList;
-    ActionsList << mExitAction << mCopyAction << mAboutAction;
+    ActionsList << mActionExit << mActionCopy << mActionAbout;
     mToolBar->addActions(ActionsList);
 
 
@@ -94,8 +129,13 @@ MainWindow::MainWindow(QWidget *parent) :
     mSettingsDialog->addPage(mPluginsConfig);
     mSettingsDialog->addPage(mLanguageConfig);
 
-    connect(mOptionsAction, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
-    connect(mExitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+    connect(mActionOptions, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
+    connect(mActionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
+
+
+    connect(mActionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    connect(mActionAbout, SIGNAL(triggered()), this, SLOT(about()));
+
 
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
 
@@ -211,4 +251,9 @@ void MainWindow::onConfigAccept() {
 
 
     // Updating table
+}
+
+void MainWindow::about() {
+    QMessageBox::about(this, tr("About QPhoenix"),
+                                      tr("Advanced translation tool Advanced translation toolAdvanced translation tool"));
 }
