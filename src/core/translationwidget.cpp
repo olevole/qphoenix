@@ -29,8 +29,27 @@
 #include <QComboBox>
 #include <QLayout>
 #include <QDebug>
+#include <QToolBar>
+#include <QAction>
 //#include "global.h"
 #include <QMap>
+
+
+
+TranslationToolBar::TranslationToolBar(QWidget *parent)
+    :QToolBar(parent),
+      mSpeechAction(new QAction("Speech", this))
+{
+    this->addAction(mSpeechAction);
+
+    connect(mSpeechAction,SIGNAL(triggered()), this, SIGNAL(speechRequest()));
+
+}
+
+void TranslationToolBar::setSpeechActionEnabled(const bool b) {
+    mSpeechAction->setEnabled(b);
+}
+
 TranslationWidget::TranslationWidget(QWidget *parent) :
     QWidget(parent),
     mSrcComboBox(new QComboBox(this)),
@@ -41,17 +60,34 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mSwapButton(new QToolButton(this)),
     mMainLayout(new QVBoxLayout()),
     mButtonsLayout(new QHBoxLayout()),
+
+    mSrcToolbar(new TranslationToolBar(this)),
+    mResToolbar(new TranslationToolBar(this)),
     mNativeNames(true)
 
 {
+
+
+
+//    QToolBar *tb = new QToolBar(this);
+//    tb->addAction(new QAction("text", this));
+
+
+
     mButtonsLayout->addWidget(mSrcComboBox);
     mButtonsLayout->addWidget(mSwapButton);
     mButtonsLayout->addWidget(mResComboBox);
     mButtonsLayout->addStretch();
     mButtonsLayout->addWidget(mTranslateButton);
 
+
+//    mMainLayout->addWidget(tb);
+
+    mMainLayout->addWidget(mSrcToolbar);
     mMainLayout->addWidget(srcText());
     mMainLayout->addLayout(mButtonsLayout);
+    mMainLayout->addWidget(mResToolbar);
+
     mMainLayout->addWidget(mResText);
 
     setLayout(mMainLayout);

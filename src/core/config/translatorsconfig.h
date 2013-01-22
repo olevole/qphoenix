@@ -47,7 +47,10 @@ public:
 
 
     TranslatorInterface *currentTranslator() {
-        return mTranslatorsList[mTranslatorComboBox->currentIndex()];
+        if(mTranslatorComboBox->currentIndex() > -1)
+            return mTranslatorsList[mTranslatorComboBox->currentIndex()];
+        else
+            return NULL;
     }
 
 private slots:

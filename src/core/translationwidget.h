@@ -23,6 +23,7 @@
 #define TRANSLATIONWIDGET_H
 
 #include <QWidget>
+#include <QToolBar>
 #include "translatorwidgetinterface.h"
 #include "info.h"
 #include "translatorinterface.h"
@@ -36,7 +37,22 @@ class QComboBox;
 class QLabel;
 class QVBoxLayout;
 class QHBoxLayout;
+class QToolBar;
 
+
+class TranslationToolBar : public QToolBar {
+Q_OBJECT
+public:
+    explicit TranslationToolBar(QWidget *parent = 0);
+public slots:
+    void setSpeechActionEnabled(const bool b );
+//    void setCopyActionEnabled(bool);
+signals:
+    void speechRequest();
+private:
+    QAction *mSpeechAction;
+
+};
 
 
 
@@ -88,6 +104,8 @@ private:
 
     QVBoxLayout *mMainLayout;
     QHBoxLayout *mButtonsLayout;
+
+    TranslationToolBar *mSrcToolbar, *mResToolbar;
 
     LanguageTable mTable;
     LanguageList  mLangList;

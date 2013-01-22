@@ -96,7 +96,7 @@ void LanguageConfig::createTable() {
 
     mTable->verticalHeader()->hide();
     mTable->setHorizontalHeaderItem(0, new QTableWidgetItem("Name"));
-    mTable->setHorizontalHeaderItem(1, new QTableWidgetItem("Enabled"));
+    mTable->setHorizontalHeaderItem(1, new QTableWidgetItem("*"));
 
     mTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 
@@ -134,6 +134,7 @@ void LanguageConfig::createTable() {
         mTable->setRowHeight(i, 20);
         i++;
     }
+//    mTable->setColumnWidth(1, 15);
 
 }
 

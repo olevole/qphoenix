@@ -27,6 +27,7 @@
 #include <QComboBox>
 #include <QGroupBox>
 #include <QHBoxLayout>
+#include <QDebug>
 #include <QVBoxLayout>
 
 
@@ -69,12 +70,17 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
 
     Loader ldr("translators:");
 
+    QDir dir(ldr.searchPaths().first());
+        qDebug() << "Translator " << dir.entryList();
     ModuleList list = ldr.modules();
 
     foreach (QObject *obj, list) {
+
         TranslatorInterface *iface = qobject_cast<TranslatorInterface *>(obj);
         mTranslatorsList <<  iface;
         mTranslatorComboBox->addItem(iface->name());
+        qDebug() << "Loading to gui...";
+
     }
 }
 

@@ -178,7 +178,15 @@ void MainWindow::onConfigAccept() {
     if(enabledKeys != mLastEnabledLanguages) {
         mLastEnabledLanguages = enabledKeys;
 
-        LanguageTable table = mTranslatorsConfig->currentTranslator()->table();
+        qDebug() << "Being uptadted--____";
+
+        TranslatorInterface *translator  = mTranslatorsConfig->currentTranslator();
+        LanguageTable table;
+        if(translator != NULL)
+            table = translator->table();
+        else
+            qFatal("No translators loaded! Nothing to do!");
+
 
         QStringList keys = table.keys();
 
