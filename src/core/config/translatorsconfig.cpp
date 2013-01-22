@@ -86,7 +86,7 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
 
 
 void TranslatorsConfig::onIndexChange(const int i) {
-    //! FIXME: optimisation: do not overload same widget!
+    //! FIXME: optimisation: do not overload the same widget!
     QLayoutItem *child;
     while ( (child = mOptionsLayout->takeAt(0)) != 0) {
         delete child->widget();
@@ -99,4 +99,5 @@ void TranslatorsConfig::onIndexChange(const int i) {
     //TODO: Segfault here, it's a dangerous fragment!
 
     mOptionsLayout->addWidget(iface->configWidget());
+    mOptionsLayout->addStretch(); //TODO: Does not work. Fix!
 }

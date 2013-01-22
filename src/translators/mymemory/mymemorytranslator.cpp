@@ -6,6 +6,7 @@ MyMemoryTranslator::MyMemoryTranslator(QObject *parent)
     :QObject(parent)
 {
     setName("Google translate");
+
 }
 
 

@@ -6,15 +6,15 @@
 #include "translatorinterface.h"
 
 
-class AbstractWrapper : public QThread {
-public:
-    virtual bool isReady() const = 0;
-    virtual QString errorString() const = 0;
-protected:
-    virtual void run() = 0;
+//class AbstractWrapper : public QThread {
+//public:
+//    virtual bool isReady() const = 0;
+//    virtual QString errorString() const = 0;
+//protected:
+//    virtual void run() = 0;
 
 
-};
+//};
 
 
 
@@ -29,7 +29,7 @@ protected:
 
 
 
-class TranslatorWrapper : public AbstractWrapper
+class TranslatorWrapper : public QObject
 {
     Q_OBJECT
 public:
@@ -37,47 +37,28 @@ public:
     TranslatorWrapper(TranslatorInterface *ptr)
     {setTranslator(ptr);}
 
-    void setTranslator(TranslatorInterface *ptr);
+    void setTranslator(TranslatorInterface *ptr)
+    {mPtr = ptr;}
 public slots:
-    void execQuery(const QString &src_text, const QString &src_lang,
-                      const QString &dest_lang) {
+    void execute() {
+        emit reply(mPtr->translate(mSrcText, mSrcLang, mDestLang));
+    }
+
+    void setParams(const QString &src_text, const QString &src_lang, const QString &dest_lang) {
         mSrcText = src_text;
         mSrcLang = src_lang;
         mDestLang = dest_lang;
-
-        this->run();
     }
-
-    virtual bool isReady() const { return mReady; }
-
-    // Not implemented yet
-    virtual QString errorString() const {return QString();}
-protected:
-    virtual void run();
 private:
     TranslatorInterface *mPtr;
-    bool mReady;
+    QString mSrcText, mSrcLang, mDestLang;
 
-    QString mSrcText, mSrcLang, mDestLang, mResult;
 signals:
     void reply(QString);
 };
 
 
 //-------------------------------------------------------------------------------------
-
-
-class DictionaryWrapper : public AbstractWrapper {
-    Q_OBJECT
-public:
-    DictionaryWrapper(){}
-//    DictionaryWrapper(DictionaryWrapper)
-public slots:
-protected:
-
-};
-
-
 
 
 #endif // QUERYWRAPPERS_H

@@ -7,6 +7,23 @@
 #include <QCheckBox>
 #include <QHBoxLayout>
 #include <QDebug>
+#include <QThread>
+#include <QTime>
+#include <QtTest/QTest>
+
+
+
+class SleeperThread : public QThread
+{
+public:
+static void msleep(unsigned long msecs)
+{
+QThread::msleep(msecs);
+}
+};
+
+
+
 
 class MyMemoryTranslator : public QObject, TranslatorInterface
 {
@@ -43,7 +60,7 @@ public:
 //        cb->setText("Disable google?");
 
 //        return cb;
-        return mConfigWidget;
+        return new QCheckBox("test");
 
     }
 
@@ -59,7 +76,7 @@ public:
 
 
         QStringList german;
-        german << "ru" << "en";
+        german << "ru" << "en" << "uz";
 
         QStringList spanish;
         spanish << "de" << "ru";
@@ -79,7 +96,10 @@ public:
     }
 
     QString translate(const QString &src_text, const QString &src_lang, const QString &dest_lang) {
+        qDebug() << "SLEEP STARTED";
 
+        SleeperThread t;t.msleep(10002);
+        qDebug() << "SLEEP FINISHED";
         return QString("Result text | " + src_text);
     }
 };

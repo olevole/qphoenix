@@ -2,13 +2,15 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDebug>
 #include "fancytabwidget.h"
 #include "mainwindowinterface.h"
 #include "dictionarywidgetinterface.h"
 #include "dictionarywidget.h"
 #include "translationwidget.h"
+#include "querywrappers.h"
 
-
+#include <QThread>
 
 class QStatusBar;
 class QToolBar;
@@ -22,6 +24,7 @@ class Config;
 class PluginsConfig;
 class TranslatorsConfig;
 class LanguageConfig;
+
 
 class MainWindow : public  QMainWindow, MainWindowInterface
 {
@@ -54,8 +57,24 @@ private slots:
     //! Update plugins, etc information from config dialog.
     void onConfigAccept();
 
+//    void open();
+//    void save();
+//    void saveAs();
+//    void print();
+
+//    void clear();
+//    void copy();
+//    void undo();
+//    void redo();
+
 
     void about();
+
+
+
+    void translate();
+
+    void message(const QString &msg) {qDebug() << "TRANSLATION RESULT: " << msg;}
 
 private:
     QStatusBar  *mStatusBar;
@@ -97,6 +116,18 @@ private:
 
 
     QStringList mLastEnabledLanguages;
+
+
+
+
+
+
+
+
+
+
+    QThread mTranslatorWorkerThread;
+    TranslatorWrapper *mTranslatorWrapper;
 signals:
     void pageChanged(const int i);
 

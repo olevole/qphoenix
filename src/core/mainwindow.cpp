@@ -16,8 +16,11 @@
 #include <QApplication>
 #include <QMap>
 #include <QMessageBox>
+#include <QTextEdit>
+#include <QTextBrowser>
 
 #include "plugininterface.h"
+#include "querywrappers.h"
 
 #include "translationwidget.h"
 #include "dictionarywidget.h"
@@ -28,6 +31,9 @@
 #include "loader.h"
 #include "translatorinterface.h"
 #include "languageconfig.h"
+#include <QThread>
+#include <qtconcurrentrun.h>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -65,7 +71,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mPluginsConfig(new PluginsConfig),
     mTranslatorsConfig(new TranslatorsConfig(this)),
-    mLanguageConfig(new LanguageConfig(this))
+    mLanguageConfig(new LanguageConfig(this)),
+
+
+    mTranslatorWrapper(new TranslatorWrapper())
 {
 
     setWindowTitle(qApp->applicationName());
@@ -140,7 +149,24 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
 
 
+    connect(translationWidget()->translateButton(), SIGNAL(clicked()), this, SLOT(translate()));
+
     onConfigAccept();
+
+//    wp = new TranslatorWrapper;
+////    QThread thread;
+
+//
+
+//    wp->setTranslator(mTranslatorsConfig->currentTranslator());
+//    wp->moveToThread(&thread);
+//    wp->setParams("test","test","test");
+
+//    connect(&thread, SIGNAL(started()), wp, SLOT(execute()));
+//    thread.start();
+//    wp->execQuery("test", "test", "test");
+
+
 
 }
 
@@ -214,7 +240,12 @@ void MainWindow::onConfigAccept() {
      */
 
 
+
     QStringList enabledKeys = mLanguageConfig->keysForEnabled();
+
+    mLanguageConfig->setUseNativeNames(false);
+    mTranslationWidget->setNativeNames(false);
+
 
     if(enabledKeys != mLastEnabledLanguages) {
         mLastEnabledLanguages = enabledKeys;
@@ -256,4 +287,24 @@ void MainWindow::onConfigAccept() {
 void MainWindow::about() {
     QMessageBox::about(this, tr("About QPhoenix"),
                                       tr("Advanced translation tool Advanced translation toolAdvanced translation tool"));
+}
+
+void MainWindow::translate() {
+    QString src_text = this->translationWidget()->srcText()->toPlainText();
+    QString src_lang = mLastEnabledLanguages.at(mTranslationWidget->srcComboBox()->currentIndex());
+    QString res_lang = mLastEnabledLanguages.at(mTranslationWidget->resComboBox()->currentIndex());
+
+    connect(mTranslatorWrapper, SIGNAL(reply(QString)), this->translationWidget()->resText(), SLOT(setText(QString)));
+
+    mTranslatorWrapper->setTranslator(mTranslatorsConfig->currentTranslator());
+
+    mTranslatorWrapper->setParams(src_text, src_lang, res_lang);
+    mTranslatorWrapper->moveToThread(&mTranslatorWorkerThread);
+
+
+    connect(&mTranslatorWorkerThread, SIGNAL(started()), mTranslatorWrapper, SLOT(execute()));
+    mTranslatorWorkerThread.start();
+
+
+    qDebug() << "Src text: " << src_text << " SRc Lang: " << src_lang << " REs Lang: " << res_lang;
 }
