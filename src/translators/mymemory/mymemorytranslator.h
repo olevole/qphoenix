@@ -3,6 +3,7 @@
 
 #include "../../include/translatorinterface.h"
 #include "../../include/info.h"
+#include "qxtjson.h"
 #include <QObject>
 #include <QCheckBox>
 #include <QHBoxLayout>
@@ -10,6 +11,13 @@
 #include <QThread>
 #include <QTime>
 #include <QtTest/QTest>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkRequest>
+#include <QtNetwork/QNetworkReply>
+#include <QtGui/QTextDocumentFragment>
+#include <QtCore/QEventLoop>
+#include <QtCore/QStringList>
+#include <QtCore/QDebug>
 
 
 
@@ -96,11 +104,42 @@ public:
     }
 
     QString translate(const QString &src_text, const QString &src_lang, const QString &dest_lang) {
-        qDebug() << "SLEEP STARTED";
+        QByteArray html = src_text.toUtf8();
 
-        SleeperThread t;t.msleep(10002);
-        qDebug() << "SLEEP FINISHED";
-        return QString("Result text | " + src_text);
+        html.replace("&", "&amp;");
+        html.replace("<", "&lt;");
+        html.replace(">", "&gt;");
+        html.replace("\n", "<br>");
+
+        QByteArray query = "v=1.0&format=html";
+        query += "&langpair=" + src_lang.toLatin1() + "%7C" + dest_lang.toLatin1();
+        query += "&q=" + html.toPercentEncoding();
+
+        QUrl url("http://mymemory.translated.net/api/get");
+        QNetworkRequest req(url);
+        req.setRawHeader("User-Agent", "Mozilla/5.0");
+        req.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
+        req.setRawHeader("Content-Length", QByteArray::number(query.size()));
+
+        QNetworkAccessManager manager;
+        QEventLoop loop;
+
+        connect(&manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
+
+        QNetworkReply *reply  = manager.post(req, query);
+        loop.exec();
+
+        const QByteArray rawdata = reply->readAll();
+
+        QxtJSON parser;
+
+
+        QVariantMap map = parser.parse(QString::fromUtf8(rawdata.data())).toMap();
+        QVariantMap map2 = map["responseData"].toMap();
+
+        const QString result = map2["translatedText"].toString();
+
+        return QTextDocumentFragment::fromHtml(result).toPlainText();
     }
 };
 

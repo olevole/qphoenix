@@ -27,6 +27,8 @@ ${CMAKE_CURRENT_BINARY_DIR}/src/include
 src/core
 src/core/config
 src/core/3rdparty/fancytab-widgets
+src/core/3rdparty/qxtjson
+
 src/include)
 
 
@@ -102,6 +104,7 @@ SET(DICTIONARIES_PATH   ${MPREFIX}/dictionaries   CACHE INTERNAL "")
 #SET(RESOURCES_PATH      ${MPREFIX}/resources      CACHE INTERNAL "")
 
 ADD_SUBDIRECTORY(src/core/3rdparty/fancytab-widgets)
+ADD_SUBDIRECTORY(src/core/3rdparty/qxtjson)
 ADD_SUBDIRECTORY(src/plugins)
 ADD_SUBDIRECTORY(src/translators)
 ADD_SUBDIRECTORY(src/tests)
@@ -114,7 +117,7 @@ QT4_WRAP_CPP(MOC_SOURCES ${HEADERS})
 # TODO: Fx this ugly code
 ADD_LIBRARY(${STATICLIB} SHARED ${SOURCES} ${MOC_SOURCES}  ${QM_FILES} ${QRC_SOURCES} ${GLOBAL_HEADERS} ${IFACES} )
 TARGET_LINK_LIBRARIES(${STATICLIB} ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES}
- ${QT_QTXML_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES}  fancytabwidget)
+ ${QT_QTXML_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES}  fancytabwidget qxtjson)
 
 ADD_EXECUTABLE(${EXECUTABLE_NAME} src/main.cpp ${RC_SOURCES})
 TARGET_LINK_LIBRARIES(${EXECUTABLE_NAME}  ${STATICLIB})
