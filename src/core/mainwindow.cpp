@@ -140,7 +140,7 @@ void MainWindow::removePage(const QWidget *page) {
 }
 
 QWidget *MainWindow::pageAt(const int i) {
-
+    return new QWidget();
 }
 
 void MainWindow::setCurrentPage(const int i) {
@@ -183,10 +183,11 @@ void MainWindow::onConfigAccept() {
 
         TranslatorInterface *translator  = mTranslatorsConfig->currentTranslator();
         LanguageTable table;
+
         if(translator != NULL)
             table = translator->table();
         else
-            qFatal("No translators loaded! Nothing to do!");
+            qDebug("No translators loaded! Nothing to do!");
 
 
         QStringList keys = table.keys();

@@ -28,6 +28,7 @@ class QTextEdit;
 class QTextBrowser;
 class QPushButton;
 class QToolButton;
+class QToolBar;
 
 // Inherited by TranslatorWidget
 class TranslatorWidgetInterface {
@@ -44,6 +45,10 @@ public:
     virtual QTextBrowser*resText() = 0;
     virtual QPushButton *translateButton() = 0;
     virtual QToolButton *swapButton() = 0;
+
+
+    virtual QToolBar    *srcToolbar() = 0;
+    virtual QToolBar    *resToolbar() = 0;
 };
 
 

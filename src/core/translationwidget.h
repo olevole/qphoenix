@@ -72,6 +72,8 @@ public:
     virtual QTextBrowser*resText()          { return mResText;          }
     virtual QPushButton *translateButton()  { return mTranslateButton;  }
     virtual QToolButton *swapButton()       { return mSwapButton;       }
+    virtual QToolBar    *srcToolbar()       { return mSrcToolbar;       }
+    virtual QToolBar    *resToolbar()       { return mResToolbar;       }
 
     void setLangTable(const LanguageTable table) {
         if(mTable != table) {

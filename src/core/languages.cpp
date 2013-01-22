@@ -43,6 +43,6 @@ QStringList LanguageEngine::keysToNames(const QStringList &keys, const bool nati
 
 
 LanguageList LanguageEngine::intersect(const LanguageList &lst1, const LanguageList &lst2) {
-
+    return LanguageList();
 }
 
