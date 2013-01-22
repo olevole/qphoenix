@@ -38,10 +38,11 @@
 
 TranslationToolBar::TranslationToolBar(QWidget *parent)
     :QToolBar(parent),
-      mSpeechAction(new QAction("Speech", this))
+
+      mSpeechAction(new QAction(QIcon::fromTheme("application-exit"), "Speech", this))
 {
     this->addAction(mSpeechAction);
-
+setIconSize(QSize(15,15)),
     connect(mSpeechAction,SIGNAL(triggered()), this, SIGNAL(speechRequest()));
 
 }
@@ -74,6 +75,7 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
 
 
 
+    mButtonsLayout->addWidget(mResToolbar);
     mButtonsLayout->addWidget(mSrcComboBox);
     mButtonsLayout->addWidget(mSwapButton);
     mButtonsLayout->addWidget(mResComboBox);
@@ -81,12 +83,14 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mButtonsLayout->addWidget(mTranslateButton);
 
 
+
+
 //    mMainLayout->addWidget(tb);
 
     mMainLayout->addWidget(mSrcToolbar);
     mMainLayout->addWidget(srcText());
     mMainLayout->addLayout(mButtonsLayout);
-    mMainLayout->addWidget(mResToolbar);
+//    mMainLayout->addWidget(mResToolbar);
 
     mMainLayout->addWidget(mResText);
 

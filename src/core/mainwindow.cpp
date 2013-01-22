@@ -151,6 +151,7 @@ void MainWindow::setCurrentPage(const int i) {
 void MainWindow::onConfigAccept() {
     /*!
      * Plugins processing
+     *
      */
     ModuleList *lst = mPluginsConfig->pluginsList();
 
