@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QThread>
 #include <QDebug>
 #include "fancytabwidget.h"
 #include "mainwindowinterface.h"
@@ -10,14 +11,14 @@
 #include "translationwidget.h"
 #include "querywrappers.h"
 
-#include <QThread>
+
 
 class QStatusBar;
 class QToolBar;
 class QMenuBar;
 class QMenu;
 class QAction;
-//class QPushButton;
+class QClipboard;
 
 
 class Config;
@@ -52,6 +53,8 @@ public:
     QStatusBar *statusbar() { return mStatusBar;    }
     QMenuBar *menubar()     { return mMenuBar;      }
 
+
+    int currentIndex() const;
 private slots:
 
     //! Update plugins, etc information from config dialog.
@@ -62,8 +65,8 @@ private slots:
 //    void saveAs();
 //    void print();
 
-//    void clear();
-//    void copy();
+    void clear();
+    void copy();
 //    void undo();
 //    void redo();
 
@@ -73,6 +76,11 @@ private slots:
 
 
     void translate();
+
+
+
+    void fillComboBox(QComboBox *cb, LanguageList &lst);
+
 
     void message(const QString &msg) {qDebug() << "TRANSLATION RESULT: " << msg;}
 
@@ -115,14 +123,9 @@ private:
     LanguageConfig *mLanguageConfig;
 
 
+    QClipboard *mClipboard;
+
     QStringList mLastEnabledLanguages;
-
-
-
-
-
-
-
 
 
 

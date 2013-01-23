@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QDir>
 #include "languages.h"
+#include "tools.h"
 
 int main(int argc, char *argv[])
 {
@@ -23,6 +24,17 @@ int main(int argc, char *argv[])
     MainWindow *mw = new MainWindow();
 
     mw->show();
+
+
+
+
+    QStringList lst1, lst2;
+    lst1 << "test" <<"blablabla" <<"bla";
+    lst2 << "test" <<"bababa" <<"bla";
+
+
+
+    qDebug() << "TOOLS TEST: " << Tools::intersects(lst1,lst2);
 
 
     return a.exec();

@@ -7,7 +7,8 @@
 MyMemoryTranslator::MyMemoryTranslator(QObject *parent)
     :QObject(parent)
 {
-    setName("Google translate");
+    setName("MyMemory");
+    setUrl("http://mymemory.translated.net");
 
 }
 

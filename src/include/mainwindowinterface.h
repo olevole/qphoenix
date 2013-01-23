@@ -45,10 +45,14 @@ public:
     //Slots
     virtual void setCurrentPage(const int i) = 0;
 
+
+
     // Methods
     virtual void addPage(QWidget *page) = 0;
     virtual void removePage(const QWidget *page) = 0;
     virtual QWidget *pageAt(const int i) = 0;
+
+    virtual int currentIndex() const = 0;
 
     // Instances
     virtual QToolBar *toolbar() = 0;

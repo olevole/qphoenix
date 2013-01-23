@@ -27,13 +27,27 @@ class QWidget;
 class QString;
 
 
+
+class DictionaryReply {
+
+};
+
+/*!
+ * \brief The DictionaryItem class
+ * incapsulates a dictionary translation variant.
+ */
+class DictionaryItem {
+    QString part() const;
+
+
+};
+
+
 class DictionaryInterface : public BaseModule {
 public:
     virtual ~DictionaryInterface(){}
 
     virtual QWidget *configWidget() = 0;
-
-
 
 
 };

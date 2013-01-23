@@ -18,6 +18,9 @@
 #include <QMessageBox>
 #include <QTextEdit>
 #include <QTextBrowser>
+#include <QLineEdit>
+#include <QClipboard>
+
 
 #include "plugininterface.h"
 #include "querywrappers.h"
@@ -72,6 +75,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mPluginsConfig(new PluginsConfig),
     mTranslatorsConfig(new TranslatorsConfig(this)),
     mLanguageConfig(new LanguageConfig(this)),
+    mClipboard(qApp->clipboard()),
 
 
     mTranslatorWrapper(new TranslatorWrapper())
@@ -145,6 +149,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mActionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(mActionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
+    // Edit actions connects
+    connect(mActionClear, SIGNAL(triggered()), this, SLOT(clear()));
+    connect(mActionCopy, SIGNAL(triggered()), this, SLOT(copy()));
+
 
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
 
@@ -152,22 +160,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(translationWidget()->translateButton(), SIGNAL(clicked()), this, SLOT(translate()));
 
     onConfigAccept();
-
-//    wp = new TranslatorWrapper;
-////    QThread thread;
-
-//
-
-//    wp->setTranslator(mTranslatorsConfig->currentTranslator());
-//    wp->moveToThread(&thread);
-//    wp->setParams("test","test","test");
-
-//    connect(&thread, SIGNAL(started()), wp, SLOT(execute()));
-//    thread.start();
-//    wp->execQuery("test", "test", "test");
-
-
-
 }
 
 MainWindow::~MainWindow()
@@ -207,6 +199,10 @@ void MainWindow::removePage(const QWidget *page) {
 
 QWidget *MainWindow::pageAt(const int i) {
     return new QWidget();
+}
+
+int MainWindow::currentIndex() const {
+    return mFancyWidget->currentIndex();
 }
 
 void MainWindow::setCurrentPage(const int i) {
@@ -284,6 +280,43 @@ void MainWindow::onConfigAccept() {
     // Updating table
 }
 
+
+//----------------------------------------------------------------------------------------------
+// Actions slots
+void MainWindow::clear() {
+    const int i = currentIndex();
+    switch(i){
+        case 0:
+            translationWidget()->srcText()->clear();
+            translationWidget()->resText()->clear();
+        break;
+
+        case 1:
+            dictionaryWidget()->srcText()->clear();
+            dictionaryWidget()->resText()->clear();
+        break;
+    }
+}
+
+void MainWindow::copy() {
+    const int i = currentIndex();
+    QString content;
+    switch(i) {
+    case 0:
+        content = translationWidget()->resText()->toPlainText();
+        break;
+    case 1:
+        //TODO: improve this part
+        content = dictionaryWidget()->resText()->toPlainText();
+        break;
+    }
+
+    mClipboard->setText(content);
+}
+
+
+//----------------------------------------------------------------------------------------------
+
 void MainWindow::about() {
     QMessageBox::about(this, tr("About QPhoenix"),
                                       tr("Advanced translation tool Advanced translation toolAdvanced translation tool"));
@@ -295,16 +328,20 @@ void MainWindow::translate() {
     QString res_lang = mLastEnabledLanguages.at(mTranslationWidget->resComboBox()->currentIndex());
 
     connect(mTranslatorWrapper, SIGNAL(reply(QString)), this->translationWidget()->resText(), SLOT(setText(QString)));
+    connect(mTranslatorWrapper, SIGNAL(reply(QString)), &mTranslatorWorkerThread, SLOT(quit()));
+
 
     mTranslatorWrapper->setTranslator(mTranslatorsConfig->currentTranslator());
-
     mTranslatorWrapper->setParams(src_text, src_lang, res_lang);
     mTranslatorWrapper->moveToThread(&mTranslatorWorkerThread);
-
 
     connect(&mTranslatorWorkerThread, SIGNAL(started()), mTranslatorWrapper, SLOT(execute()));
     mTranslatorWorkerThread.start();
 
-
     qDebug() << "Src text: " << src_text << " SRc Lang: " << src_lang << " REs Lang: " << res_lang;
+}
+
+
+void MainWindow::fillComboBox(QComboBox *cb, LanguageList &lst) {
+
 }

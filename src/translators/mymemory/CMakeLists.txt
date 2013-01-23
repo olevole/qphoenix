@@ -1,16 +1,9 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 SET(TARGET "mymemorytranslator")
-
-
-
-
 
 SET(SOURCES mymemorytranslator.cpp)
 SET(HEADERS mymemorytranslator.h)
 
 QT4_WRAP_CPP(MOC_SOURCES ${HEADERS})
-
-
 
 
 ADD_LIBRARY( ${TARGET} SHARED ${HEDARS} ${SOURCES}  ${MOC_SOURCES})

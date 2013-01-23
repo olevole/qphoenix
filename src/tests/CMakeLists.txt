@@ -1,7 +1,4 @@
-
 SET(QT_USE_QTTEST TRUE)
-
-
 
 SET(PLUGINTEST_SRC plugintest.cpp )
 SET(PLUGINTEST_HDR plugintest.h )
