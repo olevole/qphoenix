@@ -67,8 +67,8 @@ private slots:
 
     void clear();
     void copy();
-//    void undo();
-//    void redo();
+    void undo();
+    void redo();
 
 
     void about();

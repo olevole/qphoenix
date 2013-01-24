@@ -152,6 +152,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // Edit actions connects
     connect(mActionClear, SIGNAL(triggered()), this, SLOT(clear()));
     connect(mActionCopy, SIGNAL(triggered()), this, SLOT(copy()));
+    connect(mActionUndo, SIGNAL(triggered()), this, SLOT(undo()));
+    connect(mActionRedo, SIGNAL(triggered()), this, SLOT(redo()));
 
 
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
@@ -291,10 +293,10 @@ void MainWindow::clear() {
             translationWidget()->resText()->clear();
         break;
 
-        case 1:
-            dictionaryWidget()->srcText()->clear();
-            dictionaryWidget()->resText()->clear();
-        break;
+//        case 1:
+//            dictionaryWidget()->srcText()->clear();
+//            dictionaryWidget()->resText()->clear();
+//        break;
     }
 }
 
@@ -305,15 +307,42 @@ void MainWindow::copy() {
     case 0:
         content = translationWidget()->resText()->toPlainText();
         break;
-    case 1:
-        //TODO: improve this part
-        content = dictionaryWidget()->resText()->toPlainText();
-        break;
+//    case 1:
+//        //TODO: improve this part (because of html content?)
+//        content = dictionaryWidget()->resText()->toPlainText();
+//        break;
     }
 
     mClipboard->setText(content);
 }
 
+
+void MainWindow::undo() {
+    const int i = currentIndex();
+    QString content;
+    switch(i) {
+    case 0:
+        translationWidget()->srcText()->undo();
+        break;
+//    case 1:
+//        dictionaryWidget()->srcText()->undo();
+//        break;
+    }
+
+}
+
+void MainWindow::redo() {
+    const int i = currentIndex();
+    QString content;
+    switch(i) {
+    case 0:
+        translationWidget()->srcText()->redo();
+        break;
+//    case 1:
+//            dictionaryWidget()->srcText()->redo();
+//        break;
+    }
+}
 
 //----------------------------------------------------------------------------------------------
 
