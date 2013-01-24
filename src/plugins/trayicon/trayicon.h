@@ -23,10 +23,8 @@
 #define TRAYICON_H
 
 #include <QObject>
-//#include "../../include/plugininterface.h"
-#include "../../include/plugininterface.h"
-
-#include "../../include/basemodule.h"
+#include "plugininterface.h"
+#include "basemodule.h"
 
 
 class QPushButton;

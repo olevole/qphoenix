@@ -7,6 +7,8 @@ qrc_*.cpp
 *.exe
 *.dll
 
+
+docs/doxygen/*
 Thumbs.dm
 desktop.ini
 site

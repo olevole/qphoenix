@@ -10,17 +10,16 @@
 #define QP_ORG_NAME "QPhoenix developers"
 #define QP_ORG_DOMAIN "http://qphoenix.org"
 
-#ifdef Q_OS_UNIX
-    #define QP_PLUGIN_EXT "so"
+#if defined(Q_OS_UNIX)
+    #define QP_DLIB_SUFFIX "so"
+#elif defined(Q_OS_WIN32)
+    #define QP_DLIB_SUFFIX "dll"
+#elif defined(Q_OS_MAC)
+    #define QP_DLIB_SUFFIX "dylib"
 #endif
 
-#ifdef Q_OS_WIN32
-    #define QP_PLUGIN_EXT "dll"
-#endif
+#define QP_MODULE_SIGNATURE QString("%1%2").arg("lib*.").arg(QP_DLIB_SUFFIX)
 
-#define QP_MODULE_SIGNATURE QString("%1%2").arg("lib*.").arg( QP_PLUGIN_EXT)
-
-#define QP_PREFIX "${PREFIX}"
 
 /*!
  * Paths. Do not use them! Use qt paths instead.

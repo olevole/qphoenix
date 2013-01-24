@@ -1,8 +1,8 @@
 #ifndef MYMEMORYTRANSLATOR_H
 #define MYMEMORYTRANSLATOR_H
 
-#include "../../include/translatorinterface.h"
-#include "../../include/info.h"
+#include "translatorinterface.h"
+#include "info.h"
 #include "qxtjson.h"
 #include <QObject>
 #include <QCheckBox>
