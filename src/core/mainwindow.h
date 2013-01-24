@@ -55,6 +55,9 @@ public:
 
 
     int currentIndex() const;
+
+
+    QString getCopyableContent();
 private slots:
 
     //! Update plugins, etc information from config dialog.
@@ -79,7 +82,7 @@ private slots:
 
 
 
-    void fillComboBox(QComboBox *cb, LanguageList &lst);
+//    void fillComboBox(QComboBox *cb, LanguageList &lst);
 
 
     void message(const QString &msg) {qDebug() << "TRANSLATION RESULT: " << msg;}

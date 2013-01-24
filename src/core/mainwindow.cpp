@@ -301,26 +301,12 @@ void MainWindow::clear() {
 }
 
 void MainWindow::copy() {
-    const int i = currentIndex();
-    QString content;
-    switch(i) {
-    case 0:
-        content = translationWidget()->resText()->toPlainText();
-        break;
-//    case 1:
-//        //TODO: improve this part (because of html content?)
-//        content = dictionaryWidget()->resText()->toPlainText();
-//        break;
-    }
-
-    mClipboard->setText(content);
+    mClipboard->setText(getCopyableContent());
 }
 
 
 void MainWindow::undo() {
-    const int i = currentIndex();
-    QString content;
-    switch(i) {
+    switch(currentIndex()) {
     case 0:
         translationWidget()->srcText()->undo();
         break;
@@ -332,9 +318,7 @@ void MainWindow::undo() {
 }
 
 void MainWindow::redo() {
-    const int i = currentIndex();
-    QString content;
-    switch(i) {
+    switch(currentIndex()) {
     case 0:
         translationWidget()->srcText()->redo();
         break;
@@ -371,6 +355,16 @@ void MainWindow::translate() {
 }
 
 
-void MainWindow::fillComboBox(QComboBox *cb, LanguageList &lst) {
+//void MainWindow::fillComboBox(QComboBox *cb, LanguageList &lst) {
 
+//}
+
+QString MainWindow::getCopyableContent()  {
+    switch(currentIndex()) {
+    case 0:
+        return translationWidget()->resText()->toPlainText();
+    case 1:
+        //TODO: improve this part (because of html content?)
+        return dictionaryWidget()->resText()->toPlainText();
+    }
 }

@@ -148,20 +148,6 @@ void TranslationWidget::onTableChanged() {
 
 
     fillCombobox(mSrcComboBox, mTable.keys());
-//    QStringList keys = mTable.keys();
-
-//    foreach (QString key, keys) {
-//        QString icon = QString(":/flags/flags/%1.png").arg(key);
-//        QString name;
-
-//        Language entry = mLangList[key];
-//        if(mNativeNames)
-//            name = entry.nativeName();
-//        else
-//            name = entry.name();
-
-//        mSrcComboBox->addItem(QIcon(icon), name);
-//    }
 }
 
 void TranslationWidget::onSwapButtonPressed() {
