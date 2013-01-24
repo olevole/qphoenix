@@ -25,20 +25,60 @@
 
 class QWidget;
 class QString;
+class DictionaryItem;
+
+typedef QList<DictionaryItem> DictionaryItemList;
 
 
+/*!
+ * \brief The DictionaryReply class
+ * incapsulates a dictionary reply
+ */
 
 class DictionaryReply {
-
+public:
+private:
+    DictionaryItem mItems;
 };
+
+//class DictionaryAbbreviation {
+//public:
+//    DictionaryAbbreviation(const QString &abbr, const QString &term);
+
+//    QString abbr() const;
+//    QString term() const;
+//private:
+//};
+
+
 
 /*!
  * \brief The DictionaryItem class
  * incapsulates a dictionary translation variant.
  */
 class DictionaryItem {
-    QString part() const;
+public:
+    enum Abbreviation {
+        //!< english
+        Verb = 0x001,
+        Noun,
+        Pronoun,
+        Adjective,
+        Adverb,
+        Preposition,
+        Conjunction,
+        Interjection
+    };
 
+
+    Abbreviation abbr() const;
+    QString source() const;
+    QString explaination() const;
+    QString translation() const;
+
+    void addChildItem(const DictionaryItem child);
+private:
+    DictionaryItemList mChildren;
 
 };
 
