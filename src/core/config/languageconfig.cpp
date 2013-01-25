@@ -15,8 +15,8 @@ LanguageConfig::LanguageConfig(QWidget *parent) :
     mUnsetButton(new QPushButton(tr("Unset All"),this))
 {
 
-    LanguageEngine engine;
-    mLangList = engine.languages();
+//    LanguageEngine engine = LanguageEngine::instance();
+    mLangList = LanguageEngine::instance().languages();
 
     QHBoxLayout *buttons  = new QHBoxLayout;
     buttons->addWidget(mSetButton);

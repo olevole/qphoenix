@@ -6,6 +6,7 @@
 #include "languages.h"
 #include "tools.h"
 
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -24,6 +25,7 @@ int main(int argc, char *argv[])
     MainWindow *mw = new MainWindow();
 
     mw->show();
+
 
 
 

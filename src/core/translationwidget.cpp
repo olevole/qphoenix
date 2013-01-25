@@ -103,8 +103,8 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     setName("Translate");
 
 
-    LanguageEngine engine;
-    mLangList = engine.languages();
+//    LanguageEngine engine;
+    mLangList = QP_LANG_FACTORY.languages();
 
     connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onSourceLanguageChanged()));
     connect(mSwapButton, SIGNAL(clicked()), this, SLOT(onSwapButtonPressed()));

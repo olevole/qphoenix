@@ -36,12 +36,17 @@ private:
 };
 
 
-
+#define QP_LANG_FACTORY LanguageEngine::instance()
 
 class LanguageEngine : public QObject {
 public:
-    explicit LanguageEngine(QObject *parent = 0);
+//    explicit LanguageEngine(QObject *parent = 0);
 
+    static const LanguageEngine& instance()
+    {
+            static LanguageEngine theSingleInstance;
+            return theSingleInstance;
+    }
 
     /*!
      * \brief keysForEnabled
@@ -49,13 +54,24 @@ public:
      */
     LanguageList languages() const {return mLangList;}
 
-    QStringList keysToNames(const QStringList &keys, const bool native = false);
+//    QStringList keysToNames(const QStringList &keys, const bool native = false);
+
+//    QString nameToKey(const QString &name, const bool native = false) {
+//        for(LanguageList::iterator i = mLangList.begin(); i != mLangList.end(); i++) {
+//            const QString _name = native ? i.value().name() : i.value().nativeName();
+//            if(_name == name)
+//                return i.key();
+//        }
+//    }
 
 
     static LanguageList intersect(const LanguageList &lst1, const LanguageList &lst2);
 
 private:
     LanguageList mLangList;
+        LanguageEngine();
+        LanguageEngine(const LanguageEngine& root);
+        LanguageEngine& operator=(const LanguageEngine&);
 };
 
 

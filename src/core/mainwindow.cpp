@@ -337,7 +337,9 @@ void MainWindow::about() {
 
 void MainWindow::translate() {
     QString src_text = this->translationWidget()->srcText()->toPlainText();
-    QString src_lang = mLastEnabledLanguages.at(mTranslationWidget->srcComboBox()->currentIndex());
+
+
+    QString src_lang = /*qpLangEngine.nameToKey*/(mTranslationWidget->srcComboBox()->currentText());
     QString res_lang = mLastEnabledLanguages.at(mTranslationWidget->resComboBox()->currentIndex());
 
     connect(mTranslatorWrapper, SIGNAL(reply(QString)), this->translationWidget()->resText(), SLOT(setText(QString)));

@@ -82,6 +82,10 @@ public:
         }
     }
 
+    void setLangEngine(const LanguageEngine &engine) {
+
+    }
+
     void setNativeNames(const bool enabled) {
         mNativeNames = enabled;
     }
@@ -111,6 +115,8 @@ private:
 
     LanguageTable mTable;
     LanguageList  mLangList;
+
+
 
     bool mIsLinear, mNativeNames;
 };

@@ -4,8 +4,7 @@
 #include <QTextStream>
 
 
-LanguageEngine::LanguageEngine(QObject *parent)
-    :QObject(parent)
+LanguageEngine::LanguageEngine()
 {
     QFile file(":/langmap.csv");
 
@@ -29,17 +28,17 @@ LanguageEngine::LanguageEngine(QObject *parent)
 
 
 
-QStringList LanguageEngine::keysToNames(const QStringList &keys, const bool native) {
-    QStringList names;
+//QStringList LanguageEngine::keysToNames(const QStringList &keys, const bool native) {
+//    QStringList names;
 
-    foreach (QString key, keys) {
-        if(native)
-            names << mLangList[key].nativeName();
-        else
-            names << mLangList[key].name();
-    }
-    return names;
-}
+//    foreach (QString key, keys) {
+//        if(native)
+//            names << mLangList[key].nativeName();
+//        else
+//            names << mLangList[key].name();
+//    }
+//    return names;
+//}
 
 
 LanguageList LanguageEngine::intersect(const LanguageList &lst1, const LanguageList &lst2) {
