@@ -56,16 +56,27 @@ public:
 
 //    QStringList keysToNames(const QStringList &keys, const bool native = false);
 
-//    QString nameToKey(const QString &name, const bool native = false) {
+    QString nameToKey(const QString &name, const bool native = false) const {
+
+        const QStringList keys = mLangList.keys();
+
+        foreach(QString key, keys) {
+            const QString mname = native ? mLangList[key].nativeName() :    mLangList[key].name();
+            if(name == mname)
+                return key;
+
+
+        }
+
 //        for(LanguageList::iterator i = mLangList.begin(); i != mLangList.end(); i++) {
 //            const QString _name = native ? i.value().name() : i.value().nativeName();
 //            if(_name == name)
 //                return i.key();
 //        }
-//    }
+    }
 
 
-    static LanguageList intersect(const LanguageList &lst1, const LanguageList &lst2);
+//    static LanguageList intersect(const LanguageList &lst1, const LanguageList &lst2);
 
 private:
     LanguageList mLangList;

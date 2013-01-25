@@ -339,11 +339,11 @@ void MainWindow::translate() {
     QString src_text = this->translationWidget()->srcText()->toPlainText();
 
 
-    QString src_lang = /*qpLangEngine.nameToKey*/(mTranslationWidget->srcComboBox()->currentText());
-    QString res_lang = mLastEnabledLanguages.at(mTranslationWidget->resComboBox()->currentIndex());
+    QString src_lang = QP_LANG_FACTORY.nameToKey(mTranslationWidget->srcComboBox()->currentText());
+    QString res_lang = QP_LANG_FACTORY.nameToKey(mTranslationWidget->resComboBox()->currentText());
 
-    connect(mTranslatorWrapper, SIGNAL(reply(QString)), this->translationWidget()->resText(), SLOT(setText(QString)));
     connect(mTranslatorWrapper, SIGNAL(reply(QString)), &mTranslatorWorkerThread, SLOT(quit()));
+    connect(mTranslatorWrapper, SIGNAL(reply(QString)), this->translationWidget()->resText(), SLOT(setText(QString)));
 
 
     mTranslatorWrapper->setTranslator(mTranslatorsConfig->currentTranslator());
