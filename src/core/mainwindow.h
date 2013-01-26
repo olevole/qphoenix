@@ -25,7 +25,7 @@ class Config;
 class PluginsConfig;
 class TranslatorsConfig;
 class LanguageConfig;
-
+class DictionaryConfig;
 
 class MainWindow : public  QMainWindow, MainWindowInterface
 {
@@ -125,7 +125,7 @@ private:
     PluginsConfig *mPluginsConfig;
     TranslatorsConfig *mTranslatorsConfig;
     LanguageConfig *mLanguageConfig;
-
+    DictionaryConfig *mDictionaryConfig;
 
     QClipboard *mClipboard;
 

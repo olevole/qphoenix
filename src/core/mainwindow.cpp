@@ -20,6 +20,7 @@
 #include <QTextBrowser>
 #include <QLineEdit>
 #include <QClipboard>
+#include <QThread>
 
 
 #include "plugininterface.h"
@@ -34,8 +35,7 @@
 #include "loader.h"
 #include "translatorinterface.h"
 #include "languageconfig.h"
-#include <QThread>
-#include <qtconcurrentrun.h>
+#include "dictionaryconfig.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -75,6 +75,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mPluginsConfig(new PluginsConfig),
     mTranslatorsConfig(new TranslatorsConfig(this)),
     mLanguageConfig(new LanguageConfig(this)),
+    mDictionaryConfig(new DictionaryConfig(this)),
     mClipboard(qApp->clipboard()),
 
 
@@ -127,7 +128,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setStatusBar(mStatusBar);
     this->setMenuBar(mMenuBar);
-    this->addToolBar(Qt::RightToolBarArea, mToolBar);
+    this->addToolBar(mToolBar);
 
 
     this->addPage(mTranslationWidget);
@@ -139,8 +140,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     mSettingsDialog->addPage(mTranslatorsConfig);
-    mSettingsDialog->addPage(mPluginsConfig);
+    mSettingsDialog->addPage(mDictionaryConfig);
+
     mSettingsDialog->addPage(mLanguageConfig);
+    mSettingsDialog->addPage(mPluginsConfig);
 
     connect(mActionOptions, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
     connect(mActionExit, SIGNAL(triggered()), qApp, SLOT(quit()));

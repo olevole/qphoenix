@@ -5,8 +5,7 @@
 #include <QDir>
 #include "languages.h"
 #include "tools.h"
-
-
+#include "dictionaryconfig.h"
 
 int main(int argc, char *argv[])
 {
@@ -27,18 +26,7 @@ int main(int argc, char *argv[])
 
     mw->show();
 
-
-
-
-
-    QStringList lst1, lst2;
-    lst1 << "test" <<"blablabla" <<"bla";
-    lst2 << "test" <<"bababa" <<"bla";
-
-
-
-    qDebug() << "TOOLS TEST: " << Tools::intersects(lst1,lst2);
-
+    DictionaryConfig c;
 
     return a.exec();
 }

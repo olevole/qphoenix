@@ -9,7 +9,7 @@
 #include <defines.h>
 #include <basemodule.h>
 #include <configinterface.h>
-#include <configinterface.h>
+#include <configpageinterface.h>
 #include <dictionaryinterface.h>
 #include <dictionarywidgetinterface.h>
 #include <info.h>

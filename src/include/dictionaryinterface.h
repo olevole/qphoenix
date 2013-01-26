@@ -22,74 +22,60 @@
 #pragma once
 
 #include "basemodule.h"
+#include "translatorinterface.h"
 
 class QWidget;
 class QString;
 class DictionaryItem;
 
-typedef QList<DictionaryItem> DictionaryItemList;
+
+typedef QPair<QString, QString> LanguagePair;
 
 
-/*!
- * \brief The DictionaryReply class
- * incapsulates a dictionary reply
- */
+typedef QList<LanguagePair> LanguagePairList;
 
-class DictionaryReply {
+
+class DictionaryVariant;
+
+typedef QList<DictionaryVariant> DictionaryVariantList;
+
+
+class DictionaryVariant
+{
 public:
-private:
-//    DictionaryItem mItems;
-};
-
-//class DictionaryAbbreviation {
-//public:
-//    DictionaryAbbreviation(const QString &abbr, const QString &term);
-
-//    QString abbr() const;
-//    QString term() const;
-//private:
-//};
-
-
-
-/*!
- * \brief The DictionaryItem class
- * incapsulates a dictionary translation variant.
- */
-class DictionaryItem {
-public:
+    DictionaryVariant() {}
     enum Abbreviation {
         //!< english
-        Verb = 0x001,
+        Verb = 1,
         Noun,
         Pronoun,
         Adjective,
         Adverb,
         Preposition,
         Conjunction,
-        Interjection
+        Interjection,
+        NoAbbreviation = 1000
     };
 
 
     Abbreviation abbr() const;
-    QString source() const;
+    QString sourceWord() const;
     QString explaination() const;
     QString translation() const;
-
-    void addChildItem(const DictionaryItem child);
-private:
-    DictionaryItemList mChildren;
-
 };
+
+
 
 
 class DictionaryInterface : public BaseModule {
 public:
     virtual ~DictionaryInterface(){}
 
-    virtual QWidget *configWidget() = 0;
+    virtual QWidget *configWidget()
+    {return new QWidget();}
 
-
+    virtual LanguagePairList pairs() const = 0;
+    virtual DictionaryVariantList query(const LanguagePair &pair, const QString &text)  = 0;
 };
 
 Q_DECLARE_INTERFACE(DictionaryInterface, "com.qphoenix.interfaces.dictionary/1.0");

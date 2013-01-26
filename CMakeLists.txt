@@ -54,12 +54,14 @@ src/core/config/config.h
 src/core/config/translatorsconfig.h
 src/core/config/pluginsconfig.h
 src/core/config/languageconfig.h
+src/core/config/dictionaryconfig.h
 src/core/translationwidget.h
 src/core/dictionarywidget.h
 src/core/querywrappers.h
 src/core/loader.h
 src/core/languages.h
-src/core/tools.h)
+src/core/tools.h
+)
 
 
 
@@ -70,12 +72,14 @@ src/core/config/config.cpp
 src/core/config/translatorsconfig.cpp
 src/core/config/pluginsconfig.cpp
 src/core/config/languageconfig.cpp
+src/core/config/dictionaryconfig.cpp
 src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
 src/core/querywrappers.cpp
 src/core/loader.cpp
 src/core/languages.cpp
-src/core/tools.cpp)
+src/core/tools.cpp
+src/dictionaries/wordreference/wordreference.h)
 
 
 SET(RESOURCES resources/resources.qrc)
@@ -108,6 +112,7 @@ SET(DICTIONARIES_PATH   ${MPREFIX}/dictionaries   CACHE INTERNAL "")
 ADD_SUBDIRECTORY(src/core/3rdparty)
 ADD_SUBDIRECTORY(src/plugins)
 ADD_SUBDIRECTORY(src/translators)
+ADD_SUBDIRECTORY(src/dictionaries)
 ADD_SUBDIRECTORY(src/tests)
 
 CONFIGURE_FILE(src/include/defines.h.in src/include/defines.h)

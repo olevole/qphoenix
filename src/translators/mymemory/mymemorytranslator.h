@@ -72,7 +72,7 @@ public:
 
     }
 
-    bool isLinear() const{ return false; }
+//    bool isLinear() const{ return false; }
 
     LanguageTable table() const {
         QStringList english;

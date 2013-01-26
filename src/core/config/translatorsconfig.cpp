@@ -86,17 +86,23 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
 
 
 void TranslatorsConfig::onIndexChange(const int i) {
-    //! FIXME: optimisation: do not overload the same widget!
-    QLayoutItem *child;
-    while ( (child = mOptionsLayout->takeAt(0)) != 0) {
-        delete child->widget();
-        delete child;
-    }
 
     TranslatorInterface *iface = mTranslatorsList[i];
     if(!iface->isLoaded())
         iface->load();
     //TODO: Segfault here, it's a dangerous fragment!
+
+
+    //! FIXME: optimisation: do not overload the same widget!
+    QLayoutItem *child;
+    while ( (child = mOptionsLayout->takeAt(0)) != 0) {
+        QWidget *w = child->widget();
+        if(w != iface->configWidget()) {
+            delete child->widget();
+            delete child;
+        }
+    }
+
 
     mOptionsLayout->addWidget(iface->configWidget());
     mOptionsLayout->addStretch(); //TODO: Does not work. Fix!

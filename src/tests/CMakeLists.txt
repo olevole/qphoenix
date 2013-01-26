@@ -4,6 +4,16 @@ SET(PLUGINTEST_SRC plugintest.cpp )
 SET(PLUGINTEST_HDR plugintest.h )
 
 
+set(DICTEST_SRC dictionarytest.cpp)
+set(DICTEST_HDR dictionarytest.h)
+
+
+
+
+
+
+
+
 QT4_WRAP_CPP(MOC_SOURCES ${PLUGINTEST_HDR})
 ADD_EXECUTABLE(plugintest ${PLUGINTEST_SRC} ${MOC_SOURCES})
 
