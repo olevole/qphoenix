@@ -98,7 +98,7 @@ QColor StyleHelper::panelTextColor(bool lightColored)
 }
 
 // Invalid by default, setBaseColor needs to be called at least once
-QColor StyleHelper::m_baseColor = QColor(10,123,210);
+QColor StyleHelper::m_baseColor = QColor("#FF5507");
 QColor StyleHelper::m_requestedBaseColor;
 
 QColor StyleHelper::baseColor(bool lightColored)

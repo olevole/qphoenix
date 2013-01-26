@@ -127,9 +127,8 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setCentralWidget(mFancyWidget);
 
 
-    QBrush b;
-    b.setColor(Qt::gray);
-    mFancyWidget->setBackgroundBrush(b);
+
+    mFancyWidget->setBackgroundBrush(QBrush(Qt::red));
 //    mFancyWidget->addCornerWidget(new Core::Internal::Fa);
     mFancyWidget->setStatusBar(mStatusBar);
 
