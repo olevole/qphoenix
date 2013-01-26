@@ -16,7 +16,7 @@ LanguageConfig::LanguageConfig(QWidget *parent) :
 {
 
 //    LanguageEngine engine = LanguageEngine::instance();
-    mLangList = LanguageEngine::instance().languages();
+    mLangList = LanguageEngine::instance()->languages();
 
     QHBoxLayout *buttons  = new QHBoxLayout;
     buttons->addWidget(mSetButton);

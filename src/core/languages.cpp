@@ -6,6 +6,8 @@
 
 LanguageEngine::LanguageEngine()
 {
+
+
     QFile file(":/langmap.csv");
 
     if(!file.open(QFile::ReadOnly))

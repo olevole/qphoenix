@@ -104,7 +104,7 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
 
 
 //    LanguageEngine engine;
-    mLangList = QP_LANG_FACTORY.languages();
+    mLangList = QP_LANG_FACTORY->languages();
 
     connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onSourceLanguageChanged()));
     connect(mSwapButton, SIGNAL(clicked()), this, SLOT(swap()));
@@ -169,6 +169,6 @@ void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
         else
             name = entry.name();
 
-        cb->addItem(QIcon(icon), name);
+        cb->addItem(QIcon(icon), name, key);
     }
 }

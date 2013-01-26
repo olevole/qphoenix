@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
 
+
     QCoreApplication::setApplicationName(QP_APP_NAME);
     QCoreApplication::setApplicationVersion(QP_APP_VERSION);
     QCoreApplication::setOrganizationName(QP_ORG_NAME);
@@ -23,7 +24,6 @@ int main(int argc, char *argv[])
 
 
     MainWindow *mw = new MainWindow();
-
     mw->show();
 
     DictionaryConfig c;

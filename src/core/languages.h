@@ -7,7 +7,8 @@
 #include <QPair>
 #include <QStringList>
 #include <QObject>
-
+#include <QDebug>
+#include <QMutex>
 
 class Language;
 
@@ -42,10 +43,21 @@ class LanguageEngine : public QObject {
 public:
 //    explicit LanguageEngine(QObject *parent = 0);
 
-    static const LanguageEngine& instance()
+    static  LanguageEngine* instance()
     {
-            static LanguageEngine theSingleInstance;
-            return theSingleInstance;
+        static QMutex mutex;
+            static LanguageEngine *singleton = 0;
+
+            if(!singleton) {
+                qDebug() << "!!!!!!!!!!!!!!!!";
+                mutex.lock();
+                singleton =  new LanguageEngine;
+
+            }
+            mutex.unlock();
+
+            return singleton;
+
     }
 
     /*!
@@ -54,35 +66,13 @@ public:
      */
     LanguageList languages() const {return mLangList;}
 
-//    QStringList keysToNames(const QStringList &keys, const bool native = false);
-
-    QString nameToKey(const QString &name, const bool native = false) const {
-
-        const QStringList keys = mLangList.keys();
-
-        foreach(QString key, keys) {
-            const QString mname = native ? mLangList[key].nativeName() :    mLangList[key].name();
-            if(name == mname)
-                return key;
-
-
-        }
-
-//        for(LanguageList::iterator i = mLangList.begin(); i != mLangList.end(); i++) {
-//            const QString _name = native ? i.value().name() : i.value().nativeName();
-//            if(_name == name)
-//                return i.key();
-//        }
-    }
-
-
-//    static LanguageList intersect(const LanguageList &lst1, const LanguageList &lst2);
 
 private:
+//    static LanguageEngine *singleton;
     LanguageList mLangList;
-        LanguageEngine();
-        LanguageEngine(const LanguageEngine& root);
-        LanguageEngine& operator=(const LanguageEngine&);
+    LanguageEngine();
+    LanguageEngine(const LanguageEngine& root);
+    LanguageEngine& operator=(const LanguageEngine&);
 };
 
 
