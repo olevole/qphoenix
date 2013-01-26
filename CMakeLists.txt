@@ -44,6 +44,7 @@ src/include/translatorinterface.h
 src/include/dictionaryinterface.h
 src/include/info.h
 src/include/basemodule.h
+src/include/api.h
 )
 
 

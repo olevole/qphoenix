@@ -154,6 +154,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mActionCopy, SIGNAL(triggered()), this, SLOT(copy()));
     connect(mActionUndo, SIGNAL(triggered()), this, SLOT(undo()));
     connect(mActionRedo, SIGNAL(triggered()), this, SLOT(redo()));
+    connect(mActionSwap, SIGNAL(triggered()), this, SLOT(swap()));
 
 
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
@@ -326,6 +327,10 @@ void MainWindow::redo() {
 //            dictionaryWidget()->srcText()->redo();
 //        break;
     }
+}
+
+void MainWindow::swap() {
+//    translationWidget()->swapButton().
 }
 
 //----------------------------------------------------------------------------------------------

@@ -38,7 +38,7 @@ typedef QList<DictionaryItem> DictionaryItemList;
 class DictionaryReply {
 public:
 private:
-    DictionaryItem mItems;
+//    DictionaryItem mItems;
 };
 
 //class DictionaryAbbreviation {

@@ -49,6 +49,8 @@ public:
 
     virtual QToolBar    *srcToolbar() = 0;
     virtual QToolBar    *resToolbar() = 0;
+
+    virtual void swap() = 0;
 };
 
 

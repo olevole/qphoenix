@@ -39,7 +39,7 @@
 TranslationToolBar::TranslationToolBar(QWidget *parent)
     :QToolBar(parent),
 
-      mSpeechAction(new QAction(/*QIcon::fromTheme("application-exit"),*/ "Speech", this))
+      mSpeechAction(new QAction(QIcon::fromTheme("application-exit"), "Speech", this))
 {
     this->addAction(mSpeechAction);
 //    setIconSize(QSize(15,15)),
@@ -107,7 +107,7 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mLangList = QP_LANG_FACTORY.languages();
 
     connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onSourceLanguageChanged()));
-    connect(mSwapButton, SIGNAL(clicked()), this, SLOT(onSwapButtonPressed()));
+    connect(mSwapButton, SIGNAL(clicked()), this, SLOT(swap()));
 
 
 }
@@ -150,7 +150,10 @@ void TranslationWidget::onTableChanged() {
     fillCombobox(mSrcComboBox, mTable.keys());
 }
 
-void TranslationWidget::onSwapButtonPressed() {
+void TranslationWidget::swap() {
+    const int i = srcComboBox()->currentIndex();
+    mSrcComboBox->setCurrentIndex(mResComboBox->currentIndex());
+    mResComboBox->setCurrentIndex(i);
 }
 
 void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {

@@ -51,7 +51,6 @@ signals:
     void speechRequest();
 private:
     QAction *mSpeechAction;
-
 };
 
 
@@ -89,11 +88,11 @@ public:
     void setNativeNames(const bool enabled) {
         mNativeNames = enabled;
     }
-
+public slots:
+    virtual void swap();
 private slots:
     void onSourceLanguageChanged();
     void onTableChanged();
-    void onSwapButtonPressed();
 
     void fillCombobox(QComboBox *cb, QStringList keys);
 private:

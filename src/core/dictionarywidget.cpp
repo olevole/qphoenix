@@ -55,7 +55,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mLineLayout->addWidget(mLanguagesComboBox);
     mLineLayout->addWidget(mQueryLabel);
     mLineLayout->addWidget(mSrcText);
-    mLineLayout->addStretch();
+//    mLineLayout->addStretch();
 
     mMainLayout->addLayout(mLineLayout);
     mMainLayout->addWidget(mGroupbox);

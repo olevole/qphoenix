@@ -72,6 +72,7 @@ private slots:
     void copy();
     void undo();
     void redo();
+    void swap();
 
 
     void about();
