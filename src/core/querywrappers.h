@@ -4,19 +4,30 @@
 #include <QThread>
 
 #include "translatorinterface.h"
+#include "dictionaryinterface.h"
 
 
-//class AbstractWrapper : public QThread {
+class AbstractWrapper : public QThread {
+public:
+    virtual bool isReady() const = 0;
+    virtual QString errorString() const = 0;
+protected:
+    virtual void run() = 0;
+
+
+};
+
+//class DictionaryWrapper : public AbstractWrapper {
+//    Q_OBJECT
 //public:
-//    virtual bool isReady() const = 0;
-//    virtual QString errorString() const = 0;
-//protected:
-//    virtual void run() = 0;
+//    DictionaryWrapper() {
+//        connect(this, SIGNAL(reply(QString)), this, SLOT(quit()));
+//    }
 
-
+//    void query(const LanguagePair &pair, const QString &query);
+//signals:
+//    void reply(QString);
 //};
-
-
 
 
 /*!

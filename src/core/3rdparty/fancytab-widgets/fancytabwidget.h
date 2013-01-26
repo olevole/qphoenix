@@ -43,6 +43,7 @@ QT_BEGIN_NAMESPACE
 class QPainter;
 class QStackedLayout;
 class QStatusBar;
+class QVBoxLayout;
 QT_END_NAMESPACE
 
 namespace Core {
@@ -104,6 +105,7 @@ public:
         tab->icon = icon;
         tab->text = label;
         m_tabs.insert(index, tab);
+//        m_tabBar->setTabEnabled(index, true);
     }
     void setEnabled(int index, bool enabled);
     void removeTab(int index) {
@@ -153,6 +155,7 @@ public:
     void insertCornerWidget(int pos, QWidget *widget);
     int cornerWidgetCount() const;
     void setTabToolTip(int index, const QString &toolTip);
+    void setStatusBar(QStatusBar *statusbar);
 
     void paintEvent(QPaintEvent *event);
 
@@ -182,6 +185,8 @@ private:
     QStackedLayout *m_modesStack;
     QWidget *m_selectionWidget;
     QStatusBar *m_statusBar;
+    QVBoxLayout *m_contentLayout;
+
 };
 
 } // namespace Internal

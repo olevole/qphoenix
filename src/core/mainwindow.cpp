@@ -21,6 +21,7 @@
 #include <QLineEdit>
 #include <QClipboard>
 #include <QThread>
+#include <QFrame>
 
 
 #include "plugininterface.h"
@@ -126,7 +127,13 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setCentralWidget(mFancyWidget);
 
 
-    this->setStatusBar(mStatusBar);
+    QBrush b;
+    b.setColor(Qt::gray);
+    mFancyWidget->setBackgroundBrush(b);
+//    mFancyWidget->addCornerWidget(new Core::Internal::Fa);
+    mFancyWidget->setStatusBar(mStatusBar);
+
+//    this->setStatusBar(mStatusBar);
     this->setMenuBar(mMenuBar);
     this->addToolBar(mToolBar);
 

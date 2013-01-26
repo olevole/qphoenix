@@ -49,6 +49,8 @@
 #include <QtGui/QToolTip>
 #include <QtCore/QAnimationGroup>
 #include <QtCore/QPropertyAnimation>
+#include <QFrame>
+#include <QVBoxLayout>
 
 using namespace Core;
 using namespace Internal;
@@ -91,6 +93,11 @@ FancyTabBar::FancyTabBar(QWidget *parent)
     setMouseTracking(true); // Needed for hover events
     m_triggerTimer.setSingleShot(true);
 
+
+
+
+
+
     // We use a zerotimer to keep the sidebar responsive
     connect(&m_triggerTimer, SIGNAL(timeout()), this, SLOT(emitCurrentIndex()));
 }
@@ -122,6 +129,7 @@ void FancyTabBar::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
     QPainter p(this);
+    p.drawLine(QPoint(0,0), QPoint(this->size().width(),0));
 
     for (int i = 0; i < count(); ++i)
         if (i != currentIndex())
@@ -379,7 +387,8 @@ private:
 FancyTabWidget::FancyTabWidget(QWidget *parent)
     : QWidget(parent)
 	,m_tabBar(0)
-	,m_statusBar(0)
+    ,m_statusBar(0)
+    ,m_contentLayout(new QVBoxLayout)
 {
     m_tabBar = new FancyTabBar(this);
     m_selectionWidget = new QWidget(this);
@@ -390,10 +399,18 @@ FancyTabWidget::FancyTabWidget(QWidget *parent)
 //     Utils::StyledBar *bar = new Utils::StyledBar;
 //     QHBoxLayout *layout = new QHBoxLayout(bar);
 //     layout->setMargin(0);
-//     layout->setSpacing(0);
+//     layout->setSpacing(0);faddCornerWidget
 //     layout->addWidget(new FancyColorButton(this));
 
     //selectionLayout->addWidget(bar);
+
+//    QFrame *frame = new QFrame(this);
+//    frame->setFrameShape(QFrame::HLine);
+//    frame->setFrameShadow(QFrame::Plain);
+
+
+//    selectionLayout->addWidget(frame);
+
     selectionLayout->addWidget(m_tabBar, 1);
     m_selectionWidget->setLayout(selectionLayout);
     m_selectionWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
@@ -414,17 +431,17 @@ FancyTabWidget::FancyTabWidget(QWidget *parent)
     //m_statusBar = new QStatusBar;
     //m_statusBar->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
 
-    QVBoxLayout *vlayout = new QVBoxLayout;
-    vlayout->setMargin(0);
-    vlayout->setSpacing(0);
-    vlayout->addLayout(m_modesStack);
+//    QVBoxLayout *vlayout = new QVBoxLayout;
+    m_contentLayout->setMargin(0);
+    m_contentLayout->setSpacing(0);
+    m_contentLayout->addLayout(m_modesStack);
     //vlayout->addWidget(m_statusBar);
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setMargin(0);
     mainLayout->setSpacing(1);
     mainLayout->addWidget(m_selectionWidget);
-    mainLayout->addLayout(vlayout);
+    mainLayout->addLayout(m_contentLayout);
     setLayout(mainLayout);
 
     connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(showWidget(int)));
@@ -437,6 +454,10 @@ void FancyTabWidget::insertTab(int index, QWidget *tab, const QIcon &icon, const
 
     //NOTE: My fix, could be dangerous!
     setTabEnabled(index, true);
+
+
+
+     m_tabBar->update();
 }
 
 void FancyTabWidget::removeTab(int index)
@@ -487,6 +508,8 @@ void FancyTabWidget::addCornerWidget(QWidget *widget)
     m_cornerWidgetContainer->layout()->addWidget(widget);
 }
 
+
+
 int FancyTabWidget::currentIndex() const
 {
     return m_tabBar->currentIndex();
@@ -513,6 +536,16 @@ void FancyTabWidget::showWidget(int index)
 void FancyTabWidget::setTabToolTip(int index, const QString &toolTip)
 {
     m_tabBar->setTabToolTip(index, toolTip);
+}
+
+void FancyTabWidget::setStatusBar(QStatusBar *statusbar) {
+    if(m_statusBar != 0) {
+        qWarning("Already has statusbar!");
+        return;
+    }
+
+    m_statusBar = statusbar;
+    m_contentLayout->addWidget(statusbar);
 }
 
 void FancyTabWidget::setTabEnabled(int index, bool enable)
