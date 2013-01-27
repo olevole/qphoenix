@@ -93,17 +93,20 @@ void TranslatorsConfig::onIndexChange(const int i) {
     //TODO: Segfault here, it's a dangerous fragment!
 
 
+
+    QWidget *cw = iface->configWidget();
     //! FIXME: optimisation: do not overload the same widget!
     QLayoutItem *child;
     while ( (child = mOptionsLayout->takeAt(0)) != 0) {
         QWidget *w = child->widget();
-        if(w != iface->configWidget()) {
+
+        if(w != cw) {
             delete child->widget();
             delete child;
         }
     }
 
 
-    mOptionsLayout->addWidget(iface->configWidget());
+    mOptionsLayout->addWidget(cw);
     mOptionsLayout->addStretch(); //TODO: Does not work. Fix!
 }

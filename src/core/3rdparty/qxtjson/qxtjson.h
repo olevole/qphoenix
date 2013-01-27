@@ -32,6 +32,8 @@
 
 class QXT_CORE_EXPORT QxtJSON {
 public:
+//    QxtJSON(){}
+//    ~QxtJSON(){}
     static QVariant parse     (QString string);
     static QString  stringify (QVariant v);
 };

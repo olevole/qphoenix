@@ -26,7 +26,6 @@ int main(int argc, char *argv[])
     MainWindow *mw = new MainWindow();
     mw->show();
 
-    DictionaryConfig c;
 
     return a.exec();
 }

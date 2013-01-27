@@ -27,7 +27,10 @@
 #include "basemodule.h"
 
 
+
+
 class QPushButton;
+class QClipboard;
 
 class TrayIcon : public QObject, PluginInterface
 {
@@ -43,9 +46,15 @@ public:
     bool unload();
     bool isLoaded() const { return mIsLoaded; }
     QString errorString() const {}
+private slots:
+    void translate();
 
 private:
+
+    MainWindowInterface *mWindowIface;
     QPushButton *button;
+
+    QClipboard *clipboard;
     bool mIsLoaded;
 };
 

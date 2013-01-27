@@ -27,23 +27,3 @@ LanguageEngine::LanguageEngine()
     }
     file.close();
 }
-
-
-
-//QStringList LanguageEngine::keysToNames(const QStringList &keys, const bool native) {
-//    QStringList names;
-
-//    foreach (QString key, keys) {
-//        if(native)
-//            names << mLangList[key].nativeName();
-//        else
-//            names << mLangList[key].name();
-//    }
-//    return names;
-//}
-
-
-//LanguageList LanguageEngine::intersect(const LanguageList &lst1, const LanguageList &lst2) {
-//    return LanguageList();
-//}
-

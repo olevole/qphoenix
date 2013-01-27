@@ -10,7 +10,7 @@
   )
 
 
-  ADD_LIBRARY(qxtjson STATIC
+  ADD_LIBRARY(qxtjson SHARED
     ${QXT-SOURCES}
     ${QXTHEADERS}
   )

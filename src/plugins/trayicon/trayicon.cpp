@@ -25,6 +25,8 @@
 #include <QToolBar>
 #include <QAction>
 
+#include <QToolTip>
+
 TrayIcon::TrayIcon(QObject *parent) :
     QObject(parent),
     mIsLoaded(false)
@@ -50,10 +52,24 @@ bool TrayIcon::unload() {
 }
 
 void TrayIcon::setMainWindowPTR(MainWindowInterface *ptr) {
-    ptr->setCurrentPage(1);
-    ptr->toolbar()->addWidget(button);
+    mWindowIface = ptr;
+//    ptr->setCurrentPage(1);
+//    ptr->toolbar()->addWidget(button);
 
-    ptr->dictionaryWidget()->srcText()->setText("Test");
+//    ptr->dictionaryWidget()->srcText()->setText("Test");
+
+    clipboard = qApp->clipboard();
+
+    connect(clipboard, SIGNAL(selectionChanged()), this, SLOT(translate()));
+}
+
+void TrayIcon::translate() {
+    mWindowIface->translationWidget()->srcText()->setText(clipboard->text(QClipboard::Selection));
+    mWindowIface->translationWidget()->translateButton()->click();
+
+    QPoint pos = QCursor::pos();
+
+    QToolTip::showText(pos, mWindowIface->translationWidget()->resText()->toPlainText());
 }
 
 void TrayIcon::setSettingsPTR(ConfigInterface *ptr) {
