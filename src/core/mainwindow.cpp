@@ -41,8 +41,8 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    mToolBar(new QToolBar(this)),
     mStatusBar(new QStatusBar(this)),
+    mToolBar(new QToolBar(this)),
     mMenuBar(new QMenuBar(this)),
     mFancyWidget(new Core::Internal::FancyTabWidget(this)),
 
@@ -383,11 +383,13 @@ void MainWindow::translate() {
 //}
 
 QString MainWindow::getCopyableContent()  {
+    QString text;
     switch(currentIndex()) {
     case 0:
-        return translationWidget()->resText()->toPlainText();
+        text = translationWidget()->resText()->toPlainText();
     case 1:
         //TODO: improve this part (because of html content?)
-        return dictionaryWidget()->resText()->toPlainText();
+        text = dictionaryWidget()->resText()->toPlainText();
     }
+    return text;
 }

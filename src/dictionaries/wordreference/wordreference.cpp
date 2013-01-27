@@ -44,4 +44,5 @@ DictionaryVariantList WordReference::query(const LanguagePair &pair, const QStri
     qDebug() << reply->readAll();
 
 
+
 }

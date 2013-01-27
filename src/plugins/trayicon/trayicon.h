@@ -45,7 +45,7 @@ public:
     bool load();
     bool unload();
     bool isLoaded() const { return mIsLoaded; }
-    QString errorString() const {}
+    QString errorString() const {return QString();}
 private slots:
     void translate();
 

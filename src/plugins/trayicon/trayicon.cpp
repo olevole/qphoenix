@@ -42,6 +42,7 @@ bool TrayIcon::load() {
         button = new QPushButton;
         mIsLoaded = true;
     }
+    return true;
 }
 
 bool TrayIcon::unload() {
@@ -49,6 +50,7 @@ bool TrayIcon::unload() {
         delete button;
         mIsLoaded = false;
     }
+    return true;
 }
 
 void TrayIcon::setMainWindowPTR(MainWindowInterface *ptr) {
