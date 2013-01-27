@@ -133,10 +133,12 @@ private:
 
 
 
-    QThread mTranslatorWorkerThread;
-    TranslatorWrapper *mTranslatorWrapper;
+//    QThread mTranslatorWorkerThread;
+    TranslatorWrapper mTranslatorWrapper;
 signals:
     void pageChanged(const int i);
+
+
 
 };
 

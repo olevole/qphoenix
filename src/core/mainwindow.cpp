@@ -77,10 +77,10 @@ MainWindow::MainWindow(QWidget *parent) :
     mTranslatorsConfig(new TranslatorsConfig(this)),
     mLanguageConfig(new LanguageConfig(this)),
     mDictionaryConfig(new DictionaryConfig(this)),
-    mClipboard(qApp->clipboard()),
+    mClipboard(qApp->clipboard())
 
 
-    mTranslatorWrapper(new TranslatorWrapper())
+//    mTranslatorWrapper(new TranslatorWrapper())
 {
 
     setWindowTitle(qApp->applicationName());
@@ -363,16 +363,18 @@ void MainWindow::translate() {
             //QP_LANG_FACTORY.nameToKey(mTranslationWidget->srcComboBox()->currentText());
 //    QString res_lang = //QP_LANG_FACTORY.nameToKey(mTranslationWidget->resComboBox()->currentText());
 
-    connect(mTranslatorWrapper, SIGNAL(reply(QString)), &mTranslatorWorkerThread, SLOT(quit()));
-    connect(mTranslatorWrapper, SIGNAL(reply(QString)), this->translationWidget()->resText(), SLOT(setText(QString)));
 
 
-    mTranslatorWrapper->setTranslator(mTranslatorsConfig->currentTranslator());
-    mTranslatorWrapper->setParams(src_text, src_lang, res_lang);
-    mTranslatorWrapper->moveToThread(&mTranslatorWorkerThread);
+//    connect(mTranslatorWrapper, SIGNAL(reply(QString)), &mTranslatorWorkerThread, SLOT(quit()));
+    connect(&mTranslatorWrapper, SIGNAL(reply(QString)), this->translationWidget()->resText(), SLOT(setText(QString)));
 
-    connect(&mTranslatorWorkerThread, SIGNAL(started()), mTranslatorWrapper, SLOT(execute()));
-    mTranslatorWorkerThread.start();
+
+    mTranslatorWrapper.setTranslator(mTranslatorsConfig->currentTranslator());
+    mTranslatorWrapper.query( src_lang, res_lang, src_text);
+//    mTranslatorWrapper->moveToThread(&mTranslatorWorkerThread);
+
+//    connect(&mTranslatorWorkerThread, SIGNAL(started()), mTranslatorWrapper, SLOT(execute()));
+//    mTranslatorWorkerThread.start();
 
     qDebug() << "Src text: " << src_text << " SRc Lang: " << src_lang << " REs Lang: " << res_lang;
 }

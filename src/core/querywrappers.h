@@ -8,13 +8,25 @@
 
 
 
-class DictionaryWrapper : public QThread {
+class IWrapper : public QThread
+{
+public:
+    IWrapper() {}
+protected:
+    void start(Priority priority = InheritPriority) {
+        QThread::start(priority);
+    }
+};
+
+
+
+class DictionaryWrapper : public IWrapper {
     Q_OBJECT
 public:
     DictionaryWrapper()
         :m_ptr(0)
     {
-        connect(this, SIGNAL(reply(QString)), this, SLOT(quit()));
+        connect(this, SIGNAL(reply(DictionaryVariantList)), this, SLOT(quit()));
     }
 
     void run() {
@@ -40,9 +52,9 @@ signals:
     void reply(DictionaryVariantList);
 private:
 
-    void start(Priority priority = InheritPriority) {
-        QThread::start(priority);
-    }
+//    void start(Priority priority = InheritPriority) {
+//        QThread::start(priority);
+//    }
 
     LanguagePair mPair;
     QString mQuery;
@@ -60,26 +72,37 @@ private:
 
 
 
-class TranslatorWrapper : public QTh
+class TranslatorWrapper : public IWrapper
 {
     Q_OBJECT
 public:
-    TranslatorWrapper(){}
-    TranslatorWrapper(TranslatorInterface *ptr)
-    {setTranslator(ptr);}
+    TranslatorWrapper()
+        :mPtr(0)
+    {
+        connect(this, SIGNAL(reply(QString)), this, SLOT(quit()));
+    }
 
     void setTranslator(TranslatorInterface *ptr)
     {mPtr = ptr;}
-public slots:
-    void execute() {
-        emit reply(mPtr->translate(mSrcText, mSrcLang, mDestLang));
+
+    void run() {
+        const QString _result = mPtr->translate(mSrcText, mSrcLang, mDestLang);
+        emit reply(_result);
     }
 
-    void setParams(const QString &src_text, const QString &src_lang, const QString &dest_lang) {
-        mSrcText = src_text;
+public slots:
+    void query(const QString &src_lang, const QString &res_lang, const QString &src_text) {
         mSrcLang = src_lang;
-        mDestLang = dest_lang;
+        mDestLang = res_lang;
+        mSrcText = src_text;
+
+        if(!mPtr)
+            qFatal("Select TranslatorInterface Before!!!");
+
+        start();
     }
+
+
 private:
     TranslatorInterface *mPtr;
     QString mSrcText, mSrcLang, mDestLang;
