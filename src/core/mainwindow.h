@@ -133,8 +133,8 @@ private:
 
 
 
-//    QThread mTranslatorWorkerThread;
     TranslatorWrapper mTranslatorWrapper;
+    DictionaryWrapper mDictionaryWrapper;
 signals:
     void pageChanged(const int i);
 

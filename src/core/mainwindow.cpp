@@ -360,21 +360,15 @@ void MainWindow::translate() {
     QString res_lang = mTranslationWidget->resComboBox()->
             itemData(mTranslationWidget->resComboBox()->currentIndex()).toString();
 
-            //QP_LANG_FACTORY.nameToKey(mTranslationWidget->srcComboBox()->currentText());
-//    QString res_lang = //QP_LANG_FACTORY.nameToKey(mTranslationWidget->resComboBox()->currentText());
 
 
 
-//    connect(mTranslatorWrapper, SIGNAL(reply(QString)), &mTranslatorWorkerThread, SLOT(quit()));
     connect(&mTranslatorWrapper, SIGNAL(reply(QString)), this->translationWidget()->resText(), SLOT(setText(QString)));
 
 
     mTranslatorWrapper.setTranslator(mTranslatorsConfig->currentTranslator());
     mTranslatorWrapper.query( src_lang, res_lang, src_text);
-//    mTranslatorWrapper->moveToThread(&mTranslatorWorkerThread);
 
-//    connect(&mTranslatorWorkerThread, SIGNAL(started()), mTranslatorWrapper, SLOT(execute()));
-//    mTranslatorWorkerThread.start();
 
     qDebug() << "Src text: " << src_text << " SRc Lang: " << src_lang << " REs Lang: " << res_lang;
 }

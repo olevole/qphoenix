@@ -9,7 +9,6 @@ class QTableWidget;
 
 
 
-typedef QList<DictionaryInterface *>DictionaryInterfaceList;
 
 class DictionaryConfig : public QWidget, ConfigPageInterface
 {
@@ -22,12 +21,13 @@ public:
     void read(){}
     void reset(){}
 
-    DictionaryInterfaceList dictionaries();
+    QObjectList dictionaries() {
+        return mDictionaries;
+    }
+
 private:
     Loader mLoader;
-
     QObjectList mDictionaries;
-
     QTableWidget *mTable;
 };
 
