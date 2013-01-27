@@ -6,6 +6,7 @@
 #include "languages.h"
 #include "tools.h"
 #include "dictionaryconfig.h"
+#include "querywrappers.h"
 
 int main(int argc, char *argv[])
 {
@@ -25,7 +26,6 @@ int main(int argc, char *argv[])
 
     MainWindow *mw = new MainWindow();
     mw->show();
-
 
     return a.exec();
 }

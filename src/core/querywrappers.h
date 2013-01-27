@@ -7,27 +7,47 @@
 #include "dictionaryinterface.h"
 
 
-class AbstractWrapper : public QThread {
+
+class DictionaryWrapper : public QThread {
+    Q_OBJECT
 public:
-    virtual bool isReady() const = 0;
-    virtual QString errorString() const = 0;
-protected:
-    virtual void run() = 0;
+    DictionaryWrapper()
+        :m_ptr(0)
+    {
+        connect(this, SIGNAL(reply(QString)), this, SLOT(quit()));
+    }
 
+    void run() {
+        DictionaryVariantList list = m_ptr->query(mPair, mQuery);
+        emit reply(list);
+    }
 
+    void setDictionary(DictionaryInterface *iface)
+    {m_ptr = iface;}
+
+public slots:
+    void query(const LanguagePair &pair, const QString &query)  {
+        mPair = pair;
+        mQuery = query;
+
+        if(!m_ptr)
+            qFatal("Set DictionaryInterface before!");
+
+        start();
+    }
+
+signals:
+    void reply(DictionaryVariantList);
+private:
+
+    void start(Priority priority = InheritPriority) {
+        QThread::start(priority);
+    }
+
+    LanguagePair mPair;
+    QString mQuery;
+    DictionaryInterface *m_ptr;
 };
-
-//class DictionaryWrapper : public AbstractWrapper {
-//    Q_OBJECT
-//public:
-//    DictionaryWrapper() {
-//        connect(this, SIGNAL(reply(QString)), this, SLOT(quit()));
-//    }
-
-//    void query(const LanguagePair &pair, const QString &query);
-//signals:
-//    void reply(QString);
-//};
 
 
 /*!
@@ -40,7 +60,7 @@ protected:
 
 
 
-class TranslatorWrapper : public QObject
+class TranslatorWrapper : public QTh
 {
     Q_OBJECT
 public:

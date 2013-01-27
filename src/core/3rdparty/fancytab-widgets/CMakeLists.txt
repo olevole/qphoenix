@@ -1,7 +1,5 @@
-SET(TARGET "fancytabwidget")
 
 INCLUDE_DIRECTORIES(utils)
-
 
 SET(SOURCES
 fancytabwidget.cpp
@@ -23,16 +21,5 @@ utils/styledbar.h
 utils/stylehelper.h
 utils/utils_global.h)
 
-
-
-
 QT4_WRAP_CPP(MOC_SOURCES ${HEADERS})
-
-
-
-ADD_LIBRARY(${TARGET} SHARED
-    ${MOC_SOURCES}
-    ${SOURCES}
-    ${HEADERS})
-
-TARGET_LINK_LIBRARIES(${TARGET}  ${QT_LIBRARIES})
+ADD_LIBRARY(fancytabwidget STATIC ${MOC_SOURCES} ${SOURCES} ${HEADERS})
