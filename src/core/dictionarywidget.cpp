@@ -59,6 +59,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 
     mMainLayout->addLayout(mLineLayout);
     mMainLayout->addWidget(mGroupbox);
+    setIcon(QIcon(":/icons/dictionary.png"));
 
 
 //    mSrcText->setText("Put your query word here");

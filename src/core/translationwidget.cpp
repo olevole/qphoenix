@@ -87,6 +87,7 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mResComboBox->setSizePolicy(QSizePolicy::Maximum, mSrcComboBox->sizePolicy().verticalPolicy());
 
     setName("Translate");
+    setIcon(QIcon(":/icons/translator.png"));
 
 
     mLangList = QP_LANG_FACTORY->languages();
@@ -151,7 +152,7 @@ void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
 
 
     foreach (QString key, keys) {
-        QString icon = QString(":/flags/flags/%1.png").arg(key);
+        QString icon = QString(":/flags/%1.png").arg(key);
         QString name;
 
         Language entry = mLangList[key];

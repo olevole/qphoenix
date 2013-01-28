@@ -8,7 +8,7 @@ LanguageEngine::LanguageEngine()
 {
 
 
-    QFile file(":/langmap.csv");
+    QFile file(":/files/langmap.csv");
 
     if(!file.open(QFile::ReadOnly))
         qFatal("Unable to open language map! ");

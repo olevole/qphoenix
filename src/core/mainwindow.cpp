@@ -122,20 +122,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ActionsList << mActionExit << mActionCopy << mActionAbout;
     mToolBar->addActions(ActionsList);
 
-
-
-//    this->setLa
-            QVBoxLayout *l = new QVBoxLayout;
-            QFrame *f = new QFrame(this);
-            f->setFrameShape(QFrame::HLine);
-
-
-            l->addWidget(f);
-            l->addWidget(mFancyWidget);
-
-            this->setCentralWidget(new QWidget(this));
-            this->centralWidget()->setLayout(l);
-//    this->setCentralWidget(mFancyWidget);
+    this->setCentralWidget(mFancyWidget);
 
 
 
@@ -143,7 +130,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mFancyWidget->setStatusBar(mStatusBar);
 
     this->setMenuBar(mMenuBar);
-    this->addToolBar(mToolBar);
+    this->addToolBar(Qt::RightToolBarArea, mToolBar);
 
 
     this->addPage(mTranslationWidget);

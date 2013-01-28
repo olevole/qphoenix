@@ -3,10 +3,12 @@
 #include <QApplication>
 #include <QDebug>
 #include <QDir>
+#include <QIcon>
 #include "languages.h"
 #include "tools.h"
 #include "dictionaryconfig.h"
 #include "querywrappers.h"
+#include <QFile>
 
 int main(int argc, char *argv[])
 {
@@ -22,6 +24,8 @@ int main(int argc, char *argv[])
     QDir::addSearchPath("plugins", QP_PLUGINS_PATH);
     QDir::addSearchPath("translators", QP_TRANSLATORS_PATH);
     QDir::addSearchPath("dictionaries", QP_DICTIONARIES_PATH);
+
+//    QIcon::setThemeSearchPaths(QIcon::themeSearchPaths() + QStringList(":icons/"));
 
 
     MainWindow *mw = new MainWindow();

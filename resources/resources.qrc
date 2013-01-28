@@ -1,51 +1,53 @@
 <RCC>
-    <qresource prefix="/l18n"/>
-    <qresource prefix="/icons"/>
-    <qresource prefix="/">
-        <file>langmap.csv</file>
+    <qresource prefix="/icons">
+        <file>dictionary.png</file>
+        <file>translator.png</file>
     </qresource>
     <qresource prefix="/flags">
-        <file>flags/ar.png</file>
-        <file>flags/bg.png</file>
-        <file>flags/ca.png</file>
-        <file>flags/cs.png</file>
-        <file>flags/da.png</file>
-        <file>flags/de.png</file>
-        <file>flags/el.png</file>
-        <file>flags/en.png</file>
-        <file>flags/es.png</file>
-        <file>flags/et.png</file>
-        <file>flags/fi.png</file>
-        <file>flags/fr.png</file>
-        <file>flags/gl.png</file>
-        <file>flags/hi.png</file>
-        <file>flags/hr.png</file>
-        <file>flags/hu.png</file>
-        <file>flags/id.png</file>
-        <file>flags/it.png</file>
-        <file>flags/iw.png</file>
-        <file>flags/ja.png</file>
-        <file>flags/ko.png</file>
-        <file>flags/lt.png</file>
-        <file>flags/lv.png</file>
-        <file>flags/mt.png</file>
-        <file>flags/nl.png</file>
-        <file>flags/no.png</file>
-        <file>flags/pl.png</file>
-        <file>flags/pt.png</file>
-        <file>flags/ro.png</file>
-        <file>flags/ru.png</file>
-        <file>flags/sk.png</file>
-        <file>flags/sl.png</file>
-        <file>flags/sq.png</file>
-        <file>flags/sr.png</file>
-        <file>flags/sv.png</file>
-        <file>flags/th.png</file>
-        <file>flags/tl.png</file>
-        <file>flags/tr.png</file>
-        <file>flags/uk.png</file>
-        <file>flags/vi.png</file>
-        <file>flags/zh-CN.png</file>
-        <file>flags/zh-TW.png</file>
+        <file>el.png</file>
+        <file>en.png</file>
+        <file>es.png</file>
+        <file>et.png</file>
+        <file>fi.png</file>
+        <file>fr.png</file>
+        <file>gl.png</file>
+        <file>hi.png</file>
+        <file>hr.png</file>
+        <file>hu.png</file>
+        <file>id.png</file>
+        <file>it.png</file>
+        <file>sk.png</file>
+        <file>sl.png</file>
+        <file>sq.png</file>
+        <file>sr.png</file>
+        <file>iw.png</file>
+        <file>ja.png</file>
+        <file>ko.png</file>
+        <file>lt.png</file>
+        <file>lv.png</file>
+        <file>mt.png</file>
+        <file>nl.png</file>
+        <file>no.png</file>
+        <file>pl.png</file>
+        <file>pt.png</file>
+        <file>ro.png</file>
+        <file>ru.png</file>
+        <file>sv.png</file>
+        <file>th.png</file>
+        <file>tl.png</file>
+        <file>tr.png</file>
+        <file>uk.png</file>
+        <file>vi.png</file>
+        <file>zh-CN.png</file>
+        <file>zh-TW.png</file>
+        <file>bg.png</file>
+        <file>ca.png</file>
+        <file>cs.png</file>
+        <file>da.png</file>
+        <file>de.png</file>
+        <file>ar.png</file>
+    </qresource>
+    <qresource prefix="/files">
+        <file>langmap.csv</file>
     </qresource>
 </RCC>
