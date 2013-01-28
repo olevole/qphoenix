@@ -31,28 +31,24 @@
 #include <QDebug>
 #include <QToolBar>
 #include <QAction>
+#include <QApplication>
 //#include "global.h"
 #include <QMap>
-
+#include <QClipboard>
 
 
 TranslationToolBar::TranslationToolBar(QWidget *parent)
     :QToolBar(parent),
-
-      mSpeechAction(new QAction(QIcon::fromTheme("media-playback-start"), "Speech", this)),
       mCopyAction(new QAction(QIcon::fromTheme("edit-copy"), "Copy", this))
-
 {
-    this->addAction(mSpeechAction);
-    this->addAction(mCopyAction);
+    this->addAction(mCopyAction),
 
-    setIconSize(QSize(16,16)),
-    connect(mSpeechAction,SIGNAL(triggered()), this, SIGNAL(speechRequest()));
-
+    setIconSize(QSize(16,16));
+    connect(mCopyAction,SIGNAL(triggered()), this, SIGNAL(copyRequest()));
 }
 
-void TranslationToolBar::setSpeechActionEnabled(const bool b) {
-    mSpeechAction->setEnabled(b);
+void TranslationToolBar::setCopyActionEnabled(const bool b) {
+    mCopyAction->setEnabled(b);
 }
 
 TranslationWidget::TranslationWidget(QWidget *parent) :
@@ -71,14 +67,6 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mNativeNames(true)
 
 {
-
-
-
-//    QToolBar *tb = new QToolBar(this);
-//    tb->addAction(new QAction("text", this));
-
-
-
     mButtonsLayout->addWidget(mResToolbar);
     mButtonsLayout->addWidget(mSrcComboBox);
     mButtonsLayout->addWidget(mSwapButton);
@@ -87,17 +75,11 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mButtonsLayout->addWidget(mTranslateButton);
 
 
-
-
-//    mMainLayout->addWidget(tb);
-
     mMainLayout->addWidget(mSrcToolbar);
     mMainLayout->addWidget(srcText());
     mMainLayout->addLayout(mButtonsLayout);
-//    mMainLayout->addWidget(mResToolbar);
 
     mMainLayout->addWidget(mResText);
-
     setLayout(mMainLayout);
 
 
@@ -107,13 +89,12 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     setName("Translate");
 
 
-//    LanguageEngine engine;
     mLangList = QP_LANG_FACTORY->languages();
 
     connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onSourceLanguageChanged()));
     connect(mSwapButton, SIGNAL(clicked()), this, SLOT(swap()));
-
-
+    connect(mSrcToolbar, SIGNAL(copyRequest()), this, SLOT(copySrcText()));
+    connect(mResToolbar, SIGNAL(copyRequest()), this, SLOT(copyResText()));
 }
 
 
@@ -125,8 +106,6 @@ void TranslationWidget::onSourceLanguageChanged() {
     mResComboBox->clear();
     QList<QStringList> values = mTable.values();
     fillCombobox(mResComboBox, values.at(mSrcComboBox->currentIndex()));
-//    mResComboBox->addItems());
-
 }
 
 void TranslationWidget::onTableChanged() {
@@ -158,6 +137,14 @@ void TranslationWidget::swap() {
     const int i = srcComboBox()->currentIndex();
     mSrcComboBox->setCurrentIndex(mResComboBox->currentIndex());
     mResComboBox->setCurrentIndex(i);
+}
+
+void TranslationWidget::copySrcText() {
+    qApp->clipboard()->setText(mSrcText->toPlainText());
+}
+
+void TranslationWidget::copyResText() {
+    qApp->clipboard()->setText(mResText->toPlainText());
 }
 
 void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {

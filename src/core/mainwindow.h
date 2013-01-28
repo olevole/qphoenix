@@ -36,7 +36,7 @@ public:
     ~MainWindow();
 
 
-    void setCurrentPage(const int i);
+    void setCurrentIndex(const int i);
 
     void addPage(QWidget *page);
     void removePage(const QWidget *page);
@@ -136,7 +136,7 @@ private:
     TranslatorWrapper mTranslatorWrapper;
     DictionaryWrapper mDictionaryWrapper;
 signals:
-    void pageChanged(const int i);
+    void currentIndexChanged(const int i);
 
 
 

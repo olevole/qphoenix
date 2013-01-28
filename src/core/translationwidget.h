@@ -44,13 +44,13 @@ class TranslationToolBar : public QToolBar {
 Q_OBJECT
 public:
     explicit TranslationToolBar(QWidget *parent = 0);
+
 public slots:
-    void setSpeechActionEnabled(const bool b );
-//    void setCopyActionEnabled(bool);
+    void setCopyActionEnabled(bool);
 signals:
-    void speechRequest();
+    void copyRequest();
 private:
-    QAction *mSpeechAction, *mCopyAction;
+    QAction *mCopyAction;
 };
 
 
@@ -90,6 +90,10 @@ public:
     }
 public slots:
     virtual void swap();
+
+    virtual void copySrcText();
+    virtual void copyResText();
+
 private slots:
     void onSourceLanguageChanged();
     void onTableChanged();

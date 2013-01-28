@@ -124,15 +124,24 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-    this->setCentralWidget(mFancyWidget);
+//    this->setLa
+            QVBoxLayout *l = new QVBoxLayout;
+            QFrame *f = new QFrame(this);
+            f->setFrameShape(QFrame::HLine);
+
+
+            l->addWidget(f);
+            l->addWidget(mFancyWidget);
+
+            this->setCentralWidget(new QWidget(this));
+            this->centralWidget()->setLayout(l);
+//    this->setCentralWidget(mFancyWidget);
 
 
 
     mFancyWidget->setBackgroundBrush(QBrush(Qt::red));
-//    mFancyWidget->addCornerWidget(new Core::Internal::Fa);
     mFancyWidget->setStatusBar(mStatusBar);
 
-//    this->setStatusBar(mStatusBar);
     this->setMenuBar(mMenuBar);
     this->addToolBar(mToolBar);
 
@@ -217,7 +226,7 @@ int MainWindow::currentIndex() const {
     return mFancyWidget->currentIndex();
 }
 
-void MainWindow::setCurrentPage(const int i) {
+void MainWindow::setCurrentIndex(const int i) {
     mFancyWidget->setCurrentIndex(i);
 }
 

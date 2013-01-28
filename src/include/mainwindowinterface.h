@@ -24,6 +24,7 @@
 
 #include "translatorwidgetinterface.h"
 #include "dictionarywidgetinterface.h"
+#include "info.h"
 
 
 class QToolBar;
@@ -40,10 +41,10 @@ class MainWindowInterface {
 public:
     ~MainWindowInterface(){}
     // Signals
-    virtual void pageChanged(const int i) = 0;
+    virtual void currentIndexChanged(const int i) = 0;
 
     //Slots
-    virtual void setCurrentPage(const int i) = 0;
+    virtual void setCurrentIndex(const int i) = 0;
 
 
 
@@ -58,8 +59,14 @@ public:
     virtual QToolBar *toolbar() = 0;
     virtual QStatusBar *statusbar() =0;
     virtual QMenuBar   *menubar() = 0;
+
     virtual TranslatorWidgetInterface *translationWidget() = 0;
     virtual DictionaryWidgetInterface *dictionaryWidget() = 0;
+
+    //    virtual Info currentTranslatorInfo() const = 0;
+    //    virtual Info currentDictionaryInfo() const = 0;
+
+
 };
 
 
