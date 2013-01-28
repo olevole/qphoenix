@@ -6,6 +6,7 @@
 #include "translatorinterface.h"
 #include "dictionaryinterface.h"
 
+//-------------------------------------------------------------------------------------
 
 
 class IWrapper : public QThread
@@ -18,6 +19,7 @@ protected:
     }
 };
 
+//-------------------------------------------------------------------------------------
 
 
 class DictionaryWrapper : public IWrapper {
@@ -44,22 +46,18 @@ public slots:
 
         if(!m_ptr)
             qFatal("Set DictionaryInterface before!");
-
         start();
     }
 
 signals:
     void reply(DictionaryVariantList);
 private:
-
-//    void start(Priority priority = InheritPriority) {
-//        QThread::start(priority);
-//    }
-
     LanguagePair mPair;
     QString mQuery;
     DictionaryInterface *m_ptr;
 };
+
+//-------------------------------------------------------------------------------------
 
 
 /*!

@@ -39,10 +39,14 @@
 TranslationToolBar::TranslationToolBar(QWidget *parent)
     :QToolBar(parent),
 
-      mSpeechAction(new QAction(QIcon::fromTheme("application-exit"), "Speech", this))
+      mSpeechAction(new QAction(QIcon::fromTheme("media-playback-start"), "Speech", this)),
+      mCopyAction(new QAction(QIcon::fromTheme("edit-copy"), "Copy", this))
+
 {
     this->addAction(mSpeechAction);
-//    setIconSize(QSize(15,15)),
+    this->addAction(mCopyAction);
+
+    setIconSize(QSize(16,16)),
     connect(mSpeechAction,SIGNAL(triggered()), this, SIGNAL(speechRequest()));
 
 }

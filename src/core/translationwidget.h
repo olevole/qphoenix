@@ -50,7 +50,7 @@ public slots:
 signals:
     void speechRequest();
 private:
-    QAction *mSpeechAction;
+    QAction *mSpeechAction, *mCopyAction;
 };
 
 

@@ -31,9 +31,9 @@ TrayIcon::TrayIcon(QObject *parent) :
     QObject(parent),
     mIsLoaded(false)
 {
-    this->setName("TrayIcon");
-    this->setDescription("This is my best plugin! Object::connect: No such signal QDialogButtonBox::");
-    this->setVersion("0.666satan");
+    this->setName("Selection Buffer");
+    this->setDescription("This is my best plugin!");
+    this->setVersion("0.999999");
 }
 
 
