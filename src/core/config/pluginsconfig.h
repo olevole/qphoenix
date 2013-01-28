@@ -22,7 +22,7 @@ class PluginsConfig : public QWidget, ConfigPageInterface
 public:
     PluginsConfig(QWidget *parent = 0);
 
-    ModuleList *pluginsList() {
+    QObjectList *pluginsList() {
         return &mPlugins;
     }
 
@@ -41,7 +41,7 @@ protected:
     void updateTable();
 private:
     QTableWidget *mTable;
-    ModuleList mPlugins;
+    QObjectList mPlugins;
     QStringList mEnabledList;
 
     QList<QCheckBox *>mCheckboxList;

@@ -16,7 +16,7 @@ void PluginTest::testCase1() {
     Loader ldr;
     ldr.addSearchPath("/tmp/qphoenix-build/src/translators/mymemory");
 
-    ModuleList list = ldr.modules();
+    QObjectList list = ldr.modules();
 
     TranslatorInterface *iface = qobject_cast<TranslatorInterface *>(list.first());
 

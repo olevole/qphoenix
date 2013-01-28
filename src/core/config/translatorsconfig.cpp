@@ -72,7 +72,7 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
 
     QDir dir(ldr.searchPaths().first());
         qDebug() << "Translator " << dir.entryList();
-    ModuleList list = ldr.modules();
+    QObjectList list = ldr.modules();
 
     foreach (QObject *obj, list) {
 

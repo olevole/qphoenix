@@ -2,6 +2,7 @@
 #define QUERYWRAPPERS_H
 
 #include <QThread>
+#include <QTimer>
 
 #include "translatorinterface.h"
 #include "dictionaryinterface.h"
@@ -12,11 +13,23 @@
 class IWrapper : public QThread
 {
 public:
-    IWrapper() {}
+    IWrapper()
+        :mTimer(new QTimer)
+    {
+        connect(mTimer, SIGNAL(timeout()), this, SLOT(quit()));
+    }
+
+    void setTimeout(const int msec)
+    {
+        mTimer->setInterval(msec);
+    }
+
 protected:
     void start(Priority priority = InheritPriority) {
         QThread::start(priority);
     }
+private:
+    QTimer *mTimer;
 };
 
 //-------------------------------------------------------------------------------------

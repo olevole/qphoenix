@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QList>
 
-typedef QList<QObject *> ModuleList;
+//typedef QList<QObject *> ModuleList;
 
 class Loader : public QObject
 {
@@ -36,7 +36,7 @@ public:
 
     // ---------------------------------------------------------
 
-    ModuleList modules();
+    QObjectList modules();
 //    void update();
 private:
     QStringList mSearchPaths;

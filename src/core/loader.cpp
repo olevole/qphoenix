@@ -4,7 +4,7 @@
 #include <QPluginLoader>
 
 
-ModuleList Loader::modules() {
+QObjectList Loader::modules() {
 
     /*
      * Getting absolute paths of all modules
@@ -36,7 +36,7 @@ ModuleList Loader::modules() {
      * Let's try load them
      */
 
-    ModuleList list;
+    QObjectList list;
     foreach(QString module, abs) {
         QPluginLoader *l = new QPluginLoader(module);
         QObject *instance;

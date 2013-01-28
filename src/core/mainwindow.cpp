@@ -227,7 +227,7 @@ void MainWindow::onConfigAccept() {
      * Plugins processing
      *
      */
-    ModuleList *lst = mPluginsConfig->pluginsList();
+    QObjectList *lst = mPluginsConfig->pluginsList();
 
     for(int i = 0; i < lst->count(); i++) {
         qDebug() << "iteration #" << i;

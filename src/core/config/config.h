@@ -20,19 +20,17 @@ class QHBoxLayout;
 class QGroupBox;
 class QTreeWidgetItem;
 class QPushButton;
-//class Settings;
 
 
 /*
  *  This is an implementation of main settings dialog.
- *  All settings pages MUST include SettingsInteface.
+ *  All config pages MUST include ConfigPageInteface.
  */
 
 
 /*
- * A list with Settings pages interfaces
+ * A list with Config pages interfaces
  */
-typedef QList<ConfigPageInterface *>ConfigPageList;
 
 
 
@@ -58,6 +56,7 @@ public:
 private:
 
 
+    typedef QList<ConfigPageInterface *>ConfigPageList;
 
     ConfigPageList mPagesList;
 

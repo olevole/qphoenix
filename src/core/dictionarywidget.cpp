@@ -43,7 +43,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mMainLayout(new QVBoxLayout)
 {
 
-    mGroupbox->setTitle(tr("Result"));
+//    mGroupbox->setTitle(tr("Result"));
     mGroupbox->setLayout(new QHBoxLayout);
     mGroupbox->layout()->addWidget(mResText);
     mGroupbox->setFlat(true);
