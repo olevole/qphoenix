@@ -61,7 +61,6 @@ src/core/dictionarywidget.h
 src/core/querywrappers.h
 src/core/loader.h
 src/core/languages.h
-src/core/tools.h
 )
 
 
@@ -79,7 +78,6 @@ src/core/dictionarywidget.cpp
 src/core/querywrappers.cpp
 src/core/loader.cpp
 src/core/languages.cpp
-src/core/tools.cpp
 src/dictionaries/wordreference/wordreference.h)
 
 

@@ -5,7 +5,6 @@
 #include <QDir>
 #include <QIcon>
 #include "languages.h"
-#include "tools.h"
 #include "dictionaryconfig.h"
 #include "querywrappers.h"
 #include <QFile>
