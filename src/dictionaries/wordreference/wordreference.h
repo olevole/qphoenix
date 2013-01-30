@@ -30,7 +30,11 @@ public:
         Q_UNUSED(str)
         Q_UNUSED(pair)
         QStringList sl; sl << "test" << "thanks";
-        return sl;
+
+
+        QString str2("For QCompleter::PopupCompletion and QCompletion::UnfilteredPopupCompletion modes, calling this function displays the popup displaying the current completions. By default, if rect is not specified, the popup is displayed on the bottom of the widget(). If rect is specified the popup is displayed on the left edge of the rectangle.");
+
+        return str2.split(" ");
     }
     bool load(){}
     bool unload(){}

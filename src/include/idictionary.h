@@ -32,13 +32,8 @@ class DictionaryItem;
 
 
 typedef QPair<QString, QString> LanguagePair;
-
-
 typedef QList<LanguagePair> LanguagePairList;
-
-
 class DictionaryVariant;
-
 typedef QList<DictionaryVariant> DictionaryVariantList;
 
 enum Abbreviation {
@@ -79,8 +74,6 @@ private:
     Abbreviation mAbbr;
     QString mSrcWord, mExpl, mTrans;
 };
-
-
 
 
 class IDictionary : public IModule {
