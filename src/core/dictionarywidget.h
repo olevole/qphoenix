@@ -53,7 +53,6 @@ public:
     virtual QTextBrowser*resText()      {return mResText;       }
 public slots:
     void setCompletions(const QStringList comp);
-
 private:
     QComboBox *mLanguagesComboBox;
     QLineEdit *mSrcText;

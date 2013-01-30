@@ -29,7 +29,8 @@ public:
     QStringList completions(const QString &str, const LanguagePair &pair) const {
         Q_UNUSED(str)
         Q_UNUSED(pair)
-        return QStringList() << "test" << "thanks";
+        QStringList sl; sl << "test" << "thanks";
+        return sl;
     }
     bool load(){}
     bool unload(){}

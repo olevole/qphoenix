@@ -158,10 +158,10 @@ MainWindow::MainWindow(QWidget *parent) :
     onConfigAccept();
 
 
-    QStringList wordList;
-    wordList << "alpha" << "omega" << "omicron" << "zeta";
+//    QStringList wordList;
+//    wordList << "alpha" << "omega" << "omicron" << "zeta";
 
-    mDictionaryWidget->setCompletions(wordList);
+//    mDictionaryWidget->setCompletions(wordList);
 }
 
 MainWindow::~MainWindow()
@@ -288,7 +288,14 @@ void MainWindow::onConfigAccept() {
      */
 
 
-//    QObjectList dicts = mDictionaryConfig->dictionaries();
+    QObjectList dicts = mDictionaryConfig->dictionaries();
+
+    DictionaryInterface *iface = qobject_cast<DictionaryInterface *>(dicts.first());
+    iface->load();
+
+    iface->completions("test", LanguagePair("ru", "en"));
+
+    mDictionaryWidget->setCompletions(iface->completions("test", LanguagePair("ru", "en")));
 
 
 }
