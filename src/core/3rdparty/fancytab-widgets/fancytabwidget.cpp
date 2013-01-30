@@ -217,7 +217,7 @@ QRect FancyTabBar::tabRect(int index) const
     if (sh.height() * m_tabs.count() > height())
         sh.setHeight(height() / m_tabs.count());
 
-    return QRect(0, index * sh.height(), sh.width(), sh.height());
+    return QRect(0, index * sh.height()+1, sh.width(), sh.height());
 
 }
 

@@ -4,6 +4,7 @@
 
 #include <QDir>
 #include <QString>
+#include <QIcon>
 
 #define QP_APP_VERSION "0.01a"
 #define QP_APP_NAME "QPhoenix"
@@ -20,6 +21,7 @@
 
 #define QP_MODULE_SIGNATURE QString("%1%2").arg("lib*.").arg(QP_DLIB_SUFFIX)
 
+#define QP_ICON(x) QIcon::fromTheme(x, QIcon(QString(":/icons/" + QString(x) + ".png")))
 
 /*!
  * Paths. Do not use them! Use qt paths instead.

@@ -10,6 +10,7 @@
 #include "querywrappers.h"
 #include <QFile>
 
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -25,11 +26,16 @@ int main(int argc, char *argv[])
     QDir::addSearchPath("translators", QP_TRANSLATORS_PATH);
     QDir::addSearchPath("dictionaries", QP_DICTIONARIES_PATH);
 
-//    QIcon::setThemeSearchPaths(QIcon::themeSearchPaths() + QStringList(":icons/"));
+
 
 
     MainWindow *mw = new MainWindow();
     mw->show();
+
+
+
+    mw->setWindowIcon(QP_ICON("dictionary"));
+//    mw->setWindowIcon(/*QIcon::fromTheme("dictionary"));*/
 
     return a.exec();
 }

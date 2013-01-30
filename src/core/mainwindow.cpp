@@ -52,16 +52,16 @@ MainWindow::MainWindow(QWidget *parent) :
     mHelpMenu(new QMenu(tr("Help"), this)),
 
     //Actions
-    mActionExit(new QAction(QIcon::fromTheme("application-exit"), tr("Exit"), this)),
-    mActionOpen(new QAction(tr("Open"), this)),
-    mActionSave(new QAction(tr("Save"), this)),
-    mActionSaveAs(new QAction(tr("Save As"), this)),
-    mActionPrint(new QAction(tr("Print"), this)),
+    mActionExit(new QAction(QP_ICON("application-exit"), tr("Exit"), this)),
+    mActionOpen(new QAction(QP_ICON("document-open"),tr("Open"), this)),
+    mActionSave(new QAction(QP_ICON("document-save"),tr("Save"), this)),
+    mActionSaveAs(new QAction(QP_ICON("document-save-as"),tr("Save As"), this)),
+    mActionPrint(new QAction(QP_ICON("document-print"),tr("Print"), this)),
 
-    mActionClear(new QAction(tr("Clear"), this)),
-    mActionCopy(new QAction(QIcon::fromTheme("edit-copy"),tr("Copy"), this)),
-    mActionUndo(new QAction(tr("Undo"), this)),
-    mActionRedo(new QAction(tr("Redo"), this)),
+    mActionClear(new QAction(QP_ICON("edit-clear"), tr("Clear"), this)),
+    mActionCopy(new QAction(QP_ICON("edit-copy"),tr("Copy"), this)),
+    mActionUndo(new QAction(QP_ICON("edit-undo"),tr("Undo"), this)),
+    mActionRedo(new QAction(QP_ICON("edit-redo"),tr("Redo"), this)),
     mActionSwap(new QAction(tr("Swap"), this)),
     mActionOptions(new QAction(tr("Options"), this)),
 
@@ -78,13 +78,8 @@ MainWindow::MainWindow(QWidget *parent) :
     mLanguageConfig(new LanguageConfig(this)),
     mDictionaryConfig(new DictionaryConfig(this)),
     mClipboard(qApp->clipboard())
-
-
-//    mTranslatorWrapper(new TranslatorWrapper())
 {
-
     setWindowTitle(qApp->applicationName());
-
 
     mFileMenu->addAction(mActionOpen);
     mFileMenu->addSeparator();
@@ -93,8 +88,6 @@ MainWindow::MainWindow(QWidget *parent) :
     mFileMenu->addAction(mActionPrint);
     mFileMenu->addSeparator();
     mFileMenu->addAction(mActionExit);
-
-
 
     mEditMenu->addAction(mActionClear);
     mEditMenu->addAction(mActionCopy);
@@ -105,13 +98,8 @@ MainWindow::MainWindow(QWidget *parent) :
     mEditMenu->addSeparator();
     mEditMenu->addAction(mActionOptions);
 
-
-
-
-
     mHelpMenu->addAction(mActionAbout);
     mHelpMenu->addAction(mActionAboutQt);
-
 
     mMenuBar->addMenu(mFileMenu);
     mMenuBar->addMenu(mEditMenu);
@@ -119,7 +107,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     QList<QAction *> ActionsList;
-    ActionsList << mActionExit << mActionCopy << mActionAbout;
+    ActionsList << mActionClear << mActionAbout;
     mToolBar->addActions(ActionsList);
 
     this->setCentralWidget(mFancyWidget);
@@ -286,6 +274,17 @@ void MainWindow::onConfigAccept() {
 
 
     // Updating table
+
+
+
+    /*!
+     * Dictionaries sync
+     */
+
+
+//    QObjectList dicts = mDictionaryConfig->dictionaries();
+
+
 }
 
 
@@ -370,9 +369,9 @@ void MainWindow::translate() {
 }
 
 
-//void MainWindow::fillComboBox(QComboBox *cb, LanguageList &lst) {
+void MainWindow::diction() {
 
-//}
+}
 
 QString MainWindow::getCopyableContent()  {
     QString text;

@@ -33,6 +33,7 @@
 #include <QAction>
 #include <QApplication>
 //#include "global.h"
+#include "defines.h"
 #include <QMap>
 #include <QClipboard>
 
@@ -87,7 +88,7 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mResComboBox->setSizePolicy(QSizePolicy::Maximum, mSrcComboBox->sizePolicy().verticalPolicy());
 
     setName("Translate");
-    setIcon(QIcon(":/icons/translator.png"));
+    setIcon(QP_ICON("translator"));
 
 
     mLangList = QP_LANG_FACTORY->languages();

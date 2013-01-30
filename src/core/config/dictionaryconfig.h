@@ -24,7 +24,6 @@ public:
     QObjectList dictionaries() {
         return mDictionaries;
     }
-
 private:
     Loader mLoader;
     QObjectList mDictionaries;

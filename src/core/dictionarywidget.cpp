@@ -28,6 +28,7 @@
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include "defines.h"
 
 
 
@@ -37,8 +38,6 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mSrcText(new QLineEdit(this)),
     mResText(new QTextBrowser(this)),
     mGroupbox(new QGroupBox(this)),
-//    mQueryLabel(new QLabel(tr("Query"), this)),
-//    mDirectionLabel(new QLabel(tr("Languages"), this)),
     mLineLayout(new QHBoxLayout),
     mMainLayout(new QVBoxLayout)
 {
@@ -51,18 +50,14 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     setName(tr("Dictionary"));
     setIcon(QIcon::fromTheme("accessoriesbgb-dictionary"));
 
-//    mLineLayout->addWidget(mDirectionLabel);
     mLineLayout->addWidget(mLanguagesComboBox);
-//    mLineLayout->addWidget(mQueryLabel);
     mLineLayout->addWidget(mSrcText);
-//    mLineLayout->addStretch();
 
     mMainLayout->addLayout(mLineLayout);
     mMainLayout->addWidget(mGroupbox);
-    setIcon(QIcon(":/icons/dictionary.png"));
+    setIcon(QP_ICON("dictionary"));
 
 
-//    mSrcText->setText("Put your query word here");
 
     setLayout(mMainLayout);
 }

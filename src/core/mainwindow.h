@@ -80,6 +80,7 @@ private slots:
 
 
     void translate();
+    void diction();
 
 
 

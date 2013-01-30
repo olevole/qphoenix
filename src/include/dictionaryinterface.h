@@ -24,6 +24,8 @@
 #include "basemodule.h"
 #include "translatorinterface.h"
 
+#include <QPair>
+
 class QWidget;
 class QString;
 class DictionaryItem;
@@ -39,29 +41,43 @@ class DictionaryVariant;
 
 typedef QList<DictionaryVariant> DictionaryVariantList;
 
+enum Abbreviation {
+    //!< english
+    Verb = 1,
+    Noun,
+    Pronoun,
+    Adjective,
+    Adverb,
+    Preposition,
+    Conjunction,
+    Interjection,
+    NoAbbreviation = 1000
+};
 
 class DictionaryVariant
 {
 public:
-    DictionaryVariant() {}
-    enum Abbreviation {
-        //!< english
-        Verb = 1,
-        Noun,
-        Pronoun,
-        Adjective,
-        Adverb,
-        Preposition,
-        Conjunction,
-        Interjection,
-        NoAbbreviation = 1000
-    };
+    DictionaryVariant(const Abbreviation abbr, const QString &src_word,
+                      const QString &expl, const QString &trans) {
+        setAbbr(abbr);
+        setSourceWord(src_word);
+        setExplaination(expl);
+        setTranslation(trans);
+    }
 
 
-    Abbreviation abbr() const;
-    QString sourceWord() const;
-    QString explaination() const;
-    QString translation() const;
+    void setAbbr(const Abbreviation abbr) { mAbbr = abbr;}
+    void setSourceWord(const QString &word) { mSrcWord = word;}
+    void setExplaination(const QString &expl) {mExpl = expl;}
+    void setTranslation(const QString &tr) {mTrans = tr;}
+
+    Abbreviation abbr() const   { return mAbbr;     }
+    QString sourceWord() const  { return mSrcWord;  }
+    QString explaination() const{ return mExpl;     }
+    QString translation() const { return mTrans;    }
+private:
+    Abbreviation mAbbr;
+    QString mSrcWord, mExpl, mTrans;
 };
 
 
@@ -76,6 +92,9 @@ public:
 
     virtual LanguagePairList pairs() const = 0;
     virtual DictionaryVariantList query(const LanguagePair &pair, const QString &text)  = 0;
+    virtual QStringList completions(const QString &str, const LanguagePair &pair) const = 0;
+
+
 };
 
 Q_DECLARE_INTERFACE(DictionaryInterface, "com.qphoenix.interfaces.dictionary/1.0");

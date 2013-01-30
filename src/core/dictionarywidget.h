@@ -48,18 +48,14 @@ public:
     virtual QComboBox   *languagesComboBox() {return mLanguagesComboBox;   }
     virtual QLineEdit   *srcText()      {return mSrcText;       }
     virtual QTextBrowser*resText()      {return mResText;       }
-
-
 private:
     QComboBox *mLanguagesComboBox;
     QLineEdit *mSrcText;
     QTextBrowser *mResText;
     QGroupBox   *mGroupbox;
-    QLabel      *mQueryLabel, *mDirectionLabel;
 
     QHBoxLayout *mLineLayout;
-    QVBoxLayout *mMainLayout;
-    
+    QVBoxLayout *mMainLayout;    
 };
 
 #endif // DICTIONARYWIDGET_H

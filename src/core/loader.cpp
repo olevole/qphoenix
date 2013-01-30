@@ -2,7 +2,7 @@
 #include "defines.h"
 #include <QDir>
 #include <QPluginLoader>
-
+#include <QDebug>
 
 QObjectList Loader::modules() {
 
@@ -21,8 +21,6 @@ QObjectList Loader::modules() {
         QDir dir(path);
         QStringList rel;
         rel << dir.entryList(QStringList() << QP_MODULE_SIGNATURE);
-
-
 
         for (int j = 0; j < rel.count(); j++) {
             abs << dir.absoluteFilePath(rel.at(j));
@@ -44,7 +42,8 @@ QObjectList Loader::modules() {
         if(l->load() && (instance = l->instance()) != NULL) {
             list.append(instance);
         } else {
-//            /TODO: hadnle
+            qDebug() << "Couldn't load plugin: " << l->fileName()
+                        << l->errorString();
 
         }
     }
