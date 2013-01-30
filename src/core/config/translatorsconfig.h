@@ -24,8 +24,8 @@
 
 #include <QWidget>
 #include <QList>
-#include "configpageinterface.h"
-#include "translatorinterface.h"
+#include "iconfigpage.h"
+#include "itranslator.h"
 #include <QComboBox>
 
 class QLabel;
@@ -34,10 +34,10 @@ class QHBoxLayout;
 class QVBoxLayout;
 class QGroupBox;
 
-class TranslatorsConfig : public QWidget, ConfigPageInterface
+class TranslatorsConfig : public QWidget, IConfigPage
 {
     Q_OBJECT
-    Q_INTERFACES(ConfigPageInterface)
+    Q_INTERFACES(IConfigPage)
 public:
     explicit TranslatorsConfig(QWidget *parent = 0);
 
@@ -46,7 +46,7 @@ public:
     void reset(){}
 
 
-    TranslatorInterface *currentTranslator() {
+    ITranslator *currentTranslator() {
         if(mTranslatorComboBox->currentIndex() > -1)
             return mTranslatorsList[mTranslatorComboBox->currentIndex()];
         else
@@ -66,7 +66,7 @@ private:
 
     QVBoxLayout *mMainLayout;
 
-    QList <TranslatorInterface *>mTranslatorsList;
+    QList <ITranslator *>mTranslatorsList;
 };
 
 #endif // TRANSLATOR_H

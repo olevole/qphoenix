@@ -5,10 +5,10 @@
 #include <QObject>
 
 
-class WordReference : public QObject, DictionaryInterface
+class WordReference : public QObject, IDictionary
 {
     Q_OBJECT
-    Q_INTERFACES(DictionaryInterface)
+    Q_INTERFACES(IDictionary)
 public:
     WordReference(QObject *parent = 0);
 

@@ -19,27 +19,29 @@
  *    Years: 2012-2013
  */
 
-#ifndef DICTIONARYWIDGETINTERFACE_H
-#define DICTIONARYWIDGETINTERFACE_H
+#ifndef SETTINGSPAGEINTERFACE_H
+#define SETTINGSPAGEINTERFACE_H
 
+#include "info.h"
 
-class QComboBox;
-class QLineEdit;
-class QTextBrowser;
-
-
-
-class DictionaryWidgetInterface {
+class IConfigPage : public Info
+{
 public:
-    virtual ~DictionaryWidgetInterface() {}
+    virtual ~IConfigPage(){}
 
-    virtual QComboBox   *languagesComboBox() = 0;
-    virtual QLineEdit   *srcText() = 0;
-    virtual QTextBrowser*resText() = 0;
+    // Read and save the settings
+    virtual void save() = 0;
+    virtual void read() = 0;
+    virtual void reset() = 0;
+
+
+
 };
 
+Q_DECLARE_INTERFACE(IConfigPage, "com.qphoenix.interfaces.settings/1.0");
 
-Q_DECLARE_INTERFACE(DictionaryWidgetInterface, "com.qphoenix.interfaces.dictionarywidget/1.0")
 
 
-#endif // DICTIONARYWIDGETINTERFACE_H
+
+#endif // SETTINGSPAGEINTERFACE_H
+

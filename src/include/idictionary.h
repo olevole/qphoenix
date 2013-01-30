@@ -21,8 +21,8 @@
 
 #pragma once
 
-#include "basemodule.h"
-#include "translatorinterface.h"
+#include "imodule.h"
+#include "itranslator.h"
 
 #include <QPair>
 
@@ -83,9 +83,9 @@ private:
 
 
 
-class DictionaryInterface : public IModule {
+class IDictionary : public IModule {
 public:
-    virtual ~DictionaryInterface(){}
+    virtual ~IDictionary(){}
 
     virtual QWidget *configWidget()
     {return new QWidget();}
@@ -97,5 +97,5 @@ public:
 
 };
 
-Q_DECLARE_INTERFACE(DictionaryInterface, "com.qphoenix.interfaces.dictionary/1.0");
+Q_DECLARE_INTERFACE(IDictionary, "com.qphoenix.interfaces.dictionary/1.0");
 

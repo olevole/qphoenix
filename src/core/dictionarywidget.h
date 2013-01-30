@@ -26,8 +26,8 @@
 #include <QStringList>
 #include <QListWidget>
 #include "info.h"
-#include "dictionarywidgetinterface.h"
-#include "dictionaryinterface.h"
+#include "idictionarywidget.h"
+#include "idictionary.h"
 
 
 class QComboBox;
@@ -41,10 +41,10 @@ class QHBoxLayout;
 class QVBoxLayout;
 class QStringListModel;
 
-class DictionaryWidget : public QWidget, DictionaryWidgetInterface, Info
+class DictionaryWidget : public QWidget, IDictionaryWidget, Info
 {
     Q_OBJECT
-    Q_INTERFACES(DictionaryWidgetInterface)
+    Q_INTERFACES(IDictionaryWidget)
     Q_INTERFACES(Info)
 public:
     explicit DictionaryWidget(QWidget *parent = 0);

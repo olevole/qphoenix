@@ -1,8 +1,8 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include "configinterface.h"
-#include "configpageinterface.h"
+#include "iconfig.h"
+#include "iconfigpage.h"
 
 #include <QTreeWidget>
 #include <QDialogButtonBox>
@@ -56,7 +56,7 @@ public:
 private:
 
 
-    typedef QList<ConfigPageInterface *>ConfigPageList;
+    typedef QList<IConfigPage *>ConfigPageList;
 
     ConfigPageList mPagesList;
 

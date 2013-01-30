@@ -4,7 +4,7 @@
 #include <QStringList>
 #include <QSet>
 #include "languages.h"
-#include "translatorinterface.h"
+#include "itranslator.h"
 
 class Tools
 {

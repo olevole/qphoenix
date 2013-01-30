@@ -5,8 +5,8 @@
 #include <QThread>
 #include <QDebug>
 #include "fancytabwidget.h"
-#include "mainwindowinterface.h"
-#include "dictionarywidgetinterface.h"
+#include "imainwindow.h"
+#include "idictionarywidget.h"
 #include "dictionarywidget.h"
 #include "translationwidget.h"
 #include "querywrappers.h"
@@ -27,10 +27,10 @@ class TranslatorsConfig;
 class LanguageConfig;
 class DictionaryConfig;
 
-class MainWindow : public  QMainWindow, MainWindowInterface
+class MainWindow : public  QMainWindow, IMainWindow
 {
     Q_OBJECT
-    Q_INTERFACES(MainWindowInterface)
+    Q_INTERFACES(IMainWindow)
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -42,11 +42,11 @@ public:
     void removePage(const QWidget *page);
     QWidget *pageAt(const int i);
 
-    DictionaryWidgetInterface *dictionaryWidget()
-    {return qobject_cast<DictionaryWidgetInterface *>(mDictionaryWidget);  }
+    IDictionaryWidget *dictionaryWidget()
+    {return qobject_cast<IDictionaryWidget *>(mDictionaryWidget);  }
 
-    TranslatorWidgetInterface *translationWidget()
-    {return qobject_cast<TranslatorWidgetInterface *>(mTranslationWidget);}
+    ITranslatorWidget *translationWidget()
+    {return qobject_cast<ITranslatorWidget *>(mTranslationWidget);}
 
 
     QToolBar *toolbar()     { return mToolBar;      }
@@ -134,7 +134,7 @@ private:
     QClipboard *mClipboard;
     QStringList mLastEnabledLanguages;
 
-    QList<DictionaryInterface *> mDictList;
+    QList<IDictionary *> mDictList;
 
     TranslatorWrapper mTranslatorWrapper;
     DictionaryWrapper mDictionaryWrapper;

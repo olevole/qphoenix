@@ -7,23 +7,23 @@
  * This is a basic interface for ALL plugins
  */
 
-#include "mainwindowinterface.h"
-#include "configinterface.h"
-#include "basemodule.h"
+#include "imainwindow.h"
+#include "iconfig.h"
+#include "imodule.h"
 
 
 
-class PluginInterface : public IModule
+class IPlugin : public IModule
 {
 
 public:
-    virtual ~PluginInterface() {}
+    virtual ~IPlugin() {}
 
     /*!
      * \brief setMainWindowPTR
      * \param ptr a pointer to MainWindow class
      */
-    virtual void setMainWindowPTR(MainWindowInterface *ptr) = 0;
+    virtual void setMainWindowPTR(IMainWindow *ptr) = 0;
 
     /*!
      * \brief setSettingsPTR
@@ -34,7 +34,7 @@ public:
 
 
 
-Q_DECLARE_INTERFACE(PluginInterface, "com.qphoenix.interfaces.plugin/1.0");
+Q_DECLARE_INTERFACE(IPlugin, "com.qphoenix.interfaces.plugin/1.0");
 
 
 

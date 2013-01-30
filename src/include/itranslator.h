@@ -24,7 +24,7 @@
 
 #include <QMap>
 #include <QWidget>
-#include "basemodule.h"
+#include "imodule.h"
 
 
 
@@ -47,9 +47,9 @@ typedef QMap <QString, QStringList> LanguageTable;
 
 
 
-class TranslatorInterface : public IModule {
+class ITranslator : public IModule {
 public:
-    virtual ~TranslatorInterface(){}
+    virtual ~ITranslator(){}
 
 
     /*!
@@ -79,7 +79,7 @@ public:
 };
 
 
-Q_DECLARE_INTERFACE(TranslatorInterface, "com.qphoenix.interfaces.translator/1.0");
+Q_DECLARE_INTERFACE(ITranslator, "com.qphoenix.interfaces.translator/1.0");
 
 
 

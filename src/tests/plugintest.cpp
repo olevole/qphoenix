@@ -2,8 +2,8 @@
 #include <QtTest/QtTest>
 #include "plugintest.h"
 #include "loader.h"
-#include "plugininterface.h"
-#include "translatorinterface.h"
+#include "iplugin.h"
+#include "itranslator.h"
 
 PluginTest::PluginTest()
 {
@@ -18,7 +18,7 @@ void PluginTest::testCase1() {
 
     QObjectList list = ldr.modules();
 
-    TranslatorInterface *iface = qobject_cast<TranslatorInterface *>(list.first());
+    ITranslator *iface = qobject_cast<ITranslator *>(list.first());
 
     QVERIFY(iface->load());
 }

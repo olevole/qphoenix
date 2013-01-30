@@ -41,7 +41,7 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
 
     for (int i = 0; i < mDictionaries.count(); ++i) {
         QObject *d = mDictionaries[i];
-        DictionaryInterface *iface = qobject_cast<DictionaryInterface *>(d);
+        IDictionary *iface = qobject_cast<IDictionary *>(d);
         iface->load();
 
         mTable->insertRow(i);

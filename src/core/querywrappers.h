@@ -4,8 +4,8 @@
 #include <QThread>
 #include <QTimer>
 
-#include "translatorinterface.h"
-#include "dictionaryinterface.h"
+#include "itranslator.h"
+#include "idictionary.h"
 
 //-------------------------------------------------------------------------------------
 
@@ -49,7 +49,7 @@ public:
         emit reply(list);
     }
 
-    void setDictionary(DictionaryInterface *iface)
+    void setDictionary(IDictionary *iface)
     {m_ptr = iface;}
 
 public slots:
@@ -67,7 +67,7 @@ signals:
 private:
     LanguagePair mPair;
     QString mQuery;
-    DictionaryInterface *m_ptr;
+    IDictionary *m_ptr;
 };
 
 //-------------------------------------------------------------------------------------
@@ -93,7 +93,7 @@ public:
         connect(this, SIGNAL(reply(QString)), this, SLOT(quit()));
     }
 
-    void setTranslator(TranslatorInterface *ptr)
+    void setTranslator(ITranslator *ptr)
     {mPtr = ptr;}
 
     void run() {
@@ -115,7 +115,7 @@ public slots:
 
 
 private:
-    TranslatorInterface *mPtr;
+    ITranslator *mPtr;
     QString mSrcText, mSrcLang, mDestLang;
 
 signals:

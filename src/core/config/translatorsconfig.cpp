@@ -76,7 +76,7 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
 
     foreach (QObject *obj, list) {
 
-        TranslatorInterface *iface = qobject_cast<TranslatorInterface *>(obj);
+        ITranslator *iface = qobject_cast<ITranslator *>(obj);
         mTranslatorsList <<  iface;
         mTranslatorComboBox->addItem(iface->name());
         qDebug() << "Loading to gui...";
@@ -87,7 +87,7 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
 
 void TranslatorsConfig::onIndexChange(const int i) {
 
-    TranslatorInterface *iface = mTranslatorsList[i];
+    ITranslator *iface = mTranslatorsList[i];
     if(!iface->isLoaded())
         iface->load();
     //TODO: Segfault here, it's a dangerous fragment!

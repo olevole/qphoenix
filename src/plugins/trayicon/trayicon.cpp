@@ -53,7 +53,7 @@ bool TrayIcon::unload() {
     return true;
 }
 
-void TrayIcon::setMainWindowPTR(MainWindowInterface *ptr) {
+void TrayIcon::setMainWindowPTR(IMainWindow *ptr) {
     mWindowIface = ptr;
 //    ptr->setCurrentPage(1);
 //    ptr->toolbar()->addWidget(button);

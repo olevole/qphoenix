@@ -5,7 +5,7 @@
 #include <QPushButton>
 
 #include "config.h"
-#include "configpageinterface.h"
+#include "iconfigpage.h"
 #include "translatorsconfig.h"
 #include "defines.h"
 
@@ -72,7 +72,7 @@ Config::~Config() {
 }
 
 void Config::addPage(QWidget *page) {
-    ConfigPageInterface *iface = qobject_cast<ConfigPageInterface *>(page);
+    IConfigPage *iface = qobject_cast<IConfigPage *>(page);
 
 
 
@@ -115,7 +115,7 @@ void Config::addPage(QWidget *page) {
 
 void Config::removePage(const QWidget *page) {
     for(int i = 0; i < mPagesList.count(); i++) {
-        ConfigPageInterface *iface = qobject_cast<ConfigPageInterface *>(page);
+        IConfigPage *iface = qobject_cast<IConfigPage *>(page);
 
 
         const QString nameA = mPagesList.at(i)->name();
@@ -140,7 +140,7 @@ void Config::itemChangeHandle() {
 
 
 void Config::save() {
-    foreach (ConfigPageInterface *i, mPagesList)
+    foreach (IConfigPage *i, mPagesList)
         i->save();
 
 
@@ -148,12 +148,12 @@ void Config::save() {
 }
 
 void Config::read() {
-    foreach(ConfigPageInterface *i, mPagesList)
+    foreach(IConfigPage *i, mPagesList)
         i->read();
 }
 
 void Config::reset() {
-    foreach(ConfigPageInterface *i, mPagesList)
+    foreach(IConfigPage *i, mPagesList)
         i->reset();
 }
 

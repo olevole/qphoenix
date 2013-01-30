@@ -23,8 +23,8 @@
 #define TRAYICON_H
 
 #include <QObject>
-#include "plugininterface.h"
-#include "basemodule.h"
+#include "iplugin.h"
+#include "imodule.h"
 
 
 
@@ -32,13 +32,13 @@
 class QPushButton;
 class QClipboard;
 
-class TrayIcon : public QObject, PluginInterface
+class TrayIcon : public QObject, IPlugin
 {
     Q_OBJECT
-    Q_INTERFACES(PluginInterface)
+    Q_INTERFACES(IPlugin)
 public:
     explicit TrayIcon(QObject *parent = 0);    
-    void setMainWindowPTR(MainWindowInterface *ptr);
+    void setMainWindowPTR(IMainWindow *ptr);
 
     void setSettingsPTR(IConfig *ptr);
 
@@ -51,7 +51,7 @@ private slots:
 
 private:
 
-    MainWindowInterface *mWindowIface;
+    IMainWindow *mWindowIface;
     QPushButton *button;
 
     QClipboard *clipboard;

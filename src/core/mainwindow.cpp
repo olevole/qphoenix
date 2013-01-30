@@ -24,7 +24,7 @@
 #include <QFrame>
 
 
-#include "plugininterface.h"
+#include "iplugin.h"
 #include "querywrappers.h"
 
 #include "translationwidget.h"
@@ -34,7 +34,7 @@
 #include "defines.h"
 #include "pluginsconfig.h"
 #include "loader.h"
-#include "translatorinterface.h"
+#include "itranslator.h"
 #include "languageconfig.h"
 #include "dictionaryconfig.h"
 
@@ -221,7 +221,7 @@ void MainWindow::onConfigAccept() {
 
     for(int i = 0; i < lst->count(); i++) {
         qDebug() << "iteration #" << i;
-        PluginInterface *iface =  qobject_cast<PluginInterface *>(lst->at(i));
+        IPlugin *iface =  qobject_cast<IPlugin *>(lst->at(i));
 
         bool enabled = mPluginsConfig->isEnabled(i);
         if(enabled) {
@@ -250,7 +250,7 @@ void MainWindow::onConfigAccept() {
 
         qDebug() << "Being uptadted--____";
 
-        TranslatorInterface *translator  = mTranslatorsConfig->currentTranslator();
+        ITranslator *translator  = mTranslatorsConfig->currentTranslator();
         LanguageTable table;
 
         if(translator != NULL)
@@ -290,7 +290,7 @@ void MainWindow::onConfigAccept() {
 
     QObjectList dicts = mDictionaryConfig->dictionaries();
 
-    DictionaryInterface *iface = qobject_cast<DictionaryInterface *>(dicts.first());
+    IDictionary *iface = qobject_cast<IDictionary *>(dicts.first());
     iface->load();
 
     iface->completions("test", LanguagePair("ru", "en"));

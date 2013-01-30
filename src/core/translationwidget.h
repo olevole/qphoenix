@@ -24,9 +24,9 @@
 
 #include <QWidget>
 #include <QToolBar>
-#include "translatorwidgetinterface.h"
+#include "itranslatorwidget.h"
 #include "info.h"
-#include "translatorinterface.h"
+#include "itranslator.h"
 #include "languages.h"
 
 class QTextEdit;
@@ -57,10 +57,10 @@ private:
 
 
 
-class TranslationWidget : public QWidget, TranslatorWidgetInterface, Info
+class TranslationWidget : public QWidget, ITranslatorWidget, Info
 {
     Q_OBJECT
-    Q_INTERFACES(TranslatorWidgetInterface)
+    Q_INTERFACES(ITranslatorWidget)
     Q_INTERFACES(Info)
 public:
     explicit TranslationWidget(QWidget *parent = 0);

@@ -1,7 +1,7 @@
 #include "pluginsconfig.h"
 #include "defines.h"
 #include "info.h"
-#include "plugininterface.h"
+#include "iplugin.h"
 
 #include <QTableWidget>
 #include <QHBoxLayout>
@@ -92,7 +92,7 @@ void PluginsConfig::updateTable() {
     mPlugins = loader.modules();
 
     for (int i = 0; i < mPlugins.count(); ++i) {
-        PluginInterface *iface = qobject_cast<PluginInterface *>(mPlugins.at(i));
+        IPlugin *iface = qobject_cast<IPlugin *>(mPlugins.at(i));
 
         const int row = mTable->rowCount();
         mTable->insertRow(row);

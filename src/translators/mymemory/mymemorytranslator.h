@@ -1,7 +1,7 @@
 #ifndef MYMEMORYTRANSLATOR_H
 #define MYMEMORYTRANSLATOR_H
 
-#include "translatorinterface.h"
+#include "itranslator.h"
 #include "info.h"
 #include "qxtjson.h"
 #include <QObject>
@@ -33,10 +33,10 @@ QThread::msleep(msecs);
 
 
 
-class MyMemoryTranslator : public QObject, TranslatorInterface
+class MyMemoryTranslator : public QObject, ITranslator
 {
     Q_OBJECT
-    Q_INTERFACES(TranslatorInterface)
+    Q_INTERFACES(ITranslator)
 private:
     QWidget *mConfigWidget;
     bool mLoaded;

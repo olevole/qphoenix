@@ -22,8 +22,8 @@
 #ifndef MAINWINDOWINTERFACE_H
 #define MAINWINDOWINTERFACE_H
 
-#include "translatorwidgetinterface.h"
-#include "dictionarywidgetinterface.h"
+#include "itranslatorwidget.h"
+#include "idictionarywidget.h"
 #include "info.h"
 
 
@@ -37,9 +37,9 @@ class QTextBrowser;
 class QMenuBar;
 class QLineEdit;
 
-class MainWindowInterface {
+class IMainWindow {
 public:
-    ~MainWindowInterface(){}
+    ~IMainWindow(){}
     // Signals
     virtual void currentIndexChanged(const int i) = 0;
 
@@ -60,8 +60,8 @@ public:
     virtual QStatusBar *statusbar() =0;
     virtual QMenuBar   *menubar() = 0;
 
-    virtual TranslatorWidgetInterface *translationWidget() = 0;
-    virtual DictionaryWidgetInterface *dictionaryWidget() = 0;
+    virtual ITranslatorWidget *translationWidget() = 0;
+    virtual IDictionaryWidget *dictionaryWidget() = 0;
 
     //    virtual Info currentTranslatorInfo() const = 0;
     //    virtual Info currentDictionaryInfo() const = 0;
@@ -70,7 +70,7 @@ public:
 };
 
 
-Q_DECLARE_INTERFACE(MainWindowInterface, "com.qphoenix.interfaces.mainwindow/1.0")
+Q_DECLARE_INTERFACE(IMainWindow, "com.qphoenix.interfaces.mainwindow/1.0")
 
 
 #endif // MAINWINDOWINTERFACE_H

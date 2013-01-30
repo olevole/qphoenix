@@ -7,15 +7,15 @@
  */
 
 #include <defines.h>
-#include <basemodule.h>
-#include <configinterface.h>
-#include <configpageinterface.h>
-#include <dictionaryinterface.h>
-#include <dictionarywidgetinterface.h>
+#include <imodule.h>
+#include <iconfig.h>
+#include <iconfigpage.h>
+#include <idictionary.h>
+#include <idictionarywidget.h>
 #include <info.h>
-#include <mainwindowinterface.h>
-#include <plugininterface.h>
-#include <translatorinterface.h>
-#include <translatorwidgetinterface.h>
+#include <imainwindow.h>
+#include <iplugin.h>
+#include <itranslator.h>
+#include <itranslatorwidget.h>
 
 #endif // API_H

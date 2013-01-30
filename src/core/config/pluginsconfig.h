@@ -2,7 +2,7 @@
 #define PLUGINSCONFIG_H
 
 
-#include "configpageinterface.h"
+#include "iconfigpage.h"
 #include "info.h"
 #include "loader.h"
 
@@ -14,10 +14,10 @@
 class QTableWidget;
 class QHBoxLayout;
 
-class PluginsConfig : public QWidget, ConfigPageInterface
+class PluginsConfig : public QWidget, IConfigPage
 {
     Q_OBJECT
-    Q_INTERFACES(ConfigPageInterface)
+    Q_INTERFACES(IConfigPage)
 
 public:
     PluginsConfig(QWidget *parent = 0);

@@ -10,10 +10,10 @@ class QTableWidget;
 
 
 
-class DictionaryConfig : public QWidget, ConfigPageInterface
+class DictionaryConfig : public QWidget, IConfigPage
 {
     Q_OBJECT
-    Q_INTERFACES(ConfigPageInterface)
+    Q_INTERFACES(IConfigPage)
 public:
     DictionaryConfig(QWidget *parent = 0);
 

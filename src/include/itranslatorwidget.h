@@ -31,12 +31,12 @@ class QToolButton;
 class QToolBar;
 
 // Inherited by TranslatorWidget
-class TranslatorWidgetInterface {
+class ITranslatorWidget {
 public:
 
 
 
-    virtual ~TranslatorWidgetInterface() {}
+    virtual ~ITranslatorWidget() {}
 
 
     virtual QComboBox   *srcComboBox() = 0;
@@ -58,7 +58,7 @@ public:
 };
 
 
-Q_DECLARE_INTERFACE(TranslatorWidgetInterface, "com.qphoenix.interfaces.translatorwidget/1.0")
+Q_DECLARE_INTERFACE(ITranslatorWidget, "com.qphoenix.interfaces.translatorwidget/1.0")
 
 
 #endif // TRANSLATORWIDGETINTERFACE_H

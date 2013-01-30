@@ -48,7 +48,7 @@ public:
     virtual bool isLoaded() const = 0;
 };
 
-Q_DECLARE_INTERFACE(IModule, "com.qphoenix.interfaces.basemodule/1.0")
+Q_DECLARE_INTERFACE(IModule, "com.qphoenix.interfaces.imodule/1.0")
 
 
 

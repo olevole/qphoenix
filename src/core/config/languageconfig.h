@@ -2,7 +2,7 @@
 #define LANGUAGECONFIG_H
 
 #include <QWidget>
-#include "configpageinterface.h"
+#include "iconfigpage.h"
 #include <QList>
 #include "languages.h"
 
@@ -10,10 +10,10 @@ class QTableWidget;
 class QPushButton;
 class QCheckBox;
 
-class LanguageConfig : public QWidget, ConfigPageInterface
+class LanguageConfig : public QWidget, IConfigPage
 {
     Q_OBJECT
-    Q_INTERFACES(ConfigPageInterface)
+    Q_INTERFACES(IConfigPage)
 public:
     explicit LanguageConfig(QWidget *parent = 0);
     

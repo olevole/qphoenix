@@ -35,16 +35,16 @@ src/include)
 
 
 SET(IFACES
-src/include/configpageinterface.h
-src/include/mainwindowinterface.h
-src/include/translatorwidgetinterface.h
-src/include/dictionarywidgetinterface.h
-src/include/configinterface.h
-src/include/plugininterface.h
-src/include/translatorinterface.h
-src/include/dictionaryinterface.h
+src/include/iconfigpage.h
+src/include/imainwindow.h
+src/include/itranslatorwidget.h
+src/include/idictionarywidget.h
+src/include/iconfig.h
+src/include/iplugin.h
+src/include/itranslator.h
+src/include/idictionary.h
 src/include/info.h
-src/include/basemodule.h
+src/include/imodule.h
 src/include/api.h
 )
 
