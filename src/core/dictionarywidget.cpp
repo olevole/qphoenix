@@ -79,3 +79,9 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 void DictionaryWidget::setCompletions(const QStringList comp) {
     mCompleterModel->setStringList(comp);
 }
+
+void DictionaryWidget::displayData(const DictionaryVariantList lst) {
+    foreach(DictionaryVariant var, lst) {
+        mResText->setText(mResText->toPlainText() + var.translation() + "|" + var.explaination());
+    }
+}

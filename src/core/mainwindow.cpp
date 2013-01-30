@@ -297,6 +297,8 @@ void MainWindow::onConfigAccept() {
 
     mDictionaryWidget->setCompletions(iface->completions("test", LanguagePair("ru", "en")));
 
+    mDictionaryWidget->displayData(iface->query(LanguagePair("en", "ru"), "test"));
+
 
 }
 
@@ -384,6 +386,11 @@ void MainWindow::translate() {
 
 void MainWindow::diction() {
 
+}
+
+
+void MainWindow::onDictionaryQueryChange(const QString &str) {
+//    foreach(DictionaryInterface *iface, )
 }
 
 QString MainWindow::getCopyableContent()  {

@@ -89,6 +89,9 @@ private slots:
 
     void message(const QString &msg) {qDebug() << "TRANSLATION RESULT: " << msg;}
 
+
+    void onDictionaryQueryChange(const QString &str);
+
 private:
     QStatusBar  *mStatusBar;
     QToolBar    *mToolBar;
@@ -129,10 +132,9 @@ private:
     DictionaryConfig *mDictionaryConfig;
 
     QClipboard *mClipboard;
-
     QStringList mLastEnabledLanguages;
 
-
+    QList<DictionaryInterface *> mDictList;
 
     TranslatorWrapper mTranslatorWrapper;
     DictionaryWrapper mDictionaryWrapper;
