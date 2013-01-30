@@ -35,10 +35,10 @@ class QPushButton;
 
 
 
-class Config : public QDialog,  ConfigInterface
+class Config : public QDialog,  IConfig
 {
     Q_OBJECT
-    Q_INTERFACES(ConfigInterface)
+    Q_INTERFACES(IConfig)
 
 public:
     explicit Config(QWidget *parent = 0);

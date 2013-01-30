@@ -40,7 +40,7 @@ public:
     explicit TrayIcon(QObject *parent = 0);    
     void setMainWindowPTR(MainWindowInterface *ptr);
 
-    void setSettingsPTR(ConfigInterface *ptr);
+    void setSettingsPTR(IConfig *ptr);
 
     bool load();
     bool unload();

@@ -47,7 +47,7 @@ typedef QMap <QString, QStringList> LanguageTable;
 
 
 
-class TranslatorInterface : public BaseModule {
+class TranslatorInterface : public IModule {
 public:
     virtual ~TranslatorInterface(){}
 

@@ -13,7 +13,7 @@
 
 
 
-class PluginInterface : public BaseModule
+class PluginInterface : public IModule
 {
 
 public:
@@ -29,7 +29,7 @@ public:
      * \brief setSettingsPTR
      * \param ptr a pointer to config dialog object
      */
-    virtual void setSettingsPTR(ConfigInterface *ptr) = 0;
+    virtual void setSettingsPTR(IConfig *ptr) = 0;
 };
 
 

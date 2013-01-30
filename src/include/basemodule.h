@@ -13,9 +13,9 @@
  * Class BaseModule MUST be inherited by all kinds of modules.
  */
 
-class BaseModule : public Info {
+class IModule : public Info {
 public:
-    virtual ~BaseModule() {}
+    virtual ~IModule() {}
 
 
     /*!
@@ -48,7 +48,7 @@ public:
     virtual bool isLoaded() const = 0;
 };
 
-Q_DECLARE_INTERFACE(BaseModule, "com.qphoenix.interfaces.basemodule/1.0")
+Q_DECLARE_INTERFACE(IModule, "com.qphoenix.interfaces.basemodule/1.0")
 
 
 

@@ -74,7 +74,7 @@ void TrayIcon::translate() {
     QToolTip::showText(pos, mWindowIface->translationWidget()->resText()->toPlainText());
 }
 
-void TrayIcon::setSettingsPTR(ConfigInterface *ptr) {
+void TrayIcon::setSettingsPTR(IConfig *ptr) {
 
 }
 

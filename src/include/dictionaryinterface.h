@@ -83,7 +83,7 @@ private:
 
 
 
-class DictionaryInterface : public BaseModule {
+class DictionaryInterface : public IModule {
 public:
     virtual ~DictionaryInterface(){}
 
