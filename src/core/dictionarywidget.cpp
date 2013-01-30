@@ -28,8 +28,9 @@
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QCompleter>
 #include "defines.h"
-
+#include <QStringListModel>
 
 
 DictionaryWidget::DictionaryWidget(QWidget *parent) :
@@ -39,7 +40,10 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mResText(new QTextBrowser(this)),
     mGroupbox(new QGroupBox(this)),
     mLineLayout(new QHBoxLayout),
-    mMainLayout(new QVBoxLayout)
+    mMainLayout(new QVBoxLayout),
+    mCompleter(new QCompleter(this)),
+    mCompleterModel(new QStringListModel(this))
+
 {
 
 //    mGroupbox->setTitle(tr("Result"));
@@ -59,5 +63,19 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 
 
 
+
+
+    mCompleter->setModel(mCompleterModel);
+    mSrcText->setCompleter(mCompleter);
+
+    mSrcText->setPlaceholderText("Put some word here..");
+
+//    connect(mSrcText, SIGNAL(textChanged(QString)), SIGNAL(lineChanged(QString)));
+
     setLayout(mMainLayout);
+}
+
+
+void DictionaryWidget::setCompletions(const QStringList comp) {
+    mCompleterModel->setStringList(comp);
 }

@@ -47,7 +47,10 @@ DictionaryVariantList WordReference::query(const LanguagePair &pair, const QStri
 //    qDebug() << reply->readAll();
 
     DictionaryVariantList list;
-//    list.append();
+
+    DictionaryVariant v(Verb, "test", "A testing of subject", "Тестирование чего-либо");
+    list.append(v);
+    return list;
 
 
 }

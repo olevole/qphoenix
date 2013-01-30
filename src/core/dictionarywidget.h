@@ -23,6 +23,8 @@
 #define DICTIONARYWIDGET_H
 
 #include <QWidget>
+#include <QStringList>
+#include <QListWidget>
 #include "info.h"
 #include "dictionarywidgetinterface.h"
 
@@ -33,9 +35,10 @@ class QTextBrowser;
 class QToolButton;
 class QGroupBox;
 class QLabel;
+class QCompleter;
 class QHBoxLayout;
 class QVBoxLayout;
-
+class QStringListModel;
 
 class DictionaryWidget : public QWidget, DictionaryWidgetInterface, Info
 {
@@ -48,11 +51,18 @@ public:
     virtual QComboBox   *languagesComboBox() {return mLanguagesComboBox;   }
     virtual QLineEdit   *srcText()      {return mSrcText;       }
     virtual QTextBrowser*resText()      {return mResText;       }
+public slots:
+    void setCompletions(const QStringList comp);
+
 private:
     QComboBox *mLanguagesComboBox;
     QLineEdit *mSrcText;
     QTextBrowser *mResText;
     QGroupBox   *mGroupbox;
+
+    QCompleter *mCompleter;
+    QStringListModel *mCompleterModel;
+
 
     QHBoxLayout *mLineLayout;
     QVBoxLayout *mMainLayout;    

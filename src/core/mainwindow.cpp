@@ -156,6 +156,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(translationWidget()->translateButton(), SIGNAL(clicked()), this, SLOT(translate()));
 
     onConfigAccept();
+
+
+    QStringList wordList;
+    wordList << "alpha" << "omega" << "omicron" << "zeta";
+
+    mDictionaryWidget->setCompletions(wordList);
 }
 
 MainWindow::~MainWindow()

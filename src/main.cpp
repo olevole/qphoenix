@@ -9,13 +9,11 @@
 #include "dictionaryconfig.h"
 #include "querywrappers.h"
 #include <QFile>
-
+#include "dictionarywidget.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
-
 
     QCoreApplication::setApplicationName(QP_APP_NAME);
     QCoreApplication::setApplicationVersion(QP_APP_VERSION);
@@ -27,15 +25,9 @@ int main(int argc, char *argv[])
     QDir::addSearchPath("dictionaries", QP_DICTIONARIES_PATH);
 
 
-
-
     MainWindow *mw = new MainWindow();
     mw->show();
-
-
-
     mw->setWindowIcon(QP_ICON("dictionary"));
-//    mw->setWindowIcon(/*QIcon::fromTheme("dictionary"));*/
 
     return a.exec();
 }
