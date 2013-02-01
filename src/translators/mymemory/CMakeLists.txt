@@ -3,6 +3,7 @@ SET(TARGET "mymemorytranslator")
 SET(SOURCES mymemorytranslator.cpp)
 SET(HEADERS mymemorytranslator.h)
 
+
 QT4_WRAP_CPP(MOC_SOURCES ${HEADERS})
 
 

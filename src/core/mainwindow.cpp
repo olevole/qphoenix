@@ -297,7 +297,7 @@ void MainWindow::onConfigAccept() {
 
     mDictionaryWidget->setCompletions(iface->completions("test", LanguagePair("ru", "en")));
 
-    mDictionaryWidget->displayData(iface->query(LanguagePair("en", "ru"), "test"));
+    mDictionaryWidget->displayData(iface->query(LanguagePair("en", "fr"), "test"));
 
 
 }

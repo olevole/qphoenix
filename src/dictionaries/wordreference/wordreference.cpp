@@ -25,26 +25,22 @@ WordReference::WordReference(QObject *parent)
 
 
 DictionaryVariantList WordReference::query(const LanguagePair &pair, const QString &text)  {
-//    const QString langs = pair.first + pair.second;
+    const QString langs = pair.first + pair.second;
 
-//    const QUrl url = QString(" http://api.wordreference.com/%1/%2/%3/%4").
-//            arg(version).arg(apikey).arg(langs).arg(text);
+    const QUrl url = QString("http://api.wordreference.com/%2/json/%3/%4").
+            arg(apikey).arg(langs).arg(text);
 
-//    QNetworkRequest req(url);
-//    req.setRawHeader("User-Agent", "Mozilla/5.0");
-//    req.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
-////        req.setRawHeader("Content-Length", QByteArray::number(text.size()));
+    QNetworkRequest req(url);
+    QNetworkAccessManager manager;
+    QEventLoop loop;
 
-//    QNetworkAccessManager manager;
-//    QEventLoop loop;
+    QObject::connect(&manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
 
-//    QObject::connect(&manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
-
-//    QNetworkReply *reply  = manager.get(req);
-//    loop.exec();
+    QNetworkReply *reply  = manager.get(req);
+    loop.exec();
 
 
-//    qDebug() << reply->readAll();
+    qDebug() << reply->readAll() << "URL: " << url.toString();
 
     DictionaryVariantList list;
 
@@ -52,6 +48,13 @@ DictionaryVariantList WordReference::query(const LanguagePair &pair, const QStri
     list.append(v);
     return list;
 
+
+    return parse(reply->readAll());
+
+
+}
+
+DictionaryVariantList WordReference::parse(const QByteArray content) const {
 
 }
 
