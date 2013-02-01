@@ -43,23 +43,19 @@ QString MyMemoryTranslator::translate(const QString &src_text, const QString &sr
     QNetworkReply *reply  = manager.post(req, query);
     loop.exec();
 
-    const QByteArray rawdata = reply->readAll();
+    const QString  rawdata = reply->readAll();
 
 
-    QJsonDocument doc;
-    doc = QJsonDocument::fromBinaryData(rawdata);
+//    QJsonDocument doc;
+//    doc = ;
+
+    QJsonObject obj = QJsonDocument::fromJson(rawdata.toUtf8()).object();
+
+    QString res = obj.value("responseData").toObject().value("translatedText").toString();
 
 
-    QJsonObject arr = doc.object();
-    qDebug() << "OBJECT!" << arr.size();
-
-//        QxtJSON parser;
+    qDebug() << "OBJECT!" << res;
 
 
-//        QVariantMap map = parser.parse(QString::fromUtf8(rawdata.data())).toMap();
-//        QVariantMap map2 = map["responseData"].toMap();
-
-//        const QString result = map2["translatedText"].toString();
-
-    return QString();//QTextDocumentFragment::fromHtml(result).toPlainText();
+    return res;
 }
