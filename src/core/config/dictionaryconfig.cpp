@@ -12,6 +12,7 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
 
 {
 //    mLoader.addSearchPath("dictionaries:");
+    setIcon(QP_ICON("dictionary"));
 
 
     Loader ldr("dictionaries:");

@@ -39,7 +39,7 @@ DictionaryVariantList WordReference::query(const LanguagePair &pair, const QStri
     loop.exec();
 
 
-    qDebug() << reply->readAll() << "URL: " << url.toString();
+//    qDebug() << reply->readAll() << "URL: " << url.toString();
 
     DictionaryVariantList list;
 

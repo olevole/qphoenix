@@ -35,7 +35,7 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     QWidget(parent),
     mTranslatorLabel(new QLabel(tr("Translator"), this)),
     mTranslatorComboBox(new QComboBox(this)),
-    mTranslatorGroupBox(new QGroupBox(tr("Translators"), this)),
+    mTranslatorGroupBox(new QGroupBox(this)),
     mTranslatorLayout(new QHBoxLayout),
 
     mOptionsGroupBox(new QGroupBox(tr("Config"), this)),
@@ -43,6 +43,7 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     mMainLayout(new QVBoxLayout)
 {
     setName(tr("Translators"));
+    setIcon(QP_ICON("translator"));
 
 
     mTranslatorComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);

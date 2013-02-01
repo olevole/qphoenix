@@ -29,6 +29,9 @@ Config::Config(QWidget *parent) :
     mBottomLayout->addWidget(mButtons);
 
 
+    setWindowTitle("Settings");
+
+
 //    QFrame *frame = new QFrame(this);
 //    frame->setFrameShape(QFrame::HLine);
 
