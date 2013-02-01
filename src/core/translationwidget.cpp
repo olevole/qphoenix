@@ -84,8 +84,8 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     setLayout(mMainLayout);
 
 
-    mSrcComboBox->setSizePolicy(QSizePolicy::Maximum, mSrcComboBox->sizePolicy().verticalPolicy());
-    mResComboBox->setSizePolicy(QSizePolicy::Maximum, mSrcComboBox->sizePolicy().verticalPolicy());
+    mSrcComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    mResComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
     setName("Translation");
     setIcon(QP_ICON("translator"));
