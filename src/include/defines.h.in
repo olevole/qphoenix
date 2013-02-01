@@ -4,7 +4,7 @@
 
 #include <QDir>
 #include <QString>
-#include <QIcon>
+//#include <QtGui/con>
 
 #define QP_APP_VERSION "0.01a"
 #define QP_APP_NAME "QPhoenix"

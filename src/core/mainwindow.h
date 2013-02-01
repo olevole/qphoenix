@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QThread>
 #include <QDebug>
-#include "fancytabwidget.h"
 #include "imainwindow.h"
 #include "idictionarywidget.h"
 #include "dictionarywidget.h"
@@ -19,6 +18,7 @@ class QMenuBar;
 class QMenu;
 class QAction;
 class QClipboard;
+class QTabWidget;
 
 
 class Config;
@@ -96,7 +96,7 @@ private:
     QStatusBar  *mStatusBar;
     QToolBar    *mToolBar;
     QMenuBar    *mMenuBar;
-    Core::Internal::FancyTabWidget *mFancyWidget;
+    QTabWidget *mFancyWidget;
 
     QMenu   *mFileMenu, *mEditMenu, *mHelpMenu;
 

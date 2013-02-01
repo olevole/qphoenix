@@ -22,6 +22,7 @@
 #include <QClipboard>
 #include <QThread>
 #include <QFrame>
+#include <QTabWidget>
 
 
 #include "iplugin.h"
@@ -44,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mStatusBar(new QStatusBar(this)),
     mToolBar(new QToolBar(this)),
     mMenuBar(new QMenuBar(this)),
-    mFancyWidget(new Core::Internal::FancyTabWidget(this)),
+    mFancyWidget(new QTabWidget(this)),
 
     // Menus
     mFileMenu(new QMenu(tr("File"), this)),
@@ -113,9 +114,11 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setCentralWidget(mFancyWidget);
 
 
+    mFancyWidget->setTabPosition(QTabWidget::West);
 
-    mFancyWidget->setBackgroundBrush(QBrush(Qt::red));
-    mFancyWidget->setStatusBar(mStatusBar);
+
+//    mFancyWidget->setBackgroundBrush(QBrush(Qt::red));
+    this->setStatusBar(mStatusBar);
 
     this->setMenuBar(mMenuBar);
     this->addToolBar(Qt::RightToolBarArea, mToolBar);

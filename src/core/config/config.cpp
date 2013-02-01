@@ -29,11 +29,11 @@ Config::Config(QWidget *parent) :
     mBottomLayout->addWidget(mButtons);
 
 
-    QFrame *frame = new QFrame(this);
-    frame->setFrameShape(QFrame::HLine);
+//    QFrame *frame = new QFrame(this);
+//    frame->setFrameShape(QFrame::HLine);
 
     mMainLayout->addLayout(mHorizontalLayout);
-    mMainLayout->addWidget(frame);
+//    mMainLayout->addWidget(frame);
     mMainLayout->addLayout(mBottomLayout);
 
     mTree->setHeaderHidden(true);

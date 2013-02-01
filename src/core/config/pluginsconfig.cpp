@@ -22,7 +22,7 @@ PluginsConfig::PluginsConfig(QWidget *parent)
     mTable->setColumnCount(4);
     mTable->verticalHeader()->hide();
 
-    mTable->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+//    mTable->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
 
 
     mTable->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Name")));

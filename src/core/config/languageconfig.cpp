@@ -98,7 +98,7 @@ void LanguageConfig::createTable() {
     mTable->setHorizontalHeaderItem(0, new QTableWidgetItem("Name"));
     mTable->setHorizontalHeaderItem(1, new QTableWidgetItem("*"));
 
-    mTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+//    mTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 
 
     LanguageList::Iterator it = mLangList.begin();

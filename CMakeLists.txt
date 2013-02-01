@@ -1,22 +1,13 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.6)
 PROJECT(QPhoenix)
 
-SET(USE_CLANG FALSE)
-
-IF(${USE_CLANG} AND NOT BSD OR MAC)
-    INCLUDE (${PROJECT_SOURCE_DIR}/cmake/clang.txt )
-ENDIF(${USE_CLANG} AND NOT BSD OR MAC)
 
 SET(EXECUTABLE_NAME "qphoenix")
 SET(PROJECT_VERSION "0.999999")
-SET(STATICLIB "qphoenix_static" CACHE INTERNAL "")
 SET(CMAKE_BUILD_TYPE Debug)
-SET(USE_CLANG FALSE)
 ENABLE_TESTING(TRUE)
 
-IF(${USE_CLANG} AND NOT BSD OR MAC)
-    INCLUDE (${PROJECT_SOURCE_DIR}/cmake/clang.txt )
-ENDIF()
+
 
 IF(NOT MSVC)
     IF("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
@@ -24,8 +15,11 @@ IF(NOT MSVC)
     ENDIF("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
 ENDIF()
 
-FIND_PACKAGE(Qt4 REQUIRED QtCore QtGui)
-INCLUDE(${QT_USE_FILE})
+FIND_PACKAGE(Qt5Widgets REQUIRED)
+FIND_PACKAGE(Qt5Core REQUIRED)
+FIND_PACKAGE(Qt5Network REQUIRED)
+
+#INCLUDE(${QT_USE_FILE})
 
 
 INCLUDE_DIRECTORIES(
@@ -34,8 +28,6 @@ ${CMAKE_INCLUDE_PATH}
 ${CMAKE_CURRENT_BINARY_DIR}/src/include
 src/core
 src/core/config
-src/core/3rdparty/fancytab-widgets
-src/core/3rdparty/qxtjson
 src/include)
 
 
@@ -83,17 +75,13 @@ src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
 src/core/querywrappers.cpp
 src/core/loader.cpp
-src/core/languages.cpp
-src/dictionaries/wordreference/wordreference.h)
+src/core/languages.cpp)
 
 
 SET(RESOURCES resources/resources.qrc)
-QT4_ADD_RESOURCES(RC_SOURCES ${RESOURCES})
+QT5_ADD_RESOURCES(RC_SOURCES ${RESOURCES})
 
-# Not implemented yet
-SET(L18N
-src/l18n/Russian.ts
-src/l18n/English.ts)
+
 
 SET(PREFIX ${CMAKE_INSTALL_PREFIX})
 
@@ -114,24 +102,25 @@ SET(TRANSLATORS_PATH    ${MPREFIX}/translators    CACHE INTERNAL "")
 SET(DICTIONARIES_PATH   ${MPREFIX}/dictionaries   CACHE INTERNAL "")
 
 
-ADD_SUBDIRECTORY(src/core/3rdparty)
+
+#ADD_SUBDIRECTORY(src/core/3rdparty)
 ADD_SUBDIRECTORY(src/plugins)
 ADD_SUBDIRECTORY(src/translators)
 ADD_SUBDIRECTORY(src/dictionaries)
-ADD_SUBDIRECTORY(src/tests)
+#ADD_SUBDIRECTORY(src/tests)
 
 CONFIGURE_FILE(src/include/defines.h.in src/include/defines.h)
 
-QT4_WRAP_CPP(MOC_SOURCES ${HEADERS})
+QT5_WRAP_CPP(MOC_SOURCES ${HEADERS})
 
 
 # TODO: Fx this ugly code
-ADD_LIBRARY(${STATICLIB} SHARED ${SOURCES} ${MOC_SOURCES}  ${QM_FILES} ${QRC_SOURCES} ${GLOBAL_HEADERS} ${IFACES} )
 
-TARGET_LINK_LIBRARIES(${STATICLIB} ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES} ${QT_QTXML_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES}  fancytabwidget qxtjson)
 
-ADD_EXECUTABLE(${EXECUTABLE_NAME} src/main.cpp ${RC_SOURCES})
-TARGET_LINK_LIBRARIES(${EXECUTABLE_NAME}  ${STATICLIB})
+ADD_EXECUTABLE(${EXECUTABLE_NAME} src/main.cpp ${RC_SOURCES} ${SOURCES} ${MOC_SOURCES}  ${QM_FILES} ${GLOBAL_HEADERS} ${IFACES})
+QT5_USE_MODULES(${EXECUTABLE_NAME} Widgets Core Network)
+
+#TARGET_LINK_LIBRARIES(${EXECUTABLE_NAME}  ${STATICLIB})
 
 
 INSTALL(TARGETS ${EXECUTABLE_NAME} DESTINATION ${INSTALLPATH})

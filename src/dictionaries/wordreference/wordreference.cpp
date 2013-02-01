@@ -1,5 +1,4 @@
 #include "wordreference.h"
-#include "qxtjson.h"
 #include <QObject>
 #include <QCheckBox>
 #include <QHBoxLayout>
@@ -58,4 +57,4 @@ DictionaryVariantList WordReference::parse(const QByteArray content) const {
 
 }
 
-Q_EXPORT_PLUGIN2(wordreference, WordReference);
+Q_PLUGIN_METADATA(IID "org.qphoenix.dictionaries.wordreference")

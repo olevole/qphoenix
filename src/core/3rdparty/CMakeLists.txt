@@ -1,2 +1,2 @@
-ADD_SUBDIRECTORY(fancytab-widgets)
-ADD_SUBDIRECTORY(qxtjson)
+#ADD_SUBDIRECTORY(fancytab-widgets)
+#ADD_SUBDIRECTORY(qxtjson)

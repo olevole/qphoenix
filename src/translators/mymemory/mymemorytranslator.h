@@ -3,7 +3,7 @@
 
 #include "itranslator.h"
 #include "info.h"
-#include "qxtjson.h"
+//#include "qxtjson.h"
 #include <QObject>
 #include <QCheckBox>
 #include <QHBoxLayout>
@@ -36,7 +36,9 @@ QThread::msleep(msecs);
 class MyMemoryTranslator : public QObject, ITranslator
 {
     Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.qphoenix.translators.mymemory")
     Q_INTERFACES(ITranslator)
+
 private:
     QWidget *mConfigWidget;
     bool mLoaded;
@@ -131,15 +133,15 @@ public:
 
         const QByteArray rawdata = reply->readAll();
 
-        QxtJSON parser;
+//        QxtJSON parser;
 
 
-        QVariantMap map = parser.parse(QString::fromUtf8(rawdata.data())).toMap();
-        QVariantMap map2 = map["responseData"].toMap();
+//        QVariantMap map = parser.parse(QString::fromUtf8(rawdata.data())).toMap();
+//        QVariantMap map2 = map["responseData"].toMap();
 
-        const QString result = map2["translatedText"].toString();
+//        const QString result = map2["translatedText"].toString();
 
-        return QTextDocumentFragment::fromHtml(result).toPlainText();
+        return QString();//QTextDocumentFragment::fromHtml(result).toPlainText();
     }
 };
 

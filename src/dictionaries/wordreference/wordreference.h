@@ -8,6 +8,7 @@
 class WordReference : public QObject, IDictionary
 {
     Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.qphoenix.dictionaries.wordreference")
     Q_INTERFACES(IDictionary)
 public:
     WordReference(QObject *parent = 0);

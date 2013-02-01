@@ -13,5 +13,4 @@ MyMemoryTranslator::MyMemoryTranslator(QObject *parent)
 }
 
 
-Q_EXPORT_PLUGIN2(mymemory, MyMemoryTranslator);
 
