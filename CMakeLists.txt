@@ -98,13 +98,15 @@ ENDIF()
 SET(PLUGINS_PATH        ${MPREFIX}/plugins        CACHE INTERNAL "")
 SET(TRANSLATORS_PATH    ${MPREFIX}/translators    CACHE INTERNAL "")
 SET(DICTIONARIES_PATH   ${MPREFIX}/dictionaries   CACHE INTERNAL "")
+SET(LIBRARY_PATH        ${PREFIX}/lib             CACHE INTERNAL "")
+
 
 
 
 ADD_SUBDIRECTORY(src/plugins)
 ADD_SUBDIRECTORY(src/translators)
 ADD_SUBDIRECTORY(src/dictionaries)
-#ADD_SUBDIRECTORY(src/tests)
+ADD_SUBDIRECTORY(src/libphoenix)
 
 CONFIGURE_FILE(src/include/defines.h.in src/include/defines.h)
 

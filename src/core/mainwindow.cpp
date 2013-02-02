@@ -108,20 +108,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     QList<QAction *> ActionsList;
-    ActionsList << mActionClear << mActionAbout;
+    ActionsList << mActionClear <<  mActionUndo<< mActionRedo, mActionAbout;
     mToolBar->addActions(ActionsList);
 
     this->setCentralWidget(mFancyWidget);
 
+//    mMenuBar->setCornerWidget(new QPushButton());
 
     mFancyWidget->setTabPosition(QTabWidget::West);
-
 
 //    mFancyWidget->setBackgroundBrush(QBrush(Qt::red));
     this->setStatusBar(mStatusBar);
 
     this->setMenuBar(mMenuBar);
-    this->addToolBar(Qt::RightToolBarArea, mToolBar);
+    this->addToolBar(mToolBar);
 
 
     this->addPage(mTranslationWidget);
@@ -316,10 +316,10 @@ void MainWindow::clear() {
             translationWidget()->resText()->clear();
         break;
 
-//        case 1:
-//            dictionaryWidget()->srcText()->clear();
-//            dictionaryWidget()->resText()->clear();
-//        break;
+        case 1:
+            dictionaryWidget()->srcText()->clear();
+            dictionaryWidget()->resText()->clear();
+        break;
     }
 }
 
@@ -359,7 +359,7 @@ void MainWindow::swap() {
 
 void MainWindow::about() {
     QMessageBox::about(this, tr("About QPhoenix"),
-                                      tr("Advanced translation tool Advanced translation toolAdvanced translation tool"));
+                                      tr("QPhoenix is an advanced translation tool that could use multiple dictionaries and translators"));
 }
 
 void MainWindow::translate() {

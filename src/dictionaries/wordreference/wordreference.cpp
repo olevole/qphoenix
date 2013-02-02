@@ -50,11 +50,9 @@ DictionaryVariantList WordReference::query(const LanguagePair &pair, const QStri
 
     return parse(reply->readAll());
 
-
 }
 
 DictionaryVariantList WordReference::parse(const QByteArray content) const {
 
 }
 
-Q_PLUGIN_METADATA(IID "org.qphoenix.dictionaries.wordreference")

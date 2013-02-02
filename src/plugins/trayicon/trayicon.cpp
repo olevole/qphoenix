@@ -81,7 +81,6 @@ void TrayIcon::setSettingsPTR(IConfig *ptr) {
 }
 
 
-Q_PLUGIN_METADATA(IID "org.qphoenix.plugins.trayicon")
 
 
 //Q_EXPORT_PLUGIN2(trayicon, TrayIcon);
