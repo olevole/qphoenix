@@ -38,7 +38,7 @@ Contribute
 Build Dependencies
 --------------------
 
-  - Qt 4
+  - Qt 5.0.1 or higher
   - cmake 2.8 or higher
   - gcc (not tested with other compilers, yet (FIXME))
       
