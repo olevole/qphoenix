@@ -42,8 +42,8 @@ public:
     bool isLoaded()const{return true;}
 private:
     DictionaryVariantList parse(const QByteArray content) const;
-    const QString apikey = "284e7";
-    const QString version = "0.8";
+//    const QString apikey = "284e7";
+//    const QString version = "0.8";
 
 };
 

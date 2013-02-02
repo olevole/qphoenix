@@ -113,11 +113,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setCentralWidget(mFancyWidget);
 
-//    mMenuBar->setCornerWidget(new QPushButton());
 
     mFancyWidget->setTabPosition(QTabWidget::West);
 
-//    mFancyWidget->setBackgroundBrush(QBrush(Qt::red));
     this->setStatusBar(mStatusBar);
 
     this->setMenuBar(mMenuBar);
@@ -159,12 +157,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(translationWidget()->translateButton(), SIGNAL(clicked()), this, SLOT(translate()));
 
     onConfigAccept();
-
-
-//    QStringList wordList;
-//    wordList << "alpha" << "omega" << "omicron" << "zeta";
-
-//    mDictionaryWidget->setCompletions(wordList);
 }
 
 MainWindow::~MainWindow()
@@ -187,13 +179,8 @@ void MainWindow::addPage(QWidget *page) {
     QIcon icon = i->icon();
     QString name = i->name();
 
-    QGroupBox *gb = new QGroupBox(this);
 
-    gb->setTitle(name);
-    gb->setLayout(new QHBoxLayout);
-    gb->layout()->addWidget(page);
-
-    mFancyWidget->insertTab(mFancyWidget->count(), gb, icon, name);
+    mFancyWidget->insertTab(mFancyWidget->count(), page, icon, name);
 
     resize(800, 600);
 }

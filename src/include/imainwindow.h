@@ -63,6 +63,9 @@ public:
     virtual ITranslatorWidget *translationWidget() = 0;
     virtual IDictionaryWidget *dictionaryWidget() = 0;
 
+
+
+    virtual void addToolBar(QToolBar *tb) = 0;
     //    virtual Info currentTranslatorInfo() const = 0;
     //    virtual Info currentDictionaryInfo() const = 0;
 

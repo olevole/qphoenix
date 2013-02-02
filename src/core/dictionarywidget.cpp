@@ -31,6 +31,7 @@
 #include <QCompleter>
 #include "defines.h"
 #include <QStringListModel>
+#include <QRegExpValidator>
 
 
 DictionaryWidget::DictionaryWidget(QWidget *parent) :
@@ -38,7 +39,6 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mLanguagesComboBox(new QComboBox(this)),
     mSrcText(new QLineEdit(this)),
     mResText(new QTextBrowser(this)),
-//    mGroupbox(new QGroupBox(this)),
     mLineLayout(new QHBoxLayout),
     mMainLayout(new QVBoxLayout),
     mCompleter(new QCompleter(this)),
@@ -46,10 +46,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 
 {
 
-//    mGroupbox->setTitle(tr("Result"));
-//    mGroupbox->setLayout(new QHBoxLayout);
-//    mGroupbox->layout()->addWidget(mResText);
-//    mGroupbox->setFlat(true);
+
 
     setName(tr("Dictionary"));
     setIcon(QIcon::fromTheme("accessoriesbgb-dictionary"));
@@ -58,20 +55,20 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mLineLayout->addWidget(mSrcText);
 
     mMainLayout->addLayout(mLineLayout);
-//    mMainLayout->addWidget(mGroupbox);
     mMainLayout->addWidget(mResText);
     setIcon(QP_ICON("dictionary"));
 
 
 
+//QRegExp("[^.\Q,;|/-=+`\'\"\E]+")
 
+    QRegExpValidator *v = new QRegExpValidator(QRegExp("[^\Q,.\E].*"), this);
 
+    mSrcText->setValidator(v);
     mCompleter->setModel(mCompleterModel);
     mSrcText->setCompleter(mCompleter);
 
     mSrcText->setPlaceholderText("Put some word here..");
-
-//    connect(mSrcText, SIGNAL(textChanged(QString)), SIGNAL(lineChanged(QString)));
 
     setLayout(mMainLayout);
 }

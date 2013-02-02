@@ -27,7 +27,7 @@ DictionaryVariantList WordReference::query(const LanguagePair &pair, const QStri
     const QString langs = pair.first + pair.second;
 
     const QUrl url = QString("http://api.wordreference.com/%2/json/%3/%4").
-            arg(apikey).arg(langs).arg(text);
+            arg("284e7").arg(langs).arg(text);
 
     QNetworkRequest req(url);
     QNetworkAccessManager manager;

@@ -49,6 +49,11 @@ public:
     {return qobject_cast<ITranslatorWidget *>(mTranslationWidget);}
 
 
+    void addToolBar(QToolBar *toolbar) {
+        QMainWindow::addToolBar(toolbar);
+    }
+
+
     QToolBar *toolbar()     { return mToolBar;      }
     QStatusBar *statusbar() { return mStatusBar;    }
     QMenuBar *menubar()     { return mMenuBar;      }
