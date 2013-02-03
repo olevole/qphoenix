@@ -124,10 +124,9 @@ void Config::removePage(const QWidget *page) {
         const QString nameA = mPagesList.at(i)->name();
         const QString nameB = iface->name();
 
-        if(nameA == nameB) {
-            qDebug() << "<<<<";
+        if(nameA == nameB)
               delete mPagesList.at(i);
-        }
+
     }
 }
 

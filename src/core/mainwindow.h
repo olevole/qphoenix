@@ -89,13 +89,7 @@ private slots:
 
 
 
-//    void fillComboBox(QComboBox *cb, LanguageList &lst);
 
-
-    void message(const QString &msg) {qDebug() << "TRANSLATION RESULT: " << msg;}
-
-
-    void onDictionaryQueryChange(const QString &str);
 
 private:
     QStatusBar  *mStatusBar;
@@ -140,6 +134,7 @@ private:
     QStringList mLastEnabledLanguages;
 
     QList<IDictionary *> mDictList;
+    LanguagePairList mDictPairList;
 
     TranslatorWrapper mTranslatorWrapper;
     DictionaryWrapper mDictionaryWrapper;

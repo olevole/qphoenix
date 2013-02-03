@@ -49,7 +49,6 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 
 
     setName(tr("Dictionary"));
-    setIcon(QIcon::fromTheme("accessoriesbgb-dictionary"));
 
     mLineLayout->addWidget(mLanguagesComboBox);
     mLineLayout->addWidget(mSrcText);
@@ -60,7 +59,6 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 
 
 
-//QRegExp("[^.\Q,;|/-=+`\'\"\E]+")
 
     QRegExpValidator *v = new QRegExpValidator(QRegExp("[^\Q,.\E].*"), this);
 
@@ -78,8 +76,9 @@ void DictionaryWidget::setCompletions(const QStringList comp) {
     mCompleterModel->setStringList(comp);
 }
 
-void DictionaryWidget::displayData(const DictionaryVariantList lst) {
+void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
     foreach(DictionaryVariant var, lst) {
-        mResText->setText(mResText->toPlainText() + var.translation() + "|" + var.explaination());
+        const QString text = mResText->toPlainText() + var.translation() + "|" + var.explaination() +"\n";
+        mResText->setPlainText(text);
     }
 }

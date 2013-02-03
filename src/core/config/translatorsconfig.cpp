@@ -72,7 +72,6 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     Loader ldr("translators:");
 
     QDir dir(ldr.searchPaths().first());
-        qDebug() << "Translator " << dir.entryList();
     QObjectList list = ldr.modules();
 
     foreach (QObject *obj, list) {
@@ -80,7 +79,6 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
         ITranslator *iface = qobject_cast<ITranslator *>(obj);
         mTranslatorsList <<  iface;
         mTranslatorComboBox->addItem(iface->name());
-        qDebug() << "Loading to gui...";
 
     }
 }

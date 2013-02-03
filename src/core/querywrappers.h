@@ -45,7 +45,7 @@ public:
     }
 
     void run() {
-        DictionaryVariantList list = m_ptr->query(mPair, mQuery);
+        DictionaryVariantList list = m_ptr->query(mQuery, mPair);
         emit reply(list);
     }
 

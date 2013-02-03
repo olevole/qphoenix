@@ -150,6 +150,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mActionRedo, SIGNAL(triggered()), this, SLOT(redo()));
     connect(mActionSwap, SIGNAL(triggered()), this, SLOT(swap()));
 
+    connect(mDictionaryWidget->srcText(), SIGNAL(textChanged(QString)), this, SLOT(diction()));
+
 
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
 
@@ -171,7 +173,6 @@ void MainWindow::addPage(QWidget *page) {
 
 
     if(i == NULL) {
-        qDebug() << "Problem here!"; //TODO: fix it!
         return;
     }
 
@@ -210,7 +211,6 @@ void MainWindow::onConfigAccept() {
     QObjectList *lst = mPluginsConfig->pluginsList();
 
     for(int i = 0; i < lst->count(); i++) {
-        qDebug() << "iteration #" << i;
         IPlugin *iface =  qobject_cast<IPlugin *>(lst->at(i));
 
         bool enabled = mPluginsConfig->isEnabled(i);
@@ -238,7 +238,6 @@ void MainWindow::onConfigAccept() {
     if(enabledKeys != mLastEnabledLanguages) {
         mLastEnabledLanguages = enabledKeys;
 
-        qDebug() << "Being uptadted--____";
 
         ITranslator *translator  = mTranslatorsConfig->currentTranslator();
         LanguageTable table;
@@ -246,7 +245,7 @@ void MainWindow::onConfigAccept() {
         if(translator != NULL)
             table = translator->table();
         else
-            qDebug("No translators loaded! Nothing to do!");
+            qWarning("No translators loaded! Nothing to do!");
 
 
         QStringList keys = table.keys();
@@ -264,9 +263,10 @@ void MainWindow::onConfigAccept() {
                 table[key] = values;
             }
         }
-        qDebug() << "ALL KEYS: " << table.values();
         mTranslationWidget->setLangTable(table);
     }
+
+
 
 
     // Updating table
@@ -277,19 +277,41 @@ void MainWindow::onConfigAccept() {
      * Dictionaries sync
      */
 
-
     QObjectList dicts = mDictionaryConfig->dictionaries();
 
-    IDictionary *iface = qobject_cast<IDictionary *>(dicts.first());
-    iface->load();
+//    QStringList enabledKeys = mLanguageConfig->keysForEnabled();
 
-    iface->completions("test", LanguagePair("ru", "en"));
+    foreach(QObject *obj, dicts) {
+        IDictionary *iface = qobject_cast<IDictionary *>(obj);
+        mDictList << iface;
 
-    mDictionaryWidget->setCompletions(iface->completions("test", LanguagePair("ru", "en")));
+        if(!iface->isLoaded())
+            iface->load();
 
-    mDictionaryWidget->displayData(iface->query(LanguagePair("en", "fr"), "test"));
+//        mDictPairList <<
+                        LanguagePairList list = iface->pairs();
+
+        for(int i = 0; i < list.count(); i++) {
+            const LanguagePair pair = list.at(i);
 
 
+            const QString first = QP_LANG_FACTORY->languages()[pair.first].name();
+            const QString second = QP_LANG_FACTORY->languages()[pair.second].name();
+
+            if(!first.isEmpty() && !second.isEmpty()) {
+                    mDictionaryWidget->languagesComboBox()->addItem(first + " -> " + second);
+                    mDictPairList << pair;
+
+            } else {
+
+//                mDictPairList.removeAt(i);
+//                delete &mDictPairList[i];
+                qWarning("This language doesn't supported yet! Sorry...");
+            }
+        }
+    }
+
+    qDebug() << "SIZE OF DICTS" << mDictPairList[2].first;
 }
 
 
@@ -370,18 +392,29 @@ void MainWindow::translate() {
     mTranslatorWrapper.query( src_lang, res_lang, src_text);
 
 
-    qDebug() << "Src text: " << src_text << " SRc Lang: " << src_lang << " REs Lang: " << res_lang;
 }
 
 
 void MainWindow::diction() {
 
+    const QString text = mDictionaryWidget->srcText()->text();
+    const LanguagePair pair = mDictPairList.at(mDictionaryWidget->languagesComboBox()->currentIndex());
+
+
+    foreach (IDictionary *i, mDictList) {
+        QStringList cmpl = i->completions(text, pair);
+        if(cmpl.count() == 1) {
+              mDictionaryWidget->displayData(i->query(text, pair));
+        } else {
+            mDictionaryWidget->setCompletions(cmpl);
+
+        }
+
+    }
+
 }
 
 
-void MainWindow::onDictionaryQueryChange(const QString &str) {
-//    foreach(DictionaryInterface *iface, )
-}
 
 QString MainWindow::getCopyableContent()  {
     QString text;

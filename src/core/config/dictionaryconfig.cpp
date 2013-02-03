@@ -51,6 +51,5 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
         mTable->setItem(i, 1, new QTableWidgetItem(iface->name()));
     }
 
-    qDebug() << "Dictionaries count: " << mDictionaries.count() << QP_DICTIONARIES_PATH;
 
 }

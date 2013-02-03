@@ -105,7 +105,6 @@ void LanguageConfig::createTable() {
 
     int i = 0;
     for(; it != mLangList.end(); ++it) {
-        qDebug() << "ITERATION";
 
         QString name;
 

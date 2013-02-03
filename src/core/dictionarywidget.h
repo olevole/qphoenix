@@ -54,7 +54,7 @@ public:
     virtual QTextBrowser*resText()      {return mResText;       }
 public slots:
     void setCompletions(const QStringList comp);
-    void displayData(const DictionaryVariantList lst);
+    void displayData(const DictionaryVariantList &lst);
 private:
     QComboBox *mLanguagesComboBox;
     QLineEdit *mSrcText;

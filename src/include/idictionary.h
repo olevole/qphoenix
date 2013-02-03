@@ -84,7 +84,7 @@ public:
     {return new QWidget();}
 
     virtual LanguagePairList pairs() const = 0;
-    virtual DictionaryVariantList query(const LanguagePair &pair, const QString &text)  = 0;
+    virtual DictionaryVariantList query(const QString &text, const LanguagePair &pair)  = 0;
     virtual QStringList completions(const QString &str, const LanguagePair &pair) const = 0;
 
 

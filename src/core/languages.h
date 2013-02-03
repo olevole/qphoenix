@@ -49,7 +49,6 @@ public:
             static LanguageEngine *singleton = 0;
 
             if(!singleton) {
-                qDebug() << "!!!!!!!!!!!!!!!!";
                 mutex.lock();
                 singleton =  new LanguageEngine;
 

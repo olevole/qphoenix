@@ -100,7 +100,6 @@ public:
 
         return myTable;
 
-        qDebug() << "Keys2: " << myTable.keys();
 
 
 

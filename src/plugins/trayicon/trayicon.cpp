@@ -42,6 +42,9 @@ TrayIcon::TrayIcon(QObject *parent) :
 bool TrayIcon::load() {
     if(!isLoaded()) {
         button = new QPushButton;
+        clipboard = qApp->clipboard();
+
+        connect(clipboard, SIGNAL(selectionChanged()), this, SLOT(translate()));
         mIsLoaded = true;
     }
     return true;
@@ -50,6 +53,8 @@ bool TrayIcon::load() {
 bool TrayIcon::unload() {
     if(isLoaded()) {
         delete button;
+        disconnect(clipboard, SIGNAL(selectionChanged()), this, SLOT(translate()));
+
         mIsLoaded = false;
     }
     return true;
@@ -57,14 +62,9 @@ bool TrayIcon::unload() {
 
 void TrayIcon::setMainWindowPTR(IMainWindow *ptr) {
     mWindowIface = ptr;
-//    ptr->setCurrentPage(1);
-//    ptr->toolbar()->addWidget(button);
 
-//    ptr->dictionaryWidget()->srcText()->setText("Test");
 
-    clipboard = qApp->clipboard();
 
-    connect(clipboard, SIGNAL(selectionChanged()), this, SLOT(translate()));
 }
 
 void TrayIcon::translate() {
