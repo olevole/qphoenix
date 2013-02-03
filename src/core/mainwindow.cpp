@@ -159,6 +159,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(translationWidget()->translateButton(), SIGNAL(clicked()), this, SLOT(translate()));
 
     onConfigAccept();
+
+
+    mTranslatorWrapper.setTimeout(1000);
 }
 
 MainWindow::~MainWindow()
@@ -389,29 +392,29 @@ void MainWindow::translate() {
 
 
     mTranslatorWrapper.setTranslator(mTranslatorsConfig->currentTranslator());
-    mTranslatorWrapper.query( src_lang, res_lang, src_text);
+    mTranslatorWrapper.query(src_lang, res_lang, src_text);
 
 
 }
 
 
 void MainWindow::diction() {
-
     const QString text = mDictionaryWidget->srcText()->text();
     const LanguagePair pair = mDictPairList.at(mDictionaryWidget->languagesComboBox()->currentIndex());
 
+    qDebug() << "TEXT: " << text ;
 
     foreach (IDictionary *i, mDictList) {
         QStringList cmpl = i->completions(text, pair);
+//        qDebug() << "DATA SIZE: " << i->query(text, pair).first().translation();
         if(cmpl.count() == 1) {
-              mDictionaryWidget->displayData(i->query(text, pair));
-        } else {
             mDictionaryWidget->setCompletions(cmpl);
 
-        }
-
+        }/* else {
+            mDictionaryWidget->setCompletions(cmpl);
+        }*/
+        mDictionaryWidget->displayData(i->query(text, pair));
     }
-
 }
 
 

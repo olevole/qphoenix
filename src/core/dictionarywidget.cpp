@@ -32,6 +32,7 @@
 #include "defines.h"
 #include <QStringListModel>
 #include <QRegExpValidator>
+#include <QDebug>
 
 
 DictionaryWidget::DictionaryWidget(QWidget *parent) :
@@ -77,8 +78,11 @@ void DictionaryWidget::setCompletions(const QStringList comp) {
 }
 
 void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
+    qDebug() << "COUNT: " << lst.count();
+
     foreach(DictionaryVariant var, lst) {
         const QString text = mResText->toPlainText() + var.translation() + "|" + var.explaination() +"\n";
+        qDebug() << "ITERATION: " << text;
         mResText->setPlainText(text);
     }
 }

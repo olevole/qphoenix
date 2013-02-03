@@ -12,10 +12,12 @@
 
 class IWrapper : public QThread
 {
+    Q_OBJECT
 public:
     IWrapper()
         :mTimer(new QTimer)
     {
+        connect(mTimer, SIGNAL(timeout()), this, SIGNAL(timeout()));
         connect(mTimer, SIGNAL(timeout()), this, SLOT(quit()));
     }
 
@@ -27,9 +29,11 @@ public:
 protected:
     void start(Priority priority = InheritPriority) {
         QThread::start(priority);
+        mTimer->start();
     }
-private:
     QTimer *mTimer;
+signals:
+    void timeout();
 };
 
 //-------------------------------------------------------------------------------------
@@ -39,35 +43,47 @@ class DictionaryWrapper : public IWrapper {
     Q_OBJECT
 public:
     DictionaryWrapper()
-        :m_ptr(0)
     {
         connect(this, SIGNAL(reply(DictionaryVariantList)), this, SLOT(quit()));
+        connect(this, SIGNAL(reply(QStringList)), this, SLOT(quit()));
+
     }
 
     void run() {
-        DictionaryVariantList list = m_ptr->query(mQuery, mPair);
-        emit reply(list);
+        int count = mDictionaryList.count();
+        if(!mSearchAll)
+            count = 1;
+
+        for(int i = 0; i < count; i++) {
+//            DictionaryVariantList list = m_ptr->query(mQuery, mPair);
+        }
+//        emit reply(list);
     }
 
-    void setDictionary(IDictionary *iface)
-    {m_ptr = iface;}
-
+    void setDictionaryList(QList<IDictionary *> lst) { mDictionaryList = lst; }
+    void setSearchAll(const bool b) { mSearchAll = b; }
 public slots:
     void query(const LanguagePair &pair, const QString &query)  {
         mPair = pair;
         mQuery = query;
 
-        if(!m_ptr)
-            qFatal("Set DictionaryInterface before!");
-        start();
+//        if(!m_ptr)
+//            qFatal("Set DictionaryInterface before!");
+//        start();
     }
+
+
 
 signals:
     void reply(DictionaryVariantList);
+    void reply(QStringList);
 private:
     LanguagePair mPair;
     QString mQuery;
-    IDictionary *m_ptr;
+    bool mSearchAll;
+
+    QList<IDictionary *>mDictionaryList;
+//    IDictionary *m_ptr;
 };
 
 //-------------------------------------------------------------------------------------

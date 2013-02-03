@@ -19,6 +19,7 @@ class QMenu;
 class QAction;
 class QClipboard;
 class QTabWidget;
+class QTimer;
 
 
 class Config;

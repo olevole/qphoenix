@@ -33,9 +33,6 @@ class QToolBar;
 // Inherited by TranslatorWidget
 class ITranslatorWidget {
 public:
-
-
-
     virtual ~ITranslatorWidget() {}
 
 
@@ -51,10 +48,6 @@ public:
     virtual QToolBar    *resToolbar() = 0;
 
     virtual void swap() = 0;
-//private:
-//    virtual void copySrcText() = 0;
-//    virtual void copyResText() = 0;
-
 };
 
 
