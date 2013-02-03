@@ -19,6 +19,7 @@ public:
     {
         connect(mTimer, SIGNAL(timeout()), this, SIGNAL(timeout()));
         connect(mTimer, SIGNAL(timeout()), this, SLOT(quit()));
+//        this->setTerminationEnabled(true);
     }
 
     void setTimeout(const int msec)
@@ -47,17 +48,32 @@ public:
         connect(this, SIGNAL(reply(DictionaryVariantList)), this, SLOT(quit()));
         connect(this, SIGNAL(reply(QStringList)), this, SLOT(quit()));
 
+        mSearchAll = false;
+
     }
 
     void run() {
         int count = mDictionaryList.count();
-        if(!mSearchAll)
-            count = 1;
+        if(!mSearchAll) count = 1;
 
+        DictionaryVariantList list;
         for(int i = 0; i < count; i++) {
-//            DictionaryVariantList list = m_ptr->query(mQuery, mPair);
+            IDictionary *iface = mDictionaryList.at(i);
+            if(iface == NULL) {
+                qWarning("Invalid translator!");
+                continue;
+            }
+
+            const QStringList c = iface->completions(mQuery, mPair);
+            iface->completions(mQuery, mPair);
+            iface->completions(mQuery, mPair);
+
+
+//            if(c.size() == 1)
+//                reply(c);
+            reply(iface->query(mQuery, mPair));
+
         }
-//        emit reply(list);
     }
 
     void setDictionaryList(QList<IDictionary *> lst) { mDictionaryList = lst; }
@@ -66,14 +82,8 @@ public slots:
     void query(const LanguagePair &pair, const QString &query)  {
         mPair = pair;
         mQuery = query;
-
-//        if(!m_ptr)
-//            qFatal("Set DictionaryInterface before!");
-//        start();
+        start();
     }
-
-
-
 signals:
     void reply(DictionaryVariantList);
     void reply(QStringList);
@@ -83,7 +93,6 @@ private:
     bool mSearchAll;
 
     QList<IDictionary *>mDictionaryList;
-//    IDictionary *m_ptr;
 };
 
 //-------------------------------------------------------------------------------------

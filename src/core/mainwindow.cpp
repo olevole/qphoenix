@@ -23,6 +23,7 @@
 #include <QThread>
 #include <QFrame>
 #include <QTabWidget>
+#include <QToolButton>
 
 
 #include "iplugin.h"
@@ -150,13 +151,22 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mActionRedo, SIGNAL(triggered()), this, SLOT(redo()));
     connect(mActionSwap, SIGNAL(triggered()), this, SLOT(swap()));
 
-    connect(mDictionaryWidget->srcText(), SIGNAL(textChanged(QString)), this, SLOT(diction()));
+    connect(mDictionaryWidget, SIGNAL(queryChanged()), this, SLOT(diction()));
 
 
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
 
 
     connect(translationWidget()->translateButton(), SIGNAL(clicked()), this, SLOT(translate()));
+
+
+    connect(&mDictionaryWrapper, SIGNAL(reply(DictionaryVariantList)), mDictionaryWidget, SLOT(displayData(DictionaryVariantList)));
+    connect(&mDictionaryWrapper, SIGNAL(reply(QStringList)), mDictionaryWidget, SLOT(setCompletions(QStringList)));
+
+
+
+
+
 
     onConfigAccept();
 
@@ -173,6 +183,8 @@ void MainWindow::addPage(QWidget *page) {
 
     Info *i =
             qobject_cast<Info *>(page);
+    //        mTimer->start();
+    //        mTimer->start();
 
 
     if(i == NULL) {
@@ -305,6 +317,8 @@ void MainWindow::onConfigAccept() {
                     mDictionaryWidget->languagesComboBox()->addItem(first + " -> " + second);
                     mDictPairList << pair;
 
+
+
             } else {
 
 //                mDictPairList.removeAt(i);
@@ -313,6 +327,8 @@ void MainWindow::onConfigAccept() {
             }
         }
     }
+
+    mDictionaryWrapper.setDictionaryList(mDictList);
 
     qDebug() << "SIZE OF DICTS" << mDictPairList[2].first;
 }
@@ -364,7 +380,7 @@ void MainWindow::redo() {
 }
 
 void MainWindow::swap() {
-//    translationWidget()->swapButton().
+    translationWidget()->swapButton()->click();
 }
 
 //----------------------------------------------------------------------------------------------
@@ -392,7 +408,9 @@ void MainWindow::translate() {
 
 
     mTranslatorWrapper.setTranslator(mTranslatorsConfig->currentTranslator());
+
     mTranslatorWrapper.query(src_lang, res_lang, src_text);
+
 
 
 }
@@ -404,17 +422,10 @@ void MainWindow::diction() {
 
     qDebug() << "TEXT: " << text ;
 
-    foreach (IDictionary *i, mDictList) {
-        QStringList cmpl = i->completions(text, pair);
-//        qDebug() << "DATA SIZE: " << i->query(text, pair).first().translation();
-        if(cmpl.count() == 1) {
-            mDictionaryWidget->setCompletions(cmpl);
 
-        }/* else {
-            mDictionaryWidget->setCompletions(cmpl);
-        }*/
-        mDictionaryWidget->displayData(i->query(text, pair));
-    }
+
+    mDictionaryWrapper.query(pair, text);
+
 }
 
 

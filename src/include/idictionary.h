@@ -25,6 +25,7 @@
 #include "itranslator.h"
 
 #include <QPair>
+#include <QMetaType>
 
 class QWidget;
 class QString;
@@ -35,6 +36,9 @@ typedef QPair<QString, QString> LanguagePair;
 typedef QList<LanguagePair> LanguagePairList;
 class DictionaryVariant;
 typedef QList<DictionaryVariant> DictionaryVariantList;
+
+
+//qRegisterMetaType<DictionaryVariantList>();
 
 enum Abbreviation {
     //!< english
@@ -75,6 +79,7 @@ private:
     QString mSrcWord, mExpl, mTrans;
 };
 
+//qRegisterMetaType<DictionaryVariant>("DictionaryVariant");
 
 class IDictionary : public IModule {
 public:

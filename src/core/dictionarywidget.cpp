@@ -33,6 +33,7 @@
 #include <QStringListModel>
 #include <QRegExpValidator>
 #include <QDebug>
+#include <QTimer>
 
 
 DictionaryWidget::DictionaryWidget(QWidget *parent) :
@@ -43,11 +44,13 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mLineLayout(new QHBoxLayout),
     mMainLayout(new QVBoxLayout),
     mCompleter(new QCompleter(this)),
-    mCompleterModel(new QStringListModel(this))
+    mCompleterModel(new QStringListModel(this)),
+    mQueryChangeDelay(new QTimer(this))
 
 {
 
-
+    mQueryChangeDelay->setInterval(1000);
+    mQueryChangeDelay->setSingleShot(true);
 
     setName(tr("Dictionary"));
 
@@ -59,6 +62,8 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     setIcon(QP_ICON("dictionary"));
 
 
+    connect(mSrcText, SIGNAL(textChanged(QString)), mQueryChangeDelay, SLOT(start()));
+    connect(mQueryChangeDelay, SIGNAL(timeout ()), this, SIGNAL(queryChanged()));
 
 
     QRegExpValidator *v = new QRegExpValidator(QRegExp("[^\Q,.\E].*"), this);
@@ -73,12 +78,13 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 }
 
 
-void DictionaryWidget::setCompletions(const QStringList comp) {
+void DictionaryWidget::setCompletions(const QStringList &comp) {
     mCompleterModel->setStringList(comp);
 }
 
 void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
     qDebug() << "COUNT: " << lst.count();
+    mResText->clear();
 
     foreach(DictionaryVariant var, lst) {
         const QString text = mResText->toPlainText() + var.translation() + "|" + var.explaination() +"\n";

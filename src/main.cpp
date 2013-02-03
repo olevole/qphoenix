@@ -9,6 +9,7 @@
 #include "querywrappers.h"
 #include <QFile>
 #include "dictionarywidget.h"
+#include "idictionary.h"
 
 
 
@@ -16,6 +17,9 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    qRegisterMetaType<DictionaryVariantList>("DictionaryVariantList");
+
 
     QCoreApplication::setApplicationName(QP_APP_NAME);
     QCoreApplication::setApplicationVersion(QP_APP_VERSION);

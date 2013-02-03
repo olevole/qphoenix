@@ -19,8 +19,7 @@
 
 
 WordReference::WordReference(QObject *parent)
-    :QObject(parent),
-      mManager(new QNetworkAccessManager(this))
+    :QObject(parent)
 {
     setName("WordReference");
 
@@ -65,41 +64,43 @@ QJsonDocument WordReference::queryData(const QString &text, const LanguagePair &
 
 
 
+    QNetworkAccessManager mManager;
 
     QEventLoop loop;
 
-    QObject::connect(mManager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
+    QObject::connect(&mManager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
 
-    QNetworkReply *reply  = mManager->get(QNetworkRequest(url));
+
+    QNetworkRequest req(url);
+    req.setRawHeader("User-Agent", "Mozilla/5.0");
+    req.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
+    req.setRawHeader("Content-Length", QByteArray::number(text.size()));
+
+
+    QNetworkReply *reply  = mManager.get(req);
     loop.exec();
 
     const QString  rawdata = reply->readAll();
-    qDebug() << "QUERY URL: " << url.toString();
-    return QJsonDocument::fromJson(rawdata.toUtf8());
 
+    qDebug() << "QUERY URL: " << url.toString() << "DATA SIZE: " << rawdata.size();
+
+    return QJsonDocument::fromJson(rawdata.toUtf8());
 }
 
 
 
 QStringList WordReference::completions(const QString &str, const LanguagePair &pair) const {
     QJsonDocument doc = queryData(str, pair);
-
     QJsonObject root = doc.object().value("term0").toObject();
-
     QJsonObject principal = root.value("PrincipalTranslations").toObject();
 
     QStringList lst;
 
     for (int i = 0; i < 20; i++) {
-
         QJsonObject orig = principal.value(QString::number(i)).toObject();
-
         if(orig.isEmpty()) break;
-
         QJsonObject oterm = orig.value("FirstTranslation").toObject();
-
         QString expl = oterm.value("term").toString();
-
         lst << expl;
     }
 

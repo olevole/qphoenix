@@ -40,6 +40,7 @@ class QCompleter;
 class QHBoxLayout;
 class QVBoxLayout;
 class QStringListModel;
+class QTimer;
 
 class DictionaryWidget : public QWidget, IDictionaryWidget, Info
 {
@@ -53,9 +54,12 @@ public:
     virtual QLineEdit   *srcText()      {return mSrcText;       }
     virtual QTextBrowser*resText()      {return mResText;       }
 public slots:
-    void setCompletions(const QStringList comp);
+    void setCompletions(const QStringList &comp);
     void displayData(const DictionaryVariantList &lst);
+signals:
+    void queryChanged();
 private:
+    QTimer *mQueryChangeDelay;
     QComboBox *mLanguagesComboBox;
     QLineEdit *mSrcText;
     QTextBrowser *mResText;

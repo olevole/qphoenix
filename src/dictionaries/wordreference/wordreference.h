@@ -40,7 +40,7 @@ private:
     QString first;
     QStringList other;
 
-    QNetworkAccessManager *mManager;
+
     QJsonDocument queryData(const QString &str, const LanguagePair &pair) const;
 //    const QString apikey = "284e7";
 //    const QString version = "0.8";
