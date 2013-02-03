@@ -63,26 +63,28 @@ QJsonDocument WordReference::queryData(const QString &text, const LanguagePair &
             arg("284e7").arg(langs).arg(text);
 
 
-
+    qDebug() << "QUERY URL: " << url.toString();
     QNetworkAccessManager mManager;
 
     QEventLoop loop;
+
+
+
 
     QObject::connect(&mManager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
 
 
     QNetworkRequest req(url);
-    req.setRawHeader("User-Agent", "Mozilla/5.0");
-    req.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
-    req.setRawHeader("Content-Length", QByteArray::number(text.size()));
 
 
     QNetworkReply *reply  = mManager.get(req);
     loop.exec();
 
+
+//    if(text == "test") forever {}
+
     const QString  rawdata = reply->readAll();
 
-    qDebug() << "QUERY URL: " << url.toString() << "DATA SIZE: " << rawdata.size();
 
     return QJsonDocument::fromJson(rawdata.toUtf8());
 }

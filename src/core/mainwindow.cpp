@@ -151,27 +151,24 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mActionRedo, SIGNAL(triggered()), this, SLOT(redo()));
     connect(mActionSwap, SIGNAL(triggered()), this, SLOT(swap()));
 
+
+    // Widgets , Dialogs, etc
     connect(mDictionaryWidget, SIGNAL(queryChanged()), this, SLOT(diction()));
-
-
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
 
-
     connect(translationWidget()->translateButton(), SIGNAL(clicked()), this, SLOT(translate()));
-
 
     connect(&mDictionaryWrapper, SIGNAL(reply(DictionaryVariantList)), mDictionaryWidget, SLOT(displayData(DictionaryVariantList)));
     connect(&mDictionaryWrapper, SIGNAL(reply(QStringList)), mDictionaryWidget, SLOT(setCompletions(QStringList)));
 
 
-
-
-
-
+    // Read configs
     onConfigAccept();
 
 
+    // NOTE: Timeout must be set! By default it's 0 (nothing will be processed)
     mTranslatorWrapper.setTimeout(1000);
+    mDictionaryWrapper.setTimeout(2000);
 }
 
 MainWindow::~MainWindow()
@@ -330,7 +327,7 @@ void MainWindow::onConfigAccept() {
 
     mDictionaryWrapper.setDictionaryList(mDictList);
 
-    qDebug() << "SIZE OF DICTS" << mDictPairList[2].first;
+    qDebug() << "SIZE OF DICTS" << mDictList.count();
 }
 
 
@@ -361,9 +358,9 @@ void MainWindow::undo() {
     case 0:
         translationWidget()->srcText()->undo();
         break;
-//    case 1:
-//        dictionaryWidget()->srcText()->undo();
-//        break;
+    case 1:
+        dictionaryWidget()->srcText()->undo();
+        break;
     }
 
 }
@@ -373,9 +370,9 @@ void MainWindow::redo() {
     case 0:
         translationWidget()->srcText()->redo();
         break;
-//    case 1:
-//            dictionaryWidget()->srcText()->redo();
-//        break;
+    case 1:
+            dictionaryWidget()->srcText()->redo();
+        break;
     }
 }
 
@@ -421,7 +418,6 @@ void MainWindow::diction() {
     const LanguagePair pair = mDictPairList.at(mDictionaryWidget->languagesComboBox()->currentIndex());
 
     qDebug() << "TEXT: " << text ;
-
 
 
     mDictionaryWrapper.query(pair, text);
