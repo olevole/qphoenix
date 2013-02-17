@@ -96,7 +96,7 @@ private:
     QStatusBar  *mStatusBar;
     QToolBar    *mToolBar;
     QMenuBar    *mMenuBar;
-    QTabWidget *mFancyWidget;
+    QTabWidget *mTabWidget;
 
     QMenu   *mFileMenu, *mEditMenu, *mHelpMenu;
 

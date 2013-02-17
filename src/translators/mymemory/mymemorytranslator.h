@@ -78,25 +78,28 @@ public:
 //    bool isLinear() const{ return false; }
 
     LanguageTable table() const {
-        QStringList english;
+//        QStringList english;
 
-        english << "ru" << "de" << "es";
+//        english << "ru" << "de" << "es";
 
-        QStringList russian;
-        russian << "de" << "en";
+//        QStringList russian;
+//        russian << "de" << "en";
 
 
-        QStringList german;
-        german << "ru" << "en" << "uz";
+//        QStringList german;
+//        german << "ru" << "en" << "uz";
 
-        QStringList spanish;
-        spanish << "de" << "ru";
+//        QStringList spanish;
+//        spanish << "de" << "ru";
 
         LanguageTable myTable;
-        myTable["en"] = english;
-        myTable["ru"] = russian;
-        myTable["de"] = german;
-        myTable["es"] = spanish;
+        myTable["en"];
+        myTable["ru"];
+        myTable["de"];
+        myTable["es"];
+
+//        myTable["ar"];
+//        myTable["test"];
 
         return myTable;
 

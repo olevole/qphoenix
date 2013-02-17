@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mStatusBar(new QStatusBar(this)),
     mToolBar(new QToolBar(this)),
     mMenuBar(new QMenuBar(this)),
-    mFancyWidget(new QTabWidget(this)),
+    mTabWidget(new QTabWidget(this)),
 
     // Menus
     mFileMenu(new QMenu(tr("File"), this)),
@@ -112,10 +112,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ActionsList << mActionClear <<  mActionUndo<< mActionRedo, mActionAbout;
     mToolBar->addActions(ActionsList);
 
-    this->setCentralWidget(mFancyWidget);
+    this->setCentralWidget(mTabWidget);
 
 
-    mFancyWidget->setTabPosition(QTabWidget::West);
+    mTabWidget->setTabPosition(QTabWidget::West);
 
     this->setStatusBar(mStatusBar);
 
@@ -127,8 +127,8 @@ MainWindow::MainWindow(QWidget *parent) :
     this->addPage(mDictionaryWidget);
 
 
-    if(mFancyWidget->count() > 0)
-        mFancyWidget->setCurrentIndex(0);
+    if(mTabWidget->count() > 1)
+        mTabWidget->setCurrentIndex(0);
 
 
     mSettingsDialog->addPage(mTranslatorsConfig);
@@ -177,24 +177,16 @@ MainWindow::~MainWindow()
 
 
 void MainWindow::addPage(QWidget *page) {
-
-    Info *i =
-            qobject_cast<Info *>(page);
-    //        mTimer->start();
-    //        mTimer->start();
-
-
+    Info *i = qobject_cast<Info *>(page);
     if(i == NULL) {
+        //TODO: Error processing
         return;
     }
-
 
     QIcon icon = i->icon();
     QString name = i->name();
 
-
-    mFancyWidget->insertTab(mFancyWidget->count(), page, icon, name);
-
+    mTabWidget->insertTab(mTabWidget->count(), page, icon, name);
     resize(800, 600);
 }
 
@@ -207,11 +199,11 @@ QWidget *MainWindow::pageAt(const int i) {
 }
 
 int MainWindow::currentIndex() const {
-    return mFancyWidget->currentIndex();
+    return mTabWidget->currentIndex();
 }
 
 void MainWindow::setCurrentIndex(const int i) {
-    mFancyWidget->setCurrentIndex(i);
+    mTabWidget->setCurrentIndex(i);
 }
 
 
@@ -239,8 +231,6 @@ void MainWindow::onConfigAccept() {
      * Updating translators information...
      */
 
-
-
     QStringList enabledKeys = mLanguageConfig->keysForEnabled();
 
     mLanguageConfig->setUseNativeNames(false);
@@ -253,6 +243,7 @@ void MainWindow::onConfigAccept() {
 
         ITranslator *translator  = mTranslatorsConfig->currentTranslator();
         LanguageTable table;
+
 
         if(translator != NULL)
             table = translator->table();
@@ -400,16 +391,11 @@ void MainWindow::translate() {
 
 
 
-
     connect(&mTranslatorWrapper, SIGNAL(reply(QString)), this->translationWidget()->resText(), SLOT(setText(QString)));
 
 
     mTranslatorWrapper.setTranslator(mTranslatorsConfig->currentTranslator());
-
     mTranslatorWrapper.query(src_lang, res_lang, src_text);
-
-
-
 }
 
 

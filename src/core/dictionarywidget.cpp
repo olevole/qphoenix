@@ -32,7 +32,7 @@
 #include "defines.h"
 #include <QStringListModel>
 #include <QRegExpValidator>
-#include <QDebug>
+#include <QDebug>тьо
 #include <QTimer>
 
 
@@ -51,6 +51,8 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 
     mQueryChangeDelay->setInterval(1000);
     mQueryChangeDelay->setSingleShot(true);
+
+//    mResText->append("<div padding=\"120px\"><b>this is in bold</b></div>");
 
     setName(tr("Dictionary"));
 
@@ -90,5 +92,6 @@ void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
         const QString text = mResText->toPlainText() + var.translation() + "|" + var.explaination() +"\n";
         qDebug() << "ITERATION: " << text;
         mResText->setPlainText(text);
+
     }
 }

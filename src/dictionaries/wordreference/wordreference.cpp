@@ -5,14 +5,13 @@
 #include <QDebug>
 #include <QThread>
 #include <QTime>
-#include <QtTest/QTest>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkRequest>
-#include <QtNetwork/QNetworkReply>
-#include <QtGui/QTextDocumentFragment>
-#include <QtCore/QEventLoop>
-#include <QtCore/QStringList>
-#include <QtCore/QDebug>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QTextDocumentFragment>
+#include <QEventLoop>
+#include <QStringList>
+#include <QDebug>
 #include <QtGui>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -31,13 +30,9 @@ WordReference::WordReference(QObject *parent)
 
 
 DictionaryVariantList WordReference::query(const QString &text, const LanguagePair &pair)  {
-
     QJsonDocument doc = queryData(text, pair);
-
     QJsonObject root = doc.object().value("term0").toObject();
-
     QJsonObject principal = root.value("PrincipalTranslations").toObject();
-
     DictionaryVariantList lst;
 
     for (int i = 0; i < 20; i++) {
@@ -51,7 +46,7 @@ DictionaryVariantList WordReference::query(const QString &text, const LanguagePa
         QString expl = oterm.value("term").toString();
         QString tr = oterm.value("sense").toString();
 
-        lst << DictionaryVariant(Verb, text, expl, tr);
+        lst << DictionaryVariant(text, expl, tr);
     }
    return lst;
 }
@@ -61,31 +56,18 @@ QJsonDocument WordReference::queryData(const QString &text, const LanguagePair &
     const QString langs = pair.first + pair.second;
     const QUrl url = QString("http://api.wordreference.com/%2/json/%3/%4").
             arg("284e7").arg(langs).arg(text);
-
-
     qDebug() << "QUERY URL: " << url.toString();
     QNetworkAccessManager mManager;
 
     QEventLoop loop;
 
-
-
-
     QObject::connect(&mManager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
 
-
-    QNetworkRequest req(url);
-
-
-    QNetworkReply *reply  = mManager.get(req);
+    QNetworkReply *reply  = mManager.get(QNetworkRequest(url));
     loop.exec();
 
 
-//    if(text == "test") forever {}
-
     const QString  rawdata = reply->readAll();
-
-
     return QJsonDocument::fromJson(rawdata.toUtf8());
 }
 
@@ -105,6 +87,5 @@ QStringList WordReference::completions(const QString &str, const LanguagePair &p
         QString expl = oterm.value("term").toString();
         lst << expl;
     }
-
    return lst;
 }

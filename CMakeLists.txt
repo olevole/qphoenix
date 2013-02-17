@@ -102,7 +102,6 @@ SET(LIBRARY_PATH        ${PREFIX}/lib             CACHE INTERNAL "")
 
 
 
-
 ADD_SUBDIRECTORY(src/plugins)
 ADD_SUBDIRECTORY(src/translators)
 ADD_SUBDIRECTORY(src/dictionaries)
@@ -113,10 +112,9 @@ CONFIGURE_FILE(src/include/defines.h.in src/include/defines.h)
 QT5_WRAP_CPP(MOC_SOURCES ${HEADERS})
 
 
-
-
 ADD_EXECUTABLE(${EXECUTABLE_NAME} src/main.cpp ${RC_SOURCES} ${SOURCES} ${MOC_SOURCES}  ${QM_FILES} ${GLOBAL_HEADERS} ${IFACES})
 QT5_USE_MODULES(${EXECUTABLE_NAME} Widgets Core Network)
 
 INSTALL(TARGETS ${EXECUTABLE_NAME} DESTINATION ${INSTALLPATH})
 INSTALL(DIRECTORY src/include/ DESTINATION ${PREFIX}/include/qphoenix)
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qphoenix.desktop DESTINATION ${PREFIX}/share/applications)

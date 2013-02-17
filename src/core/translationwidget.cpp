@@ -133,6 +133,9 @@ void TranslationWidget::onTableChanged() {
 
 
     fillCombobox(mSrcComboBox, mTable.keys());
+
+    if(mIsLinear)
+        fillCombobox(mResComboBox, mTable.keys());
 }
 
 void TranslationWidget::swap() {

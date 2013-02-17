@@ -93,7 +93,6 @@ public slots:
 
     virtual void copySrcText();
     virtual void copyResText();
-
 private slots:
     void onSourceLanguageChanged();
     void onTableChanged();

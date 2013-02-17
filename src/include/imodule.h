@@ -34,8 +34,6 @@ public:
      */
 
     virtual bool unload() = 0;
-
-
     /*!
      * \brief errorString
      * \return Description of plugin load\unload error

@@ -13,9 +13,9 @@ DictionaryWrapper::DictionaryWrapper()
 void DictionaryWrapper::run()
 {
     int count = mDictionaryList.count();
-    //        if(!mSearchAll) count = 1;
 
-    //        DictionaryVariantList list;
+    if(!mSearchAll) count = 1;
+
     for(int i = 0; i < count; i++) {
         IDictionary *iface = mDictionaryList.at(i);
         if(iface == NULL) {
@@ -23,18 +23,15 @@ void DictionaryWrapper::run()
             continue;
         }
 
-        //            const QStringList c = iface->completions(mQuery, mPair);
-        //            iface->completions(mQuery, mPair);
-        //            iface->completions(mQuery, mPair);
+        const QStringList c = iface->completions(mQuery, mPair);
+        iface->completions(mQuery, mPair);
+        iface->completions(mQuery, mPair);
 
 
-        //            if(c.size() == 1)
-        //                repl(c);
-
-        DictionaryVariantList lst = iface->query(mQuery, mPair);
-
-
-        emit reply(lst);
+        if(c.size() > 1)
+            emit reply(c);
+        else
+            emit reply(iface->query(mQuery, mPair));
 
     }
 }

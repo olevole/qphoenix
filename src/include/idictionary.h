@@ -40,42 +40,42 @@ typedef QList<DictionaryVariant> DictionaryVariantList;
 
 //qRegisterMetaType<DictionaryVariantList>();
 
-enum Abbreviation {
-    //!< english
-    Verb = 1,
-    Noun,
-    Pronoun,
-    Adjective,
-    Adverb,
-    Preposition,
-    Conjunction,
-    Interjection,
-    NoAbbreviation = 1000
-};
+//enum Abbreviation {
+//    //!< english
+//    Verb = 1,
+//    Noun,
+//    Pronoun,
+//    Adjective,
+//    Adverb,
+//    Preposition,
+//    Conjunction,
+//    Interjection,
+//    NoAbbreviation = 1000
+//};
 
 class DictionaryVariant
 {
 public:
-    DictionaryVariant(const Abbreviation abbr, const QString &src_word,
+    DictionaryVariant(/*const Abbreviation abbr, */const QString &src_word,
                       const QString &expl, const QString &trans) {
-        setAbbr(abbr);
+//        setAbbr(abbr);
         setSourceWord(src_word);
         setExplaination(expl);
         setTranslation(trans);
     }
 
 
-    void setAbbr(const Abbreviation abbr) { mAbbr = abbr;}
+//    void setAbbr(const Abbreviation abbr) { mAbbr = abbr;}
     void setSourceWord(const QString &word) { mSrcWord = word;}
     void setExplaination(const QString &expl) {mExpl = expl;}
     void setTranslation(const QString &tr) {mTrans = tr;}
 
-    Abbreviation abbr() const   { return mAbbr;     }
+//    Abbreviation abbr() const   { return mAbbr;     }
     QString sourceWord() const  { return mSrcWord;  }
     QString explaination() const{ return mExpl;     }
     QString translation() const { return mTrans;    }
 private:
-    Abbreviation mAbbr;
+//    Abbreviation mAbbr;
     QString mSrcWord, mExpl, mTrans;
 };
 
