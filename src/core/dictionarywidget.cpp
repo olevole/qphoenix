@@ -36,6 +36,54 @@
 #include <QTimer>
 
 
+
+
+
+
+//--------------------------------------------------------------------------
+
+
+DictionaryVariantViewFragment::DictionaryVariantViewFragment(QWidget *parent)
+    :QWidget(parent),
+      text(new QLabel("TEST", this)),
+      speechButton(new QToolButton(this)),
+      copyButton(new QToolButton(this))
+{
+    speechButton->setVisible(false);
+    copyButton->setVisible(false);
+
+    QHBoxLayout *l = new QHBoxLayout;
+    l->addWidget(text);
+    l->addWidget(speechButton);
+    l->addWidget(copyButton);
+
+    this->setLayout(l);
+    text->setTextInteractionFlags(Qt::TextSelectableByMouse);
+}
+
+void DictionaryVariantViewFragment::enterEvent(QEvent *e) {
+    speechButton->setVisible(true);
+    copyButton->setVisible(true);
+
+    qDebug() << "MOUSE ENTER!";
+    update();
+
+
+}
+
+
+void DictionaryVariantViewFragment::leaveEvent(QEvent *e) {
+    speechButton->setVisible(false);
+    copyButton->setVisible(false);
+}
+
+
+
+//--------------------------------------------------------------------------
+
+
+
+
 DictionaryWidget::DictionaryWidget(QWidget *parent) :
     QWidget(parent),
     mLanguagesComboBox(new QComboBox(this)),
@@ -48,6 +96,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mQueryChangeDelay(new QTimer(this))
 
 {
+
 
     mQueryChangeDelay->setInterval(1000);
     mQueryChangeDelay->setSingleShot(true);
@@ -89,9 +138,18 @@ void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
     mResText->clear();
 
     foreach(DictionaryVariant var, lst) {
-        const QString text = mResText->toPlainText() + var.translation() + "|" + var.explaination() +"\n";
-        qDebug() << "ITERATION: " << text;
-        mResText->setPlainText(text);
+        const QString src = QString("<b>%1</b>").arg(var.sourceWord());
+        const QString translation = QString("\t%1").arg(var.translation());
+        const QString expl = QString("\t%1").arg(var.explaination());
+
+        mResText->append(src);
+        mResText->append(translation);
+        mResText->append(expl);
+//        mResText->setPlainText("TEST");
+
+//        const QString text = mResText->toPlainText() + var.translation() + "|" + var.explaination() +"\n";
+//        qDebug() << "ITERATION: " << text;
+//        mResText->setPlainText(text);
 
     }
 }

@@ -31,8 +31,8 @@ WordReference::WordReference(QObject *parent)
 
 DictionaryVariantList WordReference::query(const QString &text, const LanguagePair &pair)  {
     QJsonDocument doc = queryData(text, pair);
-    QJsonObject root = doc.object().value("term0").toObject();
-    QJsonObject principal = root.value("PrincipalTranslations").toObject();
+    QJsonObject root = doc.object().value("original").toObject();
+    QJsonObject principal = root.value("Compounds").toObject();
     DictionaryVariantList lst;
 
     for (int i = 0; i < 20; i++) {
@@ -41,7 +41,7 @@ DictionaryVariantList WordReference::query(const QString &text, const LanguagePa
 
         if(orig.isEmpty()) break;
 
-        QJsonObject oterm = orig.value("FirstTranslation").toObject();
+        QJsonObject oterm = orig.value("OriginalTerm").toObject();
 
         QString expl = oterm.value("term").toString();
         QString tr = oterm.value("sense").toString();

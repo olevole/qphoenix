@@ -83,6 +83,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     setWindowTitle(qApp->applicationName());
 
+
+//    this->setStyleSheet("background-color: red;");
+
     mFileMenu->addAction(mActionOpen);
     mFileMenu->addSeparator();
     mFileMenu->addAction(mActionSave);
@@ -168,7 +171,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // NOTE: Timeout must be set! By default it's 0 (nothing will be processed)
     mTranslatorWrapper.setTimeout(1000);
-    mDictionaryWrapper.setTimeout(2000);
+    mDictionaryWrapper.setTimeout(20000);
 }
 
 MainWindow::~MainWindow()

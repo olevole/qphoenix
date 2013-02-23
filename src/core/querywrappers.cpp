@@ -28,9 +28,9 @@ void DictionaryWrapper::run()
         iface->completions(mQuery, mPair);
 
 
-        if(c.size() > 1)
-            emit reply(c);
-        else
+//        if(c.size() > 1)
+//            emit reply(c);
+//        else
             emit reply(iface->query(mQuery, mPair));
 
     }

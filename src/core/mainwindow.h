@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QThread>
 #include <QDebug>
 #include "imainwindow.h"
 #include "idictionarywidget.h"
@@ -64,6 +63,9 @@ public:
 
 
     QString getCopyableContent();
+
+
+
 private slots:
 
     //! Update plugins, etc information from config dialog.

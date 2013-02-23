@@ -39,13 +39,11 @@ QObjectList Loader::modules() {
         QPluginLoader *l = new QPluginLoader(module);
         QObject *instance;
 
-        if(l->load() && (instance = l->instance()) != NULL) {
+        if(l->load() && (instance = l->instance()) != NULL)
             list.append(instance);
-        } else {
-            qDebug() << "Couldn't load plugin: " << l->fileName()
-                        << l->errorString();
+        else
+            qDebug() << "Couldn't load plugin: " << l->fileName() << l->errorString();
 
-        }
     }
 
     return list;

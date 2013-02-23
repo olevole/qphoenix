@@ -23,6 +23,7 @@
 #define DICTIONARYWIDGET_H
 
 #include <QWidget>
+
 #include <QStringList>
 #include <QListWidget>
 #include "info.h"
@@ -41,6 +42,40 @@ class QHBoxLayout;
 class QVBoxLayout;
 class QStringListModel;
 class QTimer;
+
+//--------------------------------------------------------------------------
+
+class DictionaryVariantViewFragment : public QWidget
+{
+    Q_OBJECT
+public:
+    explicit DictionaryVariantViewFragment(QWidget *parent = 0);
+protected:
+    void enterEvent(QEvent *e);
+    void leaveEvent(QEvent *e);
+private:
+    QLabel *text;
+    QToolButton *speechButton, *copyButton;
+
+signals:
+    void speech( QString text,  QString lang);
+
+};
+
+
+//--------------------------------------------------------------------------
+
+
+class DictionaryVariantView : public QWidget
+{
+    Q_OBJECT
+public:
+        explicit DictionaryVariantView(QWidget *parent = 0);
+
+};
+
+//--------------------------------------------------------------------------
+
 
 class DictionaryWidget : public QWidget, IDictionaryWidget, Info
 {

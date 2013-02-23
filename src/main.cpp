@@ -30,10 +30,12 @@ int main(int argc, char *argv[])
     QDir::addSearchPath("translators", QP_TRANSLATORS_PATH);
     QDir::addSearchPath("dictionaries", QP_DICTIONARIES_PATH);
 
-    MainWindow *mw = new MainWindow();
 
-    mw->show();
-    mw->setWindowIcon(QP_ICON("dictionary"));
+    DictionaryVariantViewFragment fr;fr.show();
+//    MainWindow *mw = new MainWindow();
+
+//    mw->show();
+//    mw->setWindowIcon(QP_ICON("dictionary"));
 
 
     return a.exec();

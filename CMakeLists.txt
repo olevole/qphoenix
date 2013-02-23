@@ -2,8 +2,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8.6)
 PROJECT(QPhoenix)
 
 
-SET(EXECUTABLE_NAME "qphoenix")
-SET(PROJECT_VERSION "0.999999")
+SET(EXECUTABLE_NAME qphoenix)
+SET(PROJECT_VERSION 0.999999)
 SET(CMAKE_BUILD_TYPE Debug)
 #ENABLE_TESTING(TRUE)
 
@@ -41,8 +41,7 @@ src/include/itranslator.h
 src/include/idictionary.h
 src/include/info.h
 src/include/imodule.h
-src/include/api.h
-)
+src/include/api.h)
 
 
 SET(HEADERS
@@ -56,8 +55,7 @@ src/core/translationwidget.h
 src/core/dictionarywidget.h
 src/core/querywrappers.h
 src/core/loader.h
-src/core/languages.h
-)
+src/core/languages.h)
 
 
 
