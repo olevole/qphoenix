@@ -32,50 +32,63 @@
 #include "defines.h"
 #include <QStringListModel>
 #include <QRegExpValidator>
-#include <QDebug>тьо
+#include <QDebug>
 #include <QTimer>
-
-
-
-
+#include <QApplication>
+#include <QClipboard>
 
 
 //--------------------------------------------------------------------------
 
 
-DictionaryVariantViewFragment::DictionaryVariantViewFragment(QWidget *parent)
-    :QWidget(parent),
-      text(new QLabel("TEST", this)),
-      speechButton(new QToolButton(this)),
-      copyButton(new QToolButton(this))
-{
-    speechButton->setVisible(false);
-    copyButton->setVisible(false);
+//DictionaryVariantViewFragment::DictionaryVariantViewFragment(QWidget *parent)
+//    :QWidget(parent),
+//      mLabel(new QLabel("TEST", this)),
+//      speechButton(new QToolButton(this)),
+//      copyButton(new QToolButton(this))
+//{
+//    speechButton->setVisible(false);
+//    copyButton->setVisible(false);
 
-    QHBoxLayout *l = new QHBoxLayout;
-    l->addWidget(text);
-    l->addWidget(speechButton);
-    l->addWidget(copyButton);
+//    QHBoxLayout *l = new QHBoxLayout;
+//    l->addWidget(mLabel);
+//    l->addWidget(speechButton);
+//    l->addWidget(copyButton);
 
-    this->setLayout(l);
-    text->setTextInteractionFlags(Qt::TextSelectableByMouse);
-}
-
-void DictionaryVariantViewFragment::enterEvent(QEvent *e) {
-    speechButton->setVisible(true);
-    copyButton->setVisible(true);
-
-    qDebug() << "MOUSE ENTER!";
-    update();
+//    l->addStretch();
+//    this->setLayout(l);
+//    mLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
 
 
-}
+//    connect(copyButton, SIGNAL(clicked()),this, SLOT(copy()));
+//    connect(speechButton, SIGNAL(clicked()), this, SLOT(speech()));
 
 
-void DictionaryVariantViewFragment::leaveEvent(QEvent *e) {
-    speechButton->setVisible(false);
-    copyButton->setVisible(false);
-}
+//}
+
+//void DictionaryVariantViewFragment::enterEvent(QEvent *e) {
+//    speechButton->setVisible(true);
+//    copyButton->setVisible(true);
+
+//    qDebug() << "MOUSE ENTER!";
+//    update();
+
+
+//}
+
+
+//void DictionaryVariantViewFragment::leaveEvent(QEvent *e) {
+//    speechButton->setVisible(false);
+//    copyButton->setVisible(false);
+//}
+
+
+//void DictionaryVariantViewFragment::copy() {
+//    const QString text = mLabel->selectedText().isEmpty()
+//            ? mLabel->text() : mLabel->selectedText();
+
+//    QApplication::clipboard()->setText(text);
+//}
 
 
 

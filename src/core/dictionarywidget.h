@@ -31,6 +31,9 @@
 #include "idictionary.h"
 
 
+#include <QLabel>
+
+
 class QComboBox;
 class QLineEdit;
 class QTextBrowser;
@@ -43,36 +46,48 @@ class QVBoxLayout;
 class QStringListModel;
 class QTimer;
 
-//--------------------------------------------------------------------------
-
-class DictionaryVariantViewFragment : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit DictionaryVariantViewFragment(QWidget *parent = 0);
-protected:
-    void enterEvent(QEvent *e);
-    void leaveEvent(QEvent *e);
-private:
-    QLabel *text;
-    QToolButton *speechButton, *copyButton;
-
-signals:
-    void speech( QString text,  QString lang);
-
-};
-
 
 //--------------------------------------------------------------------------
 
+//class DictionaryVariantViewFragment : public QWidget
+//{
+//    Q_OBJECT
+//public:
+//    explicit DictionaryVariantViewFragment(QWidget *parent = 0);
 
-class DictionaryVariantView : public QWidget
-{
-    Q_OBJECT
-public:
-        explicit DictionaryVariantView(QWidget *parent = 0);
+//    QLabel *label() { return mLabel; }
 
-};
+//protected:
+//    void enterEvent(QEvent *e);
+//    void leaveEvent(QEvent *e);
+//private:
+//    QLabel *mLabel;
+//    QToolButton *speechButton, *copyButton;
+//private slots:
+//    void copy();
+//    void speech(){}
+//signals:
+//    void speech( QString text,  QString lang);
+
+//};
+
+
+////--------------------------------------------------------------------------
+
+
+//class DictionaryVariantView : public QWidget
+//{
+//    Q_OBJECT
+//public:
+//        explicit DictionaryVariantView(QWidget *parent = 0);
+////public slots:
+////    void addFragment(DictionaryVariantViewFragment *w);
+//private:
+//    QWidgetList mFragmentList;
+//    QVBoxLayout *mLayout;
+//signals:
+//    void speech(QString text, QString lang);
+//};
 
 //--------------------------------------------------------------------------
 

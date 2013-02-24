@@ -14,8 +14,12 @@
 
 
 
+
 int main(int argc, char *argv[])
 {
+
+
+
     QApplication a(argc, argv);
 
     qRegisterMetaType<DictionaryVariantList>("DictionaryVariantList");
@@ -31,11 +35,11 @@ int main(int argc, char *argv[])
     QDir::addSearchPath("dictionaries", QP_DICTIONARIES_PATH);
 
 
-    DictionaryVariantViewFragment fr;fr.show();
-//    MainWindow *mw = new MainWindow();
 
-//    mw->show();
-//    mw->setWindowIcon(QP_ICON("dictionary"));
+    MainWindow *mw = new MainWindow();
+
+    mw->show();
+    mw->setWindowIcon(QP_ICON("dictionary"));
 
 
     return a.exec();

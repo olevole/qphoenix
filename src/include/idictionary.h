@@ -38,20 +38,9 @@ class DictionaryVariant;
 typedef QList<DictionaryVariant> DictionaryVariantList;
 
 
-//qRegisterMetaType<DictionaryVariantList>();
 
-//enum Abbreviation {
-//    //!< english
-//    Verb = 1,
-//    Noun,
-//    Pronoun,
-//    Adjective,
-//    Adverb,
-//    Preposition,
-//    Conjunction,
-//    Interjection,
-//    NoAbbreviation = 1000
-//};
+
+
 
 class DictionaryVariant
 {
@@ -63,6 +52,19 @@ public:
         setExplaination(expl);
         setTranslation(trans);
     }
+
+    void setSourceTerm(const QString &term){}
+    void setResultTerm(const QString &term){}
+
+    void setSourceSense(const QString &sense){}
+    void setResultSense(const QString &sense){}
+
+    QString sourceTerm() const;
+    QString resultTerm() const;
+
+    QString sourceSense() const;
+    QString resultSense() const;
+
 
 
 //    void setAbbr(const Abbreviation abbr) { mAbbr = abbr;}
