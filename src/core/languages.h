@@ -11,7 +11,6 @@
 #include <QMutex>
 
 class Language;
-
 typedef QMap<QString, Language> LanguageList;
 
 
@@ -41,7 +40,6 @@ private:
 
 class LanguageEngine : public QObject {
 public:
-//    explicit LanguageEngine(QObject *parent = 0);
 
     static  LanguageEngine* instance()
     {
@@ -67,7 +65,6 @@ public:
 
 
 private:
-//    static LanguageEngine *singleton;
     LanguageList mLangList;
     LanguageEngine();
     LanguageEngine(const LanguageEngine& root);

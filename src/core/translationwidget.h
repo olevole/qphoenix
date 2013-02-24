@@ -85,9 +85,7 @@ public:
 
     }
 
-    void setNativeNames(const bool enabled) {
-        mNativeNames = enabled;
-    }
+    void setNativeNames(const bool b) {mNativeNames = b;}
 public slots:
     virtual void swap();
 

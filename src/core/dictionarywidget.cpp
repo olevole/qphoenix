@@ -150,15 +150,36 @@ void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
     mResText->clear();
 
     foreach(DictionaryVariant var, lst) {
-        const QString src_term = QString("<b>%1</b>").arg(var.sourceTerm());
-        const QString res_term = QString("\t%1").arg(var.resultTerm());
-        const QString src_sense = QString("\t%1").arg(var.sourceSense());
-        const QString res_sense = QString("\t%1").arg(var.resultSense());
 
-        mResText->append(src_term + "  (" +    src_sense + ")");
 
-        mResText->append("\n\nFrench:" +  res_term);
-        mResText->append(res_sense);
+        const QString src_term = var.sourceTerm();
+        const QString res_term = var.resultTerm();
+        const QString src_sense = var.sourceSense();
+        const QString res_sense = var.resultSense();
+
+
+        mResText->append(QString("<b>%1</b> (%2)").arg(src_term, src_sense));
+
+
+
+
+
+        mResText->append("\nTranslation: " +  res_term);
+
+        if(!res_sense.isEmpty())
+            mResText->append("Sense: " + res_sense);
+
+        mResText->append("\n\n\n\n");
+
 
     }
+
+    mResText->append("\\dpline");
+
+//    mResText->append("<hr>");
+
+
+
 }
+
+

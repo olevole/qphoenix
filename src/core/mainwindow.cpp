@@ -83,7 +83,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     setWindowTitle(qApp->applicationName());
 
-
 //    this->setStyleSheet("background-color: red;");
 
     mFileMenu->addAction(mActionOpen);

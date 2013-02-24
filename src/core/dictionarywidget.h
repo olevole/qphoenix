@@ -47,50 +47,6 @@ class QStringListModel;
 class QTimer;
 
 
-//--------------------------------------------------------------------------
-
-//class DictionaryVariantViewFragment : public QWidget
-//{
-//    Q_OBJECT
-//public:
-//    explicit DictionaryVariantViewFragment(QWidget *parent = 0);
-
-//    QLabel *label() { return mLabel; }
-
-//protected:
-//    void enterEvent(QEvent *e);
-//    void leaveEvent(QEvent *e);
-//private:
-//    QLabel *mLabel;
-//    QToolButton *speechButton, *copyButton;
-//private slots:
-//    void copy();
-//    void speech(){}
-//signals:
-//    void speech( QString text,  QString lang);
-
-//};
-
-
-////--------------------------------------------------------------------------
-
-
-//class DictionaryVariantView : public QWidget
-//{
-//    Q_OBJECT
-//public:
-//        explicit DictionaryVariantView(QWidget *parent = 0);
-////public slots:
-////    void addFragment(DictionaryVariantViewFragment *w);
-//private:
-//    QWidgetList mFragmentList;
-//    QVBoxLayout *mLayout;
-//signals:
-//    void speech(QString text, QString lang);
-//};
-
-//--------------------------------------------------------------------------
-
 
 class DictionaryWidget : public QWidget, IDictionaryWidget, Info
 {
@@ -104,11 +60,17 @@ public:
     virtual QLineEdit   *srcText()      {return mSrcText;       }
     virtual QTextBrowser*resText()      {return mResText;       }
 public slots:
+
+    void setNativeNames(const bool b) { mNativeNames = b;}
+
     void setCompletions(const QStringList &comp);
     void displayData(const DictionaryVariantList &lst);
+
 signals:
     void queryChanged();
 private:
+    bool mNativeNames;
+
     QTimer *mQueryChangeDelay;
     QComboBox *mLanguagesComboBox;
     QLineEdit *mSrcText;

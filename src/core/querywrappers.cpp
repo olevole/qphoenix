@@ -24,8 +24,8 @@ void DictionaryWrapper::run()
         }
 
         const QStringList c = iface->completions(mQuery, mPair);
-        iface->completions(mQuery, mPair);
-        iface->completions(mQuery, mPair);
+//        iface->completions(mQuery, mPair);
+//        iface->completions(mQuery, mPair);
 
 
 //        if(c.size() > 1)
