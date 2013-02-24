@@ -45,43 +45,30 @@ typedef QList<DictionaryVariant> DictionaryVariantList;
 class DictionaryVariant
 {
 public:
-    DictionaryVariant(/*const Abbreviation abbr, */const QString &src_word,
-                      const QString &expl, const QString &trans) {
-//        setAbbr(abbr);
-        setSourceWord(src_word);
-        setExplaination(expl);
-        setTranslation(trans);
+    DictionaryVariant(const QString &src_term, const QString &res_term,
+                      const QString &src_sense, const QString &res_sense) {
+        setSourceTerm(src_term);
+        setResultTerm(res_term);
+        setSourceSense(src_sense);
+        setResultSense(res_sense);
     }
 
-    void setSourceTerm(const QString &term){}
-    void setResultTerm(const QString &term){}
+    void setSourceTerm(const QString &term){mSrcTerm = term;}
+    void setResultTerm(const QString &term){mResTerm = term;}
 
-    void setSourceSense(const QString &sense){}
-    void setResultSense(const QString &sense){}
+    void setSourceSense(const QString &sense){mSrcSense = sense;}
+    void setResultSense(const QString &sense){mResSense = sense;}
 
-    QString sourceTerm() const;
-    QString resultTerm() const;
+    QString sourceTerm() const {return mSrcTerm;}
+    QString resultTerm() const {return mResTerm;}
 
-    QString sourceSense() const;
-    QString resultSense() const;
-
-
-
-//    void setAbbr(const Abbreviation abbr) { mAbbr = abbr;}
-    void setSourceWord(const QString &word) { mSrcWord = word;}
-    void setExplaination(const QString &expl) {mExpl = expl;}
-    void setTranslation(const QString &tr) {mTrans = tr;}
-
-//    Abbreviation abbr() const   { return mAbbr;     }
-    QString sourceWord() const  { return mSrcWord;  }
-    QString explaination() const{ return mExpl;     }
-    QString translation() const { return mTrans;    }
+    QString sourceSense() const{return mSrcSense;}
+    QString resultSense() const{return mResSense;}
 private:
-//    Abbreviation mAbbr;
-    QString mSrcWord, mExpl, mTrans;
+    QString mSrcSense, mResSense, mSrcTerm, mResTerm;
+
 };
 
-//qRegisterMetaType<DictionaryVariant>("DictionaryVariant");
 
 class IDictionary : public IModule {
 public:

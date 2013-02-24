@@ -114,7 +114,6 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mQueryChangeDelay->setInterval(1000);
     mQueryChangeDelay->setSingleShot(true);
 
-//    mResText->append("<div padding=\"120px\"><b>this is in bold</b></div>");
 
     setName(tr("Dictionary"));
 
@@ -151,18 +150,15 @@ void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
     mResText->clear();
 
     foreach(DictionaryVariant var, lst) {
-        const QString src = QString("<b>%1</b>").arg(var.sourceWord());
-        const QString translation = QString("\t%1").arg(var.translation());
-        const QString expl = QString("\t%1").arg(var.explaination());
+        const QString src_term = QString("<b>%1</b>").arg(var.sourceTerm());
+        const QString res_term = QString("\t%1").arg(var.resultTerm());
+        const QString src_sense = QString("\t%1").arg(var.sourceSense());
+        const QString res_sense = QString("\t%1").arg(var.resultSense());
 
-        mResText->append(src);
-        mResText->append(translation);
-        mResText->append(expl);
-//        mResText->setPlainText("TEST");
+        mResText->append(src_term + "  (" +    src_sense + ")");
 
-//        const QString text = mResText->toPlainText() + var.translation() + "|" + var.explaination() +"\n";
-//        qDebug() << "ITERATION: " << text;
-//        mResText->setPlainText(text);
+        mResText->append("\n\nFrench:" +  res_term);
+        mResText->append(res_sense);
 
     }
 }
