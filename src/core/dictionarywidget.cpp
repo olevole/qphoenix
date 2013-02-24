@@ -38,70 +38,12 @@
 #include <QClipboard>
 
 
-//--------------------------------------------------------------------------
-
-
-//DictionaryVariantViewFragment::DictionaryVariantViewFragment(QWidget *parent)
-//    :QWidget(parent),
-//      mLabel(new QLabel("TEST", this)),
-//      speechButton(new QToolButton(this)),
-//      copyButton(new QToolButton(this))
-//{
-//    speechButton->setVisible(false);
-//    copyButton->setVisible(false);
-
-//    QHBoxLayout *l = new QHBoxLayout;
-//    l->addWidget(mLabel);
-//    l->addWidget(speechButton);
-//    l->addWidget(copyButton);
-
-//    l->addStretch();
-//    this->setLayout(l);
-//    mLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
-
-
-//    connect(copyButton, SIGNAL(clicked()),this, SLOT(copy()));
-//    connect(speechButton, SIGNAL(clicked()), this, SLOT(speech()));
-
-
-//}
-
-//void DictionaryVariantViewFragment::enterEvent(QEvent *e) {
-//    speechButton->setVisible(true);
-//    copyButton->setVisible(true);
-
-//    qDebug() << "MOUSE ENTER!";
-//    update();
-
-
-//}
-
-
-//void DictionaryVariantViewFragment::leaveEvent(QEvent *e) {
-//    speechButton->setVisible(false);
-//    copyButton->setVisible(false);
-//}
-
-
-//void DictionaryVariantViewFragment::copy() {
-//    const QString text = mLabel->selectedText().isEmpty()
-//            ? mLabel->text() : mLabel->selectedText();
-
-//    QApplication::clipboard()->setText(text);
-//}
-
-
-
-//--------------------------------------------------------------------------
-
-
-
 
 DictionaryWidget::DictionaryWidget(QWidget *parent) :
     QWidget(parent),
     mLanguagesComboBox(new QComboBox(this)),
     mSrcText(new QLineEdit(this)),
-    mResText(new QTextBrowser(this)),
+    mResText(new QWebView(this)),
     mLineLayout(new QHBoxLayout),
     mMainLayout(new QVBoxLayout),
     mCompleter(new QCompleter(this)),
@@ -109,6 +51,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mQueryChangeDelay(new QTimer(this))
 
 {
+
 
 
     mQueryChangeDelay->setInterval(1000);
@@ -121,6 +64,10 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mLineLayout->addWidget(mSrcText);
 
     mMainLayout->addLayout(mLineLayout);
+
+
+
+
     mMainLayout->addWidget(mResText);
     setIcon(QP_ICON("dictionary"));
 
@@ -138,6 +85,30 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mSrcText->setPlaceholderText("Put some word here..");
 
     setLayout(mMainLayout);
+
+
+
+
+
+
+// TODO: Check files!!!
+
+    QFile f1(":/files/dict_template.html");
+    QFile f2(":/files/dict_template_item.html");
+
+    f1.open(QFile::ReadOnly);
+    f2.open(QFile::ReadOnly);
+
+
+
+    mBaseTemplate = f1.readAll();
+    mFragmentTemplate = f2.readAll();
+
+
+    f1.close();
+    f2.close();
+
+
 }
 
 
@@ -146,9 +117,10 @@ void DictionaryWidget::setCompletions(const QStringList &comp) {
 }
 
 void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
-    qDebug() << "COUNT: " << lst.count();
-    mResText->clear();
+    qDebug() << "COUNT: " << lst.count() << "SIZE: " << mBaseTemplate.size();
 
+
+    QString base;
     foreach(DictionaryVariant var, lst) {
 
 
@@ -158,25 +130,23 @@ void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
         const QString res_sense = var.resultSense();
 
 
-        mResText->append(QString("<b>%1</b> (%2)").arg(src_term, src_sense));
+
+        // TODO: REMOVE THIS DIRTY HACK!
+        const QString tmp = mFragmentTemplate;
 
 
+        base += mFragmentTemplate.
+                replace("{SRC_TERM}", src_term).
+                replace("{SRC_SENSE}", src_sense).
+                replace("{RES_TERM}", res_term).
+                replace("{RES_SENSE}", res_sense);
+
+        mFragmentTemplate = tmp;
 
 
-
-        mResText->append("\nTranslation: " +  res_term);
-
-        if(!res_sense.isEmpty())
-            mResText->append("Sense: " + res_sense);
-
-        mResText->append("\n\n\n\n");
-
-
+        qDebug() << "TEMPLATE: " << mFragmentTemplate;
     }
-
-    mResText->append("\\dpline");
-
-//    mResText->append("<hr>");
+    mResText->setHtml(mBaseTemplate.replace("{CONTENT}", base));
 
 
 

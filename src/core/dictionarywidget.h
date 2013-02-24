@@ -32,6 +32,7 @@
 
 
 #include <QLabel>
+#include <QWebView>
 
 
 class QComboBox;
@@ -45,6 +46,7 @@ class QHBoxLayout;
 class QVBoxLayout;
 class QStringListModel;
 class QTimer;
+class QWebView;
 
 
 
@@ -58,7 +60,7 @@ public:
 
     virtual QComboBox   *languagesComboBox() {return mLanguagesComboBox;   }
     virtual QLineEdit   *srcText()      {return mSrcText;       }
-    virtual QTextBrowser*resText()      {return mResText;       }
+    virtual QWebView    *resText()      {return mResText;       }
 public slots:
 
     void setNativeNames(const bool b) { mNativeNames = b;}
@@ -74,7 +76,7 @@ private:
     QTimer *mQueryChangeDelay;
     QComboBox *mLanguagesComboBox;
     QLineEdit *mSrcText;
-    QTextBrowser *mResText;
+    QWebView *mResText;
     QGroupBox   *mGroupbox;
 
     QCompleter *mCompleter;
@@ -83,6 +85,9 @@ private:
 
     QHBoxLayout *mLineLayout;
     QVBoxLayout *mMainLayout;    
+
+
+    QString mBaseTemplate, mFragmentTemplate;
 };
 
 #endif // DICTIONARYWIDGET_H

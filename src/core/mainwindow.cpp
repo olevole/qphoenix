@@ -336,7 +336,7 @@ void MainWindow::clear() {
 
         case 1:
             dictionaryWidget()->srcText()->clear();
-            dictionaryWidget()->resText()->clear();
+//            dictionaryWidget()->resText()->clear();
         break;
     }
 }
@@ -419,9 +419,9 @@ QString MainWindow::getCopyableContent()  {
     switch(currentIndex()) {
     case 0:
         text = translationWidget()->resText()->toPlainText();
-    case 1:
+//    case 1:
         //TODO: improve this part (because of html content?)
-        text = dictionaryWidget()->resText()->toPlainText();
+//        text = dictionaryWidget()->resText()->toPlainText();
     }
     return text;
 }

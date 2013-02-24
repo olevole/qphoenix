@@ -25,7 +25,7 @@
 
 class QComboBox;
 class QLineEdit;
-class QTextBrowser;
+class QWebView;
 
 
 
@@ -35,7 +35,7 @@ public:
 
     virtual QComboBox   *languagesComboBox() = 0;
     virtual QLineEdit   *srcText() = 0;
-    virtual QTextBrowser*resText() = 0;
+    virtual QWebView *resText() = 0;
 };
 
 
