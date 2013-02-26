@@ -70,6 +70,7 @@ private slots:
 
     //! Update plugins, etc information from config dialog.
     void onConfigAccept();
+    void onIndexChange(const int i);
 
 //    void open();
 //    void save();

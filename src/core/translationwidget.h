@@ -73,6 +73,7 @@ public:
     virtual QToolButton *swapButton()       { return mSwapButton;       }
     virtual QToolBar    *srcToolbar()       { return mSrcToolbar;       }
     virtual QToolBar    *resToolbar()       { return mResToolbar;       }
+    virtual QToolBar    *mainToolBar()      { return mMainToolBar;       }
 
     void setLangTable(const LanguageTable table) {
         if(mTable != table) {
@@ -97,9 +98,16 @@ private slots:
 
     void fillCombobox(QComboBox *cb, QStringList keys);
 private:
+
+
+    QToolBar *mMainToolBar;
+
+
+
     QComboBox
     *mSrcComboBox,
-    *mResComboBox;
+    *mResComboBox,
+    *mTranslatorComboBox;
 
     QTextEdit *mSrcText;
     QTextBrowser *mResText;

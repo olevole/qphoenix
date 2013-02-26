@@ -124,6 +124,10 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setMenuBar(mMenuBar);
     this->addToolBar(mToolBar);
 
+    this->addToolBar(mDictionaryWidget->mainToolBar());
+    this->addToolBar(mTranslationWidget->mainToolBar());
+
+
 
     this->addPage(mTranslationWidget);
     this->addPage(mDictionaryWidget);
@@ -162,6 +166,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(&mDictionaryWrapper, SIGNAL(reply(DictionaryVariantList)), mDictionaryWidget, SLOT(displayData(DictionaryVariantList)));
     connect(&mDictionaryWrapper, SIGNAL(reply(QStringList)), mDictionaryWidget, SLOT(setCompletions(QStringList)));
+
+    connect(mTabWidget, SIGNAL(currentChanged(int)), this, SLOT(onIndexChange(int)));
+
 
 
     // Read configs
@@ -323,6 +330,10 @@ void MainWindow::onConfigAccept() {
     qDebug() << "SIZE OF DICTS" << mDictList.count();
 }
 
+
+void MainWindow::onIndexChange(const int i) {
+    mDictionaryWidget->mainToolBar()->setVisible(i == 1);
+}
 
 //----------------------------------------------------------------------------------------------
 // Actions slots

@@ -36,6 +36,10 @@
 #include <QTimer>
 #include <QApplication>
 #include <QClipboard>
+#include <QToolBar>
+#include <QAction>
+
+
 
 
 
@@ -48,14 +52,18 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mMainLayout(new QVBoxLayout),
     mCompleter(new QCompleter(this)),
     mCompleterModel(new QStringListModel(this)),
-    mQueryChangeDelay(new QTimer(this))
+    mQueryTimer(new QTimer(this)),
+    mMainToolBar(new QToolBar(this))
 
 {
 
+//    mLanguagesComboBox->setLineEdit(new QLineEdit(this));
+
+    mResText->setZoomFactor(0.7);
 
 
-    mQueryChangeDelay->setInterval(1000);
-    mQueryChangeDelay->setSingleShot(true);
+    mQueryTimer->setInterval(1000);
+    mQueryTimer->setSingleShot(true);
 
 
     setName(tr("Dictionary"));
@@ -68,12 +76,18 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 
 
 
-    mMainLayout->addWidget(mResText);
+    QFrame *fr = new QFrame(this);
+    fr->setFrameShape(QFrame::StyledPanel);
+    fr->setLayout(new QVBoxLayout);
+    fr->layout()->addWidget(mResText);
+
+
+    mMainLayout->addWidget(fr);
     setIcon(QP_ICON("dictionary"));
 
 
-    connect(mSrcText, SIGNAL(textChanged(QString)), mQueryChangeDelay, SLOT(start()));
-    connect(mQueryChangeDelay, SIGNAL(timeout ()), this, SIGNAL(queryChanged()));
+    connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
+    connect(mQueryTimer, SIGNAL(timeout ()), this, SIGNAL(queryChanged()));
 
 
     QRegExpValidator *v = new QRegExpValidator(QRegExp("[^\Q,.\E].*"), this);
@@ -88,6 +102,18 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 
 
 
+    QAction *aZoomOut = new QAction(QP_ICON("zoom-out"), tr("Zoom Out"), this);
+    QAction *aZoomIn = new QAction(QP_ICON("zoom-in"), tr("Zoom In"), this);
+
+    aZoomIn->setAutoRepeat(true);
+    aZoomOut->setAutoRepeat(true);
+
+    connect(aZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
+    connect(aZoomIn, SIGNAL(triggered()), this, SLOT(zoomIn()));
+
+
+    mMainToolBar->addAction(aZoomOut);
+    mMainToolBar->addAction(aZoomIn);
 
 
 
@@ -100,13 +126,17 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     f2.open(QFile::ReadOnly);
 
 
+    mBase = f1.readAll();
+    mFragment = f2.readAll();
 
-    mBaseTemplate = f1.readAll();
-    mFragmentTemplate = f2.readAll();
+
 
 
     f1.close();
     f2.close();
+
+
+
 
 
 }
@@ -117,7 +147,8 @@ void DictionaryWidget::setCompletions(const QStringList &comp) {
 }
 
 void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
-    qDebug() << "COUNT: " << lst.count() << "SIZE: " << mBaseTemplate.size();
+    qDebug() << "COUNT: " << lst.count() << "SIZE: " << mBase.size();
+
 
 
     QString base;
@@ -132,23 +163,34 @@ void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
 
 
         // TODO: REMOVE THIS DIRTY HACK!
-        const QString tmp = mFragmentTemplate;
+        QString fragment = mFragment;
 
 
-        base += mFragmentTemplate.
+        base += fragment.
                 replace("{SRC_TERM}", src_term).
                 replace("{SRC_SENSE}", src_sense).
                 replace("{RES_TERM}", res_term).
                 replace("{RES_SENSE}", res_sense);
 
-        mFragmentTemplate = tmp;
 
 
-        qDebug() << "TEMPLATE: " << mFragmentTemplate;
+        qDebug() << "TEMPLATE: " << fragment;
     }
-    mResText->setHtml(mBaseTemplate.replace("{CONTENT}", base));
+
+    QString __base = mBase;
 
 
+    mResText->setHtml(__base.replace("{CONTENT}", base));
+}
+
+
+void DictionaryWidget::zoomIn() {
+    mResText->setZoomFactor(mResText->zoomFactor()+0.1);
+}
+
+
+void DictionaryWidget::zoomOut() {
+    mResText->setZoomFactor(mResText->zoomFactor()-0.1);
 
 }
 

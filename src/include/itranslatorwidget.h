@@ -43,11 +43,13 @@ public:
     virtual QPushButton *translateButton() = 0;
     virtual QToolButton *swapButton() = 0;
 
-
+    virtual QToolBar    *mainToolBar() = 0;
     virtual QToolBar    *srcToolbar() = 0;
     virtual QToolBar    *resToolbar() = 0;
-
+// SLots
     virtual void swap() = 0;
+
+
 };
 
 

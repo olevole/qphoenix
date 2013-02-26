@@ -26,6 +26,7 @@
 class QComboBox;
 class QLineEdit;
 class QWebView;
+class QToolBar;
 
 
 
@@ -36,6 +37,8 @@ public:
     virtual QComboBox   *languagesComboBox() = 0;
     virtual QLineEdit   *srcText() = 0;
     virtual QWebView *resText() = 0;
+
+    virtual QToolBar *mainToolBar() = 0;
 };
 
 

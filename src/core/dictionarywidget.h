@@ -47,6 +47,7 @@ class QVBoxLayout;
 class QStringListModel;
 class QTimer;
 class QWebView;
+class QToolBar;
 
 
 
@@ -61,19 +62,26 @@ public:
     virtual QComboBox   *languagesComboBox() {return mLanguagesComboBox;   }
     virtual QLineEdit   *srcText()      {return mSrcText;       }
     virtual QWebView    *resText()      {return mResText;       }
+    virtual QToolBar    *mainToolBar()  { return mMainToolBar;       }
+
 public slots:
 
     void setNativeNames(const bool b) { mNativeNames = b;}
 
     void setCompletions(const QStringList &comp);
     void displayData(const DictionaryVariantList &lst);
+private slots:
+    void zoomIn();
+    void zoomOut();
 
 signals:
     void queryChanged();
 private:
     bool mNativeNames;
 
-    QTimer *mQueryChangeDelay;
+    QToolBar *mMainToolBar;
+
+    QTimer *mQueryTimer;
     QComboBox *mLanguagesComboBox;
     QLineEdit *mSrcText;
     QWebView *mResText;
@@ -87,7 +95,9 @@ private:
     QVBoxLayout *mMainLayout;    
 
 
-    QString mBaseTemplate, mFragmentTemplate;
+
+
+    QString mBase, mFragment;
 };
 
 #endif // DICTIONARYWIDGET_H

@@ -56,6 +56,7 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     QWidget(parent),
     mSrcComboBox(new QComboBox(this)),
     mResComboBox(new QComboBox(this)),
+    mTranslatorComboBox(new QComboBox(this)),
     mSrcText(new QTextEdit(this)),
     mResText(new QTextBrowser(this)),
     mTranslateButton(new QPushButton(tr("Translate"),this)),
@@ -65,6 +66,7 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
 
     mSrcToolbar(new TranslationToolBar(this)),
     mResToolbar(new TranslationToolBar(this)),
+    mMainToolBar(new QToolBar(this)),
     mNativeNames(true)
 
 {
@@ -74,6 +76,10 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mButtonsLayout->addWidget(mResComboBox);
     mButtonsLayout->addStretch();
     mButtonsLayout->addWidget(mTranslateButton);
+
+
+    mMainToolBar->addWidget(mTranslatorComboBox);
+
 
 
     mMainLayout->addWidget(mSrcToolbar);
