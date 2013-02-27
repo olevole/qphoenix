@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QDebug>
+#include <QSettings>
 #include "imainwindow.h"
 #include "idictionarywidget.h"
 #include "dictionarywidget.h"
@@ -19,6 +20,8 @@ class QAction;
 class QClipboard;
 class QTabWidget;
 class QTimer;
+class QCloseEvent;
+
 
 
 class Config;
@@ -63,19 +66,31 @@ public:
 
 
     QString getCopyableContent();
-
-
+protected:
+    void closeEvent(QCloseEvent *event);
 
 private slots:
+
+
 
     //! Update plugins, etc information from config dialog.
     void onConfigAccept();
     void onIndexChange(const int i);
 
+    void readCfg();
+    void saveCfg();
+
+
+
+    /*
+     * Menu actions slots
+     */
+
 //    void open();
 //    void save();
 //    void saveAs();
 //    void print();
+    void exit();
 
     void clear();
     void copy();
@@ -90,11 +105,6 @@ private slots:
 
     void translate();
     void diction();
-
-
-
-
-
 private:
     QStatusBar  *mStatusBar;
     QToolBar    *mToolBar;

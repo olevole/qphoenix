@@ -87,6 +87,8 @@ public:
     }
 
     void setNativeNames(const bool b) {mNativeNames = b;}
+
+    QComboBox *translatorComboBox() { return mTranslatorComboBox;}
 public slots:
     virtual void swap();
 
@@ -97,6 +99,8 @@ private slots:
     void onTableChanged();
 
     void fillCombobox(QComboBox *cb, QStringList keys);
+
+
 private:
 
 

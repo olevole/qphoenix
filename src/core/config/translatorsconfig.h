@@ -45,6 +45,8 @@ public:
     void read() {}
     void reset(){}
 
+    QComboBox *translatorComboBox() { return mTranslatorComboBox;}
+
 
     ITranslator *currentTranslator() {
         if(mTranslatorComboBox->currentIndex() > -1)

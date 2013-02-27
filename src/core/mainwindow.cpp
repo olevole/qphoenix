@@ -144,7 +144,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mSettingsDialog->addPage(mPluginsConfig);
 
     connect(mActionOptions, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
-    connect(mActionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
+    connect(mActionExit, SIGNAL(triggered()), this, SLOT(exit()));
 
 
     connect(mActionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
@@ -171,8 +171,30 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
+
+
+    QComboBox *src = mTranslationWidget->translatorComboBox();
+    QComboBox *dest = mTranslatorsConfig->translatorComboBox();
+
+    connect(src, SIGNAL(currentIndexChanged(int)), dest, SLOT(setCurrentIndex(int)));
+    connect(dest, SIGNAL(currentIndexChanged(int)), src, SLOT(setCurrentIndex(int)));
+
+
+
+    QStringList items;
+    for (int i = 0; i < dest->count(); ++i) {
+        items << dest->itemText(i);
+    }
+
+    src->clear();
+
+    src->addItems(items);
+
+
     // Read configs
     onConfigAccept();
+
+    readCfg();
 
 
     // NOTE: Timeout must be set! By default it's 0 (nothing will be processed)
@@ -196,7 +218,7 @@ void MainWindow::addPage(QWidget *page) {
     QString name = i->name();
 
     mTabWidget->insertTab(mTabWidget->count(), page, icon, name);
-    resize(800, 600);
+//    resize(800, 600);
 }
 
 void MainWindow::removePage(const QWidget *page) {
@@ -207,12 +229,11 @@ QWidget *MainWindow::pageAt(const int i) {
     return new QWidget();
 }
 
-int MainWindow::currentIndex() const {
-    return mTabWidget->currentIndex();
-}
+
 
 void MainWindow::setCurrentIndex(const int i) {
     mTabWidget->setCurrentIndex(i);
+    onIndexChange(i);
 }
 
 
@@ -333,10 +354,39 @@ void MainWindow::onConfigAccept() {
 
 void MainWindow::onIndexChange(const int i) {
     mDictionaryWidget->mainToolBar()->setVisible(i == 1);
+    mTranslationWidget->mainToolBar()->setVisible(i == 0);
 }
+
+
+void MainWindow::readCfg() {
+    QSettings s;
+    s.beginGroup("MainWindow");
+    this->setCurrentIndex(s.value("tabIndex", 0).toInt());
+    this->restoreGeometry(s.value("geometry").toByteArray());
+    s.endGroup();
+}
+
+
+
+void MainWindow::saveCfg() {
+    QSettings s;
+    s.beginGroup("MainWindow");
+    s.setValue("tabIndex", mTabWidget->currentIndex());
+    s.setValue("geometry", saveGeometry());
+    s.endGroup();
+}
+
 
 //----------------------------------------------------------------------------------------------
 // Actions slots
+
+
+void MainWindow::exit() {
+    saveCfg();
+    qApp->quit();
+}
+
+
 void MainWindow::clear() {
     const int i = currentIndex();
     switch(i){
@@ -423,7 +473,9 @@ void MainWindow::diction() {
 
 }
 
-
+int MainWindow::currentIndex() const {
+    return mTabWidget->currentIndex();
+}
 
 QString MainWindow::getCopyableContent()  {
     QString text;
@@ -435,4 +487,11 @@ QString MainWindow::getCopyableContent()  {
 //        text = dictionaryWidget()->resText()->toPlainText();
     }
     return text;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+//    saveCfg();
+//    exit();
+    QMainWindow::closeEvent(event);
 }
