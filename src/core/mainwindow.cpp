@@ -24,6 +24,7 @@
 #include <QFrame>
 #include <QTabWidget>
 #include <QToolButton>
+#include <QCloseEvent>
 
 
 #include "iplugin.h"
@@ -51,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Menus
     mFileMenu(new QMenu(tr("File"), this)),
     mEditMenu(new QMenu(tr("Edit"), this)),
+    mToolsMenu(new QMenu(tr("Tools"), this)),
     mHelpMenu(new QMenu(tr("Help"), this)),
 
     //Actions
@@ -61,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mActionPrint(new QAction(QP_ICON("document-print"),tr("Print"), this)),
 
     mActionClear(new QAction(QP_ICON("edit-clear"), tr("Clear"), this)),
-    mActionCopy(new QAction(QP_ICON("edit-copy"),tr("Copy"), this)),
+//    mActionCopy(new QAction(QP_ICON("edit-copy"),tr("Copy"), this)),
     mActionUndo(new QAction(QP_ICON("edit-undo"),tr("Undo"), this)),
     mActionRedo(new QAction(QP_ICON("edit-redo"),tr("Redo"), this)),
     mActionSwap(new QAction(tr("Swap"), this)),
@@ -83,6 +85,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     setWindowTitle(qApp->applicationName());
 
+    // Closeable by default
+    setWindowCloseable(true);
 //    this->setStyleSheet("background-color: red;");
 
     mFileMenu->addAction(mActionOpen);
@@ -94,7 +98,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mFileMenu->addAction(mActionExit);
 
     mEditMenu->addAction(mActionClear);
-    mEditMenu->addAction(mActionCopy);
+//    mEditMenu->addAction(mActionCopy);
     mEditMenu->addSeparator();
     mEditMenu->addAction(mActionUndo);
     mEditMenu->addAction(mActionRedo);
@@ -152,7 +156,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Edit actions connects
     connect(mActionClear, SIGNAL(triggered()), this, SLOT(clear()));
-    connect(mActionCopy, SIGNAL(triggered()), this, SLOT(copy()));
+//    connect(mActionCopy, SIGNAL(triggered()), this, SLOT(copy()));
     connect(mActionUndo, SIGNAL(triggered()), this, SLOT(undo()));
     connect(mActionRedo, SIGNAL(triggered()), this, SLOT(redo()));
     connect(mActionSwap, SIGNAL(triggered()), this, SLOT(swap()));
@@ -269,17 +273,13 @@ void MainWindow::onConfigAccept() {
 
     if(enabledKeys != mLastEnabledLanguages) {
         mLastEnabledLanguages = enabledKeys;
-
-
         ITranslator *translator  = mTranslatorsConfig->currentTranslator();
         LanguageTable table;
-
 
         if(translator != NULL)
             table = translator->table();
         else
             qWarning("No translators loaded! Nothing to do!");
-
 
         QStringList keys = table.keys();
 
@@ -313,7 +313,6 @@ void MainWindow::onConfigAccept() {
     QObjectList dicts = mDictionaryConfig->dictionaries();
 
 //    QStringList enabledKeys = mLanguageConfig->keysForEnabled();
-
     foreach(QObject *obj, dicts) {
         IDictionary *iface = qobject_cast<IDictionary *>(obj);
         mDictList << iface;
@@ -397,14 +396,11 @@ void MainWindow::clear() {
 
         case 1:
             dictionaryWidget()->srcText()->clear();
-//            dictionaryWidget()->resText()->clear();
+            dictionaryWidget()->resText()->setHtml("<html><body></body></html>");
         break;
     }
 }
 
-void MainWindow::copy() {
-    mClipboard->setText(getCopyableContent());
-}
 
 
 void MainWindow::undo() {
@@ -425,8 +421,8 @@ void MainWindow::redo() {
         translationWidget()->srcText()->redo();
         break;
     case 1:
-            dictionaryWidget()->srcText()->redo();
-        break;
+        dictionaryWidget()->srcText()->redo();
+    break;
     }
 }
 
@@ -442,6 +438,9 @@ void MainWindow::about() {
 }
 
 void MainWindow::translate() {
+    mStatusBar->clearMessage();
+
+
     QString src_text = this->translationWidget()->srcText()->toPlainText();
 
 
@@ -452,6 +451,10 @@ void MainWindow::translate() {
     QString res_lang = mTranslationWidget->resComboBox()->
             itemData(mTranslationWidget->resComboBox()->currentIndex()).toString();
 
+    if(src_lang == res_lang) {
+        mStatusBar->showMessage(tr("Please select two distinct languages!"));
+        return;
+    }
 
 
     connect(&mTranslatorWrapper, SIGNAL(reply(QString)), this->translationWidget()->resText(), SLOT(setText(QString)));
@@ -477,21 +480,14 @@ int MainWindow::currentIndex() const {
     return mTabWidget->currentIndex();
 }
 
-QString MainWindow::getCopyableContent()  {
-    QString text;
-    switch(currentIndex()) {
-    case 0:
-        text = translationWidget()->resText()->toPlainText();
-//    case 1:
-        //TODO: improve this part (because of html content?)
-//        text = dictionaryWidget()->resText()->toPlainText();
-    }
-    return text;
-}
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-//    saveCfg();
-//    exit();
-    QMainWindow::closeEvent(event);
+    if(mWindowCloseable) {
+        saveCfg();
+        event->accept();
+        QMainWindow::closeEvent(event);
+    } else {
+        event->ignore();
+    }
 }

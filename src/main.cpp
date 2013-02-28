@@ -12,6 +12,7 @@
 #include "idictionary.h"
 
 
+#include <QComboBox>
 
 
 int main(int argc, char *argv[])
@@ -36,6 +37,8 @@ int main(int argc, char *argv[])
     MainWindow *mw = new MainWindow();
     mw->show();
     mw->setWindowIcon(QP_ICON("dictionary"));
+
+    qDebug() << "USER DATA: " << mw->translationWidget()->srcComboBox()->itemData(mw->translationWidget()->srcComboBox()->currentIndex());
 
     return a.exec();
 }

@@ -36,7 +36,8 @@
 #include "defines.h"
 #include <QMap>
 #include <QClipboard>
-
+#include <QLabel>
+#include <QSizePolicy>
 
 TranslationToolBar::TranslationToolBar(QWidget *parent)
     :QToolBar(parent),
@@ -78,7 +79,15 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mButtonsLayout->addWidget(mTranslateButton);
 
 
-    mMainToolBar->addWidget(mTranslatorComboBox);
+    QHBoxLayout *l = new QHBoxLayout;
+    l->addWidget(new QLabel(tr("Translator:"), this));
+    l->addWidget(mTranslatorComboBox);
+
+    //TODO: Vertical toolbar expanding issue, and ugly code
+    QWidget *w = new QWidget(this);
+    w->setLayout(l);
+//    mMainToolBar->setLayout(l);
+    mMainToolBar->addWidget(w);
 
 
 
@@ -161,7 +170,9 @@ void TranslationWidget::copyResText() {
 void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
 
 
-    foreach (QString key, keys) {
+    for (int i = 0; i < keys.count(); ++i) {
+        QString key =  keys[i];
+
         QString icon = QString(":/flags/%1.png").arg(key);
         QString name;
 
@@ -172,5 +183,6 @@ void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
             name = entry.name();
 
         cb->addItem(QIcon(icon), name, key);
+        cb->setItemData(i, key);
     }
 }

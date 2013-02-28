@@ -70,6 +70,15 @@ public:
     //    virtual Info currentDictionaryInfo() const = 0;
 
 
+
+    // SOme specific flags
+
+
+    // Should we filter close event or not?
+    virtual void setWindowCloseable(const bool b) = 0;
+    virtual bool windowCloseable() const = 0;
+
+
 };
 
 

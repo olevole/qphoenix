@@ -65,7 +65,11 @@ public:
     int currentIndex() const;
 
 
-    QString getCopyableContent();
+//    QString getCopyableContent();
+
+
+    void setWindowCloseable(const bool b) {mWindowCloseable = b;}
+    bool windowCloseable() const { return mWindowCloseable;}
 protected:
     void closeEvent(QCloseEvent *event);
 
@@ -93,7 +97,7 @@ private slots:
     void exit();
 
     void clear();
-    void copy();
+//    void copy();
     void undo();
     void redo();
     void swap();
@@ -106,12 +110,15 @@ private slots:
     void translate();
     void diction();
 private:
+    bool mWindowCloseable;
+
+
     QStatusBar  *mStatusBar;
     QToolBar    *mToolBar;
     QMenuBar    *mMenuBar;
     QTabWidget *mTabWidget;
 
-    QMenu   *mFileMenu, *mEditMenu, *mHelpMenu;
+    QMenu   *mFileMenu, *mEditMenu, *mToolsMenu, *mHelpMenu;
 
     // File menu
     QAction
@@ -124,7 +131,7 @@ private:
     // Edit Menu
     QAction
     *mActionClear,
-    *mActionCopy,
+//    *mActionCopy,
     *mActionUndo,
     *mActionRedo,
     *mActionSwap,
