@@ -10,7 +10,6 @@
 #include <QDebug>
 #include <QThread>
 #include <QTime>
-#include <QtTest/QTest>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkRequest>
 #include <QtNetwork/QNetworkReply>
