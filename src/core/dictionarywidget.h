@@ -54,8 +54,7 @@ class QToolBar;
 class DictionaryWidget : public QWidget, IDictionaryWidget, Info
 {
     Q_OBJECT
-    Q_INTERFACES(IDictionaryWidget)
-    Q_INTERFACES(Info)
+    Q_INTERFACES(IDictionaryWidget Info)
 public:
     explicit DictionaryWidget(QWidget *parent = 0);
 

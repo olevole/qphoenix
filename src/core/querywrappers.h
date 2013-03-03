@@ -77,8 +77,9 @@ class TranslatorWorker : public IWorker
 public:
     TranslatorWorker();
 
-    void setTranslator(ITranslator *ptr)
-    {mPtr = ptr;}
+    void setTranslator(ITranslator *ptr){mPtr = ptr;}
+
+    ITranslator *translator(){return mPtr;}
 protected:
     void run();
 public slots:

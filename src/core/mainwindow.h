@@ -47,16 +47,13 @@ public:
     QWidget *pageAt(const int i);
 
     IDictionaryWidget *dictionaryWidget()
-    {return qobject_cast<IDictionaryWidget *>(mDictionaryWidget);  }
+    {return qobject_cast<IDictionaryWidget *>(mDictionaryWidget); }
 
     ITranslatorWidget *translationWidget()
     {return qobject_cast<ITranslatorWidget *>(mTranslationWidget);}
 
 
-    void addToolBar(QToolBar *toolbar) {
-        QMainWindow::addToolBar(toolbar);
-    }
-
+    QMainWindow *instance() {return this;}
 
     QToolBar *toolbar()     { return mToolBar;      }
     QStatusBar *statusbar() { return mStatusBar;    }
@@ -64,10 +61,6 @@ public:
 
 
     int currentIndex() const;
-
-
-//    QString getCopyableContent();
-
 
     void setWindowCloseable(const bool b) {mWindowCloseable = b;}
     bool windowCloseable() const { return mWindowCloseable;}
@@ -80,9 +73,11 @@ private slots:
 
     //! Update plugins, etc information from config dialog.
     void onConfigAccept();
+
+    //! Handle table index change
     void onIndexChange(const int i);
-    void onTranslatorTimeout();
-    void onDictionaryTimeout();
+
+
 
     void readCfg();
     void saveCfg();
@@ -110,7 +105,6 @@ private slots:
 
 
 
-    void translate();
     void diction();
 private:
     bool mWindowCloseable;
@@ -164,9 +158,6 @@ private:
     DictionaryWorker mDictionaryWrapper;
 signals:
     void currentIndexChanged(const int i);
-
-
-
 };
 
 

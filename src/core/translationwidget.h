@@ -85,7 +85,14 @@ public:
 
 
     void setNativeNames(const bool b)           {mNativeNames = b;}
-    void setTranslator(ITranslator *translator) {mWorker.setTranslator(translator);}
+
+    void setTranslator(ITranslator *t) {
+        if(t != NULL && t != mWorker.translator()) {
+            mWorker.setTranslator(t);
+            updateLanguages();
+        }
+    }
+
     void setEnabledKeys(const QStringList &keys){mKeys = keys;}
 
     QComboBox *translatorComboBox() { return mTranslatorComboBox;}
@@ -98,6 +105,9 @@ private slots:
     void onTableChanged();
     void fillCombobox(QComboBox *cb, QStringList keys);
     void translate();
+
+    // Update languages if translator was changed TODO: finish it!
+    void updateLanguages(){}
 private:
     /*!
      *  Widgets

@@ -166,7 +166,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mDictionaryWidget, SIGNAL(queryChanged()), this, SLOT(diction()));
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
 
-    connect(translationWidget()->translateButton(), SIGNAL(clicked()), this, SLOT(translate()));
 
     connect(&mDictionaryWrapper, SIGNAL(reply(DictionaryVariantList)), mDictionaryWidget, SLOT(displayData(DictionaryVariantList)));
     connect(&mDictionaryWrapper, SIGNAL(reply(QStringList)), mDictionaryWidget, SLOT(setCompletions(QStringList)));
@@ -360,18 +359,6 @@ void MainWindow::onIndexChange(const int i) {
 }
 
 
-void MainWindow::onTranslatorTimeout() {
-    mStatusBar->clearMessage();
-    mStatusBar->showMessage(tr("Translator reply timeout!"));
-}
-
-
-void MainWindow::onDictionaryTimeout() {
-    mStatusBar->clearMessage();
-    mStatusBar->showMessage(tr("Dictionary reply timeout!"));
-}
-
-
 void MainWindow::readCfg() {
     QSettings s;
     s.beginGroup("MainWindow");
@@ -453,29 +440,7 @@ void MainWindow::about() {
                                          could use multiple dictionaries and translators"));
 }
 
-void MainWindow::translate() {
-//    mStatusBar->clearMessage();
 
-
-//    QString src_text = this->translationWidget()->srcText()->toPlainText();
-
-
-//    QString src_lang = mTranslationWidget->srcComboBox()->
-//            itemData(mTranslationWidget->srcComboBox()->currentIndex()).toString();
-
-
-//    QString res_lang = mTranslationWidget->resComboBox()->
-//            itemData(mTranslationWidget->resComboBox()->currentIndex()).toString();
-
-//    if(src_lang == res_lang) {
-//        mStatusBar->showMessage(tr("Please select two distinct languages!"));
-//        return;
-//    }
-
-//    connect(&mTranslatorWrapper, SIGNAL(reply(QString)), this->translationWidget()->resText(), SLOT(setText(QString)));
-
-
-}
 
 
 void MainWindow::diction() {

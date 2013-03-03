@@ -36,6 +36,7 @@ class QTextEdit;
 class QTextBrowser;
 class QMenuBar;
 class QLineEdit;
+class QMainWindow;
 
 class IMainWindow {
 public:
@@ -63,7 +64,7 @@ public:
     virtual ITranslatorWidget *translationWidget() = 0;
     virtual IDictionaryWidget *dictionaryWidget() = 0;
 
-    virtual void addToolBar(QToolBar *tb) = 0;
+    virtual QMainWindow *instance() = 0;
 };
 
 
