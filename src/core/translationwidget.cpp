@@ -47,6 +47,7 @@ TranslationToolBar::TranslationToolBar(QWidget *parent)
 
     setIconSize(QSize(16,16));
     connect(mCopyAction,SIGNAL(triggered()), this, SIGNAL(copyRequest()));
+
 }
 
 void TranslationToolBar::setCopyActionEnabled(const bool b) {
@@ -109,11 +110,13 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
 
 
     mLangList = QP_LANG_FACTORY->languages();
-
+    mWorker.setTimeout(10000);
     connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onSourceLanguageChanged()));
     connect(mSwapButton, SIGNAL(clicked()), this, SLOT(swap()));
     connect(mSrcToolbar, SIGNAL(copyRequest()), this, SLOT(copySrcText()));
     connect(mResToolbar, SIGNAL(copyRequest()), this, SLOT(copyResText()));
+    connect(&mWorker, SIGNAL(reply(QString)), resText(), SLOT(setPlainText(QString)));
+    connect(this->translateButton(), SIGNAL(clicked()), this, SLOT(translate()));
 }
 
 
@@ -187,4 +190,17 @@ void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
         cb->addItem(QIcon(icon), name, key);
         cb->setItemData(i, key);
     }
+}
+
+void TranslationWidget::translate() {
+    QString src_text = srcText()->toPlainText();
+
+
+    QString src_lang = srcComboBox()->itemData(srcComboBox()->currentIndex()).toString();
+
+
+    QString res_lang = resComboBox()->itemData(resComboBox()->currentIndex()).toString();
+
+//    mTranslatorWrapper.setTranslator(mTranslatorsConfig->currentTranslator());
+    mWorker.query(src_lang, res_lang, src_text);
 }

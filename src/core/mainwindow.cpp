@@ -269,6 +269,8 @@ void MainWindow::onConfigAccept() {
     mTranslationWidget->setNativeNames(false);
 
 
+    //TODO: move this code to translationwidget cls :)
+
     if(enabledKeys != mLastEnabledLanguages) {
         mLastEnabledLanguages = enabledKeys;
         ITranslator *translator  = mTranslatorsConfig->currentTranslator();
@@ -346,6 +348,9 @@ void MainWindow::onConfigAccept() {
     mDictionaryWrapper.setDictionaryList(mDictList);
 
     qDebug() << "SIZE OF DICTS" << mDictList.count();
+
+
+    mTranslationWidget->setTranslator(mTranslatorsConfig->currentTranslator());
 }
 
 
@@ -449,30 +454,27 @@ void MainWindow::about() {
 }
 
 void MainWindow::translate() {
-    mStatusBar->clearMessage();
+//    mStatusBar->clearMessage();
 
 
-    QString src_text = this->translationWidget()->srcText()->toPlainText();
+//    QString src_text = this->translationWidget()->srcText()->toPlainText();
 
 
-    QString src_lang = mTranslationWidget->srcComboBox()->
-            itemData(mTranslationWidget->srcComboBox()->currentIndex()).toString();
+//    QString src_lang = mTranslationWidget->srcComboBox()->
+//            itemData(mTranslationWidget->srcComboBox()->currentIndex()).toString();
 
 
-    QString res_lang = mTranslationWidget->resComboBox()->
-            itemData(mTranslationWidget->resComboBox()->currentIndex()).toString();
+//    QString res_lang = mTranslationWidget->resComboBox()->
+//            itemData(mTranslationWidget->resComboBox()->currentIndex()).toString();
 
-    if(src_lang == res_lang) {
-        mStatusBar->showMessage(tr("Please select two distinct languages!"));
-        return;
-    }
+//    if(src_lang == res_lang) {
+//        mStatusBar->showMessage(tr("Please select two distinct languages!"));
+//        return;
+//    }
+
+//    connect(&mTranslatorWrapper, SIGNAL(reply(QString)), this->translationWidget()->resText(), SLOT(setText(QString)));
 
 
-    connect(&mTranslatorWrapper, SIGNAL(reply(QString)), this->translationWidget()->resText(), SLOT(setText(QString)));
-
-
-    mTranslatorWrapper.setTranslator(mTranslatorsConfig->currentTranslator());
-    mTranslatorWrapper.query(src_lang, res_lang, src_text);
 }
 
 
@@ -482,9 +484,7 @@ void MainWindow::diction() {
 
     qDebug() << "TEXT: " << text ;
 
-
     mDictionaryWrapper.query(pair, text);
-
 }
 
 int MainWindow::currentIndex() const {

@@ -10,7 +10,6 @@
 
 //-------------------------------------------------------------------------------------
 
-
 class IWorker : public QThread
 {
     Q_OBJECT
@@ -22,6 +21,7 @@ public:
         connect(mTimer, SIGNAL(timeout()), this, SLOT(quit()));
 
         mTimer->setSingleShot(true);
+        setTimeout(1000);
     }
 
     void setTimeout(const int msec)
@@ -61,6 +61,7 @@ private:
     QString mQuery;
     QList<IDictionary *>mDictionaryList;
 };
+
 
 //-------------------------------------------------------------------------------------
 

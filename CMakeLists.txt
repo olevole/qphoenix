@@ -32,7 +32,8 @@ ${CMAKE_INCLUDE_PATH}
 ${CMAKE_CURRENT_BINARY_DIR}/src/include
 src/core
 src/core/config
-src/include)
+src/include
+src/libphoenix)
 
 
 

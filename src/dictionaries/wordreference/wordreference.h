@@ -42,8 +42,8 @@ private:
 
 
     QJsonDocument queryData(const QString &str, const LanguagePair &pair) const;
-//    const QString apikey = "284e7";
-//    const QString version = "0.8";
+//    static QString apikey = "284e7";
+//    static QString version = "0.8";
 
 };
 

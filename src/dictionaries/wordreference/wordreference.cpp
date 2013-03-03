@@ -1,4 +1,5 @@
 #include "wordreference.h"
+#include "http.h"
 #include <QObject>
 #include <QCheckBox>
 #include <QHBoxLayout>
@@ -15,6 +16,8 @@
 #include <QtGui>
 #include <QJsonDocument>
 #include <QJsonObject>
+
+
 
 
 WordReference::WordReference(QObject *parent)
@@ -71,6 +74,7 @@ QJsonDocument WordReference::queryData(const QString &text, const LanguagePair &
     QObject::connect(&mManager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
 
     QNetworkReply *reply  = mManager.get(QNetworkRequest(url));
+
     loop.exec();
 
 

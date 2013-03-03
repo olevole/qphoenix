@@ -34,6 +34,7 @@ private:
 
     void setCbState(const bool state);
 
+
     LanguageList mLangList;
 
     QList<QCheckBox *> mCheckboxList;

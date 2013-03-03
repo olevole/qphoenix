@@ -28,6 +28,7 @@
 #include "info.h"
 #include "itranslator.h"
 #include "languages.h"
+#include "querywrappers.h"
 
 class QTextEdit;
 class QTextBrowser;
@@ -82,31 +83,27 @@ public:
         }
     }
 
-    void setLangEngine(const LanguageEngine &engine) {
 
-    }
-
-    void setNativeNames(const bool b) {mNativeNames = b;}
+    void setNativeNames(const bool b)           {mNativeNames = b;}
+    void setTranslator(ITranslator *translator) {mWorker.setTranslator(translator);}
+    void setEnabledKeys(const QStringList &keys){mKeys = keys;}
 
     QComboBox *translatorComboBox() { return mTranslatorComboBox;}
 public slots:
     virtual void swap();
-
     virtual void copySrcText();
     virtual void copyResText();
 private slots:
     void onSourceLanguageChanged();
     void onTableChanged();
-
     void fillCombobox(QComboBox *cb, QStringList keys);
-
-
+    void translate();
 private:
-
+    /*!
+     *  Widgets
+     */
 
     QToolBar *mMainToolBar;
-
-
 
     QComboBox
     *mSrcComboBox,
@@ -123,12 +120,17 @@ private:
     QVBoxLayout *mMainLayout;
     QHBoxLayout *mButtonsLayout;
 
+
+
+    /*!
+     *  Logic parts
+     */
     TranslationToolBar *mSrcToolbar, *mResToolbar;
 
+    QStringList mKeys;
     LanguageTable mTable;
     LanguageList  mLangList;
-
-
+    TranslatorWorker mWorker;
 
     bool mIsLinear, mNativeNames;
 };
