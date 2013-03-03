@@ -34,6 +34,7 @@ public:
      */
 
     virtual bool unload() = 0;
+
     /*!
      * \brief errorString
      * \return Description of plugin load\unload error
@@ -43,6 +44,10 @@ public:
     {return QString();}
 
 
+    /*!
+     * \brief isLoaded
+     * \return true if plugin is loaded, othervise - fasle
+     */
     virtual bool isLoaded() const = 0;
 };
 

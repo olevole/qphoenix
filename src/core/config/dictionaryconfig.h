@@ -6,8 +6,9 @@
 #include <QWidget>
 
 class QTableWidget;
-
-
+class QTabWidget;
+class QCheckBox;
+class QSpinBox;
 
 
 class DictionaryConfig : public QWidget, IConfigPage
@@ -28,6 +29,10 @@ private:
     Loader mLoader;
     QObjectList mDictionaries;
     QTableWidget *mTable;
+    QTabWidget *mTabWidget;
+
+    QCheckBox *mRememberPair;
+//    QSpinBox *mMaxResults;
 };
 
 #endif // DICTIONARYCONFIG_H

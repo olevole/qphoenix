@@ -1,11 +1,15 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.6)
 PROJECT(QPhoenix)
-
-
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.10)
 SET(EXECUTABLE_NAME qphoenix)
 SET(PROJECT_VERSION 0.999999)
 SET(CMAKE_BUILD_TYPE Debug)
 #ENABLE_TESTING(TRUE)
+
+
+IF(CMAKE_BUILD_TYPE STREQUAL Debug)
+    SET(CMAKE_DEBUG_MODE "#define QP_DEBUG")
+ENDIF()
 
 
 
@@ -43,7 +47,8 @@ src/include/itranslator.h
 src/include/idictionary.h
 src/include/info.h
 src/include/imodule.h
-src/include/api.h)
+src/include/api.h
+src/include/pluginconnector.h)
 
 
 SET(HEADERS

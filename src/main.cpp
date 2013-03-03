@@ -1,28 +1,46 @@
-#include "mainwindow.h"
-#include "defines.h"
+#include <QtMsgHandler>
+#include <QFile>
+#include <QIcon>
 #include <QApplication>
 #include <QDebug>
 #include <QDir>
-#include <QIcon>
+
+#include "mainwindow.h"
+#include "defines.h"
 #include "languages.h"
 #include "dictionaryconfig.h"
 #include "querywrappers.h"
-#include <QFile>
 #include "dictionarywidget.h"
 #include "idictionary.h"
 
 
-#include <QComboBox>
-
+void qpMsgHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+    QByteArray localMsg = msg.toLocal8Bit();
+    switch (type) {
+#ifdef QP_DEBUG
+    case QtDebugMsg:
+        fprintf(stderr, "[Debug]:  %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+        break;
+#endif
+    case QtWarningMsg:
+        fprintf(stderr, "[Warning]:  %s \n", localMsg.constData());
+        break;
+    case QtCriticalMsg:
+        fprintf(stderr, "[Critical]:  %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+        break;
+    case QtFatalMsg:
+        fprintf(stderr, "[Fatal]: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+        abort();
+    }
+}
 
 int main(int argc, char *argv[])
 {
-
-
     QApplication a(argc, argv);
 
+    qInstallMessageHandler(qpMsgHandler);
     qRegisterMetaType<DictionaryVariantList>("DictionaryVariantList");
-
 
     QCoreApplication::setApplicationName(QP_APP_NAME);
     QCoreApplication::setApplicationVersion(QP_APP_VERSION);
@@ -33,12 +51,9 @@ int main(int argc, char *argv[])
     QDir::addSearchPath("translators", QP_TRANSLATORS_PATH);
     QDir::addSearchPath("dictionaries", QP_DICTIONARIES_PATH);
 
-
     MainWindow *mw = new MainWindow();
     mw->show();
     mw->setWindowIcon(QP_ICON("dictionary"));
-
-    qDebug() << "USER DATA: " << mw->translationWidget()->srcComboBox()->itemData(mw->translationWidget()->srcComboBox()->currentIndex());
 
     return a.exec();
 }

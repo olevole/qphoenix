@@ -103,6 +103,7 @@ void LanguageConfig::createTable() {
 
     LanguageList::Iterator it = mLangList.begin();
 
+        //TODO: Fix issue with ugly columns
     int i = 0;
     for(; it != mLangList.end(); ++it) {
 
@@ -133,8 +134,6 @@ void LanguageConfig::createTable() {
         mTable->setRowHeight(i, 20);
         i++;
     }
-//    mTable->setColumnWidth(1, 15);
-
 }
 
 void LanguageConfig::setCbState(const bool state) {

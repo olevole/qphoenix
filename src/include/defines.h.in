@@ -11,6 +11,8 @@
 #define QP_ORG_NAME "QPhoenix"
 #define QP_ORG_DOMAIN "http://qphoenix.org"
 
+${CMAKE_DEBUG_MODE}
+
 #if defined(Q_OS_UNIX)
     #define QP_DLIB_SUFFIX "so"
 #elif defined(Q_OS_WIN32)
@@ -30,5 +32,16 @@
 #define QP_PLUGINS_PATH  "${PLUGINS_PATH}"
 #define QP_TRANSLATORS_PATH  "${TRANSLATORS_PATH}"
 #define QP_DICTIONARIES_PATH "${DICTIONARIES_PATH}"
+
+
+
+
+/*!
+ * Some default constants
+ */
+
+#define QP_DICT_DEFAULT_ZOOM_FACTOR 0.7
+
+
 
 #endif // DEFINES_H

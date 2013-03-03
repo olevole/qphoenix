@@ -34,6 +34,7 @@ class MainWindow : public  QMainWindow, IMainWindow
 {
     Q_OBJECT
     Q_INTERFACES(IMainWindow)
+    Q_DISABLE_COPY(MainWindow)
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -80,6 +81,8 @@ private slots:
     //! Update plugins, etc information from config dialog.
     void onConfigAccept();
     void onIndexChange(const int i);
+    void onTranslatorTimeout();
+    void onDictionaryTimeout();
 
     void readCfg();
     void saveCfg();

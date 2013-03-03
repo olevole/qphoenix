@@ -20,6 +20,8 @@ public:
     {
         connect(mTimer, SIGNAL(timeout()), this, SIGNAL(timeout()));
         connect(mTimer, SIGNAL(timeout()), this, SLOT(quit()));
+
+        mTimer->setSingleShot(true);
     }
 
     void setTimeout(const int msec)

@@ -39,6 +39,9 @@
 #include <QToolBar>
 #include <QAction>
 
+#include "defines.h"
+
+
 
 
 
@@ -56,12 +59,10 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mMainToolBar(new QToolBar(this))
 
 {
+    mResText->setZoomFactor(QP_DICT_DEFAULT_ZOOM_FACTOR);
+    mMainToolBar->setMovable(false);
 
-//    mLanguagesComboBox->setLineEdit(new QLineEdit(this));
-
-    mResText->setZoomFactor(0.7);
-
-
+    // TODO:SEt interval from settings!!!
     mQueryTimer->setInterval(1000);
     mQueryTimer->setSingleShot(true);
 
@@ -70,35 +71,31 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 
     mLineLayout->addWidget(mLanguagesComboBox);
     mLineLayout->addWidget(mSrcText);
-
     mMainLayout->addLayout(mLineLayout);
-
-
-
 
     QFrame *fr = new QFrame(this);
     fr->setFrameShape(QFrame::StyledPanel);
     fr->setLayout(new QVBoxLayout);
     fr->layout()->addWidget(mResText);
 
-
     mMainLayout->addWidget(fr);
+    setLayout(mMainLayout);
+
     setIcon(QP_ICON("dictionary"));
 
 
-    connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
-    connect(mQueryTimer, SIGNAL(timeout ()), this, SIGNAL(queryChanged()));
 
-
+    // A Validator for query input
     QRegExpValidator *v = new QRegExpValidator(QRegExp("[^\Q,.\E].*"), this);
-
     mSrcText->setValidator(v);
+
+    // A Completer for query input
     mCompleter->setModel(mCompleterModel);
     mSrcText->setCompleter(mCompleter);
 
     mSrcText->setPlaceholderText("Put some word here..");
 
-    setLayout(mMainLayout);
+
 
 
 
@@ -108,37 +105,27 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     aZoomIn->setAutoRepeat(true);
     aZoomOut->setAutoRepeat(true);
 
+    mMainToolBar->addAction(aZoomOut);
+    mMainToolBar->addAction(aZoomIn);
+
+    connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
+    connect(mQueryTimer, SIGNAL(timeout ()), this, SIGNAL(queryChanged()));
     connect(aZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
     connect(aZoomIn, SIGNAL(triggered()), this, SLOT(zoomIn()));
 
 
-    mMainToolBar->addAction(aZoomOut);
-    mMainToolBar->addAction(aZoomIn);
-
-
-
-// TODO: Check files!!!
-
+    // Reading templates for QWebView html's
     QFile f1(":/files/dict_template.html");
     QFile f2(":/files/dict_template_item.html");
 
-    f1.open(QFile::ReadOnly);
-    f2.open(QFile::ReadOnly);
-
+    if(!f1.open(QFile::ReadOnly) ||  !f2.open(QFile::ReadOnly))
+        qFatal("Unable to open templates for dictionary!");
 
     mBase = f1.readAll();
     mFragment = f2.readAll();
 
-
-
-
     f1.close();
     f2.close();
-
-
-
-
-
 }
 
 

@@ -63,22 +63,7 @@ public:
     virtual ITranslatorWidget *translationWidget() = 0;
     virtual IDictionaryWidget *dictionaryWidget() = 0;
 
-
-
     virtual void addToolBar(QToolBar *tb) = 0;
-    //    virtual Info currentTranslatorInfo() const = 0;
-    //    virtual Info currentDictionaryInfo() const = 0;
-
-
-
-    // SOme specific flags
-
-
-    // Should we filter close event or not?
-    virtual void setWindowCloseable(const bool b) = 0;
-    virtual bool windowCloseable() const = 0;
-
-
 };
 
 

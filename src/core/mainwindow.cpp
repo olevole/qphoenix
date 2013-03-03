@@ -87,7 +87,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Closeable by default
     setWindowCloseable(true);
-//    this->setStyleSheet("background-color: red;");
+
 
     mFileMenu->addAction(mActionOpen);
     mFileMenu->addSeparator();
@@ -98,7 +98,6 @@ MainWindow::MainWindow(QWidget *parent) :
     mFileMenu->addAction(mActionExit);
 
     mEditMenu->addAction(mActionClear);
-//    mEditMenu->addAction(mActionCopy);
     mEditMenu->addSeparator();
     mEditMenu->addAction(mActionUndo);
     mEditMenu->addAction(mActionRedo);
@@ -113,25 +112,25 @@ MainWindow::MainWindow(QWidget *parent) :
     mMenuBar->addMenu(mEditMenu);
     mMenuBar->addMenu(mHelpMenu);
 
-
-    QList<QAction *> ActionsList;
-    ActionsList << mActionClear <<  mActionUndo<< mActionRedo, mActionAbout;
-    mToolBar->addActions(ActionsList);
-
-    this->setCentralWidget(mTabWidget);
-
+    mToolBar->addAction(mActionOpen);
+    mToolBar->addSeparator();
+    mToolBar->addAction(mActionSave);
+    mToolBar->addAction(mActionSaveAs);
+    mToolBar->addSeparator();
+    mToolBar->addAction(mActionClear);
+    mToolBar->addAction(mActionUndo);
+    mToolBar->addAction(mActionRedo);
+    mToolBar->setMovable(false);
 
     mTabWidget->setTabPosition(QTabWidget::West);
 
+    this->setCentralWidget(mTabWidget);
     this->setStatusBar(mStatusBar);
-
     this->setMenuBar(mMenuBar);
-    this->addToolBar(mToolBar);
 
+    this->addToolBar(mToolBar);
     this->addToolBar(mDictionaryWidget->mainToolBar());
     this->addToolBar(mTranslationWidget->mainToolBar());
-
-
 
     this->addPage(mTranslationWidget);
     this->addPage(mDictionaryWidget);
@@ -141,25 +140,26 @@ MainWindow::MainWindow(QWidget *parent) :
         mTabWidget->setCurrentIndex(0);
 
 
+    // Configuring settings pages
     mSettingsDialog->addPage(mTranslatorsConfig);
     mSettingsDialog->addPage(mDictionaryConfig);
-
     mSettingsDialog->addPage(mLanguageConfig);
     mSettingsDialog->addPage(mPluginsConfig);
 
-    connect(mActionOptions, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
+
+
+
     connect(mActionExit, SIGNAL(triggered()), this, SLOT(exit()));
 
+    connect(mActionClear, SIGNAL(triggered()), this, SLOT(clear()));
+    connect(mActionUndo, SIGNAL(triggered()), this, SLOT(undo()));
+    connect(mActionRedo, SIGNAL(triggered()), this, SLOT(redo()));
+    connect(mActionSwap, SIGNAL(triggered()), this, SLOT(swap()));
+    connect(mActionOptions, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
 
     connect(mActionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(mActionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
-    // Edit actions connects
-    connect(mActionClear, SIGNAL(triggered()), this, SLOT(clear()));
-//    connect(mActionCopy, SIGNAL(triggered()), this, SLOT(copy()));
-    connect(mActionUndo, SIGNAL(triggered()), this, SLOT(undo()));
-    connect(mActionRedo, SIGNAL(triggered()), this, SLOT(redo()));
-    connect(mActionSwap, SIGNAL(triggered()), this, SLOT(swap()));
 
 
     // Widgets , Dialogs, etc
@@ -173,16 +173,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(mTabWidget, SIGNAL(currentChanged(int)), this, SLOT(onIndexChange(int)));
 
-
-
-
-
     QComboBox *src = mTranslationWidget->translatorComboBox();
     QComboBox *dest = mTranslatorsConfig->translatorComboBox();
 
     connect(src, SIGNAL(currentIndexChanged(int)), dest, SLOT(setCurrentIndex(int)));
     connect(dest, SIGNAL(currentIndexChanged(int)), src, SLOT(setCurrentIndex(int)));
 
+    connect(&mTranslatorWrapper, SIGNAL(timeout()), this, SLOT(onTranslatorTimeout()));
+    connect(&mDictionaryWrapper, SIGNAL(timeout()), this, SLOT(onDictionaryTimeout()));
 
 
     QStringList items;
@@ -194,16 +192,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     src->addItems(items);
 
+    readCfg();
 
     // Read configs
     onConfigAccept();
 
-    readCfg();
 
 
     // NOTE: Timeout must be set! By default it's 0 (nothing will be processed)
-    mTranslatorWrapper.setTimeout(1000);
-    mDictionaryWrapper.setTimeout(20000);
+    mTranslatorWrapper.setTimeout(10000);
+    mDictionaryWrapper.setTimeout(10000);
 }
 
 MainWindow::~MainWindow()
@@ -357,6 +355,18 @@ void MainWindow::onIndexChange(const int i) {
 }
 
 
+void MainWindow::onTranslatorTimeout() {
+    mStatusBar->clearMessage();
+    mStatusBar->showMessage(tr("Translator reply timeout!"));
+}
+
+
+void MainWindow::onDictionaryTimeout() {
+    mStatusBar->clearMessage();
+    mStatusBar->showMessage(tr("Dictionary reply timeout!"));
+}
+
+
 void MainWindow::readCfg() {
     QSettings s;
     s.beginGroup("MainWindow");
@@ -434,7 +444,8 @@ void MainWindow::swap() {
 
 void MainWindow::about() {
     QMessageBox::about(this, tr("About QPhoenix"),
-                                      tr("QPhoenix is an advanced translation tool that could use multiple dictionaries and translators"));
+                                      tr("QPhoenix is an advanced translation tool that \
+                                         could use multiple dictionaries and translators"));
 }
 
 void MainWindow::translate() {

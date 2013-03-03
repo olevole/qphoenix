@@ -62,7 +62,7 @@ public:
 
     /*!
      * \brief table
-     * \return  a table with supported language directionsо
+     * \return  a table with supported language directions
      */
     virtual LanguageTable table() const = 0;
 

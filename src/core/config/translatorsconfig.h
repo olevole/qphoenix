@@ -33,6 +33,9 @@ class QComboBox;
 class QHBoxLayout;
 class QVBoxLayout;
 class QGroupBox;
+class QTabWidget;
+class QCheckBox;
+class QSpinBox;
 
 class TranslatorsConfig : public QWidget, IConfigPage
 {
@@ -66,9 +69,12 @@ private:
     QGroupBox *mOptionsGroupBox;
     QHBoxLayout *mOptionsLayout;
 
-    QVBoxLayout *mMainLayout;
+    QVBoxLayout *mTab1;
 
     QList <ITranslator *>mTranslatorsList;
+
+
+    QTabWidget *mTabWidget;
 };
 
 #endif // TRANSLATOR_H

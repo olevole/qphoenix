@@ -4,35 +4,53 @@
 #include <QTableWidget>
 #include <QVBoxLayout>
 #include <QHeaderView>
+#include <QTabWidget>
+#include <QCheckBox>
+#include <QSpinBox>
+#include <QLabel>
 #include <QDebug>
 
 DictionaryConfig::DictionaryConfig(QWidget *parent)
     :QWidget(parent),
-      mTable(new QTableWidget(this))
+      mTable(new QTableWidget(this)),
+      mTabWidget(new QTabWidget(this)),
+      mRememberPair(new QCheckBox(tr("Remember Language Pair"), this))
 
 {
-//    mLoader.addSearchPath("dictionaries:");
     setIcon(QP_ICON("dictionary"));
 
 
     Loader ldr("dictionaries:");
     mDictionaries = ldr.modules();
 
-            // = mLoader.modules();
-
-    QVBoxLayout *l = new QVBoxLayout;
-    l->addWidget(mTable);
-
-    this->setLayout(l);
 
 
 
+    QVBoxLayout *tab1 = new QVBoxLayout;
+    tab1->addWidget(mTable);
+
+    QVBoxLayout *tab2 = new QVBoxLayout;
+    tab2->addWidget(mRememberPair);
+    tab2->addStretch();
+
+
+    mTabWidget->addTab(new QWidget(this), "Dictionaries");
+    mTabWidget->addTab(new QWidget(this), "Preferences");
+
+    mTabWidget->widget(0)->setLayout(tab1);
+    mTabWidget->widget(1)->setLayout(tab2);
+
+
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->addWidget(mTabWidget);
+    this->setLayout(mainLayout);
     this->setName("Dictionaries");
 
 
 
     mTable->setColumnCount(3);
-//    mTable->verticalHeader()->hide();
+    mTable->verticalHeader()->hide();
 
     mTable->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Name")));
     mTable->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("Description")));

@@ -3,6 +3,7 @@
 #include <QLayout>
 #include <QDebug>
 #include <QPushButton>
+#include <QSettings>
 
 #include "config.h"
 #include "iconfigpage.h"
@@ -102,15 +103,16 @@ void Config::addPage(QWidget *page) {
     item->setText(0, name);
     item->setIcon(0, icon);
 
-    QGroupBox       *gb = new QGroupBox(name, this);
-    gb->setLayout(new QHBoxLayout);
-    gb->setFlat(true);
-    gb->layout()->addWidget(qobject_cast<QWidget *>(page));
+//    QGroupBox       *gb = new QGroupBox(name, this);
+//    gb->setLayout(new QHBoxLayout);
+//    gb->setFlat(true);
+//    gb->layout()->addWidget(qobject_cast<QWidget *>(page));
+
 
 
     mPagesList.append(iface);
     mTree->insertTopLevelItem(mTree->topLevelItemCount(),item);
-    mStackedLayout->addWidget(gb);
+    mStackedLayout->addWidget(page);
 
     read();
 
@@ -142,6 +144,11 @@ void Config::itemChangeHandle() {
 
 
 void Config::save() {
+    QSettings s;
+    s.beginGroup("ConfigDialog");
+    s.setValue("geometry", saveGeometry());
+    s.endGroup();
+
     foreach (IConfigPage *i, mPagesList)
         i->save();
 
@@ -150,6 +157,11 @@ void Config::save() {
 }
 
 void Config::read() {
+    QSettings s;
+    s.beginGroup("ConfigDialog");
+    restoreGeometry(s.value("geometry").toByteArray());
+    s.endGroup();
+
     foreach(IConfigPage *i, mPagesList)
         i->read();
 }

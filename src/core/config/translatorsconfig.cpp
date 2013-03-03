@@ -29,6 +29,7 @@
 #include <QHBoxLayout>
 #include <QDebug>
 #include <QVBoxLayout>
+#include <QTabWidget>
 
 
 TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
@@ -40,7 +41,8 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
 
     mOptionsGroupBox(new QGroupBox(tr("Config"), this)),
     mOptionsLayout(new QHBoxLayout),
-    mMainLayout(new QVBoxLayout)
+    mTab1(new QVBoxLayout),
+    mTabWidget(new QTabWidget(this))
 {
     setName(tr("Translators"));
     setIcon(QP_ICON("translator"));
@@ -54,17 +56,28 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
 
 
 
+
     // Second layout
     mOptionsGroupBox->setLayout(mOptionsLayout);
 
     // Finally, main layout
-    mMainLayout->addWidget(mTranslatorGroupBox);
-    mMainLayout->addWidget(mOptionsGroupBox);
+    mTab1->addWidget(mTranslatorGroupBox);
+    mTab1->addWidget(mOptionsGroupBox);
+
+    mTabWidget->addTab(new QWidget(this), tr("Translators"));
+    mTabWidget->addTab(new QWidget(this), tr("Preferences"));
+
+
+    mTabWidget->widget(0)->setLayout(mTab1);
+
+    this->setLayout(new QVBoxLayout);
+    this->layout()->addWidget(mTabWidget);
+
+
 
 
     mTranslatorGroupBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 
-    this->setLayout(mMainLayout);
 
     connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onIndexChange(int)));
 

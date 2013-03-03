@@ -78,6 +78,8 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mButtonsLayout->addStretch();
     mButtonsLayout->addWidget(mTranslateButton);
 
+    mMainToolBar->setMovable(false);
+
 
     QHBoxLayout *l = new QHBoxLayout;
     l->addWidget(new QLabel(tr("Translator:"), this));
