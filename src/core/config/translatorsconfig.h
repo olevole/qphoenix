@@ -48,16 +48,13 @@ public:
     void read() {}
     void reset(){}
 
-    QComboBox *translatorComboBox() { return mTranslatorComboBox;}
-
+    QComboBox *translatorComboBox() {return mTranslatorComboBox;}
 
     ITranslator *currentTranslator() {
-        if(mTranslatorComboBox->currentIndex() > -1)
-            return mTranslatorsList[mTranslatorComboBox->currentIndex()];
-        else
-            return NULL;
+        const int i = mTranslatorComboBox->currentIndex();
+        if(i > -1) return mTranslatorsList[i];
+        else       return NULL;
     }
-
 private slots:
     void onIndexChange(const int i);
 private:
@@ -65,15 +62,10 @@ private:
     QComboBox *mTranslatorComboBox;
     QGroupBox *mTranslatorGroupBox;
     QHBoxLayout *mTranslatorLayout;
-
     QGroupBox *mOptionsGroupBox;
     QHBoxLayout *mOptionsLayout;
-
     QVBoxLayout *mTab1;
-
     QList <ITranslator *>mTranslatorsList;
-
-
     QTabWidget *mTabWidget;
 };
 

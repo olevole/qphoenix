@@ -63,9 +63,7 @@ public:
     virtual QLineEdit   *srcText()      {return mSrcText;       }
     virtual QWebView    *resText()      {return mResText;       }
     virtual QToolBar    *mainToolBar()  { return mMainToolBar;       }
-
 public slots:
-
     void setNativeNames(const bool b) { mNativeNames = b;}
 
     void setCompletions(const QStringList &comp);
@@ -73,7 +71,6 @@ public slots:
 private slots:
     void zoomIn();
     void zoomOut();
-
 signals:
     void queryChanged();
 private:
@@ -90,12 +87,8 @@ private:
     QCompleter *mCompleter;
     QStringListModel *mCompleterModel;
 
-
     QHBoxLayout *mLineLayout;
     QVBoxLayout *mMainLayout;    
-
-
-
 
     QString mBase, mFragment;
 };

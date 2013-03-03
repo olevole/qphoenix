@@ -32,7 +32,6 @@ private:
     QTabWidget *mTabWidget;
 
     QCheckBox *mRememberPair;
-//    QSpinBox *mMaxResults;
 };
 
 #endif // DICTIONARYCONFIG_H

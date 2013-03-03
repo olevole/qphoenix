@@ -18,21 +18,15 @@ class PluginsConfig : public QWidget, IConfigPage
 {
     Q_OBJECT
     Q_INTERFACES(IConfigPage)
-
 public:
     PluginsConfig(QWidget *parent = 0);
 
     QObjectList *pluginsList() {
         return &mPlugins;
     }
-
     QStringList enabledPluginsList();
 
-
     bool isEnabled(const int index) const ;
-
-
-
 
     void save();
     void read();
