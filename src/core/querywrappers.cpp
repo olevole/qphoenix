@@ -1,20 +1,16 @@
 #include "querywrappers.h"
 
 
-DictionaryWrapper::DictionaryWrapper()
+DictionaryWorker::DictionaryWorker()
 {
     connect(this, SIGNAL(reply(DictionaryVariantList)), this, SLOT(quit()));
     connect(this, SIGNAL(reply(QStringList)), this, SLOT(quit()));
-
-    mSearchAll = false;
-
 }
 
-void DictionaryWrapper::run()
+void DictionaryWorker::run()
 {
     int count = mDictionaryList.count();
 
-    if(!mSearchAll) count = 1;
 
     for(int i = 0; i < count; i++) {
         IDictionary *iface = mDictionaryList.at(i);
@@ -37,7 +33,7 @@ void DictionaryWrapper::run()
 }
 
 
-void DictionaryWrapper::query(const LanguagePair &pair, const QString &query)
+void DictionaryWorker::query(const LanguagePair &pair, const QString &query)
 {
     mPair = pair;
     mQuery = query;
@@ -49,20 +45,20 @@ void DictionaryWrapper::query(const LanguagePair &pair, const QString &query)
 //-------------------------------------------------------------------------------------
 
 
-TranslatorWrapper::TranslatorWrapper()
+TranslatorWorker::TranslatorWorker()
     :mPtr(0)
 {
     connect(this, SIGNAL(reply(QString)), this, SLOT(quit()));
 }
 
 
-void TranslatorWrapper::run()
+void TranslatorWorker::run()
 {
     const QString _result = mPtr->translate(mSrcText, mSrcLang, mDestLang);
     emit reply(_result);
 }
 
-void TranslatorWrapper::query(const QString &src_lang, const QString &res_lang, const QString &src_text)
+void TranslatorWorker::query(const QString &src_lang, const QString &res_lang, const QString &src_text)
 {
     mSrcLang = src_lang;
     mDestLang = res_lang;

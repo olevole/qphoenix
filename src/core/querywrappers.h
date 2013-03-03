@@ -11,11 +11,11 @@
 //-------------------------------------------------------------------------------------
 
 
-class IWrapper : public QThread
+class IWorker : public QThread
 {
     Q_OBJECT
 public:
-    IWrapper()
+    IWorker()
         :mTimer(new QTimer)
     {
         connect(mTimer, SIGNAL(timeout()), this, SIGNAL(timeout()));
@@ -42,17 +42,15 @@ signals:
 //-------------------------------------------------------------------------------------
 
 
-class DictionaryWrapper : public IWrapper {
+class DictionaryWorker : public IWorker {
     Q_OBJECT
 public:
-    DictionaryWrapper();
-    void run();
+    DictionaryWorker();
 
     void setDictionaryList(QList<IDictionary *> lst)
     { mDictionaryList = lst; }
-
-    void setSearchAll(const bool b)
-    { mSearchAll = b; }
+protected:
+    void run();
 public slots:
     void query(const LanguagePair &pair, const QString &query);
 signals:
@@ -61,8 +59,6 @@ signals:
 private:
     LanguagePair mPair;
     QString mQuery;
-    bool mSearchAll;
-
     QList<IDictionary *>mDictionaryList;
 };
 
@@ -71,29 +67,24 @@ private:
 
 /*!
  * \brief The TranslatorWrapper class
- *
- * Wrapper for execute translation query
- * in separated thread
- *
+ * Wrapper for execute translation query in separated thread
  */
 
-class TranslatorWrapper : public IWrapper
+class TranslatorWorker : public IWorker
 {
     Q_OBJECT
 public:
-    TranslatorWrapper();
+    TranslatorWorker();
 
     void setTranslator(ITranslator *ptr)
     {mPtr = ptr;}
-
+protected:
     void run();
-
 public slots:
     void query(const QString &src_lang, const QString &res_lang, const QString &src_text);
 private:
     ITranslator *mPtr;
     QString mSrcText, mSrcLang, mDestLang;
-
 signals:
     void reply(QString);
 };

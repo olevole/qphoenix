@@ -6,30 +6,12 @@
 //#include "qxtjson.h"
 #include <QObject>
 #include <QCheckBox>
-#include <QHBoxLayout>
 #include <QDebug>
-#include <QThread>
-#include <QTime>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkRequest>
-#include <QtNetwork/QNetworkReply>
-#include <QtGui/QTextDocumentFragment>
-#include <QtCore/QEventLoop>
-#include <QtCore/QStringList>
-#include <QtCore/QDebug>
-
-
-
-
-class SleeperThread : public QThread
-{
-public:
-static void msleep(unsigned long msecs)
-{
-QThread::msleep(msecs);
-}
-};
-
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QStringList>
+#include <QDebug>
 
 
 
@@ -66,30 +48,11 @@ public:
 
 
     QWidget *configWidget() {
-//        QCheckBox *cb = new QCheckBox;
-//        cb->setText("Disable google?");
-
-//        return cb;
         return new QCheckBox("test");
-
     }
 
-//    bool isLinear() const{ return false; }
 
     LanguageTable table() const {
-//        QStringList english;
-
-//        english << "ru" << "de" << "es";
-
-//        QStringList russian;
-//        russian << "de" << "en";
-
-
-//        QStringList german;
-//        german << "ru" << "en" << "uz";
-
-//        QStringList spanish;
-//        spanish << "de" << "ru";
 
         LanguageTable myTable;
         myTable["en"];
@@ -97,14 +60,7 @@ public:
         myTable["de"];
         myTable["es"];
 
-//        myTable["ar"];
-//        myTable["test"];
-
         return myTable;
-
-
-
-
     }
 
     QString translate(const QString &src_text, const QString &src_lang, const QString &dest_lang);

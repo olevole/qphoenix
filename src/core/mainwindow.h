@@ -160,8 +160,8 @@ private:
     QList<IDictionary *> mDictList;
     LanguagePairList mDictPairList;
 
-    TranslatorWrapper mTranslatorWrapper;
-    DictionaryWrapper mDictionaryWrapper;
+    TranslatorWorker mTranslatorWrapper;
+    DictionaryWorker mDictionaryWrapper;
 signals:
     void currentIndexChanged(const int i);
 
