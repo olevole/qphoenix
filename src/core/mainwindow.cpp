@@ -264,39 +264,40 @@ void MainWindow::onConfigAccept() {
 
     QStringList enabledKeys = mLanguageConfig->keysForEnabled();
 
-    mLanguageConfig->setUseNativeNames(false);
+    mLanguageConfig->setNativeNames(false);
     mTranslationWidget->setNativeNames(false);
 
 
     //TODO: move this code to translationwidget cls :)
 
-    if(enabledKeys != mLastEnabledLanguages) {
-        mLastEnabledLanguages = enabledKeys;
-        ITranslator *translator  = mTranslatorsConfig->currentTranslator();
-        LanguageTable table;
+//    if(enabledKeys != mLastEnabledLanguages) {
+//        mLastEnabledLanguages = enabledKeys;
+//        ITranslator *translator  = mTranslatorsConfig->currentTranslator();
+//        LanguageTable table;
 
-        if(translator != NULL)
-            table = translator->table();
-        else
-            qWarning("No translators loaded! Nothing to do!");
+//        if(translator != NULL)
+//            table = translator->table();
+//        else
+//            qWarning("No translators loaded! Nothing to do!");
 
-        QStringList keys = table.keys();
+//        QStringList keys = table.keys();
 
-        for(LanguageTable::iterator i = table.begin(); i != table.end(); i++) {
-            const QString key = i.key();
-            if(!enabledKeys.contains(key)) {
-                table.remove(key);
-            } else {
-                QStringList values = i.value();
-                for (int j = 0; j < values.count(); ++j) {
-                    if(!enabledKeys.contains(values.at(j)))
-                        values.removeAt(j);
-                }
-                table[key] = values;
-            }
-        }
-        mTranslationWidget->setLangTable(table);
-    }
+//        for(LanguageTable::iterator i = table.begin(); i != table.end(); i++) {
+//            const QString key = i.key();
+//            if(!enabledKeys.contains(key)) {
+//                qDebug() << "KEY REMOVE";
+//                table.remove(key);
+//            } else {
+//                QStringList values = i.value();
+//                for (int j = 0; j < values.count(); ++j) {
+//                    if(!enabledKeys.contains(values.at(j)))
+//                        values.removeAt(j);
+//                }
+//                table[key] = values;
+//            }
+//        }
+//        mTranslationWidget->setLangTable(table);
+//    }
 
 
 
@@ -348,8 +349,9 @@ void MainWindow::onConfigAccept() {
 
     qDebug() << "SIZE OF DICTS" << mDictList.count();
 
-
+    mTranslationWidget->setEnabledKeys(mLanguageConfig->keysForEnabled());
     mTranslationWidget->setTranslator(mTranslatorsConfig->currentTranslator());
+
 }
 
 

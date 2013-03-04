@@ -93,7 +93,8 @@ public:
         }
     }
 
-    void setEnabledKeys(const QStringList &keys){mKeys = keys;}
+    void setEnabledKeys(const QStringList &keys){
+        mKeys = keys;}
 
     QComboBox *translatorComboBox() { return mTranslatorComboBox;}
 public slots:
@@ -107,7 +108,7 @@ private slots:
     void translate();
 
     // Update languages if translator was changed TODO: finish it!
-    void updateLanguages(){}
+    void updateLanguages();
 private:
     /*!
      *  Widgets

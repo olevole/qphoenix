@@ -46,7 +46,7 @@ void DictionaryWorker::query(const LanguagePair &pair, const QString &query)
 
 
 TranslatorWorker::TranslatorWorker()
-    :mPtr(0)
+    :mPtr(NULL)
 {
     connect(this, SIGNAL(reply(QString)), this, SLOT(quit()));
 }

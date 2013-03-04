@@ -12,8 +12,7 @@
 #include "querywrappers.h"
 #include "dictionarywidget.h"
 #include "idictionary.h"
-
-
+#include "itranslator.h"
 
 void qpMsgHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -39,6 +38,19 @@ void qpMsgHandler(QtMsgType type, const QMessageLogContext &context, const QStri
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+
+//    QMap<QString, QStringList> table;
+
+//    table["en"] = QStringList() <<"en"<<"ru";
+//    table["ru"]= QStringList() <<"en"<<"es";
+
+
+
+//    for( QMap<QString, QStringList>::iterator i = table.begin(); i != table.end(); i++)
+//        table.remove(i.key());
+
+//    table.remove("ru");
 
     qInstallMessageHandler(qpMsgHandler);
     qRegisterMetaType<DictionaryVariantList>("DictionaryVariantList");

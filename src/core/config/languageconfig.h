@@ -23,7 +23,7 @@ public:
 
     QStringList keysForEnabled() const;
 
-    void setUseNativeNames(const bool b) {
+    void setNativeNames(const bool b) {
         mNativeNames = b;
     }
 private slots:

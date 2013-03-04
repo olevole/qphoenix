@@ -12,7 +12,6 @@ MyMemoryTranslator::MyMemoryTranslator(QObject *parent)
 {
     setName("MyMemory");
     setUrl("http://mymemory.translated.net");
-
 }
 
 

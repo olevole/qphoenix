@@ -20,7 +20,6 @@ class MyMemoryTranslator : public QObject, ITranslator
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qphoenix.translators.mymemory")
     Q_INTERFACES(ITranslator)
-
 private:
     QWidget *mConfigWidget;
     bool mLoaded;
@@ -53,13 +52,11 @@ public:
 
 
     LanguageTable table() const {
-
         LanguageTable myTable;
         myTable["en"];
         myTable["ru"];
         myTable["de"];
         myTable["es"];
-
         return myTable;
     }
 

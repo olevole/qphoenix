@@ -178,7 +178,7 @@ void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
     for (int i = 0; i < keys.count(); ++i) {
         QString key =  keys[i];
 
-        QString icon = QString(":/flags/%1.png").arg(key);
+        QIcon icon = QString(":/flags/%1.png").arg(key);
         QString name;
 
         Language entry = mLangList[key];
@@ -194,13 +194,33 @@ void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
 
 void TranslationWidget::translate() {
     QString src_text = srcText()->toPlainText();
-
-
     QString src_lang = srcComboBox()->itemData(srcComboBox()->currentIndex()).toString();
-
-
     QString res_lang = resComboBox()->itemData(resComboBox()->currentIndex()).toString();
 
-//    mTranslatorWrapper.setTranslator(mTranslatorsConfig->currentTranslator());
     mWorker.query(src_lang, res_lang, src_text);
+}
+
+
+void TranslationWidget::updateLanguages() {
+    ITranslator *tr = mWorker.translator();
+    LanguageTable table = tr->table();
+
+    Q_ASSERT(tr != NULL);
+    Q_ASSERT(!mKeys.isEmpty());
+
+    for(LanguageTable::iterator i = table.begin(); i != table.end();) {
+        const QString &key = i.key();
+        if(!mKeys.contains(key)) {
+            i = table.erase(i);
+        } else {
+            QStringList values = i.value();
+            for (int j = 0; j < values.count(); ++j) {
+                if(!mKeys.contains(values.at(j)))
+                    values.removeAt(j);
+            }
+            table[key] = values;
+            ++i;
+        }
+    }
+    setLangTable(table);
 }
