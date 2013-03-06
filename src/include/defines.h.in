@@ -10,6 +10,7 @@
 #define QP_APP_NAME "QPhoenix"
 #define QP_ORG_NAME "QPhoenix"
 #define QP_ORG_DOMAIN "http://qphoenix.org"
+#define QP_GIT_REV "${GIT_HASH}"
 
 ${CMAKE_DEBUG_MODE}
 

@@ -36,7 +36,7 @@ private:
 };
 
 
-#define QP_LANG_FACTORY LanguageEngine::instance()
+#define QP_LANG_FACTORY LanguageEngine::instance()->languages()
 
 class LanguageEngine : public QObject {
 public:

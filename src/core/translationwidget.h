@@ -76,12 +76,7 @@ public:
     virtual QToolBar    *resToolbar()       { return mResToolbar;       }
     virtual QToolBar    *mainToolBar()      { return mMainToolBar;       }
 
-    void setLangTable(const LanguageTable table) {
-        if(mTable != table) {
-            mTable = table;
-            onTableChanged();
-        }
-    }
+
 
 
     void setNativeNames(const bool b)           {mNativeNames = b;}
@@ -93,8 +88,7 @@ public:
         }
     }
 
-    void setEnabledKeys(const QStringList &keys){
-        mKeys = keys;}
+    void setEnabledKeys(const QStringList &keys){mKeys = keys;}
 
     QComboBox *translatorComboBox() { return mTranslatorComboBox;}
 public slots:
@@ -103,7 +97,6 @@ public slots:
     virtual void copyResText();
 private slots:
     void onSourceLanguageChanged();
-    void onTableChanged();
     void fillCombobox(QComboBox *cb, QStringList keys);
     void translate();
 
@@ -131,16 +124,16 @@ private:
     QVBoxLayout *mMainLayout;
     QHBoxLayout *mButtonsLayout;
 
+    TranslationToolBar *mSrcToolbar, *mResToolbar;
+
 
 
     /*!
      *  Logic parts
      */
-    TranslationToolBar *mSrcToolbar, *mResToolbar;
 
     QStringList mKeys;
     LanguageTable mTable;
-    LanguageList  mLangList;
     TranslatorWorker mWorker;
 
     bool mIsLinear, mNativeNames;

@@ -22,12 +22,13 @@ public:
     void read(){}
     void reset(){}
 
-    QObjectList dictionaries() {
-        return mDictionaries;
+    QList<IDictionary *> dictionaries() {
+        return mConvertedDicts;
     }
 private:
     Loader mLoader;
     QObjectList mDictionaries;
+    QList<IDictionary *>mConvertedDicts;
     QTableWidget *mTable;
     QTabWidget *mTabWidget;
 

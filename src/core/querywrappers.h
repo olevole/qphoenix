@@ -28,7 +28,6 @@ public:
     {
         mTimer->setInterval(msec);
     }
-
 protected:
     void start(Priority priority = InheritPriority) {
         QThread::start(priority);

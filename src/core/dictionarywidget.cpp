@@ -29,7 +29,6 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QCompleter>
-#include "defines.h"
 #include <QStringListModel>
 #include <QRegExpValidator>
 #include <QDebug>
@@ -39,9 +38,9 @@
 #include <QToolBar>
 #include <QAction>
 
+
 #include "defines.h"
-
-
+#include "languages.h"
 
 
 
@@ -171,6 +170,18 @@ void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
 }
 
 
+
+void DictionaryWidget::setDictionaryList(QList<IDictionary *> dicts) {
+    Q_ASSERT(!dicts.isEmpty());
+
+    foreach(IDictionary *dict, dicts) {
+        Q_ASSERT(dict->isLoaded());
+
+        setLangPairs(dict->pairs());
+    }
+}
+
+
 void DictionaryWidget::zoomIn() {
     mResText->setZoomFactor(mResText->zoomFactor()+0.1);
 }
@@ -182,3 +193,14 @@ void DictionaryWidget::zoomOut() {
 }
 
 
+void DictionaryWidget::setLangPairs(const LanguagePairList lst) {
+    mLanguagesComboBox->clear();
+    foreach(LanguagePair pair, lst) {
+        QString first = QP_LANG_FACTORY[pair.first].name();
+        QString second = QP_LANG_FACTORY[pair.second].name();
+        if(!first.isEmpty() && !second.isEmpty()) {
+            QString str = QString("%1 -> %2").arg(first, second);
+            mLanguagesComboBox->addItem(str);
+        }
+    }
+}

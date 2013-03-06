@@ -63,11 +63,11 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
         IDictionary *iface = qobject_cast<IDictionary *>(d);
         iface->load();
 
+        mConvertedDicts.append(iface);
+
         mTable->insertRow(i);
         mTable->setRowHeight(i, 20);
 
         mTable->setItem(i, 1, new QTableWidgetItem(iface->name()));
     }
-
-
 }

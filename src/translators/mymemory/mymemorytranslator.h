@@ -53,10 +53,10 @@ public:
 
     LanguageTable table() const {
         LanguageTable myTable;
-        myTable["en"];
-        myTable["ru"];
-        myTable["de"];
-        myTable["es"];
+        myTable["en"] = QStringList()<<"en"<<"es";
+        myTable["ru"] = QStringList()<<"en"<<"es";
+        myTable["de"] = QStringList()<<"en"<<"es";
+        myTable["es"] = QStringList()<<"en"<<"es";
         return myTable;
     }
 

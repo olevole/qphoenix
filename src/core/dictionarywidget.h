@@ -67,28 +67,46 @@ public slots:
 
     void setCompletions(const QStringList &comp);
     void displayData(const DictionaryVariantList &lst);
+
+
+    void setDictionaryList(QList<IDictionary *>dicts);
+    void setMaxVariants(const int count){mMaxVarCount = count;}
 private slots:
     void zoomIn();
     void zoomOut();
+
+    void setLangPairs(const LanguagePairList lst);
 signals:
     void queryChanged();
 private:
+    /*!
+     * Maximal count of displaying variants per dictionary
+     * if 0 - unlimited
+     */
+    int mMaxVarCount;
+
     bool mNativeNames;
-
     QToolBar *mMainToolBar;
-
     QTimer *mQueryTimer;
     QComboBox *mLanguagesComboBox;
     QLineEdit *mSrcText;
     QWebView *mResText;
     QGroupBox   *mGroupbox;
 
+
+    /*!
+     *  A completer and model for input lineedit
+     */
     QCompleter *mCompleter;
     QStringListModel *mCompleterModel;
 
     QHBoxLayout *mLineLayout;
     QVBoxLayout *mMainLayout;    
 
+    /*!
+     * Strings contains html templates
+     * NOTE: Subject to changes
+     */
     QString mBase, mFragment;
 };
 

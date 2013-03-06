@@ -78,7 +78,6 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mButtonsLayout->addWidget(mResComboBox);
     mButtonsLayout->addStretch();
     mButtonsLayout->addWidget(mTranslateButton);
-
     mMainToolBar->setMovable(false);
 
 
@@ -91,16 +90,11 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     w->setLayout(l);
 //    mMainToolBar->setLayout(l);
     mMainToolBar->addWidget(w);
-
-
-
     mMainLayout->addWidget(mSrcToolbar);
     mMainLayout->addWidget(srcText());
     mMainLayout->addLayout(mButtonsLayout);
-
     mMainLayout->addWidget(mResText);
     setLayout(mMainLayout);
-
 
     mSrcComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     mResComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -108,8 +102,6 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     setName("Translation");
     setIcon(QP_ICON("translator"));
 
-
-    mLangList = QP_LANG_FACTORY->languages();
     mWorker.setTimeout(10000);
     connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onSourceLanguageChanged()));
     connect(mSwapButton, SIGNAL(clicked()), this, SLOT(swap()));
@@ -124,39 +116,11 @@ void TranslationWidget::onSourceLanguageChanged() {
     if(mTable.isEmpty() || mIsLinear)
         return;
 
-
     mResComboBox->clear();
     QList<QStringList> values = mTable.values();
     fillCombobox(mResComboBox, values.at(mSrcComboBox->currentIndex()));
 }
 
-void TranslationWidget::onTableChanged() {
-
-
-    /*
-     * Fill source combobox;
-     */
-
-
-    // Is Linear??
-    mIsLinear = true;
-
-    mSrcComboBox->clear();
-
-
-    for(LanguageTable::iterator it = mTable.begin();it != mTable.end(); it++)  {
-        if(it.value().count() > 1)
-            mIsLinear = false;
-
-
-    }
-
-
-    fillCombobox(mSrcComboBox, mTable.keys());
-
-    if(mIsLinear)
-        fillCombobox(mResComboBox, mTable.keys());
-}
 
 void TranslationWidget::swap() {
     const int i = srcComboBox()->currentIndex();
@@ -178,10 +142,10 @@ void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
     for (int i = 0; i < keys.count(); ++i) {
         QString key =  keys[i];
 
-        QIcon icon = QString(":/flags/%1.png").arg(key);
+        QString icon = QString(":/flags/%1.png").arg(key);
         QString name;
 
-        Language entry = mLangList[key];
+        Language entry = QP_LANG_FACTORY[key];
         if(mNativeNames)
             name = entry.nativeName();
         else
@@ -208,6 +172,10 @@ void TranslationWidget::updateLanguages() {
     Q_ASSERT(tr != NULL);
     Q_ASSERT(!mKeys.isEmpty());
 
+    /*!
+     * Processing table (remove disbled language codes)
+     */
+
     for(LanguageTable::iterator i = table.begin(); i != table.end();) {
         const QString &key = i.key();
         if(!mKeys.contains(key)) {
@@ -222,5 +190,20 @@ void TranslationWidget::updateLanguages() {
             ++i;
         }
     }
-    setLangTable(table);
+
+    /*!
+     * Updating comboboxes..
+     */
+
+    mIsLinear = true;
+    mSrcComboBox->clear();
+    for(LanguageTable::iterator it = table.begin();it != table.end(); it++)
+        if(it.value().count() > 1)
+            mIsLinear = false;
+
+    mTable = table;
+    fillCombobox(mSrcComboBox, table.keys());
+    if(mIsLinear)
+        fillCombobox(mResComboBox, table.keys());
+
 }

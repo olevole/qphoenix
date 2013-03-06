@@ -138,24 +138,22 @@ private:
     // Help menu
     QAction *mActionAbout, *mActionAboutQt;
 
+
+
+
     TranslationWidget *mTranslationWidget;
     DictionaryWidget *mDictionaryWidget;
 
-    Config *mSettingsDialog;
 
+    /*!
+     * Main config dialog and these pages
+     */
+    Config *mSettingsDialog;
     PluginsConfig *mPluginsConfig;
     TranslatorsConfig *mTranslatorsConfig;
     LanguageConfig *mLanguageConfig;
     DictionaryConfig *mDictionaryConfig;
 
-    QClipboard *mClipboard;
-    QStringList mLastEnabledLanguages;
-
-    QList<IDictionary *> mDictList;
-    LanguagePairList mDictPairList;
-
-    TranslatorWorker mTranslatorWrapper;
-    DictionaryWorker mDictionaryWrapper;
 signals:
     void currentIndexChanged(const int i);
 };

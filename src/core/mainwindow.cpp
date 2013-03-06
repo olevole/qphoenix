@@ -80,8 +80,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mPluginsConfig(new PluginsConfig),
     mTranslatorsConfig(new TranslatorsConfig(this)),
     mLanguageConfig(new LanguageConfig(this)),
-    mDictionaryConfig(new DictionaryConfig(this)),
-    mClipboard(qApp->clipboard())
+    mDictionaryConfig(new DictionaryConfig(this))
 {
     setWindowTitle(qApp->applicationName());
 
@@ -163,12 +162,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     // Widgets , Dialogs, etc
-    connect(mDictionaryWidget, SIGNAL(queryChanged()), this, SLOT(diction()));
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
 
 
-    connect(&mDictionaryWrapper, SIGNAL(reply(DictionaryVariantList)), mDictionaryWidget, SLOT(displayData(DictionaryVariantList)));
-    connect(&mDictionaryWrapper, SIGNAL(reply(QStringList)), mDictionaryWidget, SLOT(setCompletions(QStringList)));
 
     connect(mTabWidget, SIGNAL(currentChanged(int)), this, SLOT(onIndexChange(int)));
 
@@ -178,8 +174,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(src, SIGNAL(currentIndexChanged(int)), dest, SLOT(setCurrentIndex(int)));
     connect(dest, SIGNAL(currentIndexChanged(int)), src, SLOT(setCurrentIndex(int)));
 
-    connect(&mTranslatorWrapper, SIGNAL(timeout()), this, SLOT(onTranslatorTimeout()));
-    connect(&mDictionaryWrapper, SIGNAL(timeout()), this, SLOT(onDictionaryTimeout()));
+
 
 
     QStringList items;
@@ -198,9 +193,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-    // NOTE: Timeout must be set! By default it's 0 (nothing will be processed)
-    mTranslatorWrapper.setTimeout(10000);
-    mDictionaryWrapper.setTimeout(10000);
+
 }
 
 MainWindow::~MainWindow()
@@ -268,86 +261,7 @@ void MainWindow::onConfigAccept() {
     mTranslationWidget->setNativeNames(false);
 
 
-    //TODO: move this code to translationwidget cls :)
-
-//    if(enabledKeys != mLastEnabledLanguages) {
-//        mLastEnabledLanguages = enabledKeys;
-//        ITranslator *translator  = mTranslatorsConfig->currentTranslator();
-//        LanguageTable table;
-
-//        if(translator != NULL)
-//            table = translator->table();
-//        else
-//            qWarning("No translators loaded! Nothing to do!");
-
-//        QStringList keys = table.keys();
-
-//        for(LanguageTable::iterator i = table.begin(); i != table.end(); i++) {
-//            const QString key = i.key();
-//            if(!enabledKeys.contains(key)) {
-//                qDebug() << "KEY REMOVE";
-//                table.remove(key);
-//            } else {
-//                QStringList values = i.value();
-//                for (int j = 0; j < values.count(); ++j) {
-//                    if(!enabledKeys.contains(values.at(j)))
-//                        values.removeAt(j);
-//                }
-//                table[key] = values;
-//            }
-//        }
-//        mTranslationWidget->setLangTable(table);
-//    }
-
-
-
-
-    // Updating table
-
-
-
-    /*!
-     * Dictionaries sync
-     */
-
-    QObjectList dicts = mDictionaryConfig->dictionaries();
-
-//    QStringList enabledKeys = mLanguageConfig->keysForEnabled();
-    foreach(QObject *obj, dicts) {
-        IDictionary *iface = qobject_cast<IDictionary *>(obj);
-        mDictList << iface;
-
-        if(!iface->isLoaded())
-            iface->load();
-
-//        mDictPairList <<
-                        LanguagePairList list = iface->pairs();
-
-        for(int i = 0; i < list.count(); i++) {
-            const LanguagePair pair = list.at(i);
-
-
-            const QString first = QP_LANG_FACTORY->languages()[pair.first].name();
-            const QString second = QP_LANG_FACTORY->languages()[pair.second].name();
-
-            if(!first.isEmpty() && !second.isEmpty()) {
-                    mDictionaryWidget->languagesComboBox()->addItem(first + " -> " + second);
-                    mDictPairList << pair;
-
-
-
-            } else {
-
-//                mDictPairList.removeAt(i);
-//                delete &mDictPairList[i];
-                qWarning("This language doesn't supported yet! Sorry...");
-            }
-        }
-    }
-
-    mDictionaryWrapper.setDictionaryList(mDictList);
-
-    qDebug() << "SIZE OF DICTS" << mDictList.count();
+    mDictionaryWidget->setDictionaryList(mDictionaryConfig->dictionaries());
 
     mTranslationWidget->setEnabledKeys(mLanguageConfig->keysForEnabled());
     mTranslationWidget->setTranslator(mTranslatorsConfig->currentTranslator());
@@ -439,19 +353,19 @@ void MainWindow::swap() {
 void MainWindow::about() {
     QMessageBox::about(this, tr("About QPhoenix"),
                                       tr("QPhoenix is an advanced translation tool that \
-                                         could use multiple dictionaries and translators"));
+                                         could use multiple dictionaries and translators.\n\n REVISION: ") + QP_GIT_REV);
 }
 
 
 
 
 void MainWindow::diction() {
-    const QString text = mDictionaryWidget->srcText()->text();
-    const LanguagePair pair = mDictPairList.at(mDictionaryWidget->languagesComboBox()->currentIndex());
+//    const QString text = mDictionaryWidget->srcText()->text();
+//    const LanguagePair pair = mDictPairList.at(mDictionaryWidget->languagesComboBox()->currentIndex());
 
-    qDebug() << "TEXT: " << text ;
+//    qDebug() << "TEXT: " << text ;
 
-    mDictionaryWrapper.query(pair, text);
+//    mDictionaryWrapper.query(pair, text);
 }
 
 int MainWindow::currentIndex() const {
