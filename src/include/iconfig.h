@@ -14,7 +14,6 @@
 class IConfig {
 public:
     virtual ~IConfig() {}
-
     virtual void addPage(QWidget *page) = 0;
     virtual void removePage(const QWidget *page) = 0;
     virtual QWidget *pageAt(const int i) = 0;

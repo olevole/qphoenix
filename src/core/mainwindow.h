@@ -39,9 +39,6 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-
-    void setCurrentIndex(const int i);
-
     void addPage(QWidget *page);
     void removePage(const QWidget *page);
     QWidget *pageAt(const int i);
@@ -52,32 +49,22 @@ public:
     ITranslatorWidget *translationWidget()
     {return qobject_cast<ITranslatorWidget *>(mTranslationWidget);}
 
-
     QMainWindow *instance() {return this;}
-
     QToolBar *toolbar()     { return mToolBar;      }
     QStatusBar *statusbar() { return mStatusBar;    }
     QMenuBar *menubar()     { return mMenuBar;      }
 
-
     int currentIndex() const;
-
-    void setWindowCloseable(const bool b) {mWindowCloseable = b;}
-    bool windowCloseable() const { return mWindowCloseable;}
+public slots:
+    void setCurrentIndex(const int i);
 protected:
     void closeEvent(QCloseEvent *event);
-
 private slots:
-
-
-
     //! Update plugins, etc information from config dialog.
     void onConfigAccept();
 
     //! Handle table index change
     void onIndexChange(const int i);
-
-
 
     void readCfg();
     void saveCfg();
@@ -99,17 +86,8 @@ private slots:
     void undo();
     void redo();
     void swap();
-
-
     void about();
-
-
-
-    void diction();
 private:
-    bool mWindowCloseable;
-
-
     QStatusBar  *mStatusBar;
     QToolBar    *mToolBar;
     QMenuBar    *mMenuBar;
@@ -137,8 +115,6 @@ private:
 
     // Help menu
     QAction *mActionAbout, *mActionAboutQt;
-
-
 
 
     TranslationWidget *mTranslationWidget;

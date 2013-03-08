@@ -33,11 +33,9 @@ class QToolBar;
 class IDictionaryWidget {
 public:
     virtual ~IDictionaryWidget() {}
-
     virtual QComboBox   *languagesComboBox() = 0;
     virtual QLineEdit   *srcText() = 0;
     virtual QWebView *resText() = 0;
-
     virtual QToolBar *mainToolBar() = 0;
 };
 

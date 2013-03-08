@@ -1,5 +1,10 @@
 #include "http.h"
 
+#include <QEventLoop>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+
 HTTP::HTTP(QObject *parent) :
     QObject(parent)
 {

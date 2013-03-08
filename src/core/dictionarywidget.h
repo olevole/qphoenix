@@ -29,7 +29,7 @@
 #include "info.h"
 #include "idictionarywidget.h"
 #include "idictionary.h"
-
+#include "querywrappers.h"
 
 #include <QLabel>
 #include <QWebView>
@@ -76,8 +76,8 @@ private slots:
     void zoomOut();
 
     void setLangPairs(const LanguagePairList lst);
-signals:
-    void queryChanged();
+
+    void onQuery();
 private:
     /*!
      * Maximal count of displaying variants per dictionary
@@ -108,6 +108,12 @@ private:
      * NOTE: Subject to changes
      */
     QString mBase, mFragment;
+
+    QList<IDictionary *>mDicts;
+
+
+    DictionaryWorker mDictWorker;
+    LanguagePairList mPairs;
 };
 
 #endif // DICTIONARYWIDGET_H

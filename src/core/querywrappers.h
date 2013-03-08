@@ -46,8 +46,7 @@ class DictionaryWorker : public IWorker {
 public:
     DictionaryWorker();
 
-    void setDictionaryList(QList<IDictionary *> lst)
-    { mDictionaryList = lst; }
+    void setDictionary(IDictionary *dict){ mDict = dict; }
 protected:
     void run();
 public slots:
@@ -58,7 +57,7 @@ signals:
 private:
     LanguagePair mPair;
     QString mQuery;
-    QList<IDictionary *>mDictionaryList;
+    IDictionary *mDict;
 };
 
 

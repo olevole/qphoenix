@@ -63,7 +63,6 @@ MainWindow::MainWindow(QWidget *parent) :
     mActionPrint(new QAction(QP_ICON("document-print"),tr("Print"), this)),
 
     mActionClear(new QAction(QP_ICON("edit-clear"), tr("Clear"), this)),
-//    mActionCopy(new QAction(QP_ICON("edit-copy"),tr("Copy"), this)),
     mActionUndo(new QAction(QP_ICON("edit-undo"),tr("Undo"), this)),
     mActionRedo(new QAction(QP_ICON("edit-redo"),tr("Redo"), this)),
     mActionSwap(new QAction(tr("Swap"), this)),
@@ -83,9 +82,6 @@ MainWindow::MainWindow(QWidget *parent) :
     mDictionaryConfig(new DictionaryConfig(this))
 {
     setWindowTitle(qApp->applicationName());
-
-    // Closeable by default
-    setWindowCloseable(true);
 
 
     mFileMenu->addAction(mActionOpen);
@@ -358,16 +354,6 @@ void MainWindow::about() {
 
 
 
-
-void MainWindow::diction() {
-//    const QString text = mDictionaryWidget->srcText()->text();
-//    const LanguagePair pair = mDictPairList.at(mDictionaryWidget->languagesComboBox()->currentIndex());
-
-//    qDebug() << "TEXT: " << text ;
-
-//    mDictionaryWrapper.query(pair, text);
-}
-
 int MainWindow::currentIndex() const {
     return mTabWidget->currentIndex();
 }
@@ -375,11 +361,7 @@ int MainWindow::currentIndex() const {
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    if(mWindowCloseable) {
-        saveCfg();
-        event->accept();
-        QMainWindow::closeEvent(event);
-    } else {
-        event->ignore();
-    }
+    // TODO: Fix it!
+    QMainWindow::event(event);
+    event->accept();
 }

@@ -2,10 +2,6 @@
 #define HTTP_H
 
 #include <QObject>
-#include <QEventLoop>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QNetworkRequest>
 
 
 /*!
@@ -26,9 +22,7 @@ public:
 
     static QByteArray get( QUrl req);
 //    static QByteArray post(const QUrl &req, QByteArray &data) const;
-//private:
-//    QEventLoop mLoop;
-//    QNetworkAccessManager mAccessManager;
+
 };
 
 #endif // HTTP_H

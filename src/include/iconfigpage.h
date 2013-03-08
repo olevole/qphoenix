@@ -28,14 +28,9 @@ class IConfigPage : public Info
 {
 public:
     virtual ~IConfigPage(){}
-
-    // Read and save the settings
     virtual void save() = 0;
     virtual void read() = 0;
     virtual void reset() = 0;
-
-
-
 };
 
 Q_DECLARE_INTERFACE(IConfigPage, "com.qphoenix.interfaces.settings/1.0");

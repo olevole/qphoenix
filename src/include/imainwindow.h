@@ -47,8 +47,6 @@ public:
     //Slots
     virtual void setCurrentIndex(const int i) = 0;
 
-
-
     // Methods
     virtual void addPage(QWidget *page) = 0;
     virtual void removePage(const QWidget *page) = 0;
@@ -63,7 +61,6 @@ public:
 
     virtual ITranslatorWidget *translationWidget() = 0;
     virtual IDictionaryWidget *dictionaryWidget() = 0;
-
     virtual QMainWindow *instance() = 0;
 };
 

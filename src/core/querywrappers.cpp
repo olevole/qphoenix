@@ -9,27 +9,18 @@ DictionaryWorker::DictionaryWorker()
 
 void DictionaryWorker::run()
 {
-    int count = mDictionaryList.count();
+    Q_ASSERT(mDict->isLoaded());
+    Q_ASSERT(!mQuery.isEmpty());
+    Q_ASSERT(!mPair.first.isEmpty() && !mPair.second.isEmpty());
 
 
-    for(int i = 0; i < count; i++) {
-        IDictionary *iface = mDictionaryList.at(i);
-        if(iface == NULL) {
-            qWarning("Invalid translator!");
-            continue;
-        }
+    const QStringList c = mDict->completions(mQuery, mPair);
 
-        const QStringList c = iface->completions(mQuery, mPair);
-//        iface->completions(mQuery, mPair);
-//        iface->completions(mQuery, mPair);
-
-
-//        if(c.size() > 1)
-//            emit reply(c);
-//        else
-            emit reply(iface->query(mQuery, mPair));
-
-    }
+    //TODO: Solve this part
+//    if(!c.count() <= 1)
+//        emit reply(c);
+//    else
+        emit reply(mDict->query(mQuery, mPair));
 }
 
 
@@ -60,12 +51,12 @@ void TranslatorWorker::run()
 
 void TranslatorWorker::query(const QString &src_lang, const QString &res_lang, const QString &src_text)
 {
+    Q_ASSERT(mPtr);
+    Q_ASSERT(mPtr->isLoaded());
+
     mSrcLang = src_lang;
     mDestLang = res_lang;
     mSrcText = src_text;
-
-    if(!mPtr)
-        qFatal("Select TranslatorInterface Before!!!");
 
     start();
 }

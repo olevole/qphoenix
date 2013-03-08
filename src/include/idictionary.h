@@ -39,9 +39,6 @@ typedef QList<DictionaryVariant> DictionaryVariantList;
 
 
 
-
-
-
 class DictionaryVariant
 {
 public:
@@ -52,7 +49,6 @@ public:
         setSourceSense(src_sense);
         setResultSense(res_sense);
     }
-
     void setSourceTerm(const QString &term){mSrcTerm = term;}
     void setResultTerm(const QString &term){mResTerm = term;}
 
@@ -66,7 +62,6 @@ public:
     QString resultSense() const{return mResSense;}
 private:
     QString mSrcSense, mResSense, mSrcTerm, mResTerm;
-
 };
 
 
@@ -80,10 +75,7 @@ public:
      * \return a pointer to configuration widget for this dictionary (optional)
      * If you don't want to provide any config widget, just don't reimplement it
      */
-
-    virtual QWidget *configWidget()
-    {return new QWidget();}
-
+    virtual QWidget *configWidget(){return new QWidget();}
 
     /*!
      * \brief pairs
@@ -109,10 +101,6 @@ public:
      * this feature, this function MUST return an empty QStringList
      */
     virtual QStringList completions(const QString &str, const LanguagePair &pair) const = 0;
-
-
-
-
 };
 
 Q_DECLARE_INTERFACE(IDictionary, "com.qphoenix.interfaces.dictionary/1.0");

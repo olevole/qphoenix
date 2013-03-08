@@ -107,10 +107,14 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mMainToolBar->addAction(aZoomOut);
     mMainToolBar->addAction(aZoomIn);
 
+
+    connect(&mDictWorker, SIGNAL(reply(DictionaryVariantList)), this, SLOT(displayData(DictionaryVariantList)));
     connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
-    connect(mQueryTimer, SIGNAL(timeout ()), this, SIGNAL(queryChanged()));
+    connect(mQueryTimer, SIGNAL(timeout ()), this, SLOT(onQuery()));
     connect(aZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
     connect(aZoomIn, SIGNAL(triggered()), this, SLOT(zoomIn()));
+
+    mDictWorker.setTimeout(90000);
 
 
     // Reading templates for QWebView html's
@@ -174,6 +178,8 @@ void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
 void DictionaryWidget::setDictionaryList(QList<IDictionary *> dicts) {
     Q_ASSERT(!dicts.isEmpty());
 
+    mDicts = dicts;
+
     foreach(IDictionary *dict, dicts) {
         Q_ASSERT(dict->isLoaded());
 
@@ -189,7 +195,6 @@ void DictionaryWidget::zoomIn() {
 
 void DictionaryWidget::zoomOut() {
     mResText->setZoomFactor(mResText->zoomFactor()-0.1);
-
 }
 
 
@@ -201,6 +206,18 @@ void DictionaryWidget::setLangPairs(const LanguagePairList lst) {
         if(!first.isEmpty() && !second.isEmpty()) {
             QString str = QString("%1 -> %2").arg(first, second);
             mLanguagesComboBox->addItem(str);
+            mPairs << pair;
+        } else {
+            qWarning() << "This pair is not supported in qphoenix: " << pair;
         }
+    }
+}
+
+
+void DictionaryWidget::onQuery() {
+    foreach (IDictionary *dict, mDicts) {
+        mDictWorker.setDictionary(dict);
+        qDebug() << "CURRENT PAIR: " <<  mPairs;
+        mDictWorker.query(mPairs.at(mLanguagesComboBox->currentIndex()), mSrcText->text());
     }
 }
