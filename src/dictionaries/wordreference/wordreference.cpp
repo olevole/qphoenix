@@ -85,18 +85,19 @@ QJsonDocument WordReference::queryData(const QString &text, const LanguagePair &
 
 
 QStringList WordReference::completions(const QString &str, const LanguagePair &pair) const {
-    QJsonDocument doc = queryData(str, pair);
-    QJsonObject root = doc.object().value("term0").toObject();
-    QJsonObject principal = root.value("PrincipalTranslations").toObject();
+//    QJsonDocument doc = queryData(str, pair);
+//    QJsonObject root = doc.object().value("term0").toObject();
+//    QJsonObject principal = root.value("PrincipalTranslations").toObject();
 
-    QStringList lst;
+//    QStringList lst;
 
-    for (int i = 0; i < 20; i++) {
-        QJsonObject orig = principal.value(QString::number(i)).toObject();
-        if(orig.isEmpty()) break;
-        QJsonObject oterm = orig.value("FirstTranslation").toObject();
-        QString expl = oterm.value("term").toString();
-        lst << expl;
-    }
-   return lst;
+//    for (int i = 0; i < 20; i++) {
+//        QJsonObject orig = principal.value(QString::number(i)).toObject();
+//        if(orig.isEmpty()) break;
+//        QJsonObject oterm = orig.value("FirstTranslation").toObject();
+//        QString expl = oterm.value("term").toString();
+//        lst << expl;
+//    }
+//   return lst;
+    return QStringList();
 }

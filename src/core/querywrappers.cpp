@@ -17,9 +17,9 @@ void DictionaryWorker::run()
     const QStringList c = mDict->completions(mQuery, mPair);
 
     //TODO: Solve this part
-//    if(!c.count() <= 1)
-//        emit reply(c);
-//    else
+    if(!c.count() > 1)
+        emit reply(c);
+    else
         emit reply(mDict->query(mQuery, mPair));
 }
 

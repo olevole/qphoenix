@@ -109,6 +109,8 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 
 
     connect(&mDictWorker, SIGNAL(reply(DictionaryVariantList)), this, SLOT(displayData(DictionaryVariantList)));
+    connect(&mDictWorker, SIGNAL(reply(QStringList)), this, SLOT(setCompletions(QStringList)));
+
     connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
     connect(mQueryTimer, SIGNAL(timeout ()), this, SLOT(onQuery()));
     connect(aZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
