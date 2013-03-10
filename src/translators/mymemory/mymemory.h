@@ -15,7 +15,7 @@
 
 
 
-class MyMemoryTranslator : public QObject, ITranslator
+class MyMemory : public QObject, ITranslator
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qphoenix.translators.mymemory")
@@ -23,8 +23,9 @@ class MyMemoryTranslator : public QObject, ITranslator
 private:
     QWidget *mConfigWidget;
     bool mLoaded;
+    static QStringList mLangs;
 public:
-    MyMemoryTranslator(QObject *parent = 0);
+    MyMemory(QObject *parent = 0);
 
     bool load() {
         if(!isLoaded()) {
@@ -53,10 +54,10 @@ public:
 
     LanguageTable table() const {
         LanguageTable myTable;
-        myTable["en"] = QStringList()<<"en"<<"es";
-        myTable["ru"] = QStringList()<<"en"<<"es";
-        myTable["de"] = QStringList()<<"en"<<"es";
-        myTable["es"] = QStringList()<<"en"<<"es";
+
+        foreach(QString lang, mLangs)
+            myTable.insert(lang, QStringList());
+
         return myTable;
     }
 

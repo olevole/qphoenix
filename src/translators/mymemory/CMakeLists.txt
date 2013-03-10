@@ -1,7 +1,7 @@
-SET(TARGET "mymemorytranslator")
+SET(TARGET "mymemory")
 
-SET(SOURCES mymemorytranslator.cpp)
-SET(HEADERS mymemorytranslator.h)
+SET(SOURCES mymemory.cpp)
+SET(HEADERS mymemory.h)
 
 
 QT5_WRAP_CPP(MOC_SOURCES ${HEADERS})

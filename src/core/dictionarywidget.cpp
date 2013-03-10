@@ -111,8 +111,12 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     connect(&mDictWorker, SIGNAL(reply(DictionaryVariantList)), this, SLOT(displayData(DictionaryVariantList)));
     connect(&mDictWorker, SIGNAL(reply(QStringList)), this, SLOT(setCompletions(QStringList)));
 
+    connect(mCompleter, SIGNAL(activated(QString)), this, SLOT(onQuery()));
+
     connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
-    connect(mQueryTimer, SIGNAL(timeout ()), this, SLOT(onQuery()));
+    connect(mQueryTimer, SIGNAL(timeout ()), this, SLOT(onQueryComp()));
+
+
     connect(aZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
     connect(aZoomIn, SIGNAL(triggered()), this, SLOT(zoomIn()));
 
@@ -131,11 +135,17 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 
     f1.close();
     f2.close();
+
+
 }
 
 
 void DictionaryWidget::setCompletions(const QStringList &comp) {
+
+
     mCompleterModel->setStringList(comp);
+    mSrcText->completer()->complete();
+//    mCompleter->widget()->show();
 }
 
 void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
@@ -184,7 +194,6 @@ void DictionaryWidget::setDictionaryList(QList<IDictionary *> dicts) {
 
     foreach(IDictionary *dict, dicts) {
         Q_ASSERT(dict->isLoaded());
-
         setLangPairs(dict->pairs());
     }
 }
@@ -205,21 +214,46 @@ void DictionaryWidget::setLangPairs(const LanguagePairList lst) {
     foreach(LanguagePair pair, lst) {
         QString first = QP_LANG_FACTORY[pair.first].name();
         QString second = QP_LANG_FACTORY[pair.second].name();
+
         if(!first.isEmpty() && !second.isEmpty()) {
             QString str = QString("%1 -> %2").arg(first, second);
             mLanguagesComboBox->addItem(str);
             mPairs << pair;
         } else {
-            qWarning() << "This pair is not supported in qphoenix: " << pair;
+            qWarning() << "This pair is not supported in" << QP_APP_NAME  << QP_APP_VERSION << ":" << pair;
         }
     }
 }
 
 
-void DictionaryWidget::onQuery() {
+void DictionaryWidget::onQueryComp() {
+    const LanguagePair pair = mPairs.at(mLanguagesComboBox->currentIndex());
+    const QString text = mSrcText->text();
+
+
+    if(pair.first.isEmpty() || pair.second.isEmpty() || text.isEmpty()) {
+        return; //TODO: Warning here
+    }
+
     foreach (IDictionary *dict, mDicts) {
         mDictWorker.setDictionary(dict);
         qDebug() << "CURRENT PAIR: " <<  mPairs;
-        mDictWorker.query(mPairs.at(mLanguagesComboBox->currentIndex()), mSrcText->text());
+        mDictWorker.queryCompletions(pair, text);
+    }
+}
+
+void DictionaryWidget::onQuery() {
+    const LanguagePair pair = mPairs.at(mLanguagesComboBox->currentIndex());
+    const QString text = mSrcText->text();
+
+
+    if(pair.first.isEmpty() || pair.second.isEmpty() || text.isEmpty()) {
+        return; //TODO: Warning here
+    }
+
+    foreach (IDictionary *dict, mDicts) {
+        mDictWorker.setDictionary(dict);
+        qDebug() << "CURRENT PAIR: " <<  mPairs;
+        mDictWorker.query(pair, text);
     }
 }

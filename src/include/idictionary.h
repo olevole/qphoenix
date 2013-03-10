@@ -65,6 +65,39 @@ private:
 };
 
 
+
+/*!
+ * \brief The _DictionaryVariant struct
+ *
+ * A data representation structure for Dictionary Reply Element
+ */
+
+struct _DictionaryVariant
+{
+    _DictionaryVariant() {
+        src_sense = res_sense = src_term = res_term = "";
+    }
+
+    QString
+    src_sense,
+    res_sense,
+    src_term,
+    res_term;
+
+
+    /*!
+     * \brief images
+     *
+     * Paths to images
+     */
+    QStringList images;
+    enum Abbr {
+
+    };
+};
+
+
+
 class IDictionary : public IModule {
 public:
     virtual ~IDictionary(){}
@@ -101,6 +134,14 @@ public:
      * this feature, this function MUST return an empty QStringList
      */
     virtual QStringList completions(const QString &str, const LanguagePair &pair) const = 0;
+
+
+    /*!
+     * \brief isSupportCompletions
+     * \return true if dictionary support completions provided by \def completions
+     * otherwise - false
+     */
+    virtual bool isSupportCompletions() const = 0;
 };
 
 Q_DECLARE_INTERFACE(IDictionary, "com.qphoenix.interfaces.dictionary/1.0");

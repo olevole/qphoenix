@@ -42,6 +42,9 @@
 #include "dictionaryconfig.h"
 
 
+QString MainWindow::mAboutStr = "QPhoenix is an advanced translation tool that could use multiple dictionaries and translators";
+
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     mStatusBar(new QStatusBar(this)),
@@ -318,26 +321,14 @@ void MainWindow::clear() {
 
 
 void MainWindow::undo() {
-    switch(currentIndex()) {
-    case 0:
-        translationWidget()->srcText()->undo();
-        break;
-    case 1:
-        dictionaryWidget()->srcText()->undo();
-        break;
-    }
+    currentIndex() == 0 ? translationWidget()->srcText()->undo()
+                        : dictionaryWidget()->srcText()->undo();
 
 }
 
 void MainWindow::redo() {
-    switch(currentIndex()) {
-    case 0:
-        translationWidget()->srcText()->redo();
-        break;
-    case 1:
-        dictionaryWidget()->srcText()->redo();
-    break;
-    }
+    currentIndex() == 0 ? translationWidget()->srcText()->redo()
+                        : dictionaryWidget()->srcText()->redo();
 }
 
 void MainWindow::swap() {

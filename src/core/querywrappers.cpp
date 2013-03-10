@@ -5,32 +5,45 @@ DictionaryWorker::DictionaryWorker()
 {
     connect(this, SIGNAL(reply(DictionaryVariantList)), this, SLOT(quit()));
     connect(this, SIGNAL(reply(QStringList)), this, SLOT(quit()));
+    mCompletions = false;
 }
 
 void DictionaryWorker::run()
 {
+    Q_ASSERT(mDict);
     Q_ASSERT(mDict->isLoaded());
     Q_ASSERT(!mQuery.isEmpty());
     Q_ASSERT(!mPair.first.isEmpty() && !mPair.second.isEmpty());
 
 
-    const QStringList c = mDict->completions(mQuery, mPair);
 
     //TODO: Solve this part
-    if(!c.count() > 1)
+    if(mCompletions && mDict->isSupportCompletions()) {
+        const QStringList c = mDict->completions(mQuery, mPair);
         emit reply(c);
-    else
+    } else {
         emit reply(mDict->query(mQuery, mPair));
+    }
 }
+
 
 
 void DictionaryWorker::query(const LanguagePair &pair, const QString &query)
 {
+    mCompletions = false;
     mPair = pair;
     mQuery = query;
     start();
 }
 
+
+void DictionaryWorker::queryCompletions(const LanguagePair &pair, const QString &query)
+{
+    mCompletions = true;
+    mPair = pair;
+    mQuery = query;
+    start();
+}
 
 
 //-------------------------------------------------------------------------------------

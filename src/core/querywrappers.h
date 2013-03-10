@@ -51,10 +51,12 @@ protected:
     void run();
 public slots:
     void query(const LanguagePair &pair, const QString &query);
+    void queryCompletions(const LanguagePair &pair, const QString &query);
 signals:
     void reply(DictionaryVariantList);
     void reply(QStringList);
 private:
+    bool mCompletions;
     LanguagePair mPair;
     QString mQuery;
     IDictionary *mDict;

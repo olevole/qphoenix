@@ -19,9 +19,9 @@ public:
 
     LanguagePairList pairs() const {
         LanguagePairList list;
-        for(int i = 0; i < other.count(); i++) {
-            list << LanguagePair(first, other.at(i))
-                 << LanguagePair(other.at(i), first);
+        for(int i = 0; i < mLangs.count(); i++) {
+            list << LanguagePair("en", mLangs.at(i))
+                 << LanguagePair(mLangs.at(i), "en");
         }
 
         return list;
@@ -36,15 +36,15 @@ public:
     bool load(){}
     bool unload(){}
     bool isLoaded()const{return true;}
-private:
-    QString first;
-    QStringList other;
 
+
+    bool isSupportCompletions() const { return true; }
+private:
+    static QStringList mLangs;
+    static QString mApiKey;
+    static QString mApiVer;
 
     QJsonDocument queryData(const QString &str, const LanguagePair &pair) const;
-//    static QString apikey = "284e7";
-//    static QString version = "0.8";
-
 };
 
 #endif // WORDREFERENCE_H

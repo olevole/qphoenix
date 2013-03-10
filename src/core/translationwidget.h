@@ -76,6 +76,7 @@ public:
     virtual QToolBar    *resToolbar()       { return mResToolbar;       }
     virtual QToolBar    *mainToolBar()      { return mMainToolBar;       }
 
+    QComboBox *translatorComboBox() { return mTranslatorComboBox;}
 
 
 
@@ -90,19 +91,23 @@ public:
 
     void setEnabledKeys(const QStringList &keys){mKeys = keys;}
 
-    QComboBox *translatorComboBox() { return mTranslatorComboBox;}
 public slots:
     virtual void swap();
     virtual void copySrcText();
     virtual void copyResText();
 private slots:
     void onSourceLanguageChanged();
+    void updateButtonState();
+
     void fillCombobox(QComboBox *cb, QStringList keys);
     void translate();
 
     // Update languages if translator was changed TODO: finish it!
     void updateLanguages();
 private:
+    QString srcComboboxData();
+    QString resComboboxData();
+
     /*!
      *  Widgets
      */

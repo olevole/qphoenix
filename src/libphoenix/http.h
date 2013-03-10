@@ -14,6 +14,7 @@
 
 
 
+
 class HTTP : public QObject
 {
     Q_OBJECT
@@ -24,5 +25,11 @@ public:
 //    static QByteArray post(const QUrl &req, QByteArray &data) const;
 
 };
+
+
+//class URL : public QObject
+//{
+//    static QString str2uri(const QString &str) const;
+//};
 
 #endif // HTTP_H

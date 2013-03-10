@@ -23,16 +23,16 @@
 #define DICTIONARYWIDGET_H
 
 #include <QWidget>
-
+#include <QLabel>
+#include <QWebView>
 #include <QStringList>
 #include <QListWidget>
+
 #include "info.h"
 #include "idictionarywidget.h"
 #include "idictionary.h"
 #include "querywrappers.h"
 
-#include <QLabel>
-#include <QWebView>
 
 
 class QComboBox;
@@ -64,19 +64,17 @@ public:
     virtual QToolBar    *mainToolBar()  { return mMainToolBar;       }
 public slots:
     void setNativeNames(const bool b) { mNativeNames = b;}
-
-    void setCompletions(const QStringList &comp);
-    void displayData(const DictionaryVariantList &lst);
-
-
     void setDictionaryList(QList<IDictionary *>dicts);
     void setMaxVariants(const int count){mMaxVarCount = count;}
 private slots:
+    void setCompletions(const QStringList &comp);
+    void displayData(const DictionaryVariantList &lst);
+
     void zoomIn();
     void zoomOut();
 
     void setLangPairs(const LanguagePairList lst);
-
+    void onQueryComp();
     void onQuery();
 private:
     /*!
@@ -110,8 +108,6 @@ private:
     QString mBase, mFragment;
 
     QList<IDictionary *>mDicts;
-
-
     DictionaryWorker mDictWorker;
     LanguagePairList mPairs;
 };

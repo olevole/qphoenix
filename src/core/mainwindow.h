@@ -130,6 +130,9 @@ private:
     LanguageConfig *mLanguageConfig;
     DictionaryConfig *mDictionaryConfig;
 
+
+    static QString mAboutStr;
+
 signals:
     void currentIndexChanged(const int i);
 };

@@ -1,13 +1,24 @@
-#include "mymemorytranslator.h"
+#include "mymemory.h"
 #include <QtGui>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 
 
+QStringList MyMemory::mLangs = QStringList()   << "sq" <<"ar" <<"bg" <<"ca"
+                                               <<"zh-CN" <<"zh-TW" <<"hr"
+                                               <<"cs" <<"da" <<"nl" <<"en"
+                                               <<"et" <<"tl" <<"fi" <<"fr"
+                                               <<"gl" <<"de" <<"el" <<"iw"
+                                               <<"hi" <<"hu" <<"id" <<"it"
+                                               <<"ja" <<"ko" <<"lv" <<"lt"
+                                               <<"mt" <<"no" <<"pl" <<"pt"
+                                               <<"ro" <<"ru" <<"sr" <<"sk"
+                                               <<"sl" <<"es" <<"sv" <<"th"
+                                               <<"tr" <<"uk" <<"vi";
 
-#include <QtGlobal>
-MyMemoryTranslator::MyMemoryTranslator(QObject *parent)
+
+MyMemory::MyMemory(QObject *parent)
     :QObject(parent)
 {
     setName("MyMemory");
@@ -16,7 +27,7 @@ MyMemoryTranslator::MyMemoryTranslator(QObject *parent)
 
 
 
-QString MyMemoryTranslator::translate(const QString &src_text, const QString &src_lang, const QString &dest_lang) {
+QString MyMemory::translate(const QString &src_text, const QString &src_lang, const QString &dest_lang) {
     QByteArray html = src_text.toUtf8();
 
     html.replace("&", "&amp;");
