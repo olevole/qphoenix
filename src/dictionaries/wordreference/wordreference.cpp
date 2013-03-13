@@ -27,11 +27,11 @@ QString WordReference::mApiVer = "0.8";
 WordReference::WordReference(QObject *parent)
     :QObject(parent)
 {
-    setName("WordReference");
+    setName("Yandex");
 }
 
 
-DictionaryVariantList WordReference::query(const QString &text, const LanguagePair &pair)  {
+DictionaryVariantList WordReference::query(const QString &text, const LanguagePair &pair, const int max_count)  {
     QJsonDocument doc = queryData(text, pair);
     QJsonObject root = doc.object().value("term0").toObject();
     QJsonObject principal = root.value("PrincipalTranslations").toObject();
@@ -95,6 +95,7 @@ QStringList WordReference::completions(const QString &str, const LanguagePair &p
         QString expl = oterm.value("term").toString();
         lst << expl;
     }
+   lst.prepend(str);
    return lst;
 //    return QStringList() << "pills" << "louis" << "zoey" << "heavy" << "medic" << "peers" << "cheers";
 }

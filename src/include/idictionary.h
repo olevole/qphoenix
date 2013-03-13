@@ -38,6 +38,8 @@ class DictionaryVariant;
 typedef QList<DictionaryVariant> DictionaryVariantList;
 
 
+#define QP_DICT_MAX 1000
+
 
 class DictionaryVariant
 {
@@ -122,7 +124,7 @@ public:
      * \param pair language pair (for example, en, ru)
      * \return DictionaryVariantList with dictionary reply
      */
-    virtual DictionaryVariantList query(const QString &text, const LanguagePair &pair)  = 0;
+    virtual DictionaryVariantList query(const QString &text, const LanguagePair &pair, const int max_count = QP_DICT_MAX)  = 0;
 
     /*!
      * \brief completions return a word completions variants

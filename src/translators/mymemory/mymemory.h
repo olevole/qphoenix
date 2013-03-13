@@ -46,21 +46,16 @@ public:
     }
     bool isLoaded() const {return mLoaded;}
 
-
     QWidget *configWidget() {
         return new QCheckBox("test");
     }
 
-
     LanguageTable table() const {
         LanguageTable myTable;
-
         foreach(QString lang, mLangs)
             myTable.insert(lang, QStringList());
-
         return myTable;
     }
-
     QString translate(const QString &src_text, const QString &src_lang, const QString &dest_lang);
 };
 

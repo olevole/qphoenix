@@ -197,6 +197,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+//    delete mTranslationWidget;
 }
 
 
@@ -350,9 +351,9 @@ int MainWindow::currentIndex() const {
 }
 
 
-void MainWindow::closeEvent(QCloseEvent *event)
-{
-    // TODO: Fix it!
-    QMainWindow::event(event);
-    event->accept();
-}
+//void MainWindow::closeEvent(QCloseEvent *event)
+//{
+//    // TODO: Fix it!
+//    QMainWindow::event(event);
+//    event->accept();
+//}

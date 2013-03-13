@@ -24,6 +24,7 @@
 
 #include <QWidget>
 #include <QToolBar>
+#include <QSettings>
 #include "itranslatorwidget.h"
 #include "info.h"
 #include "itranslator.h"
@@ -61,10 +62,11 @@ private:
 class TranslationWidget : public QWidget, ITranslatorWidget, Info
 {
     Q_OBJECT
-    Q_INTERFACES(ITranslatorWidget)
-    Q_INTERFACES(Info)
+    Q_INTERFACES(ITranslatorWidget Info)
+//    Q_INTERFACES(Info)
 public:
     explicit TranslationWidget(QWidget *parent = 0);
+    virtual ~TranslationWidget();
 
     virtual QComboBox   *srcComboBox()      { return mSrcComboBox;      }
     virtual QComboBox   *resComboBox()      { return mResComboBox;      }
@@ -78,19 +80,18 @@ public:
 
     QComboBox *translatorComboBox() { return mTranslatorComboBox;}
 
-
-
     void setNativeNames(const bool b)           {mNativeNames = b;}
-
     void setTranslator(ITranslator *t) {
         if(t != NULL && t != mWorker.translator()) {
             mWorker.setTranslator(t);
             updateLanguages();
+            readCfg();
+        } else {
+            qDebug() << "THIS TRANSLATIR IS ALREADY SET: " << t->name();
         }
     }
 
     void setEnabledKeys(const QStringList &keys){mKeys = keys;}
-
 public slots:
     virtual void swap();
     virtual void copySrcText();
@@ -104,6 +105,10 @@ private slots:
 
     // Update languages if translator was changed TODO: finish it!
     void updateLanguages();
+
+
+    void saveCfg();
+    void readCfg();
 private:
     QString srcComboboxData();
     QString resComboboxData();
@@ -111,7 +116,6 @@ private:
     /*!
      *  Widgets
      */
-
     QToolBar *mMainToolBar;
 
     QComboBox
@@ -131,12 +135,9 @@ private:
 
     TranslationToolBar *mSrcToolbar, *mResToolbar;
 
-
-
     /*!
      *  Logic parts
      */
-
     QStringList mKeys;
     LanguageTable mTable;
     TranslatorWorker mWorker;

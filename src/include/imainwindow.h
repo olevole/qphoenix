@@ -25,7 +25,7 @@
 #include "itranslatorwidget.h"
 #include "idictionarywidget.h"
 #include "info.h"
-
+#include <QDebug>
 
 class QToolBar;
 class QStatusBar;
@@ -40,7 +40,7 @@ class QMainWindow;
 
 class IMainWindow {
 public:
-    ~IMainWindow(){}
+    virtual ~IMainWindow(){}
     // Signals
     virtual void currentIndexChanged(const int i) = 0;
 

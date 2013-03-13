@@ -37,7 +37,7 @@ class MainWindow : public  QMainWindow, IMainWindow
     Q_DISABLE_COPY(MainWindow)
 public:
     explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    virtual ~MainWindow();
 
     void addPage(QWidget *page);
     void removePage(const QWidget *page);
@@ -58,7 +58,7 @@ public:
 public slots:
     void setCurrentIndex(const int i);
 protected:
-    void closeEvent(QCloseEvent *event);
+//    void closeEvent(QCloseEvent *event);
 private slots:
     //! Update plugins, etc information from config dialog.
     void onConfigAccept();

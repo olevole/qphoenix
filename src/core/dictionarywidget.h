@@ -27,6 +27,7 @@
 #include <QWebView>
 #include <QStringList>
 #include <QListWidget>
+#include <QMutex>
 
 #include "info.h"
 #include "idictionarywidget.h"
@@ -35,8 +36,10 @@
 
 
 
+
+
+
 class QComboBox;
-class QLineEdit;
 class QTextBrowser;
 class QToolButton;
 class QGroupBox;
@@ -48,6 +51,7 @@ class QStringListModel;
 class QTimer;
 class QWebView;
 class QToolBar;
+class QLineEdit;
 
 
 
@@ -65,7 +69,10 @@ public:
 public slots:
     void setNativeNames(const bool b) { mNativeNames = b;}
     void setDictionaryList(QList<IDictionary *>dicts);
+
+    //TODO: Implement those two functions reactions
     void setMaxVariants(const int count){mMaxVarCount = count;}
+    void setInputTimeout(const int t) {mQueryTimer->setInterval(t);}
 private slots:
     void setCompletions(const QStringList &comp);
     void displayData(const DictionaryVariantList &lst);
@@ -75,8 +82,13 @@ private slots:
 
     void setLangPairs(const LanguagePairList lst);
     void onQueryComp();
-    void onQuery();
+    void onQueryWord();
+signals:
+    void start();
+    void finish();
 private:
+
+    void query(const bool comp);
     /*!
      * Maximal count of displaying variants per dictionary
      * if 0 - unlimited
@@ -105,7 +117,11 @@ private:
      * Strings contains html templates
      * NOTE: Subject to changes
      */
-    QString mBase, mFragment;
+    const QString mTemplateBase;
+    const QString mTemplateItem;
+
+    QString mLastContent;
+
 
     QList<IDictionary *>mDicts;
     DictionaryWorker mDictWorker;

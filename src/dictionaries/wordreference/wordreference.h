@@ -30,7 +30,7 @@ public:
 
     //http://api.wordreference.com/{api_version}/{API_key}/{dictionary}/{term}
 
-    DictionaryVariantList query( const QString &text, const LanguagePair &pair);
+    DictionaryVariantList query( const QString &text, const LanguagePair &pair, const int max_count);
 
     QStringList completions(const QString &str, const LanguagePair &pair) const;
     bool load(){}

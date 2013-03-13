@@ -47,6 +47,7 @@ public:
     DictionaryWorker();
 
     void setDictionary(IDictionary *dict){ mDict = dict; }
+    IDictionary *instance() {return mDict;}
 protected:
     void run();
 public slots:
