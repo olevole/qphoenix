@@ -42,7 +42,7 @@ QObjectList Loader::modules() {
         if(l->load() && (instance = l->instance()) != NULL)
             list.append(instance);
         else
-            qDebug() << "Couldn't load plugin: " << l->fileName() << l->errorString();
+            qWarning() << "Couldn't load plugin: " << l->fileName() << l->errorString();
 
     }
 

@@ -38,6 +38,7 @@
 #include <QToolBar>
 #include <QAction>
 #include <QFile>
+#include <QTime>
 
 #include "defines.h"
 #include "languages.h"
@@ -67,11 +68,12 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mCompleterModel(new QStringListModel(this)),
     mQueryTimer(new QTimer(this)),
     mMainToolBar(new QToolBar(this)),
-    mTemplateBase(get_template(":/files/dict_template.html")),
-    mTemplateItem(get_template(":/files/dict_template_item.html"))
+    mTemplateRoot(get_template(":/templates/root.html")),
+    mTemplateSection(get_template(":/templates/section.html")),
+    mTemplateItem(get_template(":/templates/item.html")),
+    mChoiceFinished(false)
 
 {
-
     setName(tr("Dictionary"));
     setIcon(QP_ICON("dictionary"));
     setInputTimeout(1000);
@@ -80,9 +82,6 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mMainToolBar->setMovable(false);
 
     mQueryTimer->setSingleShot(true);
-
-
-
 
     mLineLayout->addWidget(mLanguagesComboBox);
     mLineLayout->addWidget(mSrcText);
@@ -95,9 +94,6 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 
     mMainLayout->addWidget(fr);
     setLayout(mMainLayout);
-
-
-
 
     // A Validator for query input
     QRegExpValidator *v = new QRegExpValidator(QRegExp("[^\Q,.\E].*"), this);
@@ -126,18 +122,14 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     connect(&mDictWorker, SIGNAL(reply(DictionaryVariantList)), this, SLOT(displayData(DictionaryVariantList)));
     connect(&mDictWorker, SIGNAL(reply(QStringList)), this, SLOT(setCompletions(QStringList)));
 
+    connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
+    connect(mQueryTimer, SIGNAL(timeout()), this, SLOT(onQueryComp()));
+
     connect(mCompleter, SIGNAL(activated(QString)), this, SLOT(onQueryWord()));
 
 
-    connect(mSrcText, SIGNAL(editingFinished()), this, SLOT(onQueryWord()));
 
-
-    //TODO: Some doubts here
-//    connect(mSrcText, SIGNAL(textChanged(QString)), this, SLOT(onQueryWord()));
-
-    connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
-    connect(mQueryTimer, SIGNAL(timeout ()), this, SLOT(onQueryComp()));
-//    connect(mQueryTimer, SIGNAL(timeout ()), this, SLOT(onQuery()));
+    connect(mSrcText, SIGNAL(returnPressed()), this, SLOT(onQueryWord()));
 
 
     connect(aZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
@@ -146,52 +138,57 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mDictWorker.setTimeout(90000);
 
 
-//    // Reading templates for QWebView html's
-//    QFile f1(":/files/dict_template.html");
-//    QFile f2(":/files/dict_template_item.html");
-
-//    if(!f1.open(QFile::ReadOnly) ||  !f2.open(QFile::ReadOnly))
-//        qFatal("Unable to open templates for dictionary!");
-
-//    mTemplateBase = f1.readAll();
-//    mTemplateItem = f2.readAll();
-
-//    f1.close();
-//    f2.close();
-
 
 
 }
 
 void DictionaryWidget::setCompletions(const QStringList &comp) {
-    mCompleterModel->setStringList(comp);
-    mSrcText->completer()->complete();
+    QStringList tmp = mCompleterModel->stringList() + comp;
+    tmp.removeDuplicates();
+    tmp.sort();
+
+
+    mCompleterModel->setStringList(tmp);
+
+    if(!mDictQueue.isEmpty()) {
+        onQueryComp();
+    } else {
+        mChoiceFinished = true;
+        mSrcText->completer()->complete();
+    }
 }
 
 void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
-    qDebug() << "COUNT: " << lst.count() << "SIZE: " << mTemplateBase.size();
+    qDebug() << "INSERTING WORD!";
+    QString root = mTemplateRoot;
+    QString sect = mTemplateSection;
+    QString item = mTemplateItem;
+    QString data;
 
-    QString base;
+
+    sect = sect.replace("{SECTION_ID}", mLastDictName + "_id")
+            .replace("{SECTION_TITLE}", mLastDictName);
+
     foreach(DictionaryVariant var, lst) {
-        const QString src_term = var.sourceTerm();
-        const QString res_term = var.resultTerm();
-        const QString src_sense = var.sourceSense();
-        const QString res_sense = var.resultSense();
-
-        // TODO: REMOVE THIS DIRTY HACK!
-        QString item = mTemplateItem;
-
-        base += item.
-                replace("{SRC_TERM}", src_term).
-                replace("{SRC_SENSE}", src_sense).
-                replace("{RES_TERM}", res_term).
-                replace("{RES_SENSE}", res_sense);
+        data
+                += item
+                .replace("{SRC_TERM}", var.sourceTerm())
+                .replace("{RES_TERM}", var.resultTerm())
+                .replace("{SRC_SENSE}", var.sourceSense())
+                .replace("{RES_SENSE}", var.resultSense());
+        item = mTemplateItem;
     }
-    QString _base = mTemplateBase;
+    sect = sect.replace("{SECTION_CONTENT}", data);
+    mLastContent += sect;
+    mResText->setHtml(root.replace("{ROOT_CONTENT}", mLastContent));
 
-    base.prepend(mDictWorker.instance()->name());
-    mLastContent += base;
-    mResText->setHtml(_base.replace("{CONTENT}", mLastContent + base));
+    if(mDictQueue.isEmpty()) {
+        mChoiceFinished = false;
+        mLastContent.clear();
+    } else {
+        onQueryWord();
+    }
+
 }
 
 void DictionaryWidget::setDictionaryList(QList<IDictionary *> dicts) {
@@ -231,28 +228,32 @@ void DictionaryWidget::setLangPairs(const LanguagePairList lst) {
 }
 
 void DictionaryWidget::onQueryComp() {
-    this->query(true);
+    if(mSrcText->text().isEmpty() || mChoiceFinished)
+        return;
+    qDebug() << "COMPL!";
+
+    if(mDictQueue.isEmpty())
+        mDictQueue.append(mDicts);
+
+    IDictionary *dict = mDictQueue.dequeue();
+    mDictWorker.setDictionary(dict);
+
+    mDictWorker.queryCompletions(mPairs.at(mLanguagesComboBox->currentIndex()), mSrcText->text());
 }
 
 void DictionaryWidget::onQueryWord() {
- this->query(false);
-}
 
-void DictionaryWidget::query(const bool comp) {
-    const LanguagePair pair = mPairs.at(mLanguagesComboBox->currentIndex());
-    const QString text = mSrcText->text();
+    if(mSrcText->text().isEmpty())
+        return;
+
+    if(mDictQueue.isEmpty())
+        mDictQueue.append(mDicts);
 
 
-    if(pair.first.isEmpty() || pair.second.isEmpty() || text.isEmpty()) {
-        return; //TODO: Warning here
-    }
 
-    foreach (IDictionary *dict, mDicts) {
-        mDictWorker.setDictionary(dict);
-        qDebug() << "CURRENT PAIR: " <<  mPairs;
-        if(comp)
-            mDictWorker.queryCompletions(pair, text);
-        else
-            mDictWorker.query(pair, text);
-    }
+    qDebug() << "WORD!!";
+    IDictionary *dict = mDictQueue.dequeue();
+    mDictWorker.setDictionary(dict);
+    mLastDictName = dict->name();
+    mDictWorker.query(mPairs.at(mLanguagesComboBox->currentIndex()), mSrcText->text());
 }

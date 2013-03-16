@@ -27,7 +27,7 @@ QString WordReference::mApiVer = "0.8";
 WordReference::WordReference(QObject *parent)
     :QObject(parent)
 {
-    setName("Yandex");
+    setName("WordReference");
 }
 
 
@@ -67,7 +67,6 @@ QJsonDocument WordReference::queryData(const QString &text, const LanguagePair &
     const QUrl url = QString("http://api.wordreference.com/%2/json/%3/%4").arg(mApiKey, langs, html.toPercentEncoding());
     //TODO: percent encoding fails!
 
-    qDebug() << "URL:" << html.toPercentEncoding() << " | " << url.toString();
 
     QNetworkAccessManager mManager;
     QEventLoop loop;
@@ -96,6 +95,6 @@ QStringList WordReference::completions(const QString &str, const LanguagePair &p
         lst << expl;
     }
    lst.prepend(str);
-   return lst;
-//    return QStringList() << "pills" << "louis" << "zoey" << "heavy" << "medic" << "peers" << "cheers";
+//   return lst;
+    return QStringList() << "pills" << "louis" << "zoey" << "heavy" << "medic" << "peers" << "cheers";
 }

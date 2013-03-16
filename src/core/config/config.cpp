@@ -85,7 +85,7 @@ void Config::addPage(QWidget *page) {
 
 
     if(iface == NULL) {
-        qDebug() << "Unable to cast SettingsPage! Critical error, function terminated!";
+        qWarning() << "Unable to cast SettingsPage! Critical error, function terminated!";
         return;
     } else {
         //TODO: Fix this dangerous code!

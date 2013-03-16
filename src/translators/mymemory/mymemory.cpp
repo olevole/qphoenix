@@ -57,7 +57,6 @@ QString MyMemory::translate(const QString &src_text, const QString &src_lang, co
 
     QJsonObject obj = QJsonDocument::fromJson(rawdata.toUtf8()).object();
     QString res = obj.value("responseData").toObject().value("translatedText").toString();
-    qDebug() << "ITERATION_";
 
 
     return res;

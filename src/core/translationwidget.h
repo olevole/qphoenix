@@ -87,7 +87,7 @@ public:
             updateLanguages();
             readCfg();
         } else {
-            qDebug() << "THIS TRANSLATIR IS ALREADY SET: " << t->name();
+            qWarning() << "THIS TRANSLATIR IS ALREADY SET: " << t->name();
         }
     }
 

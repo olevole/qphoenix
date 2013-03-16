@@ -24,7 +24,7 @@ void qpMsgHandler(QtMsgType type, const QMessageLogContext &context, const QStri
         break;
 #endif
     case QtWarningMsg:
-        fprintf(stderr, "[Warning]:  %s \n", localMsg.constData());
+//        fprintf(stderr, "[Warning]:  %s \n", localMsg.constData());
         break;
     case QtCriticalMsg:
         fprintf(stderr, "[Critical]:  %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);

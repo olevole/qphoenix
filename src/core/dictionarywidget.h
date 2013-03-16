@@ -28,6 +28,7 @@
 #include <QStringList>
 #include <QListWidget>
 #include <QMutex>
+#include <QQueue>
 
 #include "info.h"
 #include "idictionarywidget.h"
@@ -54,6 +55,55 @@ class QToolBar;
 class QLineEdit;
 
 
+/*!
+ * \brief The DictionaryTemplate class
+ * This class is a wrapper for html templates for dictionary QWebView
+ * display widget.
+ */
+
+class DictionaryTemplate : public QObject {
+public:
+//    void beginRoot(const QString &title, const bool collapseable);
+//    void endDocument();
+
+
+    /*!
+     * \brief beginSection create a document section
+     * \param title section title
+     * \param collapseable
+     */
+    void beginSection(const QString &title, const bool collapseable);
+
+    /*!
+     * \brief beginSection create a document section with items
+     * \param lst a list of items
+     * \param title title of section
+     * \param collapseable could that section be collapsed?
+     */
+    void beginSection(const DictionaryVariantList &lst, const QString &title, const bool collapseable);
+
+    /*!
+     * \brief endSection end of section
+     */
+    void endSection();
+
+
+    /*!
+     * \brief addItem add item for current section
+     * \param var
+     * \return true if beginSection was set correct
+     * false - otherwise
+     */
+    bool addItem(const DictionaryVariant &var);
+
+
+    QString document() const;
+private:
+    QString mRoot;
+    static QString mTemplateRoot;
+    static QString mTemplateSection;
+    static QString mTemplateItem;
+};
 
 class DictionaryWidget : public QWidget, IDictionaryWidget, Info
 {
@@ -88,14 +138,14 @@ signals:
     void finish();
 private:
 
-    void query(const bool comp);
+//    void query(const bool comp);
     /*!
      * Maximal count of displaying variants per dictionary
      * if 0 - unlimited
      */
     int mMaxVarCount;
 
-    bool mNativeNames;
+    bool mNativeNames, mChoiceFinished;
     QToolBar *mMainToolBar;
     QTimer *mQueryTimer;
     QComboBox *mLanguagesComboBox;
@@ -117,11 +167,15 @@ private:
      * Strings contains html templates
      * NOTE: Subject to changes
      */
-    const QString mTemplateBase;
+
+
+    const QString mTemplateRoot;
+    const QString mTemplateSection;
     const QString mTemplateItem;
 
-    QString mLastContent;
+    QString mLastContent, mLastDictName;
 
+    QQueue <IDictionary *> mDictQueue;
 
     QList<IDictionary *>mDicts;
     DictionaryWorker mDictWorker;

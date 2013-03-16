@@ -82,15 +82,11 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mMainToolBar->setMovable(false);
 
 
-    QHBoxLayout *l = new QHBoxLayout;
-    l->addWidget(new QLabel(tr("Translator:"), this));
-    l->addWidget(mTranslatorComboBox);
+    mMainToolBar->addSeparator();
+    mMainToolBar->addWidget(new QLabel(tr("  Translator: "), this));
+    mMainToolBar->addWidget(mTranslatorComboBox);
 
-    //TODO: Vertical toolbar expanding issue, and ugly code
-    QWidget *w = new QWidget(this);
-    w->setLayout(l);
-//    mMainToolBar->setLayout(l);
-    mMainToolBar->addWidget(w);
+
     mMainLayout->addWidget(mSrcToolbar);
     mMainLayout->addWidget(srcText());
     mMainLayout->addLayout(mButtonsLayout);
@@ -224,7 +220,6 @@ void TranslationWidget::updateLanguages() {
 }
 
 void TranslationWidget::saveCfg() {
-    qDebug() << "Save CFG";
     QSettings s;
     s.beginGroup("TranslationWidget");
     s.setValue("src_index", mSrcComboBox->currentIndex());
@@ -233,7 +228,6 @@ void TranslationWidget::saveCfg() {
 }
 
 void TranslationWidget::readCfg() {
-    qDebug() << "Read CFG";
 
         QSettings s;
         s.beginGroup("TranslationWidget");
