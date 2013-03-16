@@ -30,6 +30,8 @@ class Info
 public:
 //    virtual ~Info(){}
 
+
+
     QString name() const                    {return mName;      }
     QString version() const                 {return mVersion;   }
     QString url() const                     {return mUrl;       }

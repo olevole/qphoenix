@@ -8,21 +8,28 @@ DictionaryWorker::DictionaryWorker()
     mCompletions = false;
 }
 
+
+
 void DictionaryWorker::run()
 {
-    Q_ASSERT(mDict);
-    Q_ASSERT(mDict->isLoaded());
+//    Q_ASSERT(mDictList.is);
+//    Q_ASSERT(mDict->isLoaded());
     Q_ASSERT(!mQuery.isEmpty());
     Q_ASSERT(!mPair.first.isEmpty() && !mPair.second.isEmpty());
 
 
 
     //TODO: Solve this part
-    if(mCompletions && mDict->isSupportCompletions()) {
-        const QStringList c = mDict->completions(mQuery, mPair);
-        emit reply(c);
+    if(mCompletions) {
+        QStringList comp;
+        foreach(IDictionary *dict, mDictList)
+            if(dict->isSupportCompletions())
+                comp += dict->completions(mQuery, mPair);
+        emit reply(comp);
+
     } else {
-        emit reply(mDict->query(mQuery, mPair));
+        foreach(IDictionary *dict, mDictList)
+            emit reply(dict->query(mQuery, mPair), dict->name());
     }
 }
 

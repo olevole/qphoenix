@@ -45,22 +45,29 @@ class DictionaryWorker : public IWorker {
     Q_OBJECT
 public:
     DictionaryWorker();
+    DictionaryWorker(QList<IDictionary *>lst) {
+        DictionaryWorker();
+        this->setDictionaryList(lst);
+    }
 
-    void setDictionary(IDictionary *dict){ mDict = dict; }
-    IDictionary *instance() {return mDict;}
+    void setDictionaryList(QList<IDictionary *>lst){ mDictList = lst; }
+
+    int count(){ return mDictList.count();}
+
 protected:
     void run();
 public slots:
     void query(const LanguagePair &pair, const QString &query);
     void queryCompletions(const LanguagePair &pair, const QString &query);
 signals:
-    void reply(DictionaryVariantList);
+    void reply(DictionaryVariantList, QString);
     void reply(QStringList);
+//    void reply(LanguagePairList);c
 private:
     bool mCompletions;
     LanguagePair mPair;
     QString mQuery;
-    IDictionary *mDict;
+    QList<IDictionary *> mDictList;
 };
 
 
@@ -77,6 +84,10 @@ class TranslatorWorker : public IWorker
     Q_OBJECT
 public:
     TranslatorWorker();
+    TranslatorWorker(ITranslator *t) {
+        TranslatorWorker();
+        setTranslator(t);
+    }
 
     void setTranslator(ITranslator *ptr){mPtr = ptr;}
 

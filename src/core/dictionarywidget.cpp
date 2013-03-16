@@ -122,14 +122,10 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     connect(&mDictWorker, SIGNAL(reply(DictionaryVariantList)), this, SLOT(displayData(DictionaryVariantList)));
     connect(&mDictWorker, SIGNAL(reply(QStringList)), this, SLOT(setCompletions(QStringList)));
 
-    connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
-    connect(mQueryTimer, SIGNAL(timeout()), this, SLOT(onQueryComp()));
-
-    connect(mCompleter, SIGNAL(activated(QString)), this, SLOT(onQueryWord()));
-
-
-
-    connect(mSrcText, SIGNAL(returnPressed()), this, SLOT(onQueryWord()));
+//    connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
+//    connect(mQueryTimer, SIGNAL(timeout()), this, SLOT(onQueryComp()));
+//    connect(mCompleter, SIGNAL(activated(QString)), this, SLOT(onQueryWord()));
+//    connect(mSrcText, SIGNAL(returnPressed()), this, SLOT(onQueryWord()));
 
 
     connect(aZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
@@ -228,32 +224,10 @@ void DictionaryWidget::setLangPairs(const LanguagePairList lst) {
 }
 
 void DictionaryWidget::onQueryComp() {
-    if(mSrcText->text().isEmpty() || mChoiceFinished)
-        return;
-    qDebug() << "COMPL!";
 
-    if(mDictQueue.isEmpty())
-        mDictQueue.append(mDicts);
-
-    IDictionary *dict = mDictQueue.dequeue();
-    mDictWorker.setDictionary(dict);
-
-    mDictWorker.queryCompletions(mPairs.at(mLanguagesComboBox->currentIndex()), mSrcText->text());
 }
 
 void DictionaryWidget::onQueryWord() {
 
-    if(mSrcText->text().isEmpty())
-        return;
-
-    if(mDictQueue.isEmpty())
-        mDictQueue.append(mDicts);
-
-
-
-    qDebug() << "WORD!!";
-    IDictionary *dict = mDictQueue.dequeue();
-    mDictWorker.setDictionary(dict);
-    mLastDictName = dict->name();
-    mDictWorker.query(mPairs.at(mLanguagesComboBox->currentIndex()), mSrcText->text());
 }
+
