@@ -62,9 +62,6 @@ bool TrayIcon::unload() {
 
 void TrayIcon::setMainWindowPTR(IMainWindow *ptr) {
     mWindowIface = ptr;
-
-
-
 }
 
 void TrayIcon::translate() {

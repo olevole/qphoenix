@@ -22,7 +22,8 @@ PluginsConfig::PluginsConfig(QWidget *parent)
     mTable->setColumnCount(4);
     mTable->verticalHeader()->hide();
 
-    mTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+    mTable->horizontalHeader()->setStretchLastSection(true);
 
 
     mTable->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Name")));
@@ -121,4 +122,6 @@ void PluginsConfig::updateTable() {
         mTable->setCellWidget(row, 3, cb);
 
     }
+    mTable->resizeColumnsToContents();
+
 }

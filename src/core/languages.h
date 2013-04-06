@@ -49,12 +49,10 @@ public:
             if(!singleton) {
                 mutex.lock();
                 singleton =  new LanguageEngine;
-
             }
             mutex.unlock();
 
             return singleton;
-
     }
 
     /*!
@@ -62,8 +60,6 @@ public:
      * \return a keys for enabled languages
      */
     LanguageList languages() const {return mLangList;}
-
-
 private:
     LanguageList mLangList;
     LanguageEngine();

@@ -71,7 +71,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mTemplateRoot(get_template(":/templates/root.html")),
     mTemplateSection(get_template(":/templates/section.html")),
     mTemplateItem(get_template(":/templates/item.html")),
-    mChoiceFinished(false)
+    mLock(false)
 
 {
     setName(tr("Dictionary"));
@@ -119,13 +119,15 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mMainToolBar->addAction(aZoomIn);
 
 
-    connect(&mDictWorker, SIGNAL(reply(DictionaryVariantList)), this, SLOT(displayData(DictionaryVariantList)));
+    connect(&mDictWorker, SIGNAL(reply(DictionaryVariantList, QString)), this, SLOT(displayData(DictionaryVariantList,QString)));
     connect(&mDictWorker, SIGNAL(reply(QStringList)), this, SLOT(setCompletions(QStringList)));
 
-//    connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
-//    connect(mQueryTimer, SIGNAL(timeout()), this, SLOT(onQueryComp()));
-//    connect(mCompleter, SIGNAL(activated(QString)), this, SLOT(onQueryWord()));
-//    connect(mSrcText, SIGNAL(returnPressed()), this, SLOT(onQueryWord()));
+    connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
+    connect(mQueryTimer, SIGNAL(timeout()), this, SLOT(onQueryComp()));
+
+
+    connect(mCompleter, SIGNAL(activated(QString)), this, SLOT(onQueryWord()));
+    connect(mSrcText, SIGNAL(returnPressed()), this, SLOT(onQueryWord()));
 
 
     connect(aZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
@@ -142,19 +144,20 @@ void DictionaryWidget::setCompletions(const QStringList &comp) {
     QStringList tmp = mCompleterModel->stringList() + comp;
     tmp.removeDuplicates();
     tmp.sort();
+    qDebug() << "QUERY!" << tmp;
 
 
     mCompleterModel->setStringList(tmp);
-
-    if(!mDictQueue.isEmpty()) {
-        onQueryComp();
-    } else {
-        mChoiceFinished = true;
-        mSrcText->completer()->complete();
-    }
+    mSrcText->completer()->complete();
+//    if(!mDictQueue.isEmpty()) {
+//        onQueryComp();
+//    } else {
+//        mChoiceFinished = true;
+//        mSrcText->completer()->complete();
+//    }
 }
 
-void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
+void DictionaryWidget::displayData(const DictionaryVariantList &lst, const QString &name) {
     qDebug() << "INSERTING WORD!";
     QString root = mTemplateRoot;
     QString sect = mTemplateSection;
@@ -162,8 +165,8 @@ void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
     QString data;
 
 
-    sect = sect.replace("{SECTION_ID}", mLastDictName + "_id")
-            .replace("{SECTION_TITLE}", mLastDictName);
+    sect = sect.replace("{SECTION_ID}", name + "_id")
+            .replace("{SECTION_TITLE}", name);
 
     foreach(DictionaryVariant var, lst) {
         data
@@ -178,19 +181,18 @@ void DictionaryWidget::displayData(const DictionaryVariantList &lst) {
     mLastContent += sect;
     mResText->setHtml(root.replace("{ROOT_CONTENT}", mLastContent));
 
-    if(mDictQueue.isEmpty()) {
-        mChoiceFinished = false;
+    if(!mDictWorker.isRunning()) {
+        mLock = false;
         mLastContent.clear();
-    } else {
-        onQueryWord();
     }
-
 }
 
 void DictionaryWidget::setDictionaryList(QList<IDictionary *> dicts) {
     Q_ASSERT(!dicts.isEmpty());
 
     mDicts = dicts;
+
+    mDictWorker.setDictionaryList(mDicts);
 
     foreach(IDictionary *dict, dicts) {
         Q_ASSERT(dict->isLoaded());
@@ -224,10 +226,14 @@ void DictionaryWidget::setLangPairs(const LanguagePairList lst) {
 }
 
 void DictionaryWidget::onQueryComp() {
-
+    if(!mLock)
+        mDictWorker.queryCompletions(mPairs.at(mLanguagesComboBox->currentIndex()), mSrcText->text());
 }
 
 void DictionaryWidget::onQueryWord() {
+    qDebug() << "WORD QUERY!" << mDictWorker.isRunning();
+    mLock = true;
+    mDictWorker.query(mPairs.at(mLanguagesComboBox->currentIndex()), mSrcText->text());
 
 }
 

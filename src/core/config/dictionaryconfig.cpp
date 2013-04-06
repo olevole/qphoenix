@@ -14,7 +14,7 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
     :QWidget(parent),
       mTable(new QTableWidget(this)),
       mTabWidget(new QTabWidget(this)),
-      mRememberPair(new QCheckBox(tr("Remember Language Pair"), this))
+      mRememberPair(new QCheckBox(tr("Store Language Pair"), this))
 
 {
     setIcon(QP_ICON("dictionary"));

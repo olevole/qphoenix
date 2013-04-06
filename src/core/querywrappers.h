@@ -15,7 +15,7 @@ class IWorker : public QThread
     Q_OBJECT
 public:
     IWorker()
-        :mTimer(new QTimer)
+        :mTimer(new QTimer(this))
     {
         connect(mTimer, SIGNAL(timeout()), this, SIGNAL(timeout()));
         connect(mTimer, SIGNAL(timeout()), this, SLOT(quit()));

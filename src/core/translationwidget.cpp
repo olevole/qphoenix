@@ -181,7 +181,7 @@ void TranslationWidget::updateLanguages() {
     LanguageTable table = tr->table();
 
     Q_ASSERT(tr != NULL);
-    Q_ASSERT(!mKeys.isEmpty());
+//    Q_ASSERT(!mKeys.isEmpty());
 
     /*!
      * Processing table (remove disbled language codes)

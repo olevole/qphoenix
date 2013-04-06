@@ -98,7 +98,7 @@ void LanguageConfig::createTable() {
     mTable->setHorizontalHeaderItem(0, new QTableWidgetItem("Name"));
     mTable->setHorizontalHeaderItem(1, new QTableWidgetItem("*"));
 
-    mTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+//    mTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
 
     LanguageList::Iterator it = mLangList.begin();
@@ -119,11 +119,11 @@ void LanguageConfig::createTable() {
         QString icon = QString(":/flags/flags/%1.png").arg(it.key());
         mTable->insertRow(i);
 
-        QTableWidgetItem *item = new QTableWidgetItem;
+//        QTableWidgetItem *item = new QTableWidgetItem;
 
-        item->setFlags(item->flags() & (~(Qt::ItemIsEditable | Qt::ItemIsSelectable)));
-        item->setText(name);
-        item->setIcon(QIcon(icon));
+//        item->setFlags(item->flags() & (~(Qt::ItemIsEditable | Qt::ItemIsSelectable)));
+//        item->setText(name);
+//        item->setIcon(QIcon(icon));
 
         QCheckBox *cb = new QCheckBox(this);
         mCheckboxList << cb;
@@ -134,6 +134,8 @@ void LanguageConfig::createTable() {
         mTable->setRowHeight(i, 20);
         i++;
     }
+//    mTable->setColumnWidth(1, 20);
+    mTable->resizeColumnsToContents();
 }
 
 void LanguageConfig::setCbState(const bool state) {

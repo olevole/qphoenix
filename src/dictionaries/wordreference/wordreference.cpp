@@ -95,6 +95,6 @@ QStringList WordReference::completions(const QString &str, const LanguagePair &p
         lst << expl;
     }
    lst.prepend(str);
-//   return lst;
-    return QStringList() << "pills" << "louis" << "zoey" << "heavy" << "medic" << "peers" << "cheers";
+   return lst;
+//    return QStringList() << "pills" << "louis" << "zoey" << "heavy" << "medic" << "peers" << "cheers";
 }
