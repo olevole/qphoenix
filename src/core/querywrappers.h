@@ -15,7 +15,7 @@ class IWorker : public QThread
     Q_OBJECT
 public:
     IWorker()
-        :mTimer(new QTimer)
+        :mTimer(new QTimer(this))
     {
         connect(mTimer, SIGNAL(timeout()), this, SIGNAL(timeout()));
         connect(mTimer, SIGNAL(timeout()), this, SLOT(quit()));
@@ -62,6 +62,7 @@ public slots:
 signals:
     void reply(DictionaryVariantList, QString);
     void reply(QStringList);
+    void finished();
 //    void reply(LanguagePairList);c
 private:
     bool mCompletions;

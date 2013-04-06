@@ -36,8 +36,9 @@ QObjectList Loader::modules() {
 
     QObjectList list;
     foreach(QString module, abs) {
-        QPluginLoader *l = new QPluginLoader(module);
+        QPluginLoader *l = new QPluginLoader(module, this);
         QObject *instance;
+
 
         if(l->load() && (instance = l->instance()) != NULL)
             list.append(instance);

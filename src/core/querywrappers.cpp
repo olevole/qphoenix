@@ -25,12 +25,16 @@ void DictionaryWorker::run()
         foreach(IDictionary *dict, mDictList)
             if(dict->isSupportCompletions())
                 comp += dict->completions(mQuery, mPair);
+        qDebug() << "Completions list: " << comp;
         emit reply(comp);
 
     } else {
-        foreach(IDictionary *dict, mDictList)
+        qDebug() << "Creating reply...";
+        foreach(IDictionary *dict, mDictList) {
             emit reply(dict->query(mQuery, mPair), dict->name());
+        }
     }
+    emit finished();
 }
 
 

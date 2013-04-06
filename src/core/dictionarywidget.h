@@ -125,7 +125,7 @@ public slots:
     void setInputTimeout(const int t) {mQueryTimer->setInterval(t);}
 private slots:
     void setCompletions(const QStringList &comp);
-    void displayData(const DictionaryVariantList &lst);
+    void displayData(const DictionaryVariantList &lst, const QString &name);
 
     void zoomIn();
     void zoomOut();
@@ -133,6 +133,7 @@ private slots:
     void setLangPairs(const LanguagePairList lst);
     void onQueryComp();
     void onQueryWord();
+    void onFinish();
 signals:
     void start();
     void finish();
@@ -145,7 +146,7 @@ private:
      */
     int mMaxVarCount;
 
-    bool mNativeNames, mChoiceFinished;
+    bool mNativeNames, mLock;
     QToolBar *mMainToolBar;
     QTimer *mQueryTimer;
     QComboBox *mLanguagesComboBox;
@@ -173,7 +174,7 @@ private:
     const QString mTemplateSection;
     const QString mTemplateItem;
 
-    QString mLastContent, mLastDictName;
+    QString mLastContent;
 
     QQueue <IDictionary *> mDictQueue;
 
