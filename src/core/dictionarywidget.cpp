@@ -96,7 +96,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     setLayout(mMainLayout);
 
     // A Validator for query input
-    QRegExpValidator *v = new QRegExpValidator(QRegExp("[^\Q,.\E].*"), this);
+    QRegExpValidator *v = new QRegExpValidator(QRegExp("[^\Q ,.\E].*"), this);
     mSrcText->setValidator(v);
 
     // A Completer for query input
@@ -129,6 +129,10 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     connect(mQueryTimer, SIGNAL(timeout()), this, SLOT(onQueryComp()));
 
 
+    connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
+    connect(mQueryTimer, SIGNAL(timeout()), this, SLOT(onQueryComp()));
+
+
     connect(mCompleter, SIGNAL(activated(QString)), this, SLOT(onQueryWord()));
     connect(mSrcText, SIGNAL(returnPressed()), this, SLOT(onQueryWord()));
 
@@ -137,10 +141,6 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     connect(aZoomIn, SIGNAL(triggered()), this, SLOT(zoomIn()));
 
     mDictWorker.setTimeout(90000);
-
-
-
-
 }
 
 void DictionaryWidget::setCompletions(const QStringList &comp) {
@@ -152,12 +152,7 @@ void DictionaryWidget::setCompletions(const QStringList &comp) {
 
     mCompleterModel->setStringList(tmp);
     mSrcText->completer()->complete();
-//    if(!mDictQueue.isEmpty()) {
-//        onQueryComp();
-//    } else {
-//        mChoiceFinished = true;
-//        mSrcText->completer()->complete();
-//    }
+
 }
 
 void DictionaryWidget::displayData(const DictionaryVariantList &lst, const QString &name) {
@@ -170,8 +165,7 @@ void DictionaryWidget::displayData(const DictionaryVariantList &lst, const QStri
 
     int id = qrand() % ((100 + 1) - 1) + 1;
 
-    sect = sect.replace("{SECTION_ID}", name + QString::number(id))
-            .replace("{SECTION_TITLE}", name);
+    sect = sect.replace("{SECTION_ID}", name + QString::number(id)).replace("{SECTION_TITLE}", name);
 
     foreach(DictionaryVariant var, lst) {
         data
@@ -185,7 +179,6 @@ void DictionaryWidget::displayData(const DictionaryVariantList &lst, const QStri
     sect = sect.replace("{SECTION_CONTENT}", data);
     mLastContent += sect;
     mResText->setHtml(root.replace("{ROOT_CONTENT}", mLastContent));
-
 
 }
 
@@ -236,8 +229,8 @@ void DictionaryWidget::onQueryWord() {
     qDebug() << "WORD QUERY!" << mDictWorker.isRunning();
     mLock = true;
     mDictWorker.query(mPairs.at(mLanguagesComboBox->currentIndex()), mSrcText->text());
-
 }
+
 
 void DictionaryWidget::onFinish() {
     mLock = false;
