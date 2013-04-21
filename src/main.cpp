@@ -41,6 +41,16 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+    DictionaryTemplate t;
+    t.beginSection("Section Test");
+    t.addItem("text!");
+    t.addItem("Hello!");
+
+    t.endSection();
+
+    qDebug() << t.toHtml();
+
+
     qInstallMessageHandler(qpMsgHandler);
     qRegisterMetaType<DictionaryVariantList>("DictionaryVariantList");
 

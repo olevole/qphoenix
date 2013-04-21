@@ -60,7 +60,7 @@ public slots:
     void query(const LanguagePair &pair, const QString &query);
     void queryCompletions(const LanguagePair &pair, const QString &query);
 signals:
-    void reply(DictionaryVariantList, QString);
+    void reply(QStringList, QString);
     void reply(QStringList);
     void finished();
 //    void reply(LanguagePairList);c

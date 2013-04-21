@@ -31,11 +31,11 @@ WordReference::WordReference(QObject *parent)
 }
 
 
-DictionaryVariantList WordReference::query(const QString &text, const LanguagePair &pair, const int max_count)  {
+QStringList WordReference::query(const QString &text, const LanguagePair &pair, const int max_count)  {
     QJsonDocument doc = queryData(text, pair);
     QJsonObject root = doc.object().value("term0").toObject();
     QJsonObject principal = root.value("PrincipalTranslations").toObject();
-    DictionaryVariantList lst;
+    QStringList lst;
 
     for (int i = 0; i < 20; i++) {
 
@@ -54,8 +54,8 @@ DictionaryVariantList WordReference::query(const QString &text, const LanguagePa
         QString res_sense = oterm2.value("sense").toString();
 
 
+        lst << QString("[b]%1[/b]\n\n[i]%2[/i]\n\n[u]%3[/u][b]%4[/b]").arg(src_term, src_sense, res_sense, res_term);
 
-        lst << DictionaryVariant(src_term, res_term, src_sense, res_sense);
     }
    return lst;
 }

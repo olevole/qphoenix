@@ -15,7 +15,6 @@ class DictionaryTemplate : public QObject {
 public:
     explicit DictionaryTemplate();
 
-
     /*!
      * \brief beginSection create a document section
      * \param title section title
@@ -29,9 +28,7 @@ public:
      * \param title title of section
      * \param collapseable could that section be collapsed?
      */
-    void beginSection(const DictionaryVariantList &lst, const QString &title, const bool collapseable = true);
-
-
+    void beginSection(const QStringList &lst, const QString &title, const bool collapseable = true);
 
     /*!
      * \brief addItem add item for current section
@@ -39,24 +36,22 @@ public:
      * \return true if beginSection was set correct
      * false - otherwise
      */
-    bool addItem(const DictionaryVariant &var);
-
+    bool addItem(const QString &var);
 
     /*!
      * \brief endSection end of section
      */
     void endSection();
 
-    QString document() const;
+    QString toHtml() const;
     QString errorString() const;
 private:
     bool mLastSectionClosed;
-    QString mRoot, mTitle;
+    QString mRoot, mTitle, mSection;
 
     const QString mTemplateRoot;
     const QString mTemplateSection;
     const QString mTemplateItem;
-
 
     /*!
      * \brief bb2html turns bbcode string to html

@@ -95,7 +95,7 @@ public:
      * \param pair language pair (for example, en, ru)
      * \return DictionaryVariantList with dictionary reply
      */
-    virtual DictionaryVariantList query(const QString &text, const LanguagePair &pair, const int max_count = QP_DICT_MAX)  = 0;
+    virtual QStringList query(const QString &text, const LanguagePair &pair, const int max_count = QP_DICT_MAX)  = 0;
 
     /*!
      * \brief completions return a word completions variants

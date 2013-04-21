@@ -38,6 +38,7 @@ void DictionaryWorker::run() {
             emit reply(dict->query(mQuery, mPair), dict->name());
         }
     }
+    qDebug() << "Finished!";
     emit finished();
 }
 
