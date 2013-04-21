@@ -55,17 +55,6 @@ QString get_template(const QString &path) {
 }
 
 
-DictionaryTemplate::DictionaryTemplate()
-    :mTemplateRoot(get_template(":/templates/root.html")),
-     mTemplateSection(":/templates/section.html"),
-     mTemplateItem(":/templates/item.html"),
-     mLastSectionClosed(true)
-
-{
-}
-
-
-
 
 
 

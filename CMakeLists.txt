@@ -82,6 +82,7 @@ src/core/dictionarywidget.h
 src/core/querywrappers.h
 src/core/loader.h
 src/core/infodialog.h
+src/core/dictionarytemplate.h
 src/core/languages.h)
 
 
@@ -99,6 +100,7 @@ src/core/dictionarywidget.cpp
 src/core/querywrappers.cpp
 src/core/loader.cpp
 src/core/infodialog.cpp
+src/core/dictionarytemplate.cpp
 src/core/languages.cpp)
 
 

@@ -13,6 +13,7 @@
 #include "dictionarywidget.h"
 #include "idictionary.h"
 #include "itranslator.h"
+#include "dictionarytemplate.h"
 
 
 void qpMsgHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)

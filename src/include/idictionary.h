@@ -64,50 +64,10 @@ public:
     QString resultSense() const{return mResSense;}
 private:
     QString mSrcSense, mResSense, mSrcTerm, mResTerm;
-};
-
-
-
-/*!
- * \brief The _DictionaryVariant struct
- *
- * A data representation structure for Dictionary Reply Element
- */
-
-struct _DictionaryVariant
-{
-    _DictionaryVariant() {
-        src_sense = res_sense = src_term = res_term = "";
-    }
-
-    QString
-    src_sense,
-    res_sense,
-    src_term,
-    res_term;
-
-
-    /*!
-     * \brief images
-     *
-     * Paths to images
-     */
-    QStringList images;
-    enum Abbr {
-
-    };
-};
-
-
-struct DictionaryVairantFragment {
-    enum Type {
-        Abbr, Verb
-    };
-
-    Type type;
-
 
 };
+
+
 
 
 
