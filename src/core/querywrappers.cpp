@@ -10,14 +10,11 @@ DictionaryWorker::DictionaryWorker()
 
 
 
-void DictionaryWorker::run()
-{
-//    Q_ASSERT(mDictList.is);
-//    Q_ASSERT(mDict->isLoaded());
-    Q_ASSERT(!mQuery.isEmpty());
+void DictionaryWorker::run() {
     Q_ASSERT(!mPair.first.isEmpty() && !mPair.second.isEmpty());
 
-
+    if(mQuery.isEmpty())
+        return;
 
     //TODO: Solve this part
     if(mCompletions) {
@@ -25,10 +22,17 @@ void DictionaryWorker::run()
         foreach(IDictionary *dict, mDictList)
             if(dict->isSupportCompletions())
                 comp += dict->completions(mQuery, mPair);
-        qDebug() << "Completions list: " << comp;
-        emit reply(comp);
 
+
+        comp.removeDuplicates();
+
+        qDebug() << "Completions list: " << comp;
+
+        if(comp.count() == 1)
+            goto single;
+        emit reply(comp);
     } else {
+        single:
         qDebug() << "Creating reply...";
         foreach(IDictionary *dict, mDictList) {
             emit reply(dict->query(mQuery, mPair), dict->name());

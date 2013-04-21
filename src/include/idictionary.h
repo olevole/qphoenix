@@ -99,6 +99,17 @@ struct _DictionaryVariant
 };
 
 
+struct DictionaryVairantFragment {
+    enum Type {
+        Abbr, Verb
+    };
+
+    Type type;
+
+
+};
+
+
 
 class IDictionary : public IModule {
 public:

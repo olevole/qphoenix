@@ -49,10 +49,7 @@
     </qresource>
     <qresource prefix="/files">
         <file>langmap.csv</file>
-        <file>dict_template.html</file>
-        <file>dict_template_item.html</file>
     </qresource>
-    <qresource prefix="/templates"/>
     <qresource prefix="/templates">
         <file>item.html</file>
         <file>root.html</file>

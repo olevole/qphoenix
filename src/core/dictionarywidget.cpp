@@ -43,7 +43,6 @@
 #include "defines.h"
 #include "languages.h"
 
-
 QString get_template(const QString &path) {
     QFile f(path);
 
@@ -54,6 +53,22 @@ QString get_template(const QString &path) {
     f.close();
     return data;
 }
+
+
+DictionaryTemplate::DictionaryTemplate()
+    :mTemplateRoot(get_template(":/templates/root.html")),
+     mTemplateSection(":/templates/section.html"),
+     mTemplateItem(":/templates/item.html"),
+     mLastSectionClosed(true)
+
+{
+}
+
+
+
+
+
+
 
 
 
@@ -235,5 +250,9 @@ void DictionaryWidget::onQueryWord() {
 void DictionaryWidget::onFinish() {
     mLock = false;
     mQueryTimer->stop();
+    mLastContent.clear();
+
+
+//    mCompleterModel->setStringList(QStringList());
 }
 

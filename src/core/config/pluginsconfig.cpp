@@ -8,13 +8,22 @@
 #include <QSettings>
 #include <QHeaderView>
 #include <QDebug>
+#include <QPushButton>
 
 PluginsConfig::PluginsConfig(QWidget *parent)
     :QWidget(parent),
-      mTable(new QTableWidget(this))
+      mTable(new QTableWidget(this)),
+      mCfgButton(new QPushButton(tr("Configure"), this))
 {
-    this->setLayout(new QHBoxLayout);
-    this->layout()->addWidget(mTable);
+    QVBoxLayout *mainLayoit = new QVBoxLayout;
+    mainLayoit->addWidget(mTable);
+
+    QHBoxLayout *l = new QHBoxLayout;
+    l->addWidget(mCfgButton);
+    l->addStretch();
+    mainLayoit->addLayout(l);
+
+    this->setLayout(mainLayoit);
 
     this->setName("Plugins");
 
@@ -36,6 +45,8 @@ PluginsConfig::PluginsConfig(QWidget *parent)
     mTable->setColumnWidth(3, 70);
 
     updateTable();
+
+    connect(mCfgButton, SIGNAL(clicked()),this, SLOT(configure()));
 
 }
 
@@ -87,6 +98,13 @@ void PluginsConfig::reset() {
 
 }
 
+void PluginsConfig::configure() {
+    QObject *obj = mPlugins[mTable->currentRow()];
+    IPlugin *p = qobject_cast<IPlugin *>(obj);
+//    p->
+
+}
+
 void PluginsConfig::updateTable() {
     Loader loader("plugins:");
 
@@ -97,16 +115,11 @@ void PluginsConfig::updateTable() {
 
         const int row = mTable->rowCount();
         mTable->insertRow(row);
-
-
         mTable->resize(100, 100);
         mTable->setRowHeight(row, 20);
 
-
         QStringList data;
         data << iface->name() << iface->description() << iface->version();
-
-
 
         for (int i = 0; i < data.count(); ++i) {
             QString item_data = data[i];
@@ -123,5 +136,4 @@ void PluginsConfig::updateTable() {
 
     }
     mTable->resizeColumnsToContents();
-
 }

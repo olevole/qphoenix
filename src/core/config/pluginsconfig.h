@@ -13,6 +13,7 @@
 
 class QTableWidget;
 class QHBoxLayout;
+class QPushButton;
 
 class PluginsConfig : public QWidget, IConfigPage
 {
@@ -31,10 +32,14 @@ public:
     void save();
     void read();
     void reset();
+private slots:
+    void configure();
 protected:
     void updateTable();
 private:
     QTableWidget *mTable;
+    QPushButton *mCfgButton;
+
     QObjectList mPlugins;
     QStringList mEnabledList;
 

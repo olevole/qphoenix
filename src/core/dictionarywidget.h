@@ -63,8 +63,7 @@ class QLineEdit;
 
 class DictionaryTemplate : public QObject {
 public:
-//    void beginRoot(const QString &title, const bool collapseable);
-//    void endDocument();
+    explicit DictionaryTemplate();
 
 
     /*!
@@ -72,7 +71,7 @@ public:
      * \param title section title
      * \param collapseable
      */
-    void beginSection(const QString &title, const bool collapseable);
+    void beginSection(const QString &title, const bool collapseable = true);
 
     /*!
      * \brief beginSection create a document section with items
@@ -80,12 +79,8 @@ public:
      * \param title title of section
      * \param collapseable could that section be collapsed?
      */
-    void beginSection(const DictionaryVariantList &lst, const QString &title, const bool collapseable);
+    void beginSection(const DictionaryVariantList &lst, const QString &title, const bool collapseable = true);
 
-    /*!
-     * \brief endSection end of section
-     */
-    void endSection();
 
 
     /*!
@@ -97,13 +92,22 @@ public:
     bool addItem(const DictionaryVariant &var);
 
 
+    /*!
+     * \brief endSection end of section
+     */
+    void endSection();
+
     QString document() const;
+    QString errorString() const;
 private:
-    QString mRoot;
-    static QString mTemplateRoot;
-    static QString mTemplateSection;
-    static QString mTemplateItem;
+    bool mLastSectionClosed;
+    QString mRoot, mTitle;
+
+    const QString mTemplateRoot;
+    const QString mTemplateSection;
+    const QString mTemplateItem;
 };
+
 
 class DictionaryWidget : public QWidget, IDictionaryWidget, Info
 {
