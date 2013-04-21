@@ -2,8 +2,9 @@
 
 
 
-DictionaryTemplate::DictionaryTemplate()
-    :mTemplateRoot(getTemplate(":/templates/root.html")),
+DictionaryTemplate::DictionaryTemplate(QObject *parent)
+    :QObject(parent),
+     mTemplateRoot(getTemplate(":/templates/root.html")),
      mTemplateSection(getTemplate(":/templates/section.html")),
      mTemplateItem(getTemplate(":/templates/item.html")),
      mLastSectionClosed(true)
@@ -18,12 +19,15 @@ void DictionaryTemplate::beginSection(const QString &title, const bool collapsea
         return;
     }
     mLastSectionClosed = false;
+    mTitle = title;
 }
 
-void DictionaryTemplate::beginSection(const QStringList &lst, const QString &title, const bool collapseable) {
+void DictionaryTemplate::createSection(const QStringList &lst, const QString &title, const bool collapseable) {
     beginSection(title, collapseable);
     foreach(QString v, lst)
         addItem(v);
+
+    endSection();
 }
 
 bool DictionaryTemplate::addItem(const QString &str) {
@@ -33,9 +37,17 @@ bool DictionaryTemplate::addItem(const QString &str) {
 
 void DictionaryTemplate::endSection() {
     QString s = mTemplateSection;
-    mRoot += s.replace("{SECTION_CONTENT}", mSection).replace("{SECTION_TITLE}", mTitle);
+    mRoot += s.replace("{SECTION_CONTENT}", mSection)
+            .replace("{SECTION_TITLE}", mTitle)
+            .replace("{SECTION_ID}", mTitle + QString::number(qrand() % ((100 + 1) - 1) + 1));
     mSection.clear();
     mLastSectionClosed = true;
+}
+
+void DictionaryTemplate::clear() {
+    mRoot.clear();
+    mTitle.clear();
+    endSection();
 }
 
 QString DictionaryTemplate::bb2html(const QString &bb) const {

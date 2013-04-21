@@ -13,7 +13,7 @@
 
 class DictionaryTemplate : public QObject {
 public:
-    explicit DictionaryTemplate();
+    explicit DictionaryTemplate(QObject *parent = 0);
 
     /*!
      * \brief beginSection create a document section
@@ -28,7 +28,7 @@ public:
      * \param title title of section
      * \param collapseable could that section be collapsed?
      */
-    void beginSection(const QStringList &lst, const QString &title, const bool collapseable = true);
+    void createSection(const QStringList &lst, const QString &title, const bool collapseable = true);
 
     /*!
      * \brief addItem add item for current section
@@ -42,6 +42,8 @@ public:
      * \brief endSection end of section
      */
     void endSection();
+    void clear();
+
 
     QString toHtml() const;
     QString errorString() const;

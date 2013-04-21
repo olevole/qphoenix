@@ -40,6 +40,9 @@
 #include <QFile>
 #include <QTime>
 
+#include "dictionarytemplate.h"
+
+
 #include "defines.h"
 #include "languages.h"
 
@@ -72,10 +75,8 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mCompleterModel(new QStringListModel(this)),
     mQueryTimer(new QTimer(this)),
     mMainToolBar(new QToolBar(this)),
-    mTemplateRoot(get_template(":/templates/root.html")),
-    mTemplateSection(get_template(":/templates/section.html")),
-    mTemplateItem(get_template(":/templates/item.html")),
-    mLock(false)
+    mLock(false),
+    mTemplate(new DictionaryTemplate(this))
 
 {
     setName(tr("Dictionary"));
@@ -123,7 +124,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mMainToolBar->addAction(aZoomIn);
 
 
-    connect(&mDictWorker, SIGNAL(reply(DictionaryVariantList, QString)), this, SLOT(displayData(DictionaryVariantList,QString)));
+    connect(&mDictWorker, SIGNAL(reply(QStringList, QString)), this, SLOT(displayData(QStringList,QString)));
     connect(&mDictWorker, SIGNAL(reply(QStringList)), this, SLOT(setCompletions(QStringList)));
     connect(&mDictWorker, SIGNAL(reply(QStringList)), this, SLOT(setCompletions(QStringList)));
     connect(&mDictWorker, SIGNAL(finished()), this, SLOT(onFinish()));
@@ -159,31 +160,19 @@ void DictionaryWidget::setCompletions(const QStringList &comp) {
 
 }
 
-void DictionaryWidget::displayData(const DictionaryVariantList &lst, const QString &name) {
-    qDebug() << "INSERTING WORD!";
-    QString root = mTemplateRoot;
-    QString sect = mTemplateSection;
-    QString item = mTemplateItem;
-    QString data;
+void DictionaryWidget::displayData(const QStringList &lst, const QString &name) {
+    mTemplate->createSection(lst, name);
+
+//    mTemplate->beginSection(name);
+
+//    foreach(QString s, lst)
+//        mTemplate->addItem(s);
+
+//    mTemplate->endSection();
 
 
-    int id = qrand() % ((100 + 1) - 1) + 1;
-
-    sect = sect.replace("{SECTION_ID}", name + QString::number(id)).replace("{SECTION_TITLE}", name);
-
-    foreach(DictionaryVariant var, lst) {
-        data
-                += item
-                .replace("{SRC_TERM}", var.sourceTerm())
-                .replace("{RES_TERM}", var.resultTerm())
-                .replace("{SRC_SENSE}", var.sourceSense())
-                .replace("{RES_SENSE}", var.resultSense());
-        item = mTemplateItem;
-    }
-    sect = sect.replace("{SECTION_CONTENT}", data);
-    mLastContent += sect;
-    mResText->setHtml(root.replace("{ROOT_CONTENT}", mLastContent));
-
+    qDebug() << "RECEIVED  TEXT: " << mTemplate->toHtml();
+    mResText->setHtml(mTemplate->toHtml());
 }
 
 void DictionaryWidget::setDictionaryList(QList<IDictionary *> dicts) {
@@ -239,9 +228,8 @@ void DictionaryWidget::onQueryWord() {
 void DictionaryWidget::onFinish() {
     mLock = false;
     mQueryTimer->stop();
-    mLastContent.clear();
 
-
-//    mCompleterModel->setStringList(QStringList());
+    mTemplate->clear();
+    mCompleterModel->setStringList(QStringList());
 }
 

@@ -53,6 +53,7 @@ class QTimer;
 class QWebView;
 class QToolBar;
 class QLineEdit;
+class DictionaryTemplate;
 
 
 
@@ -78,7 +79,7 @@ public slots:
     void setInputTimeout(const int t) {mQueryTimer->setInterval(t);}
 private slots:
     void setCompletions(const QStringList &comp);
-    void displayData(const DictionaryVariantList &lst, const QString &name);
+    void displayData(const QStringList &lst, const QString &name);
 
     void zoomIn();
     void zoomOut();
@@ -123,17 +124,10 @@ private:
      */
 
 
-    const QString mTemplateRoot;
-    const QString mTemplateSection;
-    const QString mTemplateItem;
-
-    QString mLastContent;
-
-    QQueue <IDictionary *> mDictQueue;
-
     QList<IDictionary *>mDicts;
     DictionaryWorker mDictWorker;
     LanguagePairList mPairs;
+    DictionaryTemplate *mTemplate;
 };
 
 #endif // DICTIONARYWIDGET_H
