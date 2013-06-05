@@ -45,6 +45,7 @@ bool TrayIcon::load() {
         clipboard = qApp->clipboard();
 
         connect(clipboard, SIGNAL(selectionChanged()), this, SLOT(translate()));
+//        connect(mWindowIface->translationWidget(), SIGNAL(finished()), this, SLOT(show()));
         mIsLoaded = true;
     }
     return true;
@@ -65,12 +66,13 @@ void TrayIcon::setMainWindowPTR(IMainWindow *ptr) {
 }
 
 void TrayIcon::translate() {
-    mWindowIface->translationWidget()->srcText()->setText(clipboard->text(QClipboard::Selection));
-    mWindowIface->translationWidget()->translateButton()->click();
+    mWindowIface->translatorWidget()->srcText()->setText(clipboard->text(QClipboard::Selection));
+    mWindowIface->translatorWidget()->translateButton()->click();
+}
 
+void TrayIcon::show() {
     QPoint pos = QCursor::pos();
-
-    QToolTip::showText(pos, mWindowIface->translationWidget()->resText()->toPlainText());
+    QToolTip::showText(pos, mWindowIface->translatorWidget()->resText()->toPlainText());
 }
 
 void TrayIcon::setSettingsPTR(IConfig *ptr) {

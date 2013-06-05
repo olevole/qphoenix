@@ -308,8 +308,8 @@ void MainWindow::clear() {
     const int i = currentIndex();
     switch(i){
         case 0:
-            translationWidget()->srcText()->clear();
-            translationWidget()->resText()->clear();
+            translatorWidget()->srcText()->clear();
+            translatorWidget()->resText()->clear();
         break;
 
         case 1:
@@ -322,18 +322,18 @@ void MainWindow::clear() {
 
 
 void MainWindow::undo() {
-    currentIndex() == 0 ? translationWidget()->srcText()->undo()
+    currentIndex() == 0 ? translatorWidget()->srcText()->undo()
                         : dictionaryWidget()->srcText()->undo();
 
 }
 
 void MainWindow::redo() {
-    currentIndex() == 0 ? translationWidget()->srcText()->redo()
+    currentIndex() == 0 ? translatorWidget()->srcText()->redo()
                         : dictionaryWidget()->srcText()->redo();
 }
 
 void MainWindow::swap() {
-    translationWidget()->swapButton()->click();
+    translatorWidget()->swapButton()->click();
 }
 
 //----------------------------------------------------------------------------------------------

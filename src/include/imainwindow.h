@@ -59,7 +59,7 @@ public:
     virtual QStatusBar *statusbar() =0;
     virtual QMenuBar   *menubar() = 0;
 
-    virtual ITranslatorWidget *translationWidget() = 0;
+    virtual ITranslatorWidget *translatorWidget() = 0;
     virtual IDictionaryWidget *dictionaryWidget() = 0;
     virtual QMainWindow *instance() = 0;
 };

@@ -44,7 +44,6 @@ public:
     void endSection();
     void clear();
 
-
     QString toHtml() const;
     QString errorString() const;
 private:
@@ -60,9 +59,7 @@ private:
      * \param bb bbcoded string
      * \return  html
      */
-    QString bb2html(const QString &bb) const;
-
-
+    static QString bb2html(const QString &bb) ;
     inline QString getTemplate(const QString &path) const {
         QFile f(path);
 
@@ -71,6 +68,9 @@ private:
 
         const QByteArray data = f.readAll();
         f.close();
+
+        if(data.isEmpty())
+            qFatal("Oops! Something is wrong with templates");
         return data;
     }
 };

@@ -27,18 +27,10 @@
 #include <QWebView>
 #include <QStringList>
 #include <QListWidget>
-#include <QMutex>
-#include <QQueue>
-
 #include "info.h"
 #include "idictionarywidget.h"
 #include "idictionary.h"
 #include "querywrappers.h"
-
-
-
-
-
 
 class QComboBox;
 class QTextBrowser;
@@ -54,9 +46,6 @@ class QWebView;
 class QToolBar;
 class QLineEdit;
 class DictionaryTemplate;
-
-
-
 
 
 class DictionaryWidget : public QWidget, IDictionaryWidget, Info
@@ -108,7 +97,6 @@ private:
     QWebView *mResText;
     QGroupBox   *mGroupbox;
 
-
     /*!
      *  A completer and model for input lineedit
      */
@@ -117,12 +105,6 @@ private:
 
     QHBoxLayout *mLineLayout;
     QVBoxLayout *mMainLayout;    
-
-    /*!
-     * Strings contains html templates
-     * NOTE: Subject to changes
-     */
-
 
     QList<IDictionary *>mDicts;
     DictionaryWorker mDictWorker;

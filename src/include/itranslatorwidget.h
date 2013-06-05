@@ -48,6 +48,8 @@ public:
     virtual QToolBar    *resToolbar() = 0;
 // SLots
     virtual void swap() = 0;
+// Signals
+    virtual void finished() = 0;
 
 
 };

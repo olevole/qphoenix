@@ -12,6 +12,15 @@
 #define QP_ORG_DOMAIN "http://qphoenix.org"
 #define QP_GIT_REV "${GIT_HASH}"
 
+
+/*!
+ * Functionality definitions
+ */
+
+#define QP_DICTIONARY_ENABLED
+#define QP_TRANSLATOR_ENABLED
+
+
 ${CMAKE_DEBUG_MODE}
 
 #if defined(Q_OS_UNIX)

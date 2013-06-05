@@ -143,6 +143,8 @@ private:
     TranslatorWorker mWorker;
 
     bool mIsLinear, mNativeNames;
+signals:
+    void finished();
 };
 
 #endif // TRANSLATIONWIDGET_H

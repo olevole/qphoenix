@@ -1,7 +1,6 @@
 #include "dictionarytemplate.h"
 
 
-
 DictionaryTemplate::DictionaryTemplate(QObject *parent)
     :QObject(parent),
      mTemplateRoot(getTemplate(":/templates/root.html")),
@@ -26,7 +25,6 @@ void DictionaryTemplate::createSection(const QStringList &lst, const QString &ti
     beginSection(title, collapseable);
     foreach(QString v, lst)
         addItem(v);
-
     endSection();
 }
 
@@ -50,7 +48,7 @@ void DictionaryTemplate::clear() {
     endSection();
 }
 
-QString DictionaryTemplate::bb2html(const QString &bb) const {
+QString DictionaryTemplate::bb2html(const QString &bb) {
     QString str = bb;
     str.replace("[b]", "<b>").replace("[/b]", "</b>", Qt::CaseInsensitive);
     str.replace("[i]", "<i>").replace("[/i]", "</i>", Qt::CaseInsensitive);
@@ -60,7 +58,6 @@ QString DictionaryTemplate::bb2html(const QString &bb) const {
 
     return str;
 }
-
 
 QString DictionaryTemplate::toHtml() const {
     if(!mLastSectionClosed)

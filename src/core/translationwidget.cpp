@@ -112,6 +112,7 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     connect(mResToolbar, SIGNAL(copyRequest()), this, SLOT(copyResText()));
     connect(&mWorker, SIGNAL(reply(QString)), resText(), SLOT(setPlainText(QString)));
     connect(this->translateButton(), SIGNAL(clicked()), this, SLOT(translate()));
+    connect(mResText, SIGNAL(textChanged()), this, SIGNAL(finished()));
 
     updateButtonState();
 

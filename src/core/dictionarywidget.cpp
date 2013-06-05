@@ -19,7 +19,6 @@
  *    Years: 2012-2013
  */
 
-#include "dictionarywidget.h"
 #include <QComboBox>
 #include <QLineEdit>
 #include <QTextBrowser>
@@ -39,29 +38,10 @@
 #include <QAction>
 #include <QFile>
 #include <QTime>
-
+#include "dictionarywidget.h"
 #include "dictionarytemplate.h"
-
-
 #include "defines.h"
 #include "languages.h"
-
-QString get_template(const QString &path) {
-    QFile f(path);
-
-    if(!f.open(QFile::ReadOnly))
-        qFatal("Unable to open templates for dictionary!");
-
-    QByteArray data = f.readAll();
-    f.close();
-    return data;
-}
-
-
-
-
-
-
 
 
 DictionaryWidget::DictionaryWidget(QWidget *parent) :

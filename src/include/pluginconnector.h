@@ -10,8 +10,8 @@ struct PluginConnector
         QP_MainWindow = QP_ConfigDialog = NULL;
     }
 
-    MainWindow *QP_MainWindow;
-    Config *QP_ConfigDialog;
+    MainWindow *MainWindow;
+    Config *ConfigDialog;
 };
 
 

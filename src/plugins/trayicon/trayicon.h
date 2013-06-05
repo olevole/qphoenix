@@ -49,6 +49,7 @@ public:
     QString errorString() const {return QString();}
 private slots:
     void translate();
+    void show();
 
 private:
 
