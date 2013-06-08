@@ -19,8 +19,6 @@ public:
     Loader(const QStringList &paths)
     { addSearchPath(paths); }
 
-
-
     // ---------------------------------------------------------
 
     void addSearchPath(const QString &path)

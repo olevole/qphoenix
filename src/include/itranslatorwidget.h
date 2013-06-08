@@ -35,23 +35,18 @@ class ITranslatorWidget {
 public:
     virtual ~ITranslatorWidget() {}
 
-
+    virtual QWidget     *instance() = 0;
     virtual QComboBox   *srcComboBox() = 0;
     virtual QComboBox   *resComboBox() = 0;
     virtual QTextEdit   *srcText() = 0;
     virtual QTextBrowser*resText() = 0;
     virtual QPushButton *translateButton() = 0;
     virtual QToolButton *swapButton() = 0;
-
     virtual QToolBar    *mainToolBar() = 0;
     virtual QToolBar    *srcToolbar() = 0;
     virtual QToolBar    *resToolbar() = 0;
 // SLots
     virtual void swap() = 0;
-// Signals
-    virtual void finished() = 0;
-
-
 };
 
 

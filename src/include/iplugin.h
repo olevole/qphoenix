@@ -11,8 +11,6 @@
 #include "iconfig.h"
 #include "imodule.h"
 
-
-
 class IPlugin : public IModule
 {
 
@@ -32,10 +30,7 @@ public:
     virtual void setSettingsPTR(IConfig *ptr) = 0;
 };
 
-
-
 Q_DECLARE_INTERFACE(IPlugin, "com.qphoenix.interfaces.plugin/1.0");
-
 
 
 #endif // PLUGININTERFACE_H

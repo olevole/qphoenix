@@ -3,15 +3,9 @@
 
 #include "iconfig.h"
 #include "iconfigpage.h"
-
 #include <QTreeWidget>
 #include <QDialogButtonBox>
 #include <QDialog>
-
-
-
-
-
 
 class QListWidget;
 class QStackedLayout;
@@ -21,19 +15,10 @@ class QGroupBox;
 class QTreeWidgetItem;
 class QPushButton;
 
-
 /*
  *  This is an implementation of main settings dialog.
  *  All config pages MUST include ConfigPageInteface.
  */
-
-
-/*
- * A list with Config pages interfaces
- */
-
-
-
 
 class Config : public QDialog,  IConfig
 {
@@ -46,12 +31,10 @@ public:
     explicit Config(QWidget *parent = 0);
     ~Config();
 
-
-    /*  Inserting Settings page into the lmain
+    /*  Inserting Settings page into the main
      *  settings dialog. All settings pages are
      *  presented by the following interface:
      */
-
     void addPage(QWidget *page);
     void removePage(const QWidget *page);
     QWidget *pageAt(const int i);
@@ -70,13 +53,9 @@ private:
     QPushButton *mDefaultsButton;
 private slots:
     void itemChangeHandle();
-
     void save();
     void read();
     void reset();
 };
-
-
-
 
 #endif // SETTINGS_H

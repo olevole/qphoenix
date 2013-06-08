@@ -42,7 +42,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     qInstallMessageHandler(qpMsgHandler);
-    qRegisterMetaType<DictionaryVariantList>("DictionaryVariantList");
 
     QCoreApplication::setApplicationName(QP_APP_NAME);
     QCoreApplication::setApplicationVersion(QP_APP_VERSION);

@@ -47,9 +47,7 @@ public:
     void save() {}
     void read() {}
     void reset(){}
-
     QComboBox *translatorComboBox() {return mTranslatorComboBox;}
-
     ITranslator *currentTranslator() {
         const int i = mTranslatorComboBox->currentIndex();
         if(i > -1) return mTranslatorsList[i];

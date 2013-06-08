@@ -23,58 +23,20 @@
 
 #include "imodule.h"
 #include "itranslator.h"
-
 #include <QPair>
 #include <QMetaType>
 
+#define QP_DICT_MAX 1000
+
 class QWidget;
 class QString;
-class DictionaryItem;
-
 
 typedef QPair<QString, QString> LanguagePair;
 typedef QList<LanguagePair> LanguagePairList;
-class DictionaryVariant;
-typedef QList<DictionaryVariant> DictionaryVariantList;
-
-
-#define QP_DICT_MAX 1000
-
-
-class DictionaryVariant
-{
-public:
-    DictionaryVariant(const QString &src_term, const QString &res_term,
-                      const QString &src_sense, const QString &res_sense) {
-        setSourceTerm(src_term);
-        setResultTerm(res_term);
-        setSourceSense(src_sense);
-        setResultSense(res_sense);
-    }
-    void setSourceTerm(const QString &term){mSrcTerm = term;}
-    void setResultTerm(const QString &term){mResTerm = term;}
-
-    void setSourceSense(const QString &sense){mSrcSense = sense;}
-    void setResultSense(const QString &sense){mResSense = sense;}
-
-    QString sourceTerm() const {return mSrcTerm;}
-    QString resultTerm() const {return mResTerm;}
-
-    QString sourceSense() const{return mSrcSense;}
-    QString resultSense() const{return mResSense;}
-private:
-    QString mSrcSense, mResSense, mSrcTerm, mResTerm;
-
-};
-
-
-
-
 
 class IDictionary : public IModule {
 public:
     virtual ~IDictionary(){}
-
 
     /*!
      * \brief configWidget
@@ -107,7 +69,6 @@ public:
      * this feature, this function MUST return an empty QStringList
      */
     virtual QStringList completions(const QString &str, const LanguagePair &pair) const = 0;
-
 
     /*!
      * \brief isSupportCompletions

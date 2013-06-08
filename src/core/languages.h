@@ -13,10 +13,8 @@
 class Language;
 typedef QMap<QString, Language> LanguageList;
 
-
 class Language {
 public:
-
     explicit Language(const QString &name,
                       const QString &native)
     {
@@ -28,19 +26,16 @@ public:
 
     QString name() const        {return mName;      }
     QString nativeName() const  {return mNativeName;}
-
     void setName(const QString &name)           {mName = name;          }
     void setNativeName(const QString &native)   {mNativeName = native;  }
 private:
     QString mName, mNativeName;
 };
 
-
 #define QP_LANG_FACTORY LanguageEngine::instance()->languages()
 
 class LanguageEngine : public QObject {
 public:
-
     static  LanguageEngine* instance()
     {
         static QMutex mutex;

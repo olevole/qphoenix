@@ -35,8 +35,5 @@ public:
 
 Q_DECLARE_INTERFACE(IConfigPage, "com.qphoenix.interfaces.settings/1.0");
 
-
-
-
 #endif // SETTINGSPAGEINTERFACE_H
 

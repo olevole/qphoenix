@@ -1,6 +1,5 @@
 #include "querywrappers.h"
 
-
 DictionaryWorker::DictionaryWorker()
 {
     connect(this, SIGNAL(reply(DictionaryVariantList)), this, SLOT(quit()));
@@ -8,26 +7,18 @@ DictionaryWorker::DictionaryWorker()
     mCompletions = false;
 }
 
-
-
 void DictionaryWorker::run() {
     Q_ASSERT(!mPair.first.isEmpty() && !mPair.second.isEmpty());
-
     if(mQuery.isEmpty())
         return;
-
     //TODO: Solve this part
     if(mCompletions) {
         QStringList comp;
         foreach(IDictionary *dict, mDictList)
             if(dict->isSupportCompletions())
                 comp += dict->completions(mQuery, mPair);
-
-
         comp.removeDuplicates();
-
         qDebug() << "Completions list: " << comp;
-
         if(comp.count() == 1)
             goto single;
         emit reply(comp);
@@ -42,8 +33,6 @@ void DictionaryWorker::run() {
     emit finished();
 }
 
-
-
 void DictionaryWorker::query(const LanguagePair &pair, const QString &query)
 {
     mCompletions = false;
@@ -51,7 +40,6 @@ void DictionaryWorker::query(const LanguagePair &pair, const QString &query)
     mQuery = query;
     start();
 }
-
 
 void DictionaryWorker::queryCompletions(const LanguagePair &pair, const QString &query)
 {
@@ -61,16 +49,13 @@ void DictionaryWorker::queryCompletions(const LanguagePair &pair, const QString 
     start();
 }
 
-
 //-------------------------------------------------------------------------------------
-
 
 TranslatorWorker::TranslatorWorker()
     :mPtr(NULL)
 {
     connect(this, SIGNAL(reply(QString)), this, SLOT(quit()));
 }
-
 
 void TranslatorWorker::run()
 {
@@ -82,10 +67,8 @@ void TranslatorWorker::query(const QString &src_lang, const QString &res_lang, c
 {
     Q_ASSERT(mPtr);
     Q_ASSERT(mPtr->isLoaded());
-
     mSrcLang = src_lang;
     mDestLang = res_lang;
     mSrcText = src_text;
-
     start();
 }

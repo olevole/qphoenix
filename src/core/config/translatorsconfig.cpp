@@ -47,15 +47,10 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     setName(tr("Translators"));
     setIcon(QP_ICON("translator"));
 
-
     mTranslatorComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
     mTranslatorLayout->addWidget(mTranslatorLabel);
     mTranslatorLayout->addWidget(mTranslatorComboBox);
     mTranslatorGroupBox->setLayout(mTranslatorLayout);
-
-
-
 
     // Second layout
     mOptionsGroupBox->setLayout(mOptionsLayout);
@@ -66,21 +61,14 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
 
     mTabWidget->addTab(new QWidget(this), tr("Translators"));
     mTabWidget->addTab(new QWidget(this), tr("Preferences"));
-
-
     mTabWidget->widget(0)->setLayout(mTab1);
 
     this->setLayout(new QVBoxLayout);
     this->layout()->addWidget(mTabWidget);
 
-
-
-
     mTranslatorGroupBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 
-
     connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onIndexChange(int)));
-
 
     Loader ldr("translators:");
 
@@ -96,29 +84,22 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     }
 }
 
-
 void TranslatorsConfig::onIndexChange(const int i) {
 
     ITranslator *iface = mTranslatorsList[i];
     if(!iface->isLoaded())
         iface->load();
     //TODO: Segfault here, it's a dangerous fragment!
-
-
-
     QWidget *cw = iface->configWidget();
     //! FIXME: optimisation: do not overload the same widget!
     QLayoutItem *child;
     while ( (child = mOptionsLayout->takeAt(0)) != 0) {
         QWidget *w = child->widget();
-
         if(w != cw) {
             delete child->widget();
             delete child;
         }
     }
-
-
     mOptionsLayout->addWidget(cw);
     mOptionsLayout->addStretch(); //TODO: Does not work. Fix!
 }

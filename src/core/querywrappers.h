@@ -4,7 +4,6 @@
 #include <QThread>
 #include <QTimer>
 #include <QDebug>
-
 #include "itranslator.h"
 #include "idictionary.h"
 
@@ -40,7 +39,6 @@ signals:
 
 //-------------------------------------------------------------------------------------
 
-
 class DictionaryWorker : public IWorker {
     Q_OBJECT
 public:
@@ -49,11 +47,8 @@ public:
         DictionaryWorker();
         this->setDictionaryList(lst);
     }
-
     void setDictionaryList(QList<IDictionary *>lst){ mDictList = lst; }
-
     int count(){ return mDictList.count();}
-
 protected:
     void run();
 public slots:
@@ -63,7 +58,6 @@ signals:
     void reply(QStringList, QString);
     void reply(QStringList);
     void finished();
-//    void reply(LanguagePairList);c
 private:
     bool mCompletions;
     LanguagePair mPair;
@@ -71,9 +65,7 @@ private:
     QList<IDictionary *> mDictList;
 };
 
-
 //-------------------------------------------------------------------------------------
-
 
 /*!
  * \brief The TranslatorWrapper class
@@ -89,9 +81,7 @@ public:
         TranslatorWorker();
         setTranslator(t);
     }
-
     void setTranslator(ITranslator *ptr){mPtr = ptr;}
-
     ITranslator *translator(){return mPtr;}
 protected:
     void run();

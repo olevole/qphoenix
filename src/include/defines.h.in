@@ -32,7 +32,6 @@ ${CMAKE_DEBUG_MODE}
 #endif
 
 #define QP_MODULE_SIGNATURE QString("%1%2").arg("lib*.").arg(QP_DLIB_SUFFIX)
-
 #define QP_ICON(x) QIcon::fromTheme(x, QIcon(QString(":/icons/" + QString(x) + ".png")))
 
 /*!
@@ -43,15 +42,10 @@ ${CMAKE_DEBUG_MODE}
 #define QP_TRANSLATORS_PATH  "${TRANSLATORS_PATH}"
 #define QP_DICTIONARIES_PATH "${DICTIONARIES_PATH}"
 
-
-
-
 /*!
  * Some default constants
  */
 
 #define QP_DICT_DEFAULT_ZOOM_FACTOR 0.7
-
-
 
 #endif // DEFINES_H

@@ -4,6 +4,8 @@
 #include "info.h"
 #include <QString>
 
+class QObject;
+
 
 
 /*!
@@ -49,6 +51,7 @@ public:
      * \return true if plugin is loaded, othervise - fasle
      */
     virtual bool isLoaded() const = 0;
+
 };
 
 Q_DECLARE_INTERFACE(IModule, "com.qphoenix.interfaces.imodule/1.0")

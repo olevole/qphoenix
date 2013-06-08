@@ -45,7 +45,7 @@ bool TrayIcon::load() {
         clipboard = qApp->clipboard();
 
         connect(clipboard, SIGNAL(selectionChanged()), this, SLOT(translate()));
-//        connect(mWindowIface->translationWidget(), SIGNAL(finished()), this, SLOT(show()));
+//        connect(mWindowIface->translatorWidget()->instance(), SIGNAL(finished()), this, SLOT(show()));
         mIsLoaded = true;
     }
     return true;

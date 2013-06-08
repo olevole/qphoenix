@@ -43,14 +43,11 @@
 #include "defines.h"
 #include "languages.h"
 
-
 DictionaryWidget::DictionaryWidget(QWidget *parent) :
     QWidget(parent),
     mLanguagesComboBox(new QComboBox(this)),
     mSrcText(new QLineEdit(this)),
     mResText(new QWebView(this)),
-    mLineLayout(new QHBoxLayout),
-    mMainLayout(new QVBoxLayout),
     mCompleter(new QCompleter(this)),
     mCompleterModel(new QStringListModel(this)),
     mQueryTimer(new QTimer(this)),
@@ -65,8 +62,10 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 
     mResText->setZoomFactor(QP_DICT_DEFAULT_ZOOM_FACTOR);
     mMainToolBar->setMovable(false);
-
     mQueryTimer->setSingleShot(true);
+
+    QHBoxLayout *mLineLayout = new QHBoxLayout;
+    QVBoxLayout *mMainLayout = new QVBoxLayout;
 
     mLineLayout->addWidget(mLanguagesComboBox);
     mLineLayout->addWidget(mSrcText);
@@ -90,38 +89,23 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 
     mSrcText->setPlaceholderText("Put some word here..");
 
-
-
-
-
     QAction *aZoomOut = new QAction(QP_ICON("zoom-out"), tr("Zoom Out"), this);
     QAction *aZoomIn = new QAction(QP_ICON("zoom-in"), tr("Zoom In"), this);
-
     aZoomIn->setAutoRepeat(true);
     aZoomOut->setAutoRepeat(true);
-
     mMainToolBar->addAction(aZoomOut);
     mMainToolBar->addAction(aZoomIn);
-
 
     connect(&mDictWorker, SIGNAL(reply(QStringList, QString)), this, SLOT(displayData(QStringList,QString)));
     connect(&mDictWorker, SIGNAL(reply(QStringList)), this, SLOT(setCompletions(QStringList)));
     connect(&mDictWorker, SIGNAL(reply(QStringList)), this, SLOT(setCompletions(QStringList)));
     connect(&mDictWorker, SIGNAL(finished()), this, SLOT(onFinish()));
-
-
     connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
     connect(mQueryTimer, SIGNAL(timeout()), this, SLOT(onQueryComp()));
-
-
     connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
     connect(mQueryTimer, SIGNAL(timeout()), this, SLOT(onQueryComp()));
-
-
     connect(mCompleter, SIGNAL(activated(QString)), this, SLOT(onQueryWord()));
     connect(mSrcText, SIGNAL(returnPressed()), this, SLOT(onQueryWord()));
-
-
     connect(aZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
     connect(aZoomIn, SIGNAL(triggered()), this, SLOT(zoomIn()));
 
@@ -132,36 +116,19 @@ void DictionaryWidget::setCompletions(const QStringList &comp) {
     QStringList tmp = mCompleterModel->stringList() + comp;
     tmp.removeDuplicates();
     tmp.sort();
-    qDebug() << "QUERY!" << tmp;
-
-
     mCompleterModel->setStringList(tmp);
     mSrcText->completer()->complete();
-
 }
 
 void DictionaryWidget::displayData(const QStringList &lst, const QString &name) {
     mTemplate->createSection(lst, name);
-
-//    mTemplate->beginSection(name);
-
-//    foreach(QString s, lst)
-//        mTemplate->addItem(s);
-
-//    mTemplate->endSection();
-
-
-    qDebug() << "RECEIVED  TEXT: " << mTemplate->toHtml();
     mResText->setHtml(mTemplate->toHtml());
 }
 
 void DictionaryWidget::setDictionaryList(QList<IDictionary *> dicts) {
     Q_ASSERT(!dicts.isEmpty());
-
     mDicts = dicts;
-
     mDictWorker.setDictionaryList(mDicts);
-
     foreach(IDictionary *dict, dicts) {
         Q_ASSERT(dict->isLoaded());
         setLangPairs(dict->pairs());
@@ -171,7 +138,6 @@ void DictionaryWidget::setDictionaryList(QList<IDictionary *> dicts) {
 void DictionaryWidget::zoomIn() {
     mResText->setZoomFactor(mResText->zoomFactor()+0.1);
 }
-
 
 void DictionaryWidget::zoomOut() {
     mResText->setZoomFactor(mResText->zoomFactor()-0.1);
@@ -188,7 +154,7 @@ void DictionaryWidget::setLangPairs(const LanguagePairList lst) {
             mLanguagesComboBox->addItem(str);
             mPairs << pair;
         } else {
-            qWarning() << "This pair is not supported in" << QP_APP_NAME  << QP_APP_VERSION << ":" << pair;
+            qWarning() << "This language pair is not supported in " << QP_APP_NAME  << QP_APP_VERSION << ":" << pair;
         }
     }
 }
@@ -204,12 +170,9 @@ void DictionaryWidget::onQueryWord() {
     mDictWorker.query(mPairs.at(mLanguagesComboBox->currentIndex()), mSrcText->text());
 }
 
-
 void DictionaryWidget::onFinish() {
     mLock = false;
     mQueryTimer->stop();
-
     mTemplate->clear();
     mCompleterModel->setStringList(QStringList());
 }
-

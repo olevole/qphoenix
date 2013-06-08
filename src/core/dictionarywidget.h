@@ -47,7 +47,6 @@ class QToolBar;
 class QLineEdit;
 class DictionaryTemplate;
 
-
 class DictionaryWidget : public QWidget, IDictionaryWidget, Info
 {
     Q_OBJECT
@@ -59,10 +58,10 @@ public:
     virtual QLineEdit   *srcText()      {return mSrcText;       }
     virtual QWebView    *resText()      {return mResText;       }
     virtual QToolBar    *mainToolBar()  { return mMainToolBar;       }
+    virtual QWidget *instance() {return this;}
 public slots:
     void setNativeNames(const bool b) { mNativeNames = b;}
     void setDictionaryList(QList<IDictionary *>dicts);
-
     //TODO: Implement those two functions reactions
     void setMaxVariants(const int count){mMaxVarCount = count;}
     void setInputTimeout(const int t) {mQueryTimer->setInterval(t);}
@@ -72,7 +71,6 @@ private slots:
 
     void zoomIn();
     void zoomOut();
-
     void setLangPairs(const LanguagePairList lst);
     void onQueryComp();
     void onQueryWord();
@@ -81,14 +79,11 @@ signals:
     void start();
     void finish();
 private:
-
-//    void query(const bool comp);
     /*!
      * Maximal count of displaying variants per dictionary
      * if 0 - unlimited
      */
     int mMaxVarCount;
-
     bool mNativeNames, mLock;
     QToolBar *mMainToolBar;
     QTimer *mQueryTimer;
@@ -102,9 +97,6 @@ private:
      */
     QCompleter *mCompleter;
     QStringListModel *mCompleterModel;
-
-    QHBoxLayout *mLineLayout;
-    QVBoxLayout *mMainLayout;    
 
     QList<IDictionary *>mDicts;
     DictionaryWorker mDictWorker;

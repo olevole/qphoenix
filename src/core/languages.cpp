@@ -6,15 +6,10 @@
 
 LanguageEngine::LanguageEngine()
 {
-
-
     QFile file(":/files/langmap.csv");
-
     if(!file.open(QFile::ReadOnly))
         qFatal("Unable to open language map! ");
-
     QTextStream in(&file);
-
     while (!in.atEnd()) {
         QString str = in.readLine();
         QStringList result = str.split(",");

@@ -3,7 +3,6 @@
 
 #include <QDialog>
 
-
 class QDialogButtonBox;
 
 class InfoDialog : public QDialog

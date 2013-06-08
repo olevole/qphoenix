@@ -26,10 +26,8 @@
 #include <QToolButton>
 #include <QCloseEvent>
 
-
 #include "iplugin.h"
 #include "querywrappers.h"
-
 #include "translationwidget.h"
 #include "dictionarywidget.h"
 #include "config.h"
@@ -41,9 +39,7 @@
 #include "languageconfig.h"
 #include "dictionaryconfig.h"
 
-
 QString MainWindow::mAboutStr = "QPhoenix is an advanced translation tool that could use multiple dictionaries and translators";
-
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -86,7 +82,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     setWindowTitle(qApp->applicationName());
 
-
     mFileMenu->addAction(mActionOpen);
     mFileMenu->addSeparator();
     mFileMenu->addAction(mActionSave);
@@ -110,11 +105,6 @@ MainWindow::MainWindow(QWidget *parent) :
     mMenuBar->addMenu(mEditMenu);
     mMenuBar->addMenu(mHelpMenu);
 
-    mToolBar->addAction(mActionOpen);
-    mToolBar->addSeparator();
-    mToolBar->addAction(mActionSave);
-    mToolBar->addAction(mActionSaveAs);
-    mToolBar->addSeparator();
     mToolBar->addAction(mActionClear);
     mToolBar->addAction(mActionUndo);
     mToolBar->addAction(mActionRedo);
@@ -133,10 +123,8 @@ MainWindow::MainWindow(QWidget *parent) :
     this->addPage(mTranslationWidget);
     this->addPage(mDictionaryWidget);
 
-
     if(mTabWidget->count() > 1)
         mTabWidget->setCurrentIndex(0);
-
 
     // Configuring settings pages
     mSettingsDialog->addPage(mTranslatorsConfig);
@@ -144,17 +132,12 @@ MainWindow::MainWindow(QWidget *parent) :
     mSettingsDialog->addPage(mLanguageConfig);
     mSettingsDialog->addPage(mPluginsConfig);
 
-
-
-
     connect(mActionExit, SIGNAL(triggered()), this, SLOT(exit()));
-
     connect(mActionClear, SIGNAL(triggered()), this, SLOT(clear()));
     connect(mActionUndo, SIGNAL(triggered()), this, SLOT(undo()));
     connect(mActionRedo, SIGNAL(triggered()), this, SLOT(redo()));
     connect(mActionSwap, SIGNAL(triggered()), this, SLOT(swap()));
     connect(mActionOptions, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
-
     connect(mActionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(mActionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
@@ -162,9 +145,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Widgets , Dialogs, etc
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
-
-
-
     connect(mTabWidget, SIGNAL(currentChanged(int)), this, SLOT(onIndexChange(int)));
 
     QComboBox *src = mTranslationWidget->translatorComboBox();
@@ -173,26 +153,17 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(src, SIGNAL(currentIndexChanged(int)), dest, SLOT(setCurrentIndex(int)));
     connect(dest, SIGNAL(currentIndexChanged(int)), src, SLOT(setCurrentIndex(int)));
 
-
-
-
     QStringList items;
     for (int i = 0; i < dest->count(); ++i) {
         items << dest->itemText(i);
     }
 
     src->clear();
-
     src->addItems(items);
 
     readCfg();
-
     // Read configs
     onConfigAccept();
-
-
-
-
 }
 
 MainWindow::~MainWindow()
@@ -200,19 +171,16 @@ MainWindow::~MainWindow()
     saveCfg();
 }
 
-
 void MainWindow::addPage(QWidget *page) {
     Info *i = qobject_cast<Info *>(page);
     if(i == NULL) {
         //TODO: Error processing
         return;
     }
-
     QIcon icon = i->icon();
     QString name = i->name();
 
     mTabWidget->insertTab(mTabWidget->count(), page, icon, name);
-//    resize(800, 600);
 }
 
 void MainWindow::removePage(const QWidget *page) {
@@ -223,13 +191,10 @@ QWidget *MainWindow::pageAt(const int i) {
     return new QWidget();
 }
 
-
-
 void MainWindow::setCurrentIndex(const int i) {
     mTabWidget->setCurrentIndex(i);
     onIndexChange(i);
 }
-
 
 void MainWindow::onConfigAccept() {
     /*!
@@ -237,7 +202,6 @@ void MainWindow::onConfigAccept() {
      *
      */
     QObjectList *lst = mPluginsConfig->pluginsList();
-
     for(int i = 0; i < lst->count(); i++) {
         IPlugin *iface =  qobject_cast<IPlugin *>(lst->at(i));
 
@@ -250,7 +214,6 @@ void MainWindow::onConfigAccept() {
         }
     }
 
-
     /*!
      * Updating translators information...
      */
@@ -259,21 +222,15 @@ void MainWindow::onConfigAccept() {
 
     mLanguageConfig->setNativeNames(false);
     mTranslationWidget->setNativeNames(false);
-
-
     mDictionaryWidget->setDictionaryList(mDictionaryConfig->dictionaries());
-
     mTranslationWidget->setEnabledKeys(mLanguageConfig->keysForEnabled());
     mTranslationWidget->setTranslator(mTranslatorsConfig->currentTranslator());
-
 }
-
 
 void MainWindow::onIndexChange(const int i) {
     mDictionaryWidget->mainToolBar()->setVisible(i == 1);
     mTranslationWidget->mainToolBar()->setVisible(i == 0);
 }
-
 
 void MainWindow::readCfg() {
     QSettings s;
@@ -282,8 +239,6 @@ void MainWindow::readCfg() {
     this->restoreGeometry(s.value("geometry").toByteArray());
     s.endGroup();
 }
-
-
 
 void MainWindow::saveCfg() {
     QSettings s;
@@ -297,12 +252,10 @@ void MainWindow::saveCfg() {
 //----------------------------------------------------------------------------------------------
 // Actions slots
 
-
 void MainWindow::exit() {
     saveCfg();
     qApp->quit();
 }
-
 
 void MainWindow::clear() {
     const int i = currentIndex();
@@ -311,15 +264,12 @@ void MainWindow::clear() {
             translatorWidget()->srcText()->clear();
             translatorWidget()->resText()->clear();
         break;
-
         case 1:
             dictionaryWidget()->srcText()->clear();
             dictionaryWidget()->resText()->setHtml("<html><body></body></html>");
         break;
     }
 }
-
-
 
 void MainWindow::undo() {
     currentIndex() == 0 ? translatorWidget()->srcText()->undo()
@@ -344,10 +294,6 @@ void MainWindow::about() {
                                          could use multiple dictionaries and translators.\n\n REVISION: ") + QP_GIT_REV);
 }
 
-
-
 int MainWindow::currentIndex() const {
     return mTabWidget->currentIndex();
 }
-
-

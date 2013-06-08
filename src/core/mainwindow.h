@@ -10,8 +10,6 @@
 #include "translationwidget.h"
 #include "querywrappers.h"
 
-
-
 class QStatusBar;
 class QToolBar;
 class QMenuBar;
@@ -21,8 +19,6 @@ class QClipboard;
 class QTabWidget;
 class QTimer;
 class QCloseEvent;
-
-
 
 class Config;
 class PluginsConfig;
@@ -65,16 +61,10 @@ private slots:
 
     //! Handle table index change
     void onIndexChange(const int i);
-
     void readCfg();
     void saveCfg();
 
-
-
-    /*
-     * Menu actions slots
-     */
-
+    // Menu actions
 //    void open();
 //    void save();
 //    void saveAs();
@@ -110,16 +100,14 @@ private:
     *mActionUndo,
     *mActionRedo,
     *mActionSwap,
-
     *mActionOptions;
 
     // Help menu
     QAction *mActionAbout, *mActionAboutQt;
 
-
+    // Main widgets
     TranslationWidget *mTranslationWidget;
     DictionaryWidget *mDictionaryWidget;
-
 
     /*!
      * Main config dialog and these pages
@@ -129,10 +117,7 @@ private:
     TranslatorsConfig *mTranslatorsConfig;
     LanguageConfig *mLanguageConfig;
     DictionaryConfig *mDictionaryConfig;
-
-
     static QString mAboutStr;
-
 signals:
     void currentIndexChanged(const int i);
 };

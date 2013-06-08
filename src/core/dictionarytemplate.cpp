@@ -55,7 +55,6 @@ QString DictionaryTemplate::bb2html(const QString &bb) {
     str.replace("[u]", "<u>").replace("[/u]", "</u>", Qt::CaseInsensitive);
     str.replace("[quote]", "<blockquote><p>").replace("[/quote]", "</p></blockquote>", Qt::CaseInsensitive);
     str.replace("\n", "<br>");
-
     return str;
 }
 

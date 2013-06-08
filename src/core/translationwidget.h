@@ -41,12 +41,10 @@ class QVBoxLayout;
 class QHBoxLayout;
 class QToolBar;
 
-
 class TranslationToolBar : public QToolBar {
 Q_OBJECT
 public:
     explicit TranslationToolBar(QWidget *parent = 0);
-
 public slots:
     void setCopyActionEnabled(bool);
 signals:
@@ -54,9 +52,6 @@ signals:
 private:
     QAction *mCopyAction;
 };
-
-
-
 
 
 class TranslationWidget : public QWidget, ITranslatorWidget, Info
@@ -77,6 +72,7 @@ public:
     virtual QToolBar    *srcToolbar()       { return mSrcToolbar;       }
     virtual QToolBar    *resToolbar()       { return mResToolbar;       }
     virtual QToolBar    *mainToolBar()      { return mMainToolBar;       }
+    virtual QWidget *instance() {return this;}
 
     QComboBox *translatorComboBox() { return mTranslatorComboBox;}
 
@@ -90,7 +86,6 @@ public:
             qWarning() << "THIS TRANSLATIR IS ALREADY SET: " << t->name();
         }
     }
-
     void setEnabledKeys(const QStringList &keys){mKeys = keys;}
 public slots:
     virtual void swap();
@@ -99,13 +94,10 @@ public slots:
 private slots:
     void onSourceLanguageChanged();
     void updateButtonState();
-
     void fillCombobox(QComboBox *cb, QStringList keys);
     void translate();
-
     // Update languages if translator was changed TODO: finish it!
     void updateLanguages();
-
 
     void saveCfg();
     void readCfg();
@@ -128,7 +120,6 @@ private:
 
     QPushButton *mTranslateButton;
     QToolButton *mSwapButton;
-
 
     QVBoxLayout *mMainLayout;
     QHBoxLayout *mButtonsLayout;

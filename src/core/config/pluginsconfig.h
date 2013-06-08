@@ -1,15 +1,12 @@
 #ifndef PLUGINSCONFIG_H
 #define PLUGINSCONFIG_H
 
-
 #include "iconfigpage.h"
 #include "info.h"
 #include "loader.h"
-
 #include <QWidget>
 #include <QList>
 #include <QCheckBox>
-
 
 class QTableWidget;
 class QHBoxLayout;
@@ -26,9 +23,7 @@ public:
         return &mPlugins;
     }
     QStringList enabledPluginsList();
-
     bool isEnabled(const int index) const ;
-
     void save();
     void read();
     void reset();
@@ -39,7 +34,6 @@ protected:
 private:
     QTableWidget *mTable;
     QPushButton *mCfgButton;
-
     QObjectList mPlugins;
     QStringList mEnabledList;
 

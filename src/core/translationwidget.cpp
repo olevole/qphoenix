@@ -44,10 +44,8 @@ TranslationToolBar::TranslationToolBar(QWidget *parent)
       mCopyAction(new QAction(QIcon::fromTheme("edit-copy"), "Copy", this))
 {
     this->addAction(mCopyAction),
-
     setIconSize(QSize(16,16));
     connect(mCopyAction,SIGNAL(triggered()), this, SIGNAL(copyRequest()));
-
 }
 
 void TranslationToolBar::setCopyActionEnabled(const bool b) {
@@ -80,12 +78,9 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mButtonsLayout->addStretch();
     mButtonsLayout->addWidget(mTranslateButton);
     mMainToolBar->setMovable(false);
-
-
     mMainToolBar->addSeparator();
     mMainToolBar->addWidget(new QLabel(tr("  Translator: "), this));
     mMainToolBar->addWidget(mTranslatorComboBox);
-
 
     mMainLayout->addWidget(mSrcToolbar);
     mMainLayout->addWidget(srcText());
@@ -100,13 +95,11 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     setIcon(QP_ICON("translator"));
 
     mWorker.setTimeout(10000);
-    connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onSourceLanguageChanged()));
 
+    connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onSourceLanguageChanged()));
     connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateButtonState()));
     connect(mResComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateButtonState()));
-
     connect(mSrcText, SIGNAL(textChanged()), this, SLOT(updateButtonState()));
-
     connect(mSwapButton, SIGNAL(clicked()), this, SLOT(swap()));
     connect(mSrcToolbar, SIGNAL(copyRequest()), this, SLOT(copySrcText()));
     connect(mResToolbar, SIGNAL(copyRequest()), this, SLOT(copyResText()));
@@ -115,20 +108,15 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     connect(mResText, SIGNAL(textChanged()), this, SIGNAL(finished()));
 
     updateButtonState();
-
 }
 
 TranslationWidget::~TranslationWidget() {
-
-
     saveCfg();
 }
-
 
 void TranslationWidget::onSourceLanguageChanged() {
     if(mTable.isEmpty() || mIsLinear)
         return;
-
     mResComboBox->clear();
     QList<QStringList> values = mTable.values();
     fillCombobox(mResComboBox, values.at(mSrcComboBox->currentIndex()));
@@ -137,7 +125,6 @@ void TranslationWidget::onSourceLanguageChanged() {
 void TranslationWidget::updateButtonState() {
     bool f = (srcComboboxData() != resComboboxData()) && !srcText()->toPlainText().isEmpty();
     mTranslateButton->setEnabled(f);
-
 }
 
 void TranslationWidget::swap() {
@@ -157,16 +144,13 @@ void TranslationWidget::copyResText() {
 void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
     for (int i = 0; i < keys.count(); ++i) {
         QString key =  keys[i];
-
         QString icon = QString(":/flags/%1.png").arg(key);
         QString name;
-
         Language entry = QP_LANG_FACTORY[key];
         if(mNativeNames)
             name = entry.nativeName();
         else
             name = entry.name();
-
         cb->addItem(QIcon(icon), name, key);
         cb->setItemData(i, key);
     }
@@ -212,12 +196,10 @@ void TranslationWidget::updateLanguages() {
     for(LanguageTable::iterator it = table.begin();it != table.end(); it++)
         if(it.value().count() > 1)
             mIsLinear = false;
-
     mTable = table;
     fillCombobox(mSrcComboBox, table.keys());
     if(mIsLinear)
         fillCombobox(mResComboBox, table.keys());
-
 }
 
 void TranslationWidget::saveCfg() {
@@ -229,30 +211,23 @@ void TranslationWidget::saveCfg() {
 }
 
 void TranslationWidget::readCfg() {
-
         QSettings s;
         s.beginGroup("TranslationWidget");
-
         int src  = s.value("src_index", 0).toInt();
         int res  = s.value("res_index", 0).toInt();
         s.endGroup();
-
 
         if(src > mSrcComboBox->count())
             src = 0;
         if(res > mResComboBox->count())
             res = 0;
-
-
         mSrcComboBox->setCurrentIndex(src);
         mResComboBox->setCurrentIndex(res);
-
 }
 
 QString TranslationWidget::srcComboboxData() {
     return  srcComboBox()->itemData(srcComboBox()->currentIndex()).toString();
 }
-
 
 QString TranslationWidget::resComboboxData() {
     return resComboBox()->itemData(resComboBox()->currentIndex()).toString();

@@ -10,7 +10,6 @@ class QTabWidget;
 class QCheckBox;
 class QSpinBox;
 
-
 class DictionaryConfig : public QWidget, IConfigPage
 {
     Q_OBJECT
@@ -31,7 +30,6 @@ private:
     QList<IDictionary *>mConvertedDicts;
     QTableWidget *mTable;
     QTabWidget *mTabWidget;
-
     QCheckBox *mRememberPair;
 };
 

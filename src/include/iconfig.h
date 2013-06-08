@@ -10,7 +10,6 @@
  * config dialog (add their own setting pages)
  */
 
-
 class IConfig {
 public:
     virtual ~IConfig() {}
@@ -20,8 +19,5 @@ public:
 };
 
 Q_DECLARE_INTERFACE(IConfig, "com.qphoenix.interfaces.settingspage/1.0")
-
-
-
 
 #endif // SETTINGSBASE_H

@@ -3,7 +3,7 @@
 
 
 /*!
-? * Global header for all incldue required in add-ons development
+ * Global header for all incldue required in add-ons development
  */
 
 #include "defines.h"

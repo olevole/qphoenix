@@ -43,13 +43,11 @@ public:
      */
     void endSection();
     void clear();
-
     QString toHtml() const;
     QString errorString() const;
 private:
     bool mLastSectionClosed;
     QString mRoot, mTitle, mSection;
-
     const QString mTemplateRoot;
     const QString mTemplateSection;
     const QString mTemplateItem;
@@ -62,7 +60,6 @@ private:
     static QString bb2html(const QString &bb) ;
     inline QString getTemplate(const QString &path) const {
         QFile f(path);
-
         if(!f.open(QFile::ReadOnly))
             qFatal("Unable to open templates for dictionary!");
 

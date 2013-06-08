@@ -43,10 +43,6 @@
  */
 typedef QMap <QString, QStringList> LanguageTable;
 
-
-
-
-
 class ITranslator : public IModule {
 public:
     virtual ~ITranslator(){}
@@ -66,7 +62,6 @@ public:
      */
     virtual LanguageTable table() const = 0;
 
-
     /*!
      * \brief translate
      * \param src_text Source text
@@ -78,10 +73,6 @@ public:
                                const QString &dest_lang) = 0;
 };
 
-
 Q_DECLARE_INTERFACE(ITranslator, "com.qphoenix.interfaces.translator/1.0");
-
-
-
 
 #endif // TRANSLATORINTERFACE_H

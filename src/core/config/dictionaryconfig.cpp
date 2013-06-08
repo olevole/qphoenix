@@ -15,16 +15,10 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
       mTable(new QTableWidget(this)),
       mTabWidget(new QTabWidget(this)),
       mRememberPair(new QCheckBox(tr("Store Language Pair"), this))
-
 {
     setIcon(QP_ICON("dictionary"));
-
-
     Loader ldr("dictionaries:");
     mDictionaries = ldr.modules();
-
-
-
 
     QVBoxLayout *tab1 = new QVBoxLayout;
     tab1->addWidget(mTable);
@@ -40,23 +34,17 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
     mTabWidget->widget(0)->setLayout(tab1);
     mTabWidget->widget(1)->setLayout(tab2);
 
-
-
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(mTabWidget);
     this->setLayout(mainLayout);
     this->setName("Dictionaries");
 
-
-
     mTable->setColumnCount(3);
     mTable->verticalHeader()->hide();
-
     mTable->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Name")));
     mTable->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("Description")));
     mTable->setHorizontalHeaderItem(2, new QTableWidgetItem(tr("Version")));
     mTable->setHorizontalHeaderItem(3, new QTableWidgetItem(tr("#")));
-
 
     for (int i = 0; i < mDictionaries.count(); ++i) {
         QObject *d = mDictionaries[i];

@@ -28,10 +28,6 @@
 class Info
 {
 public:
-//    virtual ~Info(){}
-
-
-
     QString name() const                    {return mName;      }
     QString version() const                 {return mVersion;   }
     QString url() const                     {return mUrl;       }
@@ -39,7 +35,6 @@ public:
     QIcon   icon() const                    {return mIcon;      }
 protected:
     void setName(const QString &n)          {mName = n;         }
-
     void setVersion(const QString &v)       {mVersion = v;      }
     void setUrl(const QString &u)           {mUrl = u;          }
     void setDescription(const QString &t)   {mDecription = t;   }

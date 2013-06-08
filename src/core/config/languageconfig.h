@@ -20,9 +20,7 @@ public:
     void save();
     void read();
     void reset(){}
-
     QStringList keysForEnabled() const;
-
     void setNativeNames(const bool b) {
         mNativeNames = b;
     }
@@ -31,16 +29,12 @@ private slots:
     void unsetAll();
 private:
     void createTable();
-
     void setCbState(const bool state);
-
-
     LanguageList mLangList;
 
     QList<QCheckBox *> mCheckboxList;
     QTableWidget *mTable;
     QPushButton *mSetButton, *mUnsetButton;
-
     bool mNativeNames;
 };
 

@@ -51,17 +51,14 @@ public:
     virtual void addPage(QWidget *page) = 0;
     virtual void removePage(const QWidget *page) = 0;
     virtual QWidget *pageAt(const int i) = 0;
-
     virtual int currentIndex() const = 0;
 
     // Instances
     virtual QToolBar *toolbar() = 0;
     virtual QStatusBar *statusbar() =0;
     virtual QMenuBar   *menubar() = 0;
-
     virtual ITranslatorWidget *translatorWidget() = 0;
     virtual IDictionaryWidget *dictionaryWidget() = 0;
-    virtual QMainWindow *instance() = 0;
 };
 
 
