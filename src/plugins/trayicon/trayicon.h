@@ -19,8 +19,7 @@
  *    Years: 2012-2013
  */
 
-#ifndef TRAYICON_H
-#define TRAYICON_H
+#pragma once
 
 #include <QObject>
 #include "iplugin.h"
@@ -60,4 +59,3 @@ private:
     bool mIsLoaded;
 };
 
-#endif // TRAYICON_H

@@ -19,8 +19,7 @@
  *    Years: 2012-2013
  */
 
-#ifndef TRANSLATOR_H
-#define TRANSLATOR_H
+#pragma once
 
 #include <QWidget>
 #include <QList>
@@ -66,5 +65,3 @@ private:
     QList <ITranslator *>mTranslatorsList;
     QTabWidget *mTabWidget;
 };
-
-#endif // TRANSLATOR_H

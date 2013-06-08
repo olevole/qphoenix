@@ -1,6 +1,4 @@
-#ifndef PLUGININTERFACE_H
-#define PLUGININTERFACE_H
-
+#pragma once
 
 
 /*
@@ -31,6 +29,3 @@ public:
 };
 
 Q_DECLARE_INTERFACE(IPlugin, "com.qphoenix.interfaces.plugin/1.0");
-
-
-#endif // PLUGININTERFACE_H

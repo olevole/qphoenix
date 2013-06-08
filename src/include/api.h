@@ -1,6 +1,4 @@
-#ifndef API_H
-#define API_H
-
+#pragma once
 
 /*!
  * Global header for all incldue required in add-ons development
@@ -18,4 +16,3 @@
 #include "itranslator.h"
 #include "itranslatorwidget.h"
 
-#endif // API_H

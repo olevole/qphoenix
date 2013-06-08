@@ -1,5 +1,4 @@
-#ifndef ABSMODULE_H
-#define ABSMODULE_H
+#pragma once
 
 #include "info.h"
 #include <QString>
@@ -55,7 +54,3 @@ public:
 };
 
 Q_DECLARE_INTERFACE(IModule, "com.qphoenix.interfaces.imodule/1.0")
-
-
-
-#endif // ABSMODULE_H

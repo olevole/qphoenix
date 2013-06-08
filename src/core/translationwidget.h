@@ -19,8 +19,7 @@
  *    Years: 2012-2013
  */
 
-#ifndef TRANSLATIONWIDGET_H
-#define TRANSLATIONWIDGET_H
+#pragma once
 
 #include <QWidget>
 #include <QToolBar>
@@ -72,7 +71,6 @@ public:
     virtual QToolBar    *srcToolbar()       { return mSrcToolbar;       }
     virtual QToolBar    *resToolbar()       { return mResToolbar;       }
     virtual QToolBar    *mainToolBar()      { return mMainToolBar;       }
-    virtual QWidget *instance() {return this;}
 
     QComboBox *translatorComboBox() { return mTranslatorComboBox;}
 
@@ -137,5 +135,3 @@ private:
 signals:
     void finished();
 };
-
-#endif // TRANSLATIONWIDGET_H

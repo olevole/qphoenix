@@ -1,5 +1,4 @@
-#ifndef MYMEMORYTRANSLATOR_H
-#define MYMEMORYTRANSLATOR_H
+#pragma once
 
 #include "itranslator.h"
 #include "info.h"
@@ -59,4 +58,3 @@ public:
     QString translate(const QString &src_text, const QString &src_lang, const QString &dest_lang);
 };
 
-#endif // MYMEMORYTRANSLATOR_H

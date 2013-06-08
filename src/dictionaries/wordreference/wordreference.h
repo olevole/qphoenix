@@ -1,5 +1,4 @@
-#ifndef WORDREFERENCE_H
-#define WORDREFERENCE_H
+#pragma once
 
 #include "api.h"
 #include <QObject>
@@ -46,5 +45,3 @@ private:
 
     QJsonDocument queryData(const QString &str, const LanguagePair &pair) const;
 };
-
-#endif // WORDREFERENCE_H

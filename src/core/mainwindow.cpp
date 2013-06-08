@@ -25,6 +25,8 @@
 #include <QTabWidget>
 #include <QToolButton>
 #include <QCloseEvent>
+#include <QFile>
+#include <QFileDialog>
 
 #include "iplugin.h"
 #include "querywrappers.h"
@@ -39,7 +41,17 @@
 #include "languageconfig.h"
 #include "dictionaryconfig.h"
 
-QString MainWindow::mAboutStr = "QPhoenix is an advanced translation tool that could use multiple dictionaries and translators";
+
+
+QString MainWindow::mAboutStr = "QPhoenix is an advanced translation tool that could use multiple dictionaries and translators\n"
+#ifdef QP_DEBUG
+        "REVISION: "
+        QP_GIT_REV
+        "\nVersion: "
+        QP_APP_VERSION
+#endif
+;
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -132,6 +144,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mSettingsDialog->addPage(mLanguageConfig);
     mSettingsDialog->addPage(mPluginsConfig);
 
+    connect(mActionOpen, SIGNAL(triggered()), this, SLOT(open()));
     connect(mActionExit, SIGNAL(triggered()), this, SLOT(exit()));
     connect(mActionClear, SIGNAL(triggered()), this, SLOT(clear()));
     connect(mActionUndo, SIGNAL(triggered()), this, SLOT(undo()));
@@ -207,8 +220,9 @@ void MainWindow::onConfigAccept() {
 
         bool enabled = mPluginsConfig->isEnabled(i);
         if(enabled) {
-            iface->load();
             iface->setMainWindowPTR(this);
+            iface->load();
+
         } else if(iface->isLoaded()) {
                 iface->unload();
         }
@@ -252,6 +266,16 @@ void MainWindow::saveCfg() {
 //----------------------------------------------------------------------------------------------
 // Actions slots
 
+
+void MainWindow::open() {
+    const QString path = QFileDialog::getOpenFileName(this);
+    QFile file(path);
+    if(!file.open( QFile::ReadOnly))
+        return;
+    const QString text = file.readAll();
+    this->translatorWidget()->srcText()->setText(text);
+}
+
 void MainWindow::exit() {
     saveCfg();
     qApp->quit();
@@ -289,9 +313,7 @@ void MainWindow::swap() {
 //----------------------------------------------------------------------------------------------
 
 void MainWindow::about() {
-    QMessageBox::about(this, tr("About QPhoenix"),
-                                      tr("QPhoenix is an advanced translation tool that \
-                                         could use multiple dictionaries and translators.\n\n REVISION: ") + QP_GIT_REV);
+    QMessageBox::about(this, tr("About QPhoenix"), mAboutStr);
 }
 
 int MainWindow::currentIndex() const {

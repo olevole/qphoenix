@@ -1,5 +1,4 @@
-#ifndef DICTIONARYCONFIG_H
-#define DICTIONARYCONFIG_H
+#pragma once
 
 #include "api.h"
 #include "loader.h"
@@ -32,5 +31,3 @@ private:
     QTabWidget *mTabWidget;
     QCheckBox *mRememberPair;
 };
-
-#endif // DICTIONARYCONFIG_H

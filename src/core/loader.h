@@ -1,5 +1,4 @@
-#ifndef LOADER_H
-#define LOADER_H
+#pragma once
 
 #include <QStringList>
 #include <QObject>
@@ -39,5 +38,3 @@ public:
 private:
     QStringList mSearchPaths;
 };
-
-#endif // LOADER_H

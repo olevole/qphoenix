@@ -18,9 +18,7 @@
  *    E-Mail: development@qphoenix.org
  *    Years: 2012-2013
  */
-
-#ifndef DICTIONARYWIDGET_H
-#define DICTIONARYWIDGET_H
+#pragma once
 
 #include <QWidget>
 #include <QLabel>
@@ -104,4 +102,3 @@ private:
     DictionaryTemplate *mTemplate;
 };
 
-#endif // DICTIONARYWIDGET_H

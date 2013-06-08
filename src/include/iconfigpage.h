@@ -19,8 +19,7 @@
  *    Years: 2012-2013
  */
 
-#ifndef SETTINGSPAGEINTERFACE_H
-#define SETTINGSPAGEINTERFACE_H
+#pragma once
 
 #include "info.h"
 
@@ -34,6 +33,4 @@ public:
 };
 
 Q_DECLARE_INTERFACE(IConfigPage, "com.qphoenix.interfaces.settings/1.0");
-
-#endif // SETTINGSPAGEINTERFACE_H
 

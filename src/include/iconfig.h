@@ -1,5 +1,4 @@
-#ifndef SETTINGSBASE_H
-#define SETTINGSBASE_H
+#pragma once
 
 #include <QGroupBox>
 
@@ -20,4 +19,3 @@ public:
 
 Q_DECLARE_INTERFACE(IConfig, "com.qphoenix.interfaces.settingspage/1.0")
 
-#endif // SETTINGSBASE_H

@@ -1,5 +1,4 @@
-#ifndef INFODIALOG_H
-#define INFODIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -13,5 +12,3 @@ public:
 private:
     QDialogButtonBox *buttons;
 };
-
-#endif // INFODIALOG_H

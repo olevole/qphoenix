@@ -1,5 +1,4 @@
-#ifndef QUERYWRAPPERS_H
-#define QUERYWRAPPERS_H
+#pragma once
 
 #include <QThread>
 #include <QTimer>
@@ -93,9 +92,3 @@ private:
 signals:
     void reply(QString);
 };
-
-
-//-------------------------------------------------------------------------------------
-
-
-#endif // QUERYWRAPPERS_H

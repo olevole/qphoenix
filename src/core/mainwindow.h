@@ -1,5 +1,4 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QMainWindow>
 #include <QDebug>
@@ -33,7 +32,12 @@ class MainWindow : public  QMainWindow, IMainWindow
     Q_DISABLE_COPY(MainWindow)
 public:
     explicit MainWindow(QWidget *parent = 0);
-    virtual ~MainWindow();
+    ~MainWindow();
+
+    enum Page {
+        Translator = 0,
+        Dictionary = 1,
+    };
 
     void addPage(QWidget *page);
     void removePage(const QWidget *page);
@@ -46,9 +50,9 @@ public:
     {return qobject_cast<ITranslatorWidget *>(mTranslationWidget);}
 
     QMainWindow *instance() {return this;}
-    QToolBar *toolbar()     { return mToolBar;      }
-    QStatusBar *statusbar() { return mStatusBar;    }
-    QMenuBar *menubar()     { return mMenuBar;      }
+    QToolBar *toolbar() { return mToolBar;}
+    QStatusBar *statusbar() { return mStatusBar;}
+    QMenuBar *menubar() { return mMenuBar;}
 
     int currentIndex() const;
 public slots:
@@ -65,7 +69,7 @@ private slots:
     void saveCfg();
 
     // Menu actions
-//    void open();
+    void open();
 //    void save();
 //    void saveAs();
 //    void print();
@@ -121,6 +125,3 @@ private:
 signals:
     void currentIndexChanged(const int i);
 };
-
-
-#endif // MAINWINDOW_H

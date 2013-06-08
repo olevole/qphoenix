@@ -19,8 +19,7 @@
  *    Years: 2012-2013
  */
 
-#ifndef DICTIONARYWIDGETINTERFACE_H
-#define DICTIONARYWIDGETINTERFACE_H
+#pragma once
 
 class QComboBox;
 class QLineEdit;
@@ -37,6 +36,3 @@ public:
 };
 
 Q_DECLARE_INTERFACE(IDictionaryWidget, "com.qphoenix.interfaces.dictionarywidget/1.0")
-
-
-#endif // DICTIONARYWIDGETINTERFACE_H

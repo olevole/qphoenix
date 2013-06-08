@@ -1,5 +1,4 @@
-#ifndef DEFINES_H
-#define DEFINES_H
+#pragma once
 
 
 #include <QDir>
@@ -47,5 +46,3 @@ ${CMAKE_DEBUG_MODE}
  */
 
 #define QP_DICT_DEFAULT_ZOOM_FACTOR 0.7
-
-#endif // DEFINES_H

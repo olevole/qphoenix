@@ -1,6 +1,4 @@
 #pragma once
-#ifndef LANGUAGES_H
-#define LANGUAGES_H
 
 #include <QMap>
 #include <QString>
@@ -61,6 +59,3 @@ private:
     LanguageEngine(const LanguageEngine& root);
     LanguageEngine& operator=(const LanguageEngine&);
 };
-
-
-#endif // LANGUAGES_H

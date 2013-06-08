@@ -1,5 +1,4 @@
-#ifndef PLUGINSCONFIG_H
-#define PLUGINSCONFIG_H
+#pragma once
 
 #include "iconfigpage.h"
 #include "info.h"
@@ -39,5 +38,3 @@ private:
 
     QList<QCheckBox *>mCheckboxList;
 };
-
-#endif // PLUGINSCONFIG_H

@@ -19,8 +19,7 @@
  *    Years: 2012-2013
  */
 
-#ifndef Info_H
-#define Info_H
+#pragma once
 
 #include <QString>
 #include <QIcon>
@@ -44,9 +43,4 @@ protected:
     QIcon mIcon;
 };
 
-
-
 Q_DECLARE_INTERFACE(Info, "com.qphoenix.interfaces.info/1.0");
-
-
-#endif // Info_H

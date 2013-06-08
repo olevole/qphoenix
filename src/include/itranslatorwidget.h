@@ -19,9 +19,7 @@
  *    Years: 2012-2013
  */
 
-#ifndef TRANSLATORWIDGETINTERFACE_H
-#define TRANSLATORWIDGETINTERFACE_H
-
+#pragma once
 
 class QComboBox;
 class QTextEdit;
@@ -35,7 +33,6 @@ class ITranslatorWidget {
 public:
     virtual ~ITranslatorWidget() {}
 
-    virtual QWidget     *instance() = 0;
     virtual QComboBox   *srcComboBox() = 0;
     virtual QComboBox   *resComboBox() = 0;
     virtual QTextEdit   *srcText() = 0;
@@ -45,12 +42,15 @@ public:
     virtual QToolBar    *mainToolBar() = 0;
     virtual QToolBar    *srcToolbar() = 0;
     virtual QToolBar    *resToolbar() = 0;
-// SLots
+
+//    virtual QWidget *instance() = 0;
+// Slots
     virtual void swap() = 0;
+// Signals
+//    virtual void finished() = 0;
 };
 
 
 Q_DECLARE_INTERFACE(ITranslatorWidget, "com.qphoenix.interfaces.translatorwidget/1.0")
 
 
-#endif // TRANSLATORWIDGETINTERFACE_H

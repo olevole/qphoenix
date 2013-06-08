@@ -1,5 +1,4 @@
-#ifndef HTTP_H
-#define HTTP_H
+#pragma once
 
 #include <QObject>
 
@@ -32,4 +31,3 @@ public:
 //    static QString str2uri(const QString &str) const;
 //};
 
-#endif // HTTP_H

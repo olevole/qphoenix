@@ -19,8 +19,7 @@
  *    Years: 2012-2013
  */
 
-#ifndef TRANSLATORINTERFACE_H
-#define TRANSLATORINTERFACE_H
+#pragma once
 
 #include <QMap>
 #include <QWidget>
@@ -74,5 +73,3 @@ public:
 };
 
 Q_DECLARE_INTERFACE(ITranslator, "com.qphoenix.interfaces.translator/1.0");
-
-#endif // TRANSLATORINTERFACE_H

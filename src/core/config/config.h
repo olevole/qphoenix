@@ -1,5 +1,4 @@
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#pragma once
 
 #include "iconfig.h"
 #include "iconfigpage.h"
@@ -57,5 +56,3 @@ private slots:
     void read();
     void reset();
 };
-
-#endif // SETTINGS_H

@@ -1,5 +1,4 @@
-#ifndef DICTIONARYTEMPLATE_H
-#define DICTIONARYTEMPLATE_H
+#pragma once
 
 #include <QObject>
 #include "api.h"
@@ -71,5 +70,3 @@ private:
         return data;
     }
 };
-
-#endif // DICTIONARYTEMPLATE_H

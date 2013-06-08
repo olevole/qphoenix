@@ -1,5 +1,4 @@
-#ifndef LANGUAGECONFIG_H
-#define LANGUAGECONFIG_H
+#pragma once
 
 #include <QWidget>
 #include "iconfigpage.h"
@@ -38,4 +37,3 @@ private:
     bool mNativeNames;
 };
 
-#endif // LANGUAGECONFIG_H

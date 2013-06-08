@@ -18,9 +18,7 @@
  *    E-Mail: development@qphoenix.org
  *    Years: 2012-2013
  */
-
-#ifndef MAINWINDOWINTERFACE_H
-#define MAINWINDOWINTERFACE_H
+#pragma once
 
 #include "itranslatorwidget.h"
 #include "idictionarywidget.h"
@@ -63,6 +61,3 @@ public:
 
 
 Q_DECLARE_INTERFACE(IMainWindow, "com.qphoenix.interfaces.mainwindow/1.0")
-
-
-#endif // MAINWINDOWINTERFACE_H
