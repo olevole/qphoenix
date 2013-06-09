@@ -214,13 +214,20 @@ void MainWindow::onConfigAccept() {
      * Plugins processing
      *
      */
+    PluginConnector connector;
+    connector.QP_CONFIG_DIALOG = mSettingsDialog;
+    connector.QP_MAIN_WINDOW = this;
+    connector.QP_TRANSLATOR_WIDGET = mTranslationWidget;
+    connector.QP_DICTIONARY_WIDGET = mDictionaryWidget;
+
     QObjectList *lst = mPluginsConfig->pluginsList();
     for(int i = 0; i < lst->count(); i++) {
         IPlugin *iface =  qobject_cast<IPlugin *>(lst->at(i));
 
         bool enabled = mPluginsConfig->isEnabled(i);
         if(enabled) {
-            iface->setMainWindowPTR(this);
+            iface->setPluginConnector(connector);
+//            iface->setMainWindowPTR(this);
             iface->load();
 
         } else if(iface->isLoaded()) {

@@ -31,7 +31,6 @@ QObjectList Loader::modules() {
         QPluginLoader *l = new QPluginLoader(module, this);
         QObject *instance;
 
-
         if(l->load() && (instance = l->instance()) != NULL)
             list.append(instance);
         else

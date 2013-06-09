@@ -28,6 +28,8 @@
 #include <QTextBrowser>
 
 #include <QToolTip>
+#include "translationwidget.h"
+#include "itranslatorwidget.h"
 
 TrayIcon::TrayIcon(QObject *parent) :
     QObject(parent),
@@ -62,13 +64,12 @@ bool TrayIcon::unload() {
     return true;
 }
 
-void TrayIcon::setMainWindowPTR(IMainWindow *ptr) {
-    mWindowIface = ptr;
-}
+
 
 void TrayIcon::translate() {
-    mWindowIface->translatorWidget()->srcText()->setText(clipboard->text(QClipboard::Selection));
-    mWindowIface->translatorWidget()->translateButton()->click();
+    mConnector.QP_TRANSLATOR_WIDGET->srcText()->setText(clipboard->text(QClipboard::Selection));
+//    mWindowIface->translatorWidget()->srcText()->setText(clipboard->text(QClipboard::Selection));
+//     mConnector.QP_TRANSLATOR_WIDGET->translateButton()->click();
 }
 
 void TrayIcon::show() {
@@ -76,10 +77,15 @@ void TrayIcon::show() {
     QToolTip::showText(pos, mWindowIface->translatorWidget()->resText()->toPlainText());
 }
 
-void TrayIcon::setSettingsPTR(IConfig *ptr) {
+//void TrayIcon::setSettingsPTR(IConfig *ptr) {
+
+//}
+
+void TrayIcon::setPluginConnector(PluginConnector connector) {
+    mConnector = connector;
+//    mWindowIface = connector.QP_MAIN_WINDOW;
 
 }
-
 
 
 

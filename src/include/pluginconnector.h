@@ -1,8 +1,8 @@
 #pragma once
 
-class MainWindow;
+class IMainWindow;
 class Config;
-class TranslatorWidget;
+class TranslationWidget;
 class DictionaryWidget;
 
 
@@ -17,11 +17,14 @@ class DictionaryWidget;
 struct PluginConnector
 {
     PluginConnector() {
-        QP_MAIN_WINDOW = QP_CONFIG_DIALOG = QP_TRANSLATOR_WIDGET = QP_DICTIONARY_WIDGET = 0;
+        QP_MAIN_WINDOW = NULL;
+        QP_CONFIG_DIALOG = NULL;
+        QP_TRANSLATOR_WIDGET = NULL;
+        QP_DICTIONARY_WIDGET = NULL;
     }
-    MainWindow *QP_MAIN_WINDOW;
+    IMainWindow *QP_MAIN_WINDOW;
     Config *QP_CONFIG_DIALOG;
-    TranslatorWidget *QP_TRANSLATOR_WIDGET;
+    TranslationWidget *QP_TRANSLATOR_WIDGET;
     DictionaryWidget *QP_DICTIONARY_WIDGET;
 };
 

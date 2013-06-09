@@ -24,6 +24,7 @@
 #include <QObject>
 #include "iplugin.h"
 #include "imodule.h"
+#include "pluginconnector.h"
 
 
 
@@ -38,9 +39,9 @@ class TrayIcon : public QObject, IPlugin
     Q_PLUGIN_METADATA(IID "org.qphoenix.plugins.trayicon")
 public:
     explicit TrayIcon(QObject *parent = 0);    
-    void setMainWindowPTR(IMainWindow *ptr);
-
-    void setSettingsPTR(IConfig *ptr);
+//    void setMainWindowPTR(IMainWindow *ptr);
+//    void setSettingsPTR(IConfig *ptr);
+    void setPluginConnector(PluginConnector connector);
 
     bool load();
     bool unload();
@@ -51,7 +52,7 @@ private slots:
     void show();
 
 private:
-
+    PluginConnector mConnector;
     IMainWindow *mWindowIface;
     QPushButton *button;
 

@@ -83,7 +83,8 @@ src/core/querywrappers.h
 src/core/loader.h
 src/core/infodialog.h
 src/core/dictionarytemplate.h
-src/core/languages.h)
+src/core/languages.h
+src/core/core.h)
 
 
 
@@ -101,7 +102,8 @@ src/core/querywrappers.cpp
 src/core/loader.cpp
 src/core/infodialog.cpp
 src/core/dictionarytemplate.cpp
-src/core/languages.cpp)
+src/core/languages.cpp
+src/core/core.cpp)
 
 
 SET(RESOURCES resources/resources.qrc)
