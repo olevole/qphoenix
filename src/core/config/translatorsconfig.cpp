@@ -70,6 +70,7 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
 
     connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onIndexChange(int)));
 
+
     Loader ldr("translators:");
 
     QDir dir(ldr.searchPaths().first());

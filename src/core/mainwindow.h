@@ -62,6 +62,7 @@ protected:
 private slots:
     //! Update plugins, etc information from config dialog.
     void onConfigAccept();
+    void onTranslatorChanged(int i);
 
     //! Handle table index change
     void onIndexChange(const int i);

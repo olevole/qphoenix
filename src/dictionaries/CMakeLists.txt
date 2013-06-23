@@ -1,1 +1,2 @@
 ADD_SUBDIRECTORY(wordreference)
+ADD_SUBDIRECTORY(yandex)

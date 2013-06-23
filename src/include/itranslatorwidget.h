@@ -42,12 +42,10 @@ public:
     virtual QToolBar    *mainToolBar() = 0;
     virtual QToolBar    *srcToolbar() = 0;
     virtual QToolBar    *resToolbar() = 0;
-
-//    virtual QWidget *instance() = 0;
 // Slots
     virtual void swap() = 0;
 // Signals
-//    virtual void finished() = 0;
+    virtual void finished() = 0;
 };
 
 

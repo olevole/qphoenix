@@ -45,10 +45,7 @@ bool TrayIcon::load() {
     if(!isLoaded()) {
         button = new QPushButton;
         clipboard = qApp->clipboard();
-
         connect(clipboard, SIGNAL(selectionChanged()), this, SLOT(translate()));
-//        mWindowIface->translatorWidget();
-//        connect(mWindowIface->translatorWidget()->instance(), SIGNAL(finished()), this, SLOT(show()));
         mIsLoaded = true;
     }
     return true;
@@ -64,27 +61,18 @@ bool TrayIcon::unload() {
     return true;
 }
 
-
-
 void TrayIcon::translate() {
     mConnector.QP_TRANSLATOR_WIDGET->srcText()->setText(clipboard->text(QClipboard::Selection));
-//    mWindowIface->translatorWidget()->srcText()->setText(clipboard->text(QClipboard::Selection));
-//     mConnector.QP_TRANSLATOR_WIDGET->translateButton()->click();
 }
 
 void TrayIcon::show() {
     QPoint pos = QCursor::pos();
-    QToolTip::showText(pos, mWindowIface->translatorWidget()->resText()->toPlainText());
+    QToolTip::showText(pos, mConnector.QP_TRANSLATOR_WIDGET->resText()->toPlainText());
 }
 
-//void TrayIcon::setSettingsPTR(IConfig *ptr) {
-
-//}
 
 void TrayIcon::setPluginConnector(PluginConnector connector) {
     mConnector = connector;
-//    mWindowIface = connector.QP_MAIN_WINDOW;
-
 }
 
 

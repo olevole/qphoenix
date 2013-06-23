@@ -3,6 +3,7 @@
 #include "api.h"
 #include <QObject>
 
+#define DICTIONARY_VERSION "0.99"
 
 class QNetworkAccessManager;
 class QJsonDocument;

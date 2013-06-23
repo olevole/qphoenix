@@ -16,18 +16,6 @@ class IPlugin : public IModule
 public:
     virtual ~IPlugin() {}
 
-//    /*!
-//     * \brief setMainWindowPTR
-//     * \param ptr a pointer to MainWindow class
-//     */
-//    virtual void setMainWindowPTR(IMainWindow *ptr) = 0;
-
-//    /*!
-//     * \brief setSettingsPTR
-//     * \param ptr a pointer to config dialog object
-//     */
-//    virtual void setSettingsPTR(IConfig *ptr) = 0;
-
     /*!
      * \brief setPluginConnector
      * \param connector

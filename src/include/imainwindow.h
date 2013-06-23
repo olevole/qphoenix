@@ -55,8 +55,8 @@ public:
     virtual QToolBar *toolbar() = 0;
     virtual QStatusBar *statusbar() =0;
     virtual QMenuBar   *menubar() = 0;
-    virtual ITranslatorWidget *translatorWidget() = 0;
-    virtual IDictionaryWidget *dictionaryWidget() = 0;
+//    virtual ITranslatorWidget *translatorWidget() = 0;
+//    virtual IDictionaryWidget *dictionaryWidget() = 0;
 };
 
 

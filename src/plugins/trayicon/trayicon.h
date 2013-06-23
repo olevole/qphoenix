@@ -26,9 +26,6 @@
 #include "imodule.h"
 #include "pluginconnector.h"
 
-
-
-
 class QPushButton;
 class QClipboard;
 
@@ -50,7 +47,6 @@ public:
 private slots:
     void translate();
     void show();
-
 private:
     PluginConnector mConnector;
     IMainWindow *mWindowIface;

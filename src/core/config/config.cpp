@@ -22,7 +22,6 @@ Config::Config(QWidget *parent) :
 {
     setWindowTitle(tr("Settings"));
 
-
     // Gui Init
     mHorizontalLayout->addWidget(mTree);
     mHorizontalLayout->addLayout(mStackedLayout);
@@ -58,7 +57,6 @@ Config::Config(QWidget *parent) :
 
     // Okay, let's tell them to read configurations
     read();
-
 }
 
 Config::~Config() {
@@ -119,8 +117,6 @@ void Config::save() {
 
     foreach (IConfigPage *i, mPagesList)
         i->save();
-
-
     this->accept();
 }
 

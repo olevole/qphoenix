@@ -165,6 +165,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(src, SIGNAL(currentIndexChanged(int)), dest, SLOT(setCurrentIndex(int)));
     connect(dest, SIGNAL(currentIndexChanged(int)), src, SLOT(setCurrentIndex(int)));
+    connect(mTranslationWidget->translatorComboBox(), SIGNAL(currentIndexChanged(int)), this, SLOT(onTranslatorChanged()));
 
     QStringList items;
     for (int i = 0; i < dest->count(); ++i) {
@@ -187,17 +188,16 @@ MainWindow::~MainWindow()
 void MainWindow::addPage(QWidget *page) {
     Info *i = qobject_cast<Info *>(page);
     if(i == NULL) {
-        //TODO: Error processing
+        //TODO: Error processin//            iface->setMainWindowPTR(this);
+
         return;
     }
     QIcon icon = i->icon();
     QString name = i->name();
-
     mTabWidget->insertTab(mTabWidget->count(), page, icon, name);
 }
 
 void MainWindow::removePage(const QWidget *page) {
-
 }
 
 QWidget *MainWindow::pageAt(const int i) {
@@ -212,7 +212,6 @@ void MainWindow::setCurrentIndex(const int i) {
 void MainWindow::onConfigAccept() {
     /*!
      * Plugins processing
-     *
      */
     PluginConnector connector;
     connector.QP_CONFIG_DIALOG = mSettingsDialog;
@@ -227,7 +226,6 @@ void MainWindow::onConfigAccept() {
         bool enabled = mPluginsConfig->isEnabled(i);
         if(enabled) {
             iface->setPluginConnector(connector);
-//            iface->setMainWindowPTR(this);
             iface->load();
 
         } else if(iface->isLoaded()) {
@@ -245,6 +243,10 @@ void MainWindow::onConfigAccept() {
     mTranslationWidget->setNativeNames(false);
     mDictionaryWidget->setDictionaryList(mDictionaryConfig->dictionaries());
     mTranslationWidget->setEnabledKeys(mLanguageConfig->keysForEnabled());
+    mTranslationWidget->setTranslator(mTranslatorsConfig->currentTranslator());
+}
+
+void MainWindow::onTranslatorChanged(int i) {
     mTranslationWidget->setTranslator(mTranslatorsConfig->currentTranslator());
 }
 
@@ -269,10 +271,8 @@ void MainWindow::saveCfg() {
     s.endGroup();
 }
 
-
 //----------------------------------------------------------------------------------------------
 // Actions slots
-
 
 void MainWindow::open() {
     const QString path = QFileDialog::getOpenFileName(this);
@@ -305,7 +305,6 @@ void MainWindow::clear() {
 void MainWindow::undo() {
     currentIndex() == 0 ? translatorWidget()->srcText()->undo()
                         : dictionaryWidget()->srcText()->undo();
-
 }
 
 void MainWindow::redo() {

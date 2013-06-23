@@ -1,6 +1,4 @@
 #include "dictionaryconfig.h"
-
-
 #include <QTableWidget>
 #include <QVBoxLayout>
 #include <QHeaderView>
@@ -39,12 +37,12 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
     this->setLayout(mainLayout);
     this->setName("Dictionaries");
 
-    mTable->setColumnCount(3);
+    mTable->setColumnCount(4);
     mTable->verticalHeader()->hide();
     mTable->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Name")));
     mTable->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("Description")));
     mTable->setHorizontalHeaderItem(2, new QTableWidgetItem(tr("Version")));
-    mTable->setHorizontalHeaderItem(3, new QTableWidgetItem(tr("#")));
+    mTable->setHorizontalHeaderItem(3, new QTableWidgetItem("#"));
 
     for (int i = 0; i < mDictionaries.count(); ++i) {
         QObject *d = mDictionaries[i];
@@ -56,6 +54,8 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
         mTable->insertRow(i);
         mTable->setRowHeight(i, 20);
 
-        mTable->setItem(i, 1, new QTableWidgetItem(iface->name()));
+        mTable->setItem(i, 0, new QTableWidgetItem(iface->name()));
+        mTable->setItem(i, 1, new QTableWidgetItem(iface->description()));
+        mTable->setItem(i, 2, new QTableWidgetItem(iface->version()));
     }
 }
