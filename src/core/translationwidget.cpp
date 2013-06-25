@@ -159,6 +159,7 @@ void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
 void TranslationWidget::translate() {
     QString src_text = srcText()->toPlainText();
     mWorker.query(srcComboboxData(), resComboboxData(), src_text);
+
 }
 
 void TranslationWidget::updateLanguages() {
@@ -193,6 +194,7 @@ void TranslationWidget::updateLanguages() {
 
     mIsLinear = true;
     mSrcComboBox->clear();
+    mResComboBox->clear();
     for(LanguageTable::iterator it = table.begin();it != table.end(); it++)
         if(it.value().count() > 1)
             mIsLinear = false;

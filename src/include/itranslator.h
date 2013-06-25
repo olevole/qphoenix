@@ -26,7 +26,6 @@
 #include "imodule.h"
 
 
-
 /*!
  * \brief LanguageTable
  *
@@ -40,6 +39,7 @@
  * The key's MUST be an ISO 639-1 codes.
  * More information: en.wikipedia.org/wiki/List_of_ISO_639-1_codes
  */
+
 typedef QMap <QString, QStringList> LanguageTable;
 
 class ITranslator : public IModule {
@@ -53,7 +53,6 @@ public:
      */
     virtual QWidget *configWidget()
     {return new QWidget();        }
-
 
     /*!
      * \brief table
@@ -70,6 +69,19 @@ public:
      */
     virtual QString translate(const QString &src_text, const QString &src_lang,
                                const QString &dest_lang) = 0;
+
+    /*!
+     * \brief isSupportDetection
+     * \return true if module support language detection, or false
+     */
+    virtual bool isSupportDetection() {return false;}
+
+    /*!
+     * \brief detectLanguage
+     * \param pattern text pattern for detection of language
+     * \return language code found by pattern, or empty string if detection is not supported or failed.
+     */
+    virtual QString detectLanguage(const QString &pattern) {return QString();}
 };
 
 Q_DECLARE_INTERFACE(ITranslator, "com.qphoenix.interfaces.translator/1.0");

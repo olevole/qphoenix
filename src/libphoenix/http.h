@@ -21,7 +21,7 @@ public:
     explicit HTTP(QObject *parent = 0);
 
     static QByteArray get( QUrl req);
-//    static QByteArray post(const QUrl &req, QByteArray &data) const;
+    static QByteArray post(const QUrl &url, const QString &data);
 
 };
 

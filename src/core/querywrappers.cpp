@@ -59,6 +59,7 @@ TranslatorWorker::TranslatorWorker()
 
 void TranslatorWorker::run()
 {
+    mPtr->detectLanguage("Hello, World!");
     const QString _result = mPtr->translate(mSrcText, mSrcLang, mDestLang);
     emit reply(_result);
 }

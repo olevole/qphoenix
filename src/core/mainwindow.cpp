@@ -165,7 +165,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(src, SIGNAL(currentIndexChanged(int)), dest, SLOT(setCurrentIndex(int)));
     connect(dest, SIGNAL(currentIndexChanged(int)), src, SLOT(setCurrentIndex(int)));
-    connect(mTranslationWidget->translatorComboBox(), SIGNAL(currentIndexChanged(int)), this, SLOT(onTranslatorChanged()));
+    connect(mTranslationWidget->translatorComboBox(), SIGNAL(currentIndexChanged(int)), this, SLOT(onTranslatorChanged(int)));
 
     QStringList items;
     for (int i = 0; i < dest->count(); ++i) {
@@ -247,6 +247,7 @@ void MainWindow::onConfigAccept() {
 }
 
 void MainWindow::onTranslatorChanged(int i) {
+    qDebug() << "Called!";
     mTranslationWidget->setTranslator(mTranslatorsConfig->currentTranslator());
 }
 
