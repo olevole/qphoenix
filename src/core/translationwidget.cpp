@@ -20,6 +20,7 @@
  */
 
 #include "translationwidget.h"
+#include "defines.h"
 
 #include <QComboBox>
 #include <QTextEdit>
@@ -32,8 +33,6 @@
 #include <QToolBar>
 #include <QAction>
 #include <QApplication>
-//#include "global.h"
-#include "defines.h"
 #include <QMap>
 #include <QClipboard>
 #include <QLabel>
@@ -68,8 +67,6 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mResToolbar(new TranslationToolBar(this)),
     mMainToolBar(new QToolBar(this)),
     mNativeNames(true)
-//    mCfgUpdateState(false)
-
 {
     mButtonsLayout->addWidget(mResToolbar);
     mButtonsLayout->addWidget(mSrcComboBox);
@@ -159,7 +156,6 @@ void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
 void TranslationWidget::translate() {
     QString src_text = srcText()->toPlainText();
     mWorker.query(srcComboboxData(), resComboboxData(), src_text);
-
 }
 
 void TranslationWidget::updateLanguages() {

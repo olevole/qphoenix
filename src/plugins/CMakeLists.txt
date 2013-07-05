@@ -1,1 +1,1 @@
-ADD_SUBDIRECTORY(trayicon)
+ADD_SUBDIRECTORY(scanner)

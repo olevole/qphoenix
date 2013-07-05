@@ -27,7 +27,6 @@ public:
         return list;
     }
 
-
     //http://api.wordreference.com/{api_version}/{API_key}/{dictionary}/{term}
 
     QStringList query( const QString &text, const LanguagePair &pair, const int max_count);

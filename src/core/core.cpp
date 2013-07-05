@@ -1,6 +1,7 @@
 #include "core.h"
 
-Core::Core(QObject *parent) :
+Core::Core(MainWindow *mw, QObject *parent)
+    :mMainWindow(mw),
     QObject(parent)
 {
 }

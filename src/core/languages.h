@@ -37,15 +37,14 @@ public:
     static  LanguageEngine* instance()
     {
         static QMutex mutex;
-            static LanguageEngine *singleton = 0;
+        static LanguageEngine *singleton = 0;
 
-            if(!singleton) {
-                mutex.lock();
-                singleton =  new LanguageEngine;
-            }
+        if(!singleton) {
+            mutex.lock();
+            singleton =  new LanguageEngine;
             mutex.unlock();
-
-            return singleton;
+        }
+        return singleton;
     }
 
     /*!

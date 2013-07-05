@@ -10,7 +10,7 @@ HTTP::HTTP(QObject *parent) :
 {
 }
 
-QByteArray HTTP::get(QUrl req){
+QByteArray HTTP::GET(QUrl req){
     QNetworkAccessManager mManager;
     QEventLoop loop;
 
@@ -24,7 +24,7 @@ QByteArray HTTP::get(QUrl req){
 }
 
 
-QByteArray HTTP::post(const QUrl &url, const QString &data) {
+QByteArray HTTP::POST(const QUrl &url, const QString &data) {
     QByteArray _data = data.toUtf8();
     QNetworkAccessManager mManager;
     QEventLoop loop;

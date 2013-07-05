@@ -1,7 +1,3 @@
-#include "mainwindow.h"
-
-
-
 #include <QStatusBar>
 #include <QToolBar>
 #include <QMenuBar>
@@ -28,6 +24,7 @@
 #include <QFile>
 #include <QFileDialog>
 
+#include "mainwindow.h"
 #include "iplugin.h"
 #include "querywrappers.h"
 #include "translationwidget.h"
@@ -40,7 +37,6 @@
 #include "itranslator.h"
 #include "languageconfig.h"
 #include "dictionaryconfig.h"
-
 
 
 QString MainWindow::mAboutStr = "QPhoenix is an advanced translation tool that could use multiple dictionaries and translators\n"
@@ -78,7 +74,6 @@ MainWindow::MainWindow(QWidget *parent) :
     mActionRedo(new QAction(QP_ICON("edit-redo"),tr("Redo"), this)),
     mActionSwap(new QAction(tr("Swap"), this)),
     mActionOptions(new QAction(tr("Options"), this)),
-
 
     mActionAbout(new QAction(QIcon::fromTheme("help-about"), tr("About"), this)),
     mActionAboutQt(new QAction(tr("About Qt"), this)),
@@ -154,8 +149,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mActionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(mActionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
-
-
     // Widgets , Dialogs, etc
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
     connect(mTabWidget, SIGNAL(currentChanged(int)), this, SLOT(onIndexChange(int)));
@@ -165,7 +158,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(src, SIGNAL(currentIndexChanged(int)), dest, SLOT(setCurrentIndex(int)));
     connect(dest, SIGNAL(currentIndexChanged(int)), src, SLOT(setCurrentIndex(int)));
-    connect(mTranslationWidget->translatorComboBox(), SIGNAL(currentIndexChanged(int)), this, SLOT(onTranslatorChanged(int)));
+    connect(mTranslationWidget->translatorComboBox(), SIGNAL(currentIndexChanged(int)), this, SLOT(onTranslatorChanged()));
 
     QStringList items;
     for (int i = 0; i < dest->count(); ++i) {
@@ -178,6 +171,7 @@ MainWindow::MainWindow(QWidget *parent) :
     readCfg();
     // Read configs
     onConfigAccept();
+    onTranslatorChanged();
 }
 
 MainWindow::~MainWindow()
@@ -246,7 +240,7 @@ void MainWindow::onConfigAccept() {
     mTranslationWidget->setTranslator(mTranslatorsConfig->currentTranslator());
 }
 
-void MainWindow::onTranslatorChanged(int i) {
+void MainWindow::onTranslatorChanged() {
     qDebug() << "Called!";
     mTranslationWidget->setTranslator(mTranslatorsConfig->currentTranslator());
 }
