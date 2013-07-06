@@ -80,8 +80,8 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     setLayout(mMainLayout);
 
     // A Validator for query input
-    QRegExpValidator *v = new QRegExpValidator(QRegExp("[^\Q ,.\E].*"), this);
-    mSrcText->setValidator(v);
+//    QRegExpValidator *v = new QRegExpValidator(QRegExp("[^\Q ,.\E].*"), this);
+//    mSrcText->setValidator(v);
 
     // A Completer for query input
     mCompleter->setModel(mCompleterModel);
@@ -109,7 +109,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     connect(aZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
     connect(aZoomIn, SIGNAL(triggered()), this, SLOT(zoomIn()));
 
-    mDictWorker.setTimeout(90000);
+    mDictWorker.setTimeout(QP_DICTIONARY_TIMEOUT);
 }
 
 void DictionaryWidget::setCompletions(const QStringList &comp) {

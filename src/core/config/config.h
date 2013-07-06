@@ -24,21 +24,13 @@ class Config : public QDialog,  IConfig
     Q_OBJECT
     Q_INTERFACES(IConfig)
     Q_DISABLE_COPY(Config)
-
-    friend class MainWindow;
 public:
     explicit Config(QWidget *parent = 0);
     ~Config();
 
-    /*  Inserting Settings page into the main
-     *  settings dialog. All settings pages are
-     *  presented by the following interface:
-     */
-    void addPage(QWidget *page);
+    void addPage(QWidget *page, bool is_plugin=false);
     void removePage(const QWidget *page);
     QWidget *pageAt(const int i);
-protected:
-    void addPage(QWidget *page, bool isplugin);
 private:
     QList<IConfigPage *> mPagesList;
 

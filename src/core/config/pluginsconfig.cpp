@@ -12,29 +12,18 @@
 
 PluginsConfig::PluginsConfig(QWidget *parent)
     :QWidget(parent),
-      mTable(new QTableWidget(this)),
-      mCfgButton(new QPushButton(tr("Configure"), this))
+      mTable(new QTableWidget(this))
 {
     QVBoxLayout *mainLayoit = new QVBoxLayout;
     mainLayoit->addWidget(mTable);
 
-    QHBoxLayout *l = new QHBoxLayout;
-    l->addWidget(mCfgButton);
-    l->addStretch();
-    mainLayoit->addLayout(l);
-
     this->setLayout(mainLayoit);
-
     this->setName("Plugins");
-
 
     mTable->setColumnCount(4);
     mTable->verticalHeader()->hide();
 
-
     mTable->horizontalHeader()->setStretchLastSection(true);
-
-
     mTable->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Name")));
     mTable->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("Description")));
     mTable->setHorizontalHeaderItem(2, new QTableWidgetItem(tr("Version")));
@@ -45,9 +34,6 @@ PluginsConfig::PluginsConfig(QWidget *parent)
     mTable->setColumnWidth(3, 70);
 
     updateTable();
-
-    connect(mCfgButton, SIGNAL(clicked()),this, SLOT(configure()));
-
 }
 
 QStringList PluginsConfig::enabledPluginsList()  {
@@ -59,18 +45,14 @@ QStringList PluginsConfig::enabledPluginsList()  {
     return lst;
 }
 
-
 bool PluginsConfig::isEnabled(const int index) const {
-    if(index > mTable->rowCount() - 1)
-        qFatal("OUT OF RANGE!");
+    if(index >= mTable->rowCount())
+        qFatal("Plugin index out of range");
 
     return mCheckboxList[index]->isChecked();
 }
 
-
-
 void PluginsConfig::save() {
-    // Reading settings, yeah!
     QSettings s;
 
     s.beginGroup("Plugins");
@@ -79,7 +61,6 @@ void PluginsConfig::save() {
 }
 
 void PluginsConfig::read() {
-    // Reading settings, yeah!
     QSettings s;
     QStringList enabled;
 
@@ -90,18 +71,10 @@ void PluginsConfig::read() {
     for (int i = 0; i < mTable->rowCount(); ++i) {
         bool contains = enabled.contains(mTable->itemAt(0, i)->text());
         mCheckboxList[i]->setChecked(contains);
-
     }
 }
 
 void PluginsConfig::reset() {
-
-}
-
-void PluginsConfig::configure() {
-    QObject *obj = mPlugins[mTable->currentRow()];
-    IPlugin *p = qobject_cast<IPlugin *>(obj);
-//    p->
 
 }
 
@@ -133,7 +106,6 @@ void PluginsConfig::updateTable() {
         QCheckBox *cb = new QCheckBox(this);
         mCheckboxList << cb;
         mTable->setCellWidget(row, 3, cb);
-
     }
     mTable->resizeColumnsToContents();
 }

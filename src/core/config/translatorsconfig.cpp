@@ -30,6 +30,7 @@
 #include <QDebug>
 #include <QVBoxLayout>
 #include <QTabWidget>
+#include <QSettings>
 
 
 TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
@@ -85,14 +86,36 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     }
 }
 
-void TranslatorsConfig::onIndexChange(const int i) {
+TranslatorsConfig::~TranslatorsConfig() {
+    QSettings s;
+    s.beginGroup("Translators");
+    s.setValue("CurrentTranslator", mTranslatorComboBox->currentIndex());
+    s.endGroup();
+}
 
+void TranslatorsConfig::save() {
+}
+
+void TranslatorsConfig::read() {
+    QSettings s;
+    s.beginGroup("Translators");
+    const int index = s.value("CurrentTranslator", -1).toInt();
+    s.endGroup();
+    mTranslatorComboBox->setCurrentIndex(index);
+
+}
+
+void TranslatorsConfig::reset() {
+}
+
+void TranslatorsConfig::onIndexChange(const int i) {
+    if(i >= mTranslatorsList.size())
+        qFatal("Translator index out of range!");
     ITranslator *iface = mTranslatorsList[i];
     if(!iface->isLoaded())
         iface->load();
-    //TODO: Segfault here, it's a dangerous fragment!
+
     QWidget *cw = iface->configWidget();
-    //! FIXME: optimisation: do not overload the same widget!
     QLayoutItem *child;
     while ( (child = mOptionsLayout->takeAt(0)) != 0) {
         QWidget *w = child->widget();

@@ -57,7 +57,6 @@ class TranslationWidget : public QWidget, ITranslatorWidget, Info
 {
     Q_OBJECT
     Q_INTERFACES(ITranslatorWidget Info)
-//    Q_INTERFACES(Info)
 public:
     explicit TranslationWidget(QWidget *parent = 0);
     virtual ~TranslationWidget();
@@ -70,20 +69,12 @@ public:
     virtual QToolButton *swapButton()       { return mSwapButton;       }
     virtual QToolBar    *srcToolbar()       { return mSrcToolbar;       }
     virtual QToolBar    *resToolbar()       { return mResToolbar;       }
-    virtual QToolBar    *mainToolBar()      { return mMainToolBar;       }
+    virtual QToolBar    *mainToolBar()      { return mMainToolBar;      }
 
     QComboBox *translatorComboBox() { return mTranslatorComboBox;}
 
     void setNativeNames(const bool b)           {mNativeNames = b;}
-    void setTranslator(ITranslator *t) {
-        if(t != NULL && t != mWorker.translator()) {
-            mWorker.setTranslator(t);
-            updateLanguages();
-            readCfg();
-        } else {
-            qWarning() << "THIS TRANSLATIR IS ALREADY SET: " << t->name();
-        }
-    }
+    void setTranslator(ITranslator *t);
     void setEnabledKeys(const QStringList &keys){mKeys = keys;}
 public slots:
     virtual void swap();
@@ -132,6 +123,7 @@ private:
     TranslatorWorker mWorker;
 
     bool mIsLinear, mNativeNames;
+    int mTranslatorIndex;
 signals:
     void finished();
 };

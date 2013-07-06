@@ -18,21 +18,33 @@ class PluginsConfig : public QWidget, IConfigPage
 public:
     PluginsConfig(QWidget *parent = 0);
 
+    /*!
+     * \brief pluginsList
+     * \return list of loaded plugin QObject's pointers
+     */
     QObjectList *pluginsList() {
         return &mPlugins;
     }
+
+    /*!
+     * \brief enabledPluginsList
+     * \return list of enabled plugins names
+     */
     QStringList enabledPluginsList();
+
+    /*!
+     * \brief isEnabled
+     * \param index index of plugin
+     * \return true if plugin is enabled, false otherwise
+     */
     bool isEnabled(const int index) const ;
     void save();
     void read();
     void reset();
-private slots:
-    void configure();
 protected:
     void updateTable();
 private:
     QTableWidget *mTable;
-    QPushButton *mCfgButton;
     QObjectList mPlugins;
     QStringList mEnabledList;
 

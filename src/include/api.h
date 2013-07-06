@@ -15,4 +15,5 @@
 #include "iplugin.h"
 #include "itranslator.h"
 #include "itranslatorwidget.h"
+#include "pluginsconfig.h"
 

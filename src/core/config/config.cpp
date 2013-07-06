@@ -48,7 +48,6 @@ Config::Config(QWidget *parent) :
     /*
      * Connections (put all in this section)
      */
-
     connect(mTree, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(itemChangeHandle()));
     connect(mButtons, SIGNAL(accepted()), this, SLOT(save()));
     connect(mButtons, SIGNAL(rejected()), this, SLOT(reject()));
@@ -63,7 +62,8 @@ Config::~Config() {
 
 }
 
-void Config::addPage(QWidget *page) {
+void Config::addPage(QWidget *page, bool is_plugin) {
+    Q_UNUSED(is_plugin)
     IConfigPage *iface = qobject_cast<IConfigPage *>(page);
     QString name;
     QIcon icon;
@@ -101,6 +101,9 @@ void Config::removePage(const QWidget *page) {
 }
 
 QWidget *Config::pageAt(const int i) {
+    if(mStackedLayout->count() <= i) {
+        qFatal("Page index out of range!");
+    }
     return mStackedLayout->widget(i);
 }
 

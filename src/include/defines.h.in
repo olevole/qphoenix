@@ -11,6 +11,9 @@
 #define QP_ORG_DOMAIN "http://qphoenix.org"
 #define QP_GIT_REV "${GIT_HASH}"
 
+#define QP_TRANSLATOR_TIMEOUT 10000
+#define QP_DICTIONARY_TIMEOUT 10000
+
 
 /*!
  * Functionality definitions

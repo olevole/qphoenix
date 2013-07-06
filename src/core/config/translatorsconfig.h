@@ -42,10 +42,13 @@ class TranslatorsConfig : public QWidget, IConfigPage
     Q_INTERFACES(IConfigPage)
 public:
     explicit TranslatorsConfig(QWidget *parent = 0);
+    ~TranslatorsConfig();
 
-    void save() {}
-    void read() {}
-    void reset(){}
+
+
+    void save();
+    void read();
+    void reset();
     QComboBox *translatorComboBox() {return mTranslatorComboBox;}
     ITranslator *currentTranslator() {
         const int i = mTranslatorComboBox->currentIndex();

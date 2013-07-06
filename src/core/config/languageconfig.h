@@ -18,8 +18,18 @@ public:
     
     void save();
     void read();
-    void reset(){}
+    void reset();
+
+    /*!
+     * \brief keysForEnabled
+     * \return  list with keys of enabled languages
+     */
     QStringList keysForEnabled() const;
+
+    /*!
+     * \brief setNativeNames
+     * \param b enable native names if true, disable otherwise
+     */
     void setNativeNames(const bool b) {
         mNativeNames = b;
     }

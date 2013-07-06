@@ -1,4 +1,5 @@
 #include "mymemory.h"
+#include "http.h"
 #include <QtGui>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -36,25 +37,21 @@ QString MyMemory::translate(const QString &src_text, const QString &src_lang, co
     html.replace(">", "&gt;");
     html.replace("\n", "<br>");
 
-    QByteArray query = "v=1.0&format=html";
+    QString query = "v=1.0&format=html";
     query += "&langpair=" + src_lang.toLatin1() + "%7C" + dest_lang.toLatin1();
     query += "&q=" + html.toPercentEncoding();
 
     QUrl url("http://mymemory.translated.net/api/get");
-    QNetworkRequest req(url);
-    req.setRawHeader("User-Agent", "Mozilla/5.0");
-    req.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
-    req.setRawHeader("Content-Length", QByteArray::number(query.size()));
+
+
 
     QNetworkAccessManager manager;
     QEventLoop loop;
 
     connect(&manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
 
-    QNetworkReply *reply  = manager.post(req, query);
-    loop.exec();
 
-    const QString  rawdata = reply->readAll();
+    const QString  rawdata = HTTP::POST(url, query);
 
     QJsonObject obj = QJsonDocument::fromJson(rawdata.toUtf8()).object();
     QString res = obj.value("responseData").toObject().value("translatedText").toString();

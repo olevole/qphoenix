@@ -7,12 +7,15 @@
 #include <QSpinBox>
 #include <QLabel>
 #include <QDebug>
+#include <QSettings>
 
 DictionaryConfig::DictionaryConfig(QWidget *parent)
     :QWidget(parent),
       mTable(new QTableWidget(this)),
       mTabWidget(new QTabWidget(this)),
-      mRememberPair(new QCheckBox(tr("Store Language Pair"), this))
+//      mRememberPair(new QCheckBox(tr("Store Language Pair"), this)),
+      mResultCountLabel(new QLabel(tr("Maximum dictionary results to show"), this)),
+      mResultCountSpin(new QSpinBox(this))
 {
     setIcon(QP_ICON("dictionary"));
     Loader ldr("dictionaries:");
@@ -22,9 +25,12 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
     tab1->addWidget(mTable);
 
     QVBoxLayout *tab2 = new QVBoxLayout;
-    tab2->addWidget(mRememberPair);
-    tab2->addStretch();
 
+    QHBoxLayout *result_layout = new QHBoxLayout;
+    result_layout->addWidget(mResultCountLabel);
+    result_layout->addWidget(mResultCountSpin);
+    tab2->addLayout(result_layout);
+    tab2->addStretch();
 
     mTabWidget->addTab(new QWidget(this), "Dictionaries");
     mTabWidget->addTab(new QWidget(this), "Preferences");
@@ -58,4 +64,23 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
         mTable->setItem(i, 1, new QTableWidgetItem(iface->description()));
         mTable->setItem(i, 2, new QTableWidgetItem(iface->version()));
     }
+}
+
+void DictionaryConfig::save() {
+    QSettings s;
+    s.beginGroup("Dictionaries");
+    s.setValue("MaxResults", mResultCountSpin->value());
+    s.endGroup();
+}
+
+void DictionaryConfig::read() {
+    QSettings s;
+    s.beginGroup("Dictionaries");
+    const int index = s.value("MaxResults", 0).toInt();
+    mResultCountSpin->setValue(index);
+    s.endGroup();
+}
+
+void DictionaryConfig::reset() {
+    mResultCountSpin->setValue(QP_DEFAULT_RESULT_COUNT);
 }

@@ -62,6 +62,10 @@ void LanguageConfig::read() {
     }
 }
 
+void LanguageConfig::reset() {
+    setCbState(true);
+}
+
 QStringList LanguageConfig::keysForEnabled() const {
     QStringList enabled;
     const QStringList keys = mLangList.keys();
@@ -88,7 +92,7 @@ void LanguageConfig::createTable() {
 
     LanguageList::Iterator it = mLangList.begin();
 
-        //TODO: Fix issue with ugly columns
+    //TODO: Fix issue with ugly columns
     int i = 0;
     for(; it != mLangList.end(); ++it) {
         QString name;

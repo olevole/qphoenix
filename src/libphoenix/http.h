@@ -2,7 +2,6 @@
 
 #include <QObject>
 
-
 /*!
  * \brief The HTTP class
  * Provide a blocking get and post functions
@@ -12,22 +11,16 @@
  */
 
 
-
-
 class HTTP : public QObject
 {
     Q_OBJECT
 public:
-    explicit HTTP(QObject *parent = 0);
-
     static QByteArray GET( QUrl req);
     static QByteArray POST(const QUrl &url, const QString &data);
-
+private:
+    HTTP(QObject *parent = 0);
+    HTTP();
+    HTTP(const HTTP&);
+    HTTP& operator=(const HTTP&);
 };
-
-
-//class URL : public QObject
-//{
-//    static QString str2uri(const QString &str) const;
-//};
 
