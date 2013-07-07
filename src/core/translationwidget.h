@@ -82,8 +82,16 @@ public slots:
     virtual void copyResText();
 private slots:
     void onSourceLanguageChanged();
+    void onResultLanguageChanged();
     void updateButtonState();
     void fillCombobox(QComboBox *cb, QStringList keys);
+
+    /*!
+     * \brief setIndexByKey sets combobox index by text (or 0 if not match)
+     * \param cb combobox to set
+     * \param key key to set
+     */
+    void setIndexByKey(QComboBox *cb, const QString &key);
     void translate();
     // Update languages if translator was changed TODO: finish it!
     void updateLanguages();
@@ -125,6 +133,9 @@ private:
 
     bool mIsLinear, mNativeNames;
     int mTranslatorIndex;
+
+
+    QString mLastSrcName, mLastDestName;
 signals:
     void finished();
 };

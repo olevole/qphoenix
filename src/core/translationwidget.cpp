@@ -94,6 +94,8 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onSourceLanguageChanged()));
     connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateButtonState()));
     connect(mResComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateButtonState()));
+    connect(mResComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onResultLanguageChanged()));
+
     connect(mSrcText, SIGNAL(textChanged()), this, SLOT(updateButtonState()));
     connect(mSwapButton, SIGNAL(clicked()), this, SLOT(swap()));
     connect(mSrcToolbar, SIGNAL(copyRequest()), this, SLOT(copySrcText()));
@@ -127,17 +129,18 @@ void TranslationWidget::setTranslatorsConfig(TranslatorsConfig *cfg) {
 }
 
 void TranslationWidget::onSourceLanguageChanged() {
+    mLastSrcName = mSrcComboBox->currentText();
     if(mTable.isEmpty() || mIsLinear)
         return;
-//    const QString key = mResComboBox->currentText();
-//    mResComboBox->clear();
+
     QList<QStringList> values = mTable.values();
     fillCombobox(mResComboBox, values.at(mSrcComboBox->currentIndex()));
-//    mResComboBox->setCurrentIndex(mResComboBox->count() ? 0 : -1);
+
 }
 
-
-
+void TranslationWidget::onResultLanguageChanged() {
+    mLastDestName = mResComboBox->currentText();
+}
 
 void TranslationWidget::updateButtonState() {
     const bool ready = (srcComboboxData() != resComboboxData()) && !srcText()->toPlainText().isEmpty();
@@ -159,9 +162,9 @@ void TranslationWidget::copyResText() {
 }
 
 void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
-    const QString key = cb->currentText();
+    onSourceLanguageChanged();
+    onResultLanguageChanged();
     cb->clear();
-    int stored_index = 0;
     for (int i = 0; i < keys.count(); ++i) {
         QString key =  keys[i];
         QString icon = QString(":/flags/%1.png").arg(key);
@@ -171,15 +174,22 @@ void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
             name = entry.nativeName();
         else
             name = entry.name();
-
-        if(name == key)
-            stored_index = i;
         cb->addItem(QIcon(icon), name, key);
         cb->setItemData(i, key);
 
     }
-    qDebug() << "Stored index is: " << stored_index;
-    cb->setCurrentIndex(stored_index);
+}
+
+void TranslationWidget::setIndexByKey(QComboBox *cb, const QString &key) {
+    int match_index = 0;
+    for (int i = 0; i < cb->count(); ++i) {
+        if(cb->itemText(i) == key) {
+            match_index = i;
+            break;
+        }
+    }
+    qDebug() << "Setting index: " << match_index;
+    cb->setCurrentIndex(match_index);
 }
 
 void TranslationWidget::translate() {
@@ -217,25 +227,29 @@ void TranslationWidget::updateLanguages() {
      * Updating comboboxes..
      */
     mIsLinear = true;
-    mSrcComboBox->clear();
-    mResComboBox->clear();
+
     for(LanguageTable::iterator it = table.begin();it != table.end(); it++)
         if(it.value().count() > 1)
             mIsLinear = false;
     mTable = table;
+     qDebug() << "LAST SRC NAME: " << mLastSrcName << "LAST DEST NAME: " << mLastDestName;
+    const QString src = mLastSrcName;
+    const QString dest = mLastDestName;
     fillCombobox(mSrcComboBox, table.keys());
     if(mIsLinear)
         fillCombobox(mResComboBox, table.keys());
+
+    qDebug() << "LAST SRC NAME: " << src << "LAST DEST NAME: " << dest;
+
+    setIndexByKey(mSrcComboBox, src);
+    setIndexByKey(mResComboBox, dest);
 }
-
-
 
 void TranslationWidget::saveCfg() {
     QSettings s;
     s.beginGroup("TranslationWidget");
     s.setValue("src_index", mSrcComboBox->currentIndex());
     s.setValue("res_index", mResComboBox->currentIndex());
-//    s.setValue("TranslatorIndex", mEmbeddedComboBox->currentIndex());
     s.endGroup();
 }
 
@@ -244,11 +258,9 @@ void TranslationWidget::readCfg() {
         s.beginGroup("TranslationWidget");
         const int src  = s.value("src_index", 0).toInt();
         const int res  = s.value("res_index", 0).toInt();
-//        const int index = s.value("TranslatorIndex", -1).toInt();
         s.endGroup();
         mSrcComboBox->setCurrentIndex(mSrcComboBox->count() >= src ? src : -1);
         mResComboBox->setCurrentIndex(mResComboBox->count() >= res ? res : -1);
-//        mEmbeddedComboBox->setCurrentIndex(index);
 }
 
 QString TranslationWidget::srcComboboxData() {
