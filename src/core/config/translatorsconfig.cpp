@@ -100,7 +100,7 @@ void TranslatorsConfig::save() {
 void TranslatorsConfig::read() {
     QSettings s;
     s.beginGroup("Translators");
-    const int index = s.value("CurrentTranslator", -1).toInt();
+    const int index = s.value("CurrentTranslator", 0).toInt();
     s.endGroup();
     mTranslatorComboBox->setCurrentIndex(index);
 
