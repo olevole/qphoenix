@@ -66,6 +66,7 @@ private slots:
 
     //! Handle table index change
     void onIndexChange(const int i);
+    void onTranslatorKeysUpdate();
     void readCfg();
     void saveCfg();
 

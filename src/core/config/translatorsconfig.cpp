@@ -37,6 +37,7 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     QWidget(parent),
     mTranslatorLabel(new QLabel(tr("Translator"), this)),
     mTranslatorComboBox(new QComboBox(this)),
+    mEmbeddedTranslatorComboBox(new QComboBox(this)),
     mTranslatorGroupBox(new QGroupBox(this)),
     mTranslatorLayout(new QHBoxLayout),
 
@@ -70,11 +71,11 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     mTranslatorGroupBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 
     connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onIndexChange(int)));
-
+    connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), mEmbeddedTranslatorComboBox, SLOT(setCurrentIndex(int)));
+    connect(mEmbeddedTranslatorComboBox, SIGNAL(currentIndexChanged(int)), mTranslatorComboBox, SLOT(setCurrentIndex(int)));
 
     Loader ldr("translators:");
 
-    QDir dir(ldr.searchPaths().first());
     QObjectList list = ldr.modules();
 
     foreach (QObject *obj, list) {
@@ -82,7 +83,7 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
         ITranslator *iface = qobject_cast<ITranslator *>(obj);
         mTranslatorsList <<  iface;
         mTranslatorComboBox->addItem(iface->name());
-
+        mEmbeddedTranslatorComboBox->addItem(iface->name());
     }
 }
 

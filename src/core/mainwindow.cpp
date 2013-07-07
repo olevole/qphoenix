@@ -149,24 +149,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mActionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(mActionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
+
+    connect(mTranslationWidget, SIGNAL(requestKeysUpdate()), this, SLOT(onTranslatorKeysUpdate()));
+
     // Widgets , Dialogs, etc
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
     connect(mTabWidget, SIGNAL(currentChanged(int)), this, SLOT(onIndexChange(int)));
 
-    QComboBox *src = mTranslationWidget->translatorComboBox();
-    QComboBox *dest = mTranslatorsConfig->translatorComboBox();
-
-    connect(src, SIGNAL(currentIndexChanged(int)), dest, SLOT(setCurrentIndex(int)));
-    connect(dest, SIGNAL(currentIndexChanged(int)), src, SLOT(setCurrentIndex(int)));
-    connect(mTranslationWidget->translatorComboBox(), SIGNAL(currentIndexChanged(int)), this, SLOT(onTranslatorChanged()));
-
-    QStringList items;
-    for (int i = 0; i < dest->count(); ++i) {
-        items << dest->itemText(i);
-    }
-
-    src->clear();
-    src->addItems(items);
+//    mTranslationWidget->setTranslatorComboBox(mTranslatorsConfig->getEmbeddedComboBox());
+    mTranslationWidget->setTranslatorsConfig(mTranslatorsConfig);
 
     readCfg();
     // Read configs
@@ -182,8 +173,7 @@ MainWindow::~MainWindow()
 void MainWindow::addPage(QWidget *page) {
     Info *i = qobject_cast<Info *>(page);
     if(i == NULL) {
-        //TODO: Error processin//            iface->setMainWindowPTR(this);
-
+        //TODO: Error processing
         return;
     }
     QIcon icon = i->icon();
@@ -235,6 +225,7 @@ void MainWindow::onConfigAccept() {
 
     mLanguageConfig->setNativeNames(false);
     mTranslationWidget->setNativeNames(false);
+    qDebug() << "DICTS COUNT: " << mDictionaryConfig->dictionaries().count();
     mDictionaryWidget->setDictionaryList(mDictionaryConfig->dictionaries());
     mTranslationWidget->setEnabledKeys(mLanguageConfig->keysForEnabled());
     mTranslationWidget->setTranslator(mTranslatorsConfig->currentTranslator());
@@ -248,6 +239,12 @@ void MainWindow::onTranslatorChanged() {
 void MainWindow::onIndexChange(const int i) {
     mDictionaryWidget->mainToolBar()->setVisible(i == 1);
     mTranslationWidget->mainToolBar()->setVisible(i == 0);
+}
+
+void MainWindow::onTranslatorKeysUpdate() {
+    mTranslationWidget->setEnabledKeys(mLanguageConfig->keysForEnabled());
+    qDebug() << "____" << Q_FUNC_INFO;
+
 }
 
 void MainWindow::readCfg() {

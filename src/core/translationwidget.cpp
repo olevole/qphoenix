@@ -55,7 +55,6 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     QWidget(parent),
     mSrcComboBox(new QComboBox(this)),
     mResComboBox(new QComboBox(this)),
-    mTranslatorComboBox(new QComboBox(this)),
     mSrcText(new QTextEdit(this)),
     mResText(new QTextBrowser(this)),
     mTranslateButton(new QPushButton(tr("Translate"),this)),
@@ -77,7 +76,6 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mMainToolBar->setMovable(false);
     mMainToolBar->addSeparator();
     mMainToolBar->addWidget(new QLabel(tr("  Translator: "), this));
-    mMainToolBar->addWidget(mTranslatorComboBox);
 
     mMainLayout->addWidget(mSrcToolbar);
     mMainLayout->addWidget(srcText());
@@ -104,6 +102,8 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     connect(this->translateButton(), SIGNAL(clicked()), this, SLOT(translate()));
     connect(mResText, SIGNAL(textChanged()), this, SIGNAL(finished()));
 
+
+
     updateButtonState();
     this->readCfg();
 }
@@ -122,6 +122,16 @@ void TranslationWidget::setTranslator(ITranslator *t) {
 //    readCfg();
 }
 
+
+void TranslationWidget::setTranslatorsConfig(TranslatorsConfig *cfg) {
+    mTranslatorConfig = cfg;
+    mEmbeddedComboBox = mTranslatorConfig->getEmbeddedComboBox();
+    mMainToolBar->addWidget(mEmbeddedComboBox);
+    connect(mEmbeddedComboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(requestKeysUpdate()));
+
+
+}
+
 void TranslationWidget::onSourceLanguageChanged() {
     if(mTable.isEmpty() || mIsLinear)
         return;
@@ -129,8 +139,14 @@ void TranslationWidget::onSourceLanguageChanged() {
     QList<QStringList> values = mTable.values();
     fillCombobox(mResComboBox, values.at(mSrcComboBox->currentIndex()));
     mResComboBox->setCurrentIndex(mResComboBox->count() ? 0 : -1);
-
 }
+
+//void TranslationWidget::onTranslatorChanged() {
+//    qDebug() << "CALLEDD1111!";
+//    updateLanguages();
+//    setEnabledKeys(m->keysForEnabled());
+//}
+
 
 void TranslationWidget::updateButtonState() {
     const bool ready = (srcComboboxData() != resComboboxData()) && !srcText()->toPlainText().isEmpty();
@@ -220,7 +236,7 @@ void TranslationWidget::saveCfg() {
     s.beginGroup("TranslationWidget");
     s.setValue("src_index", mSrcComboBox->currentIndex());
     s.setValue("res_index", mResComboBox->currentIndex());
-    s.setValue("current_translator", mTranslatorComboBox->currentIndex());
+//    s.setValue("TranslatorIndex", mEmbeddedComboBox->currentIndex());
     s.endGroup();
 }
 
@@ -229,12 +245,11 @@ void TranslationWidget::readCfg() {
         s.beginGroup("TranslationWidget");
         const int src  = s.value("src_index", 0).toInt();
         const int res  = s.value("res_index", 0).toInt();
-        mTranslatorIndex = s.value("current_translator", -1).toInt();
-
+//        const int index = s.value("TranslatorIndex", -1).toInt();
         s.endGroup();
-//        mTranslatorComboBox->setCurrentIndex(index);
         mSrcComboBox->setCurrentIndex(mSrcComboBox->count() >= src ? src : -1);
         mResComboBox->setCurrentIndex(mResComboBox->count() >= res ? res : -1);
+//        mEmbeddedComboBox->setCurrentIndex(index);
 }
 
 QString TranslationWidget::srcComboboxData() {

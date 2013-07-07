@@ -49,7 +49,11 @@ public:
     void save();
     void read();
     void reset();
-    QComboBox *translatorComboBox() {return mTranslatorComboBox;}
+
+    QComboBox *getEmbeddedComboBox() {
+        return mEmbeddedTranslatorComboBox;
+    }
+
     ITranslator *currentTranslator() {
         const int i = mTranslatorComboBox->currentIndex();
         /*if(i > -1)*/ return mTranslatorsList[i];
@@ -60,6 +64,7 @@ private slots:
 private:
     QLabel *mTranslatorLabel;
     QComboBox *mTranslatorComboBox;
+    QComboBox *mEmbeddedTranslatorComboBox;
     QGroupBox *mTranslatorGroupBox;
     QHBoxLayout *mTranslatorLayout;
     QGroupBox *mOptionsGroupBox;

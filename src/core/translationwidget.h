@@ -29,6 +29,7 @@
 #include "itranslator.h"
 #include "languages.h"
 #include "querywrappers.h"
+#include "translatorsconfig.h"
 
 class QTextEdit;
 class QTextBrowser;
@@ -71,11 +72,10 @@ public:
     virtual QToolBar    *resToolbar()       { return mResToolbar;       }
     virtual QToolBar    *mainToolBar()      { return mMainToolBar;      }
 
-    QComboBox *translatorComboBox() { return mTranslatorComboBox;}
-
     void setNativeNames(const bool b)           {mNativeNames = b;}
     void setTranslator(ITranslator *t);
     void setEnabledKeys(const QStringList &keys){mKeys = keys;}
+    void setTranslatorsConfig(TranslatorsConfig *cfg);
 public slots:
     virtual void swap();
     virtual void copySrcText();
@@ -94,6 +94,9 @@ private:
     QString srcComboboxData();
     QString resComboboxData();
 
+    TranslatorsConfig *mTranslatorConfig;
+    QComboBox *mEmbeddedComboBox;
+
     /*!
      *  Widgets
      */
@@ -101,9 +104,7 @@ private:
 
     QComboBox
     *mSrcComboBox,
-    *mResComboBox,
-    *mTranslatorComboBox;
-
+    *mResComboBox;
     QTextEdit *mSrcText;
     QTextBrowser *mResText;
 
@@ -126,4 +127,5 @@ private:
     int mTranslatorIndex;
 signals:
     void finished();
+    void requestKeysUpdate();
 };
