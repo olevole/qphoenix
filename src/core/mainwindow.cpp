@@ -150,19 +150,18 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mActionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
 
-    connect(mTranslationWidget, SIGNAL(requestKeysUpdate()), this, SLOT(onTranslatorKeysUpdate()));
+    connect(mTranslatorsConfig->getEmbeddedComboBox(), SIGNAL(currentIndexChanged(int)), this, SLOT(updateTranslatorConfig()));
 
     // Widgets , Dialogs, etc
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
     connect(mTabWidget, SIGNAL(currentChanged(int)), this, SLOT(onIndexChange(int)));
 
-//    mTranslationWidget->setTranslatorComboBox(mTranslatorsConfig->getEmbeddedComboBox());
     mTranslationWidget->setTranslatorsConfig(mTranslatorsConfig);
 
     readCfg();
     // Read configs
     onConfigAccept();
-    onTranslatorChanged();
+    updateTranslatorConfig();
 }
 
 MainWindow::~MainWindow()
@@ -227,25 +226,16 @@ void MainWindow::onConfigAccept() {
     mTranslationWidget->setNativeNames(false);
     qDebug() << "DICTS COUNT: " << mDictionaryConfig->dictionaries().count();
     mDictionaryWidget->setDictionaryList(mDictionaryConfig->dictionaries());
-    mTranslationWidget->setEnabledKeys(mLanguageConfig->keysForEnabled());
-    mTranslationWidget->setTranslator(mTranslatorsConfig->currentTranslator());
 }
 
-void MainWindow::onTranslatorChanged() {
+void MainWindow::updateTranslatorConfig() {
     qDebug() << "Called!";
-    mTranslationWidget->setTranslator(mTranslatorsConfig->currentTranslator());
-}
+        mTranslationWidget->setEnabledKeys(mLanguageConfig->keysForEnabled());
+        mTranslationWidget->setTranslator(mTranslatorsConfig->currentTranslator());}
 
 void MainWindow::onIndexChange(const int i) {
     mDictionaryWidget->mainToolBar()->setVisible(i == 1);
     mTranslationWidget->mainToolBar()->setVisible(i == 0);
-}
-
-void MainWindow::onTranslatorKeysUpdate() {
-    mTranslationWidget->setEnabledKeys(mLanguageConfig->keysForEnabled());
-    mTranslationWidget->setTranslator(mTranslatorsConfig->currentTranslator());
-    qDebug() << "____" << Q_FUNC_INFO;
-
 }
 
 void MainWindow::readCfg() {

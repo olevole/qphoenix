@@ -127,5 +127,4 @@ private:
     int mTranslatorIndex;
 signals:
     void finished();
-    void requestKeysUpdate();
 };

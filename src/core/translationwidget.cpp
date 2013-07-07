@@ -102,8 +102,6 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     connect(this->translateButton(), SIGNAL(clicked()), this, SLOT(translate()));
     connect(mResText, SIGNAL(textChanged()), this, SIGNAL(finished()));
 
-
-
     updateButtonState();
     this->readCfg();
 }
@@ -119,7 +117,6 @@ void TranslationWidget::setTranslator(ITranslator *t) {
     mWorker.setTranslator(t);
     qDebug() << "Updating languages!!!!";
     updateLanguages();
-//    readCfg();
 }
 
 
@@ -127,25 +124,19 @@ void TranslationWidget::setTranslatorsConfig(TranslatorsConfig *cfg) {
     mTranslatorConfig = cfg;
     mEmbeddedComboBox = mTranslatorConfig->getEmbeddedComboBox();
     mMainToolBar->addWidget(mEmbeddedComboBox);
-    connect(mEmbeddedComboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(requestKeysUpdate()));
-
-
 }
 
 void TranslationWidget::onSourceLanguageChanged() {
     if(mTable.isEmpty() || mIsLinear)
         return;
-    mResComboBox->clear();
+//    const QString key = mResComboBox->currentText();
+//    mResComboBox->clear();
     QList<QStringList> values = mTable.values();
     fillCombobox(mResComboBox, values.at(mSrcComboBox->currentIndex()));
-    mResComboBox->setCurrentIndex(mResComboBox->count() ? 0 : -1);
+//    mResComboBox->setCurrentIndex(mResComboBox->count() ? 0 : -1);
 }
 
-//void TranslationWidget::onTranslatorChanged() {
-//    qDebug() << "CALLEDD1111!";
-//    updateLanguages();
-//    setEnabledKeys(m->keysForEnabled());
-//}
+
 
 
 void TranslationWidget::updateButtonState() {
@@ -168,6 +159,9 @@ void TranslationWidget::copyResText() {
 }
 
 void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
+    const QString key = cb->currentText();
+    cb->clear();
+    int stored_index = 0;
     for (int i = 0; i < keys.count(); ++i) {
         QString key =  keys[i];
         QString icon = QString(":/flags/%1.png").arg(key);
@@ -177,10 +171,15 @@ void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
             name = entry.nativeName();
         else
             name = entry.name();
+
+        if(name == key)
+            stored_index = i;
         cb->addItem(QIcon(icon), name, key);
         cb->setItemData(i, key);
 
     }
+    qDebug() << "Stored index is: " << stored_index;
+    cb->setCurrentIndex(stored_index);
 }
 
 void TranslationWidget::translate() {
