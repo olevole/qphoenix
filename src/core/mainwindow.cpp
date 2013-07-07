@@ -243,6 +243,7 @@ void MainWindow::onIndexChange(const int i) {
 
 void MainWindow::onTranslatorKeysUpdate() {
     mTranslationWidget->setEnabledKeys(mLanguageConfig->keysForEnabled());
+    mTranslationWidget->setTranslator(mTranslatorsConfig->currentTranslator());
     qDebug() << "____" << Q_FUNC_INFO;
 
 }
