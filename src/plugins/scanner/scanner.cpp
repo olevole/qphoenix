@@ -19,17 +19,17 @@
  *    Years: 2012-2013
  */
 
-#include "scanner.h"
 #include <QtGui>
 #include <QPushButton>
 #include <QToolBar>
 #include <QAction>
 #include <QTextEdit>
 #include <QTextBrowser>
-
 #include <QToolTip>
+
 #include "translationwidget.h"
 #include "itranslatorwidget.h"
+#include "scanner.h"
 
 TrayIcon::TrayIcon(QObject *parent) :
     QObject(parent),
@@ -39,7 +39,6 @@ TrayIcon::TrayIcon(QObject *parent) :
     this->setDescription("This is my best plugin!");
     this->setVersion("0.999999");
 }
-
 
 bool TrayIcon::load() {
     if(!isLoaded()) {
@@ -55,7 +54,6 @@ bool TrayIcon::unload() {
     if(isLoaded()) {
         delete button;
         disconnect(clipboard, SIGNAL(selectionChanged()), this, SLOT(translate()));
-
         mIsLoaded = false;
     }
     return true;
@@ -74,8 +72,6 @@ void TrayIcon::show() {
 void TrayIcon::setPluginConnector(PluginConnector connector) {
     mConnector = connector;
 }
-
-
 
 //Q_EXPORT_PLUGIN2(trayicon, TrayIcon);
 

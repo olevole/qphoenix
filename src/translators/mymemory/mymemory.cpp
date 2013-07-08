@@ -43,14 +43,6 @@ QString MyMemory::translate(const QString &src_text, const QString &src_lang, co
 
     QUrl url("http://mymemory.translated.net/api/get");
 
-
-
-    QNetworkAccessManager manager;
-    QEventLoop loop;
-
-    connect(&manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
-
-
     const QString  rawdata = HTTP::POST(url, query);
 
     QJsonObject obj = QJsonDocument::fromJson(rawdata.toUtf8()).object();

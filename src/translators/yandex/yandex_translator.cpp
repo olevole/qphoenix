@@ -25,18 +25,6 @@ QString YandexTranslator::translate(const QString &src_text, const QString &src_
     const QString  query = QString("key=%1&lang=%2-%3&text=%4").arg(mApiKey, src_lang, dest_lang, src_text);
 
     QUrl url("https://translate.yandex.net/api/v1.5/tr.json/translate");
-//    QNetworkRequest req(url);
-//    req.setRawHeader("User-Agent", "Mozilla/5.0");
-//    req.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
-//    req.setRawHeader("Content-Length", QByteArray::number(query.size()));
-
-//    QNetworkAccessManager manager;
-//    QEventLoop loop;
-
-//    connect(&manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
-
-//    QNetworkReply *reply  = manager.post(req, query);
-//    loop.exec();
 
     const QString  rawdata = HTTP::POST(url, query);
 
