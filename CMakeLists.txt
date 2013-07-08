@@ -20,8 +20,9 @@ EXEC_PROGRAM(
 
 STRING(SUBSTRING ${VERSION} 0 7 GIT_HASH)
 
-
-MESSAGE("Current git revision:  ${GIT_HASH}")
+MESSAGE("--                                         --")
+MESSAGE("-- Current git revision:  ${GIT_HASH}")
+MESSAGE("--                                         --")
 
 
 
@@ -149,4 +150,4 @@ QT5_USE_MODULES(${EXECUTABLE_NAME} Widgets Core Network WebKit WebKitWidgets)
 INSTALL(TARGETS ${EXECUTABLE_NAME} DESTINATION ${INSTALLPATH})
 INSTALL(DIRECTORY src/include/ DESTINATION ${PREFIX}/include/qphoenix)
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qphoenix.desktop DESTINATION ${PREFIX}/share/applications)
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary.png DESTINATION ${PREFIX}/share/pixmaps/qphoenix.png)
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qphoenix.png DESTINATION ${PREFIX}/share/pixmaps/)
