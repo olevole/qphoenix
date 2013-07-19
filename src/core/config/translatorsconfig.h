@@ -56,8 +56,8 @@ public:
 
     ITranslator *currentTranslator() {
         const int i = mTranslatorComboBox->currentIndex();
-        /*if(i > -1)*/ return mTranslatorsList[i];
-//        else       return NULL;
+        if(i > -1) return mTranslatorsList[i];
+        else       return NULL;
     }
 private slots:
     void onIndexChange(const int i);

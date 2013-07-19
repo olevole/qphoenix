@@ -229,9 +229,15 @@ void MainWindow::onConfigAccept() {
 }
 
 void MainWindow::updateTranslatorConfig() {
+    ITranslator *tr = mTranslatorsConfig->currentTranslator();
+    if(tr == NULL) {
+        qWarning() << "Translators are not loaded!";
+        return;
+    }
     qDebug() << "Called!";
         mTranslationWidget->setEnabledKeys(mLanguageConfig->keysForEnabled());
-        mTranslationWidget->setTranslator(mTranslatorsConfig->currentTranslator());}
+        mTranslationWidget->setTranslator(tr);
+}
 
 void MainWindow::onIndexChange(const int i) {
     mDictionaryWidget->mainToolBar()->setVisible(i == 1);

@@ -126,7 +126,12 @@ void DictionaryWidget::displayData(const QStringList &lst, const QString &name) 
 }
 
 void DictionaryWidget::setDictionaryList(QList<IDictionary *> dicts) {
-    Q_ASSERT(!dicts.isEmpty());
+//    Q_ASSERT(!dicts.isEmpty());
+    if(dicts.isEmpty()) {
+        qWarning() << "Warning! Dictionaries is empty!";
+        return;
+    }
+
     mDicts = dicts;
     mDictWorker.setDictionaryList(mDicts);
     foreach(IDictionary *dict, dicts) {

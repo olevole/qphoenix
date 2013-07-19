@@ -7,24 +7,10 @@ SET(CMAKE_BUILD_TYPE Debug)
 #ENABLE_TESTING(TRUE)
 
 
-
-
-
-
-
-EXEC_PROGRAM(
-    "git"
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ARGS "rev-parse HEAD"
-    OUTPUT_VARIABLE VERSION )
-
+EXEC_PROGRAM("git" ${CMAKE_CURRENT_SOURCE_DIR} ARGS "rev-parse HEAD" OUTPUT_VARIABLE VERSION)
 STRING(SUBSTRING ${VERSION} 0 7 GIT_HASH)
 
-MESSAGE("--                                         --")
 MESSAGE("-- Current git revision:  ${GIT_HASH}")
-MESSAGE("--                                         --")
-
-
 
 
 IF(CMAKE_BUILD_TYPE STREQUAL Debug)
@@ -55,7 +41,6 @@ src/include
 src/libphoenix)
 
 
-
 SET(IFACES
 src/include/iconfigpage.h
 src/include/imainwindow.h
@@ -69,7 +54,6 @@ src/include/info.h
 src/include/imodule.h
 src/include/api.h
 src/include/pluginconnector.h)
-
 
 SET(HEADERS
 src/core/mainwindow.h
@@ -86,8 +70,6 @@ src/core/infodialog.h
 src/core/dictionarytemplate.h
 src/core/languages.h
 src/core/core.h)
-
-
 
 SET(SOURCES
 src/main.cpp
@@ -111,16 +93,12 @@ SET(RESOURCES resources/resources.qrc)
 QT5_ADD_RESOURCES(RC_SOURCES ${RESOURCES})
 
 
-
 SET(PREFIX ${CMAKE_INSTALL_PREFIX})
 
 IF(UNIX)
         SET(MPREFIX ${PREFIX}/share/qphoenix)
         SET(INSTALLPATH ${PREFIX}/bin)
-ENDIF()
-
-
-IF(WIN32)
+ELSEIF(WIN32)
         SET(MPREFIX ${PREFIX})
         SET(INSTALLPATH ${PREFIX})
 ENDIF()
@@ -130,8 +108,6 @@ SET(PLUGINS_PATH        ${MPREFIX}/plugins        CACHE INTERNAL "")
 SET(TRANSLATORS_PATH    ${MPREFIX}/translators    CACHE INTERNAL "")
 SET(DICTIONARIES_PATH   ${MPREFIX}/dictionaries   CACHE INTERNAL "")
 SET(LIBRARY_PATH        ${PREFIX}/lib             CACHE INTERNAL "")
-
-
 
 ADD_SUBDIRECTORY(src/plugins)
 ADD_SUBDIRECTORY(src/translators)
