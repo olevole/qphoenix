@@ -126,8 +126,8 @@ void DictionaryWidget::displayData(const QStringList &lst, const QString &name) 
 }
 
 void DictionaryWidget::setDictionaryList(QList<IDictionary *> dicts) {
-//    Q_ASSERT(!dicts.isEmpty());
     if(dicts.isEmpty()) {
+         mSrcText->setDisabled(true);
         qWarning() << "Warning! Dictionaries is empty!";
         return;
     }
