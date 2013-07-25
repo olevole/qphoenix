@@ -6,3 +6,4 @@ Comment=Powerful translation program
 TryExec=qphoenix
 Exec=qphoenix
 Icon=qphoenix
+Categories=Office
