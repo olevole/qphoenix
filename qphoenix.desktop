@@ -1,12 +1,8 @@
 [Desktop Entry]
-Value=1.0
+Version=1.0
 Type=Application
-Encoding=UTF-8
-Exec=qphoenix
 Name=QPhoenix
-GenericName=QPhoenix
-Terminal=false
-Type=Application
-Categories=Office
-InitialPreference=9
-Icon=qphoenix.png
+Comment=Powerful translation program
+TryExec=qphoenix
+Exec=qphoenix
+Icon=qphoenix
