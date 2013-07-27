@@ -102,7 +102,8 @@ void TranslatorsConfig::read() {
     s.beginGroup("Translators");
     const int index = s.value("CurrentTranslator", 0).toInt();
     s.endGroup();
-    mTranslatorComboBox->setCurrentIndex(index);
+
+    mTranslatorComboBox->setCurrentIndex(index == -1 ? 0 : index);
 
 }
 
@@ -110,8 +111,9 @@ void TranslatorsConfig::reset() {
 }
 
 void TranslatorsConfig::onIndexChange(const int i) {
-    if(i >= mTranslatorsList.size())
+    if(i >= mTranslatorsList.size() || i < 0)
         qFatal("Translator index out of range!");
+    qDebug() << "INDEX IS: " << i;
     ITranslator *iface = mTranslatorsList[i];
     if(!iface->isLoaded())
         iface->load();

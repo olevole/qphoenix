@@ -2,7 +2,6 @@
 
 #include "itranslator.h"
 #include "info.h"
-//#include "qxtjson.h"
 #include <QObject>
 #include <QCheckBox>
 #include <QDebug>
@@ -11,8 +10,6 @@
 #include <QNetworkReply>
 #include <QStringList>
 #include <QDebug>
-
-
 
 class MyMemory : public QObject, ITranslator
 {
@@ -43,6 +40,7 @@ public:
         }
         return false;
     }
+
     bool isLoaded() const {return mLoaded;}
 
     QWidget *configWidget() {

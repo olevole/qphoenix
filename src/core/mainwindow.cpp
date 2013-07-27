@@ -23,6 +23,9 @@
 #include <QCloseEvent>
 #include <QFile>
 #include <QFileDialog>
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QWebFrame>
 
 #include "mainwindow.h"
 #include "iplugin.h"
@@ -85,7 +88,8 @@ MainWindow::MainWindow(QWidget *parent) :
     mPluginsConfig(new PluginsConfig),
     mTranslatorsConfig(new TranslatorsConfig(this)),
     mLanguageConfig(new LanguageConfig(this)),
-    mDictionaryConfig(new DictionaryConfig(this))
+    mDictionaryConfig(new DictionaryConfig(this)),
+    mSavePath("")
 {
     setWindowTitle(qApp->applicationName());
 
@@ -140,6 +144,12 @@ MainWindow::MainWindow(QWidget *parent) :
     mSettingsDialog->addPage(mPluginsConfig);
 
     connect(mActionOpen, SIGNAL(triggered()), this, SLOT(open()));
+    connect(mActionPrint, SIGNAL(triggered()), this, SLOT(print()));
+
+    connect(mActionSave, SIGNAL(triggered()), this, SLOT(save()));
+
+    connect(mActionSaveAs, SIGNAL(triggered()), this, SLOT(saveAs()));
+
     connect(mActionExit, SIGNAL(triggered()), this, SLOT(exit()));
     connect(mActionClear, SIGNAL(triggered()), this, SLOT(clear()));
     connect(mActionUndo, SIGNAL(triggered()), this, SLOT(undo()));
@@ -270,6 +280,63 @@ void MainWindow::open() {
         return;
     const QString text = file.readAll();
     this->translatorWidget()->srcText()->setText(text);
+}
+
+void MainWindow::print() {
+    QPrinter printer;
+      QPrintDialog print_dialog(&printer);
+      if(print_dialog.exec() == QPrintDialog::Accepted) {
+          const int i = currentIndex();
+          switch(i){
+              case 0:
+                  translatorWidget()->srcText()->print(&printer);
+              break;
+              case 1:
+                 dictionaryWidget()->resText()->print(&printer);
+              break;
+          }
+      }
+}
+
+void MainWindow::save() {
+    QFile file;
+    if(QFile::exists(mSavePath)) {
+        file.setFileName(mSavePath);
+    } else {
+        mSavePath = QFileDialog::getSaveFileName(
+                    this, tr("Save file"),
+                    QDir::homePath(),
+                    tr("Image Files (*.txt *.html )"));
+        file.setFileName(mSavePath);
+    }
+
+    file.open(QFile::Truncate | QFile::ReadWrite);
+
+    const int i = currentIndex();
+    switch(i){
+        case 0:
+            file.write(translatorWidget()->resText()->toPlainText().toUtf8());
+//            translatorWidget()->srcText()->print(&printer);
+        break;
+        case 1:
+            file.write(dictionaryWidget()->resText()->page()->mainFrame()->toHtml().toUtf8());
+//           dictionaryWidget()->resText()->print(&printer);
+        break;
+    }
+
+    file.close();
+
+
+//    if(file.exists()) {
+//        path = QFileDialog::getSaveFileName(this, tr("Save file"), QDir::homePath(), tr("Image Files (*.png *.jpg *.bmp)"));
+//    } //else if()
+
+}
+
+void MainWindow::saveAs() {
+    mSavePath = "";
+    save();
+
 }
 
 void MainWindow::exit() {

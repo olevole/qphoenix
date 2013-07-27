@@ -72,9 +72,9 @@ private slots:
 
     // Menu actions
     void open();
-//    void save();
-//    void saveAs();
-//    void print();
+    void save();
+    void saveAs();
+    void print();
 
     void exit();
 
@@ -85,6 +85,8 @@ private slots:
     void swap();
     void about();
 private:
+    QString mSavePath;
+
     QStatusBar  *mStatusBar;
     QToolBar    *mToolBar;
     QMenuBar    *mMenuBar;

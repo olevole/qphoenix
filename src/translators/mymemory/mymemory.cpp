@@ -5,6 +5,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QTextCodec>
+#include <QTextDocumentFragment>
 
 
 QStringList MyMemory::mLangs = QStringList()   << "sq" <<"ar" <<"bg" <<"ca"
@@ -27,8 +28,6 @@ MyMemory::MyMemory(QObject *parent)
     setUrl("http://mymemory.translated.net");
 }
 
-
-
 QString MyMemory::translate(const QString &src_text, const QString &src_lang, const QString &dest_lang) {
     QByteArray html = src_text.toUtf8();
 
@@ -48,6 +47,7 @@ QString MyMemory::translate(const QString &src_text, const QString &src_lang, co
     QJsonObject obj = QJsonDocument::fromJson(rawdata.toUtf8()).object();
     QString res = obj.value("responseData").toObject().value("translatedText").toString();
 
+    qDebug() << "QMM DATA: " << res;
     qDebug() << "You has been called mymemory!\n";
-    return res;
+    return QTextDocumentFragment::fromHtml(res).toPlainText();
 }
