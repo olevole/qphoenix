@@ -39,6 +39,8 @@ QStringList WordReference::query(const QString &text, const LanguagePair &pair, 
     QJsonObject principal = root.value("PrincipalTranslations").toObject();
     QStringList lst;
 
+
+    // Parse pricipal translations
     for (int i = 0; i < 20; i++) {
 
         QJsonObject orig = principal.value(QString::number(i)).toObject();
@@ -56,7 +58,12 @@ QStringList WordReference::query(const QString &text, const LanguagePair &pair, 
         QString res_sense = oterm2.value("sense").toString();
 
 
-        lst << QString("[b]%1[/b]\n\n[i]%2[/i]\n\n[u]%3[/u][b]%4[/b]").arg(src_term, src_sense, res_sense, res_term);
+        lst << QString(
+                   "[b]%1 (%2)[/b]\n\n"
+//                   "[i]%2[/i]\n\n"
+                   "[u]%3[/u][b]%4[/b]"
+                   ).arg(src_term, src_sense, res_sense, res_term);
+
 
     }
    return lst;
@@ -98,5 +105,4 @@ QStringList WordReference::completions(const QString &str, const LanguagePair &p
     }
    lst.prepend(str);
    return lst;
-//    return QStringList() << "pills" << "louis" << "zoey" << "heavy" << "medic" << "peers" << "cheers";
 }

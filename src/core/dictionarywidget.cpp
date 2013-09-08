@@ -53,6 +53,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mQueryTimer(new QTimer(this)),
     mMainToolBar(new QToolBar(this)),
     mLock(false),
+    mIsEmpty(true),
     mTemplate(new DictionaryTemplate(this))
 
 {
@@ -98,7 +99,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 
     connect(&mDictWorker, SIGNAL(reply(QStringList, QString)), this, SLOT(displayData(QStringList,QString)));
     connect(&mDictWorker, SIGNAL(reply(QStringList)), this, SLOT(setCompletions(QStringList)));
-    connect(&mDictWorker, SIGNAL(reply(QStringList)), this, SLOT(setCompletions(QStringList)));
+//    connect(&mDictWorker, SIGNAL(reply(QStringList)), this, SLOT(setCompletions(QStringList)));
     connect(&mDictWorker, SIGNAL(finished()), this, SLOT(onFinish()));
     connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
     connect(mQueryTimer, SIGNAL(timeout()), this, SLOT(onQueryComp()));
@@ -121,8 +122,13 @@ void DictionaryWidget::setCompletions(const QStringList &comp) {
 }
 
 void DictionaryWidget::displayData(const QStringList &lst, const QString &name) {
-    mTemplate->createSection(lst, name);
-    mResText->setHtml(mTemplate->toHtml());
+    if(!lst.isEmpty()) {
+        mIsEmpty = false;
+        qDebug() << "NOTEMPTY" << lst[1];
+        mTemplate->createSection(lst, name);
+        mResText->setHtml(mTemplate->toHtml());
+    }
+
 }
 
 void DictionaryWidget::setDictionaryList(QList<IDictionary *> dicts) {
@@ -170,7 +176,9 @@ void DictionaryWidget::onQueryComp() {
 }
 
 void DictionaryWidget::onQueryWord() {
+
     qDebug() << "WORD QUERY!" << mDictWorker.isRunning();
+    mIsEmpty = true;
     mLock = true;
     mDictWorker.query(mPairs.at(mLanguagesComboBox->currentIndex()), mSrcText->text());
 }
@@ -178,6 +186,10 @@ void DictionaryWidget::onQueryWord() {
 void DictionaryWidget::onFinish() {
     mLock = false;
     mQueryTimer->stop();
+    if(mIsEmpty) {
+        mResText->setHtml(DictionaryTemplate::NotFound());
+        mResText->update();
+    }
     mTemplate->clear();
     mCompleterModel->setStringList(QStringList());
 }

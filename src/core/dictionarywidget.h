@@ -83,6 +83,7 @@ private:
      */
     int mMaxVarCount;
     bool mNativeNames, mLock;
+    bool mIsEmpty;
     QToolBar *mMainToolBar;
     QTimer *mQueryTimer;
     QComboBox *mLanguagesComboBox;

@@ -31,16 +31,16 @@
 #include "itranslatorwidget.h"
 #include "scanner.h"
 
-TrayIcon::TrayIcon(QObject *parent) :
+Scanner::Scanner(QObject *parent) :
     QObject(parent),
     mIsLoaded(false)
 {
-    this->setName("Selection Buffer");
-    this->setDescription("This is my best plugin!");
+    this->setName("Scanner");
+    this->setDescription("Scans selection buffer for text");
     this->setVersion("0.999999");
 }
 
-bool TrayIcon::load() {
+bool Scanner::load() {
     if(!isLoaded()) {
         button = new QPushButton;
         clipboard = qApp->clipboard();
@@ -50,7 +50,7 @@ bool TrayIcon::load() {
     return true;
 }
 
-bool TrayIcon::unload() {
+bool Scanner::unload() {
     if(isLoaded()) {
         delete button;
         disconnect(clipboard, SIGNAL(selectionChanged()), this, SLOT(translate()));
@@ -59,17 +59,17 @@ bool TrayIcon::unload() {
     return true;
 }
 
-void TrayIcon::translate() {
+void Scanner::translate() {
     mConnector.QP_TRANSLATOR_WIDGET->srcText()->setText(clipboard->text(QClipboard::Selection));
 }
 
-void TrayIcon::show() {
+void Scanner::show() {
     QPoint pos = QCursor::pos();
     QToolTip::showText(pos, mConnector.QP_TRANSLATOR_WIDGET->resText()->toPlainText());
 }
 
 
-void TrayIcon::setPluginConnector(PluginConnector connector) {
+void Scanner::setPluginConnector(PluginConnector connector) {
     mConnector = connector;
 }
 

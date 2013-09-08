@@ -41,6 +41,11 @@ public:
      * \brief endSection end of section
      */
     void endSection();
+
+    static QString NotFound() {
+        return getTemplate(":/templates/notfound.html");
+    }
+
     void clear();
     QString toHtml() const;
     QString errorString() const;
@@ -57,7 +62,7 @@ private:
      * \return  html
      */
     static QString bb2html(const QString &bb) ;
-    inline QString getTemplate(const QString &path) const {
+    static inline QString getTemplate(const QString &path) {
         QFile f(path);
         if(!f.open(QFile::ReadOnly))
             qFatal("Unable to open templates for dictionary!");

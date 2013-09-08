@@ -59,7 +59,6 @@ QString YandexTranslator::translate(const QString &src_text, const QString &src_
     case 501:
         qWarning("Wrong translation direction");
     break;
-
     default:
         break;
     }
