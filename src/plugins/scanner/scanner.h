@@ -36,8 +36,6 @@ class Scanner : public QObject, IPlugin
     Q_PLUGIN_METADATA(IID "org.qphoenix.plugins.trayicon")
 public:
     explicit Scanner(QObject *parent = 0);
-//    void setMainWindowPTR(IMainWindow *ptr);
-//    void setSettingsPTR(IConfig *ptr);
     void setPluginConnector(PluginConnector connector);
 
     bool load();
@@ -51,7 +49,7 @@ private:
     PluginConnector mConnector;
     IMainWindow *mWindowIface;
     QPushButton *button;
-
+    QPoint mLastCursorPos;
     QClipboard *clipboard;
     bool mIsLoaded;
 };

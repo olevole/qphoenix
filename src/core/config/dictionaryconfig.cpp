@@ -13,7 +13,6 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
     :QWidget(parent),
       mTable(new QTableWidget(this)),
       mTabWidget(new QTabWidget(this)),
-//      mRememberPair(new QCheckBox(tr("Store Language Pair"), this)),
       mResultCountLabel(new QLabel(tr("Maximum dictionary results to show"), this)),
       mResultCountSpin(new QSpinBox(this))
 {

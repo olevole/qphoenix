@@ -40,7 +40,7 @@ QStringList WordReference::query(const QString &text, const LanguagePair &pair, 
     QStringList lst;
 
 
-    // Parse pricipal translations
+    // Parse principal translations
     for (int i = 0; i < 20; i++) {
 
         QJsonObject orig = principal.value(QString::number(i)).toObject();
@@ -63,8 +63,6 @@ QStringList WordReference::query(const QString &text, const LanguagePair &pair, 
 //                   "[i]%2[/i]\n\n"
                    "[u]%3[/u][b]%4[/b]"
                    ).arg(src_term, src_sense, res_sense, res_term);
-
-
     }
    return lst;
 }

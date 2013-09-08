@@ -9,7 +9,6 @@ DictionaryTemplate::DictionaryTemplate(QObject *parent)
      mLastSectionClosed(true)
 
 {
-//    qDebug() << mTemplateRoot << mTemplateItem <<mTemplateSection;
 }
 
 void DictionaryTemplate::beginSection(const QString &title, const bool collapseable) {

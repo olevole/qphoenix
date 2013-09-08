@@ -33,7 +33,6 @@ private:
     QList<IDictionary *>mConvertedDicts;
     QTableWidget *mTable;
     QTabWidget *mTabWidget;
-//    QCheckBox *mRememberPair;
     QSpinBox *mResultCountSpin;
     QLabel *mResultCountLabel;
 };

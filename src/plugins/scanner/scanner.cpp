@@ -45,6 +45,7 @@ bool Scanner::load() {
         button = new QPushButton;
         clipboard = qApp->clipboard();
         connect(clipboard, SIGNAL(selectionChanged()), this, SLOT(translate()));
+        connect(mConnector.QP_TRANSLATOR_WIDGET, SIGNAL(finished()), this, SLOT(show()));
         mIsLoaded = true;
     }
     return true;
@@ -54,24 +55,23 @@ bool Scanner::unload() {
     if(isLoaded()) {
         delete button;
         disconnect(clipboard, SIGNAL(selectionChanged()), this, SLOT(translate()));
+        disconnect(mConnector.QP_TRANSLATOR_WIDGET, SIGNAL(finished()), this, SLOT(show()));
         mIsLoaded = false;
     }
     return true;
 }
 
 void Scanner::translate() {
+    mLastCursorPos = QCursor::pos();
     mConnector.QP_TRANSLATOR_WIDGET->srcText()->setText(clipboard->text(QClipboard::Selection));
+    mConnector.QP_TRANSLATOR_WIDGET->translateButton()->click();
+
 }
 
 void Scanner::show() {
-    QPoint pos = QCursor::pos();
-    QToolTip::showText(pos, mConnector.QP_TRANSLATOR_WIDGET->resText()->toPlainText());
+    QToolTip::showText(mLastCursorPos, mConnector.QP_TRANSLATOR_WIDGET->resText()->toPlainText());
 }
-
 
 void Scanner::setPluginConnector(PluginConnector connector) {
     mConnector = connector;
 }
-
-//Q_EXPORT_PLUGIN2(trayicon, TrayIcon);
-
