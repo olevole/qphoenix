@@ -42,7 +42,7 @@
 #include "dictionaryconfig.h"
 
 
-QString MainWindow::mAboutStr = "QPhoenix is an advanced translation tool that could use multiple dictionaries and translators\n"
+QString MainWindow::mAboutStr = "Trasnaltor and dictionary with plugins support.\n"
 #ifdef QP_DEBUG
         "REVISION: "
         QP_GIT_REV

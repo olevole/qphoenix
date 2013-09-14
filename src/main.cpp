@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <QDir>
 
+//#include <QTemporaryFile>
+
 #include "mainwindow.h"
 #include "defines.h"
 #include "languages.h"
@@ -51,6 +53,10 @@ int main(int argc, char *argv[])
     QDir::addSearchPath("plugins", QP_PLUGINS_PATH);
     QDir::addSearchPath("translators", QP_TRANSLATORS_PATH);
     QDir::addSearchPath("dictionaries", QP_DICTIONARIES_PATH);
+
+//    QTemporaryFile f;
+//    f.open();
+//    qDebug() << "PATH: " << f.fileName();
 
     MainWindow mw;
     mw.show();

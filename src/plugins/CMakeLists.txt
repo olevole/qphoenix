@@ -1,1 +1,2 @@
 ADD_SUBDIRECTORY(scanner)
+ADD_SUBDIRECTORY(speech)

@@ -23,7 +23,6 @@
 #define QP_TRANSLATOR_ENABLED
 
 
-${CMAKE_DEBUG_MODE}
 
 #if defined(Q_OS_UNIX)
     #define QP_DLIB_SUFFIX "so"
