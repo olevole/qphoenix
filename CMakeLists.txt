@@ -107,7 +107,6 @@ ADD_SUBDIRECTORY(src/plugins)
 ADD_SUBDIRECTORY(src/translators)
 ADD_SUBDIRECTORY(src/dictionaries)
 ADD_SUBDIRECTORY(src/libphoenix)
-ADD_SUBDIRECTORY(tests)
 
 CONFIGURE_FILE(src/include/defines.h.in src/include/defines.h)
 

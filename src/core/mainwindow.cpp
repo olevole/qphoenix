@@ -40,6 +40,7 @@
 #include "itranslator.h"
 #include "languageconfig.h"
 #include "dictionaryconfig.h"
+#include "itranslatorwidget.h"
 
 
 QString MainWindow::mAboutStr = "Trasnaltor and dictionary with plugins support.\n"
@@ -209,7 +210,7 @@ void MainWindow::onConfigAccept() {
     PluginConnector connector;
     connector.QP_CONFIG_DIALOG = mSettingsDialog;
     connector.QP_MAIN_WINDOW = this;
-    connector.QP_TRANSLATOR_WIDGET = mTranslationWidget;
+    connector.QP_TRANSLATOR_WIDGET = (ITranslatorWidget*)mTranslationWidget;
     connector.QP_DICTIONARY_WIDGET = mDictionaryWidget;
 
     QObjectList *lst = mPluginsConfig->pluginsList();

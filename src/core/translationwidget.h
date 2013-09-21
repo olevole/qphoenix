@@ -54,7 +54,7 @@ private:
 };
 
 
-class TranslationWidget : public QWidget, ITranslatorWidget, Info
+class TranslationWidget : public QWidget, public ITranslatorWidget, Info
 {
     Q_OBJECT
     Q_INTERFACES(ITranslatorWidget Info)
@@ -76,6 +76,8 @@ public:
     void setTranslator(ITranslator *t);
     void setEnabledKeys(const QStringList &keys){mKeys = keys;}
     void setTranslatorsConfig(TranslatorsConfig *cfg);
+
+     operator QObject*() {return this;}
 public slots:
     virtual void swap();
     virtual void copySrcText();

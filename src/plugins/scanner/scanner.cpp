@@ -45,7 +45,7 @@ bool Scanner::load() {
         button = new QPushButton;
         clipboard = qApp->clipboard();
         connect(clipboard, SIGNAL(selectionChanged()), this, SLOT(translate()));
-        connect(mConnector.QP_TRANSLATOR_WIDGET, SIGNAL(finished()), this, SLOT(show()));
+        connect(*mConnector.QP_TRANSLATOR_WIDGET, SIGNAL(finished()), this, SLOT(show()));
         mIsLoaded = true;
     }
     return true;
@@ -55,7 +55,7 @@ bool Scanner::unload() {
     if(isLoaded()) {
         delete button;
         disconnect(clipboard, SIGNAL(selectionChanged()), this, SLOT(translate()));
-        disconnect(mConnector.QP_TRANSLATOR_WIDGET, SIGNAL(finished()), this, SLOT(show()));
+//        disconnect(mConnector.QP_TRANSLATOR_WIDGET, SIGNAL(finished()), this, SLOT(show()));
         mIsLoaded = false;
     }
     return true;

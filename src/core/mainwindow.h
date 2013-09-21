@@ -25,7 +25,7 @@ class TranslatorsConfig;
 class LanguageConfig;
 class DictionaryConfig;
 
-class MainWindow : public  QMainWindow, IMainWindow
+class MainWindow : public  QMainWindow, public IMainWindow
 {
     Q_OBJECT
     Q_INTERFACES(IMainWindow)
@@ -33,7 +33,6 @@ class MainWindow : public  QMainWindow, IMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
     enum Page {
         Translator = 0,
         Dictionary = 1,

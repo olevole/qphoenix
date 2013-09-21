@@ -31,6 +31,7 @@ class QToolBar;
 // Inherited by TranslatorWidget
 class ITranslatorWidget {
 public:
+    virtual operator QObject*() = 0;
     virtual ~ITranslatorWidget() {}
 
     virtual QComboBox   *srcComboBox() = 0;
@@ -45,6 +46,7 @@ public:
 // Slots
     virtual void swap() = 0;
 // Signals
+signals:
     virtual void finished() = 0;
 };
 
