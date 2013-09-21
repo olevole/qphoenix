@@ -176,7 +176,6 @@ void DictionaryWidget::onQueryComp() {
 }
 
 void DictionaryWidget::onQueryWord() {
-
     qDebug() << "WORD QUERY!" << mDictWorker.isRunning();
     mIsEmpty = true;
     mLock = true;
