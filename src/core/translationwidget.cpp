@@ -252,6 +252,7 @@ void TranslationWidget::setIndexByKey(QComboBox *cb, const QString &key) {
 }
 
 void TranslationWidget::translate() {
+    emit started();
     QString src_text = mSrcText->toPlainText();
     mWorker.query(srcComboboxData(), resComboboxData(), src_text);
 }

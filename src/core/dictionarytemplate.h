@@ -61,7 +61,7 @@ private:
      * \param bb bbcoded string
      * \return  html
      */
-    static QString bb2html(const QString &bb) ;
+    static QString bb2html(const QString &bb);
     static inline QString getTemplate(const QString &path) {
         QFile f(path);
         if(!f.open(QFile::ReadOnly))

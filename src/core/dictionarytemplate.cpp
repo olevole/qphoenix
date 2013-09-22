@@ -1,5 +1,5 @@
 #include "dictionarytemplate.h"
-
+#include <QDebug>
 
 DictionaryTemplate::DictionaryTemplate(QObject *parent)
     :QObject(parent),

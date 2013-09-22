@@ -175,13 +175,26 @@ MainWindow::MainWindow(QWidget *parent) :
 
     readCfg();
     // Read configs
-    onConfigAccept();
     updateTranslatorConfig();
+    onConfigAccept();
+
 }
 
 MainWindow::~MainWindow()
 {
     saveCfg();
+}
+
+QString MainWindow::getStatusBarMessage() const {
+    return mStatusBar->currentMessage();
+}
+
+void MainWindow::addStatusBarWidget(QWidget *widget) {
+    mStatusBar->addPermanentWidget(widget);
+}
+
+void MainWindow::addToolBarAction(QAction *action) {
+    mToolBar->addAction(action);
 }
 
 void MainWindow::addPage(QWidget *page) {
@@ -202,9 +215,13 @@ QWidget *MainWindow::pageAt(const int i) {
     return new QWidget();
 }
 
-void MainWindow::setCurrentIndex(const int i) {
+void MainWindow::setCurrentIndex(int i) {
     mTabWidget->setCurrentIndex(i);
     onIndexChange(i);
+}
+
+void MainWindow::setStatusBarMessage(const QString &msg, int timeout) {
+    mStatusBar->showMessage(msg, timeout);
 }
 
 void MainWindow::onConfigAccept() {
@@ -237,8 +254,8 @@ void MainWindow::onConfigAccept() {
 
     QStringList enabledKeys = mLanguageConfig->keysForEnabled();
 
-    mLanguageConfig->setNativeNames(true);
-    mTranslationWidget->setNativeNames(true);
+    mLanguageConfig->setNativeNames(mCommonConfig->useNativeNames());
+    mTranslationWidget->setNativeNames(mCommonConfig->useNativeNames());
     qDebug() << "DICTS COUNT: " << mDictionaryConfig->dictionaries().count();
     mDictionaryWidget->setDictionaryList(mDictionaryConfig->dictionaries());
 }

@@ -19,22 +19,10 @@
  *    Years: 2012-2013
  */
 #pragma once
+#include <QString>
 
-#include "itranslationwidget.h"
-#include "idictionarywidget.h"
-#include "info.h"
-#include <QDebug>
-
-class QToolBar;
-class QStatusBar;
-class QComboBox;
-class QToolButton;
-class QPushButton;
-class QTextEdit;
-class QTextBrowser;
-class QMenuBar;
-class QLineEdit;
-class QMainWindow;
+class QWidget;
+class QAction;
 
 class IMainWindow {
 public:
@@ -43,21 +31,21 @@ public:
     virtual void currentIndexChanged(const int i) = 0;
 
     //Slots
-    virtual void setCurrentIndex(const int i) = 0;
+    virtual void setCurrentIndex(int i) = 0;
+    virtual void setStatusBarMessage(const QString &msg, int timeout = 0) = 0;
+
 
     // Methods
+    virtual QString getStatusBarMessage() const = 0;
+
+    virtual void addStatusBarWidget(QWidget *widget) = 0;
+    virtual void addToolBarAction(QAction *action) = 0;
+
     virtual void addPage(QWidget *page) = 0;
     virtual void removePage(const QWidget *page) = 0;
     virtual QWidget *pageAt(const int i) = 0;
     virtual int currentIndex() const = 0;
 
-    // Instances
-//    virtual QToolBar *toolbar() = 0;
-//    virtual QStatusBar *statusbar() =0;
-//    virtual QMenuBar   *menubar() = 0;
-//    virtual ITranslatorWidget *translatorWidget() = 0;
-//    virtual IDictionaryWidget *dictionaryWidget() = 0;
 };
-
 
 Q_DECLARE_INTERFACE(IMainWindow, "com.qphoenix.interfaces.mainwindow/1.0")

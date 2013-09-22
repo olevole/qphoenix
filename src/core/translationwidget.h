@@ -88,7 +88,7 @@ public:
 
     QToolBar    *mainToolBar()      { return mMainToolBar;      }
 
-    void setNativeNames(const bool b)           {mNativeNames = b;}
+    void setNativeNames(const bool b) {mNativeNames = b; updateLanguages();}
     void setTranslator(ITranslator *t);
     void setEnabledKeys(const QStringList &keys){mKeys = keys;}
     void setTranslatorsConfig(TranslatorsConfig *cfg);
@@ -164,5 +164,12 @@ private:
 
     QString mLastSrcName, mLastDestName;
 signals:
+    /*
+     * begin of API methods
+     */
     void finished();
+    void started();
+    /*
+     * end of API methods
+     */
 };

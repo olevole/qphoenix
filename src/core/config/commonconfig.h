@@ -4,6 +4,11 @@
 #include <QWidget>
 #include "iconfigpage.h"
 
+class QTabWidget;
+class QCheckBox;
+class QLabel;
+class QComboBox;
+
 class CommonConfig : public QWidget, public IConfigPage
 {
     Q_OBJECT
@@ -14,6 +19,14 @@ public:
     virtual void save();
     virtual void read();
     virtual void reset();
+
+    bool useNativeNames();
+private:
+    QTabWidget *mTabWidget;
+    QCheckBox *mUseNativeCheckbox;
+    QComboBox *mLanguageCombobox;
+    QLabel *mLanguageLabel;
+
 };
 
 #endif // COMMONCONFIG_H

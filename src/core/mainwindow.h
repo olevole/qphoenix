@@ -39,9 +39,6 @@ public:
         Dictionary = 1,
     };
 
-    void addPage(QWidget *page);
-    void removePage(const QWidget *page);
-    QWidget *pageAt(const int i);
 
     IDictionaryWidget *dictionaryWidget()
     {return qobject_cast<IDictionaryWidget *>(mDictionaryWidget); }
@@ -51,12 +48,33 @@ public:
 
     QMainWindow *instance() {return this;}
 
-    int currentIndex() const;
+    /*
+     * Begin API methods
+     */
+    virtual QString getStatusBarMessage() const;
+    virtual void addStatusBarWidget(QWidget *widget);
+    virtual void addToolBarAction(QAction *action);
+
+    virtual void addPage(QWidget *page);
+    virtual void removePage(const QWidget *page);
+    virtual QWidget *pageAt(const int i);
+
+    virtual int currentIndex() const;
+
+    /*
+     * End API methods
+     */
 public slots:
-    void setCurrentIndex(const int i);
-protected:
-//    void closeEvent(QCloseEvent *event);
+    /*
+     * Begin API methods
+     */
+    virtual void setCurrentIndex(int i);
+    virtual void setStatusBarMessage(const QString &msg, int timeout);
+    /*
+     * End API methods
+     */
 private slots:
+
     //! Update plugins, etc information from config dialog.
     void onConfigAccept();
     void updateTranslatorConfig();

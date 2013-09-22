@@ -22,7 +22,6 @@ Config::Config(QWidget *parent) :
 {
     setWindowTitle(tr("Settings"));
 
-    // Gui Init
     mHorizontalLayout->addWidget(mTree);
     mHorizontalLayout->addLayout(mStackedLayout);
 
@@ -45,16 +44,12 @@ Config::Config(QWidget *parent) :
     mTree->setFixedWidth(150);
     mTree->setSizePolicy(QSizePolicy::Fixed, mTree->sizePolicy().verticalPolicy());
 
-    /*
-     * Connections (put all in this section)
-     */
     connect(mTree, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(itemChangeHandle()));
     connect(mButtons, SIGNAL(accepted()), this, SLOT(save()));
     connect(mButtons, SIGNAL(rejected()), this, SLOT(reject()));
     connect(mDefaultsButton, SIGNAL(clicked()), this, SLOT(reset()));
     connect(mButtons, SIGNAL(clicked(QDialogButtonBox::Apply)), this, SLOT(save()));
 
-    // Okay, let's tell them to read configurations
     read();
 }
 
@@ -69,7 +64,7 @@ void Config::addPage(QWidget *page, bool is_plugin) {
     QIcon icon;
 
     if(iface == NULL) {
-        qWarning() << "Unable to cast SettingsPage! Critical error, function terminated!";
+        qWarning() << "Unable cast Config page object to IConfigPage!";
         return;
     } else {
         //TODO: Fix this dangerous code!
