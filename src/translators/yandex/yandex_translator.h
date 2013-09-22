@@ -12,7 +12,6 @@ class YandexTranslator : public QObject, ITranslator
 private:
     bool mLoaded;
     static QStringList mLangs;
-//    static QString mRequest;
     static QString mApiKey;
 public:
     YandexTranslator(QObject *parent = 0);
@@ -34,10 +33,6 @@ public:
     }
     bool isLoaded() const {return mLoaded;}
 
-//    QWidget *configWidget() {
-//        return new QWidget();
-//    }
-
     LanguageTable table() const {
         LanguageTable myTable;
         foreach(QString lang, mLangs)
@@ -47,4 +42,3 @@ public:
     QString translate(const QString &src_text, const QString &src_lang, const QString &dest_lang);
     QString detectLanguage(const QString &pattern);
 };
-

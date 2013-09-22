@@ -30,7 +30,7 @@
 
 
 #include "translationwidget.h"
-#include "itranslatorwidget.h"
+#include "itranslationwidget.h"
 #include "speech.h"
 #include "http.h"
 
@@ -50,8 +50,8 @@ bool Speech::load() {
         mSpeechResultAction = new QAction(QIcon(":icons/media-playback-start.png"),"Say it!", 0);
 
         mPlayer = new QMediaPlayer;
-        mTranslatorIface->addToolbarAction(mSpeechSourceAction, ITranslatorWidget::SourceTextToolbar);
-        mTranslatorIface->addToolbarAction(mSpeechResultAction, ITranslatorWidget::ResultTextToolbar);
+        mTranslatorIface->addToolbarAction(mSpeechSourceAction, ITranslationWidget::SourceTextToolbar);
+        mTranslatorIface->addToolbarAction(mSpeechResultAction, ITranslationWidget::ResultTextToolbar);
 
         connect(mSpeechSourceAction, SIGNAL(triggered()), this, SLOT(pronounceSourceText()));
         connect(mSpeechResultAction, SIGNAL(triggered()), this, SLOT(pronounceResultText()));
@@ -62,7 +62,6 @@ bool Speech::load() {
 }
 
 bool Speech::unload() {
-    qDebug() << "UNLOADING!";
     if(isLoaded()) {
         disconnect(mSpeechSourceAction, SIGNAL(triggered()), this, SLOT(pronounceSourceText()));
         disconnect(mSpeechResultAction, SIGNAL(triggered()), this, SLOT(pronounceResultText()));
@@ -72,7 +71,6 @@ bool Speech::unload() {
         delete mPlayer;
         mIsLoaded = false;
     }
-    qDebug() << "UNLOADED!";
     return true;
 }
 
@@ -90,10 +88,9 @@ void Speech::pronounceResultText() {
 
 
 void Speech::say(const QString &text, const QString &lang) {
-    if(mPlayer->state() == QMediaPlayer::PlayingState)
+    if(text.isEmpty() || lang.isEmpty() || mPlayer->state() == QMediaPlayer::PlayingState)
         return;
-//    const QString text = mTranslatorIface->getSourceText();
-//    const QString lang = mTranslatorIface->getSourceLanguageCode();
+
     const QUrl url  = QString(TTS_URL) + QString("?tl=%1&q=%2").arg(lang, text);
     const QByteArray filedata = HTTP::GET(url);
     mMp3File.open();
@@ -103,11 +100,6 @@ void Speech::say(const QString &text, const QString &lang) {
 
     mPlayer->setMedia(QUrl::fromLocalFile(mMp3File.fileName()));
     mPlayer->play();
-
-
-    qDebug() << "URL____" << url.toString();
-    qDebug() << "PATH____" << mMp3File.fileName();
-
 }
 
 void Speech::removeTmpFile() {

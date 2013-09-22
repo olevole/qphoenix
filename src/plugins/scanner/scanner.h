@@ -28,7 +28,7 @@
 
 class QPushButton;
 class QClipboard;
-class ITranslatorWidget;
+class ITranslationWidget;
 
 class Scanner : public QObject, IPlugin
 {
@@ -47,8 +47,7 @@ private slots:
     void translate();
     void show();
 private:
-//    PluginConnector mConnector;
-    ITranslatorWidget *mTranslatorIface;
+    ITranslationWidget *mTranslatorIface;
     QPushButton *button;
     QPoint mLastCursorPos;
     QClipboard *clipboard;

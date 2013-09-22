@@ -14,6 +14,6 @@
 #include "imainwindow.h"
 #include "iplugin.h"
 #include "itranslator.h"
-#include "itranslatorwidget.h"
+#include "itranslationwidget.h"
 #include "pluginsconfig.h"
 

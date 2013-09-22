@@ -46,8 +46,8 @@ public:
     IDictionaryWidget *dictionaryWidget()
     {return qobject_cast<IDictionaryWidget *>(mDictionaryWidget); }
 
-    ITranslatorWidget *translatorWidget()
-    {return qobject_cast<ITranslatorWidget *>(mTranslationWidget);}
+    ITranslationWidget *translatorWidget()
+    {return qobject_cast<ITranslationWidget *>(mTranslationWidget);}
 
     QMainWindow *instance() {return this;}
 

@@ -39,7 +39,7 @@ src/libphoenix)
 SET(IFACES
 src/include/iconfigpage.h
 src/include/imainwindow.h
-src/include/itranslatorwidget.h
+src/include/itranslationwidget.h
 src/include/idictionarywidget.h
 src/include/iconfig.h
 src/include/iplugin.h

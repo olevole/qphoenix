@@ -8,7 +8,6 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 
-
 QStringList YandexTranslator::mLangs = QStringList()    <<"en" <<"ru";
 QString YandexTranslator::mApiKey = "trnsl.1.1.20130623T124051Z.0700cd74def1a0f5.a64b755e8f8f1312a82edd26c0bc6585be02c695";
 
@@ -18,8 +17,6 @@ YandexTranslator::YandexTranslator(QObject *parent)
     setName("Yandex");
     setUrl("http://translate.yandex.ru/");
 }
-
-
 
 QString YandexTranslator::translate(const QString &src_text, const QString &src_lang, const QString &dest_lang) {
     const QString  query = QString("key=%1&lang=%2-%3&text=%4").arg(mApiKey, src_lang, dest_lang, src_text);

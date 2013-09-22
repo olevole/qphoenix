@@ -53,7 +53,7 @@ private slots:
     void pronounceResultText();
     void removeTmpFile();
 private:
-    ITranslatorWidget *mTranslatorIface;
+    ITranslationWidget *mTranslatorIface;
     bool mIsLoaded;
     QAction *mSpeechSourceAction;
     QAction *mSpeechResultAction;

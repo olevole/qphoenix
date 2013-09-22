@@ -40,7 +40,7 @@
 #include "itranslator.h"
 #include "languageconfig.h"
 #include "dictionaryconfig.h"
-#include "itranslatorwidget.h"
+#include "itranslationwidget.h"
 #include "commonconfig.h"
 
 

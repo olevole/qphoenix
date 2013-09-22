@@ -2,7 +2,7 @@
 
 class IMainWindow;
 class Config;
-class ITranslatorWidget;
+class ITranslationWidget;
 class DictionaryWidget;
 
 
@@ -24,7 +24,7 @@ struct PluginConnector
     }
     IMainWindow *QP_MAIN_WINDOW;
     IConfig *QP_CONFIG_DIALOG;
-    ITranslatorWidget *QP_TRANSLATOR_WIDGET;
+    ITranslationWidget *QP_TRANSLATOR_WIDGET;
     DictionaryWidget *QP_DICTIONARY_WIDGET;
 };
 

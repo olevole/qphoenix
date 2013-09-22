@@ -20,7 +20,7 @@
  */
 #pragma once
 
-#include "itranslatorwidget.h"
+#include "itranslationwidget.h"
 #include "idictionarywidget.h"
 #include "info.h"
 #include <QDebug>
