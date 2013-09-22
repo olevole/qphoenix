@@ -47,13 +47,16 @@ public:
     bool unload();
     bool isLoaded() const { return mIsLoaded; }
     QString errorString() const {return QString();}
+    void say(const QString &text, const QString &lang);
 private slots:
-    void say();
+    void pronounceSourceText();
+    void pronounceResultText();
     void removeTmpFile();
 private:
-    PluginConnector mConnector;
+    ITranslatorWidget *mTranslatorIface;
     bool mIsLoaded;
-    QAction *mSpeechAction;
+    QAction *mSpeechSourceAction;
+    QAction *mSpeechResultAction;
     QMediaPlayer *mPlayer;
     QTemporaryFile mMp3File;
 };

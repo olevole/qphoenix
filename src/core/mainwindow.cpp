@@ -41,6 +41,7 @@
 #include "languageconfig.h"
 #include "dictionaryconfig.h"
 #include "itranslatorwidget.h"
+#include "commonconfig.h"
 
 
 QString MainWindow::mAboutStr = "Trasnaltor and dictionary with plugins support.\n"
@@ -90,6 +91,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mTranslatorsConfig(new TranslatorsConfig(this)),
     mLanguageConfig(new LanguageConfig(this)),
     mDictionaryConfig(new DictionaryConfig(this)),
+    mCommonConfig(new CommonConfig(this)),
     mSavePath("")
 {
     setWindowTitle(qApp->applicationName());
@@ -143,6 +145,8 @@ MainWindow::MainWindow(QWidget *parent) :
     mSettingsDialog->addPage(mDictionaryConfig);
     mSettingsDialog->addPage(mLanguageConfig);
     mSettingsDialog->addPage(mPluginsConfig);
+    mSettingsDialog->addPage(mCommonConfig);
+
 
     connect(mActionOpen, SIGNAL(triggered()), this, SLOT(open()));
     connect(mActionPrint, SIGNAL(triggered()), this, SLOT(print()));
@@ -155,7 +159,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mActionClear, SIGNAL(triggered()), this, SLOT(clear()));
     connect(mActionUndo, SIGNAL(triggered()), this, SLOT(undo()));
     connect(mActionRedo, SIGNAL(triggered()), this, SLOT(redo()));
-    connect(mActionSwap, SIGNAL(triggered()), this, SLOT(swap()));
+    connect(mActionSwap, SIGNAL(triggered()), mTranslationWidget, SLOT(swap()));
     connect(mActionOptions, SIGNAL(triggered()), mSettingsDialog, SLOT(show()));
     connect(mActionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(mActionAbout, SIGNAL(triggered()), this, SLOT(about()));
@@ -210,7 +214,7 @@ void MainWindow::onConfigAccept() {
     PluginConnector connector;
     connector.QP_CONFIG_DIALOG = mSettingsDialog;
     connector.QP_MAIN_WINDOW = this;
-    connector.QP_TRANSLATOR_WIDGET = (ITranslatorWidget*)mTranslationWidget;
+    connector.QP_TRANSLATOR_WIDGET = mTranslationWidget;
     connector.QP_DICTIONARY_WIDGET = mDictionaryWidget;
 
     QObjectList *lst = mPluginsConfig->pluginsList();
@@ -233,8 +237,8 @@ void MainWindow::onConfigAccept() {
 
     QStringList enabledKeys = mLanguageConfig->keysForEnabled();
 
-    mLanguageConfig->setNativeNames(false);
-    mTranslationWidget->setNativeNames(false);
+    mLanguageConfig->setNativeNames(true);
+    mTranslationWidget->setNativeNames(true);
     qDebug() << "DICTS COUNT: " << mDictionaryConfig->dictionaries().count();
     mDictionaryWidget->setDictionaryList(mDictionaryConfig->dictionaries());
 }
@@ -280,7 +284,7 @@ void MainWindow::open() {
     if(!file.open( QFile::ReadOnly))
         return;
     const QString text = file.readAll();
-    this->translatorWidget()->srcText()->setText(text);
+    mTranslationWidget->setSourceText(text);
 }
 
 void MainWindow::print() {
@@ -290,10 +294,10 @@ void MainWindow::print() {
           const int i = currentIndex();
           switch(i){
               case 0:
-                  translatorWidget()->srcText()->print(&printer);
+//                  mTranslationWidget->srcText()->print(&printer);
               break;
               case 1:
-                 dictionaryWidget()->resText()->print(&printer);
+//                 mDictionaryWidget->resText()->print(&printer);
               break;
           }
       }
@@ -316,12 +320,12 @@ void MainWindow::save() {
     const int i = currentIndex();
     switch(i){
         case 0:
-            file.write(translatorWidget()->resText()->toPlainText().toUtf8());
-//            translatorWidget()->srcText()->print(&printer);
+            file.write(mTranslationWidget->getResultText().toUtf8());
+//            mTranslationWidget->srcText()->print(&printer);
         break;
         case 1:
-            file.write(dictionaryWidget()->resText()->page()->mainFrame()->toHtml().toUtf8());
-//           dictionaryWidget()->resText()->print(&printer);
+            file.write(mDictionaryWidget->resText()->page()->mainFrame()->toHtml().toUtf8());
+//           mDictionaryWidget->resText()->print(&printer);
         break;
     }
 
@@ -349,29 +353,29 @@ void MainWindow::clear() {
     const int i = currentIndex();
     switch(i){
         case 0:
-            translatorWidget()->srcText()->clear();
-            translatorWidget()->resText()->clear();
+            mTranslationWidget->clearSourceText();
+            mTranslationWidget->clearResultText();
         break;
         case 1:
-            dictionaryWidget()->srcText()->clear();
-            dictionaryWidget()->resText()->setHtml("<html><body></body></html>");
+            mDictionaryWidget->srcText()->clear();
+            mDictionaryWidget->resText()->setHtml("<html><body></body></html>");
         break;
     }
 }
 
 void MainWindow::undo() {
-    currentIndex() == 0 ? translatorWidget()->srcText()->undo()
-                        : dictionaryWidget()->srcText()->undo();
+    currentIndex() == 0 ? mTranslationWidget->undo()
+                        : mDictionaryWidget->srcText()->undo();
 }
 
 void MainWindow::redo() {
-    currentIndex() == 0 ? translatorWidget()->srcText()->redo()
-                        : dictionaryWidget()->srcText()->redo();
+    currentIndex() == 0 ? mTranslationWidget->redo()
+                        : mDictionaryWidget->srcText()->redo();
 }
 
-void MainWindow::swap() {
-    translatorWidget()->swapButton()->click();
-}
+//void MainWindow::swap() {
+//    mTranslationWidget->
+//}
 
 //----------------------------------------------------------------------------------------------
 

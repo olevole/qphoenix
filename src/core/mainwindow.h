@@ -24,6 +24,7 @@ class PluginsConfig;
 class TranslatorsConfig;
 class LanguageConfig;
 class DictionaryConfig;
+class CommonConfig;
 
 class MainWindow : public  QMainWindow, public IMainWindow
 {
@@ -49,9 +50,6 @@ public:
     {return qobject_cast<ITranslatorWidget *>(mTranslationWidget);}
 
     QMainWindow *instance() {return this;}
-    QToolBar *toolbar() { return mToolBar;}
-    QStatusBar *statusbar() { return mStatusBar;}
-    QMenuBar *menubar() { return mMenuBar;}
 
     int currentIndex() const;
 public slots:
@@ -81,7 +79,7 @@ private slots:
 //    void copy();
     void undo();
     void redo();
-    void swap();
+//    void swap();
     void about();
 private:
     QString mSavePath;
@@ -124,7 +122,8 @@ private:
     PluginsConfig *mPluginsConfig;
     TranslatorsConfig *mTranslatorsConfig;
     LanguageConfig *mLanguageConfig;
-    DictionaryConfig *mDictionaryConfig;
+    DictionaryConfig *mDictionaryConfig;\
+    CommonConfig *mCommonConfig;
     static QString mAboutStr;
 signals:
     void currentIndexChanged(const int i);

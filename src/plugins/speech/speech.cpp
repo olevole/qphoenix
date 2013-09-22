@@ -1,4 +1,4 @@
-3;/*
+/*
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation; either version 2 of the License, or
@@ -46,10 +46,15 @@ Speech::Speech(QObject *parent) :
 
 bool Speech::load() {
     if(!isLoaded()) {
-        mSpeechAction = new QAction("Say it!", 0);
+        mSpeechSourceAction = new QAction(QIcon(":icons/media-playback-start.png"), "Say it!", 0);
+        mSpeechResultAction = new QAction(QIcon(":icons/media-playback-start.png"),"Say it!", 0);
+
         mPlayer = new QMediaPlayer;
-        mConnector.QP_TRANSLATOR_WIDGET->srcToolbar()->addAction(mSpeechAction);
-        connect(mSpeechAction, SIGNAL(triggered()), this, SLOT(say()));
+        mTranslatorIface->addToolbarAction(mSpeechSourceAction, ITranslatorWidget::SourceTextToolbar);
+        mTranslatorIface->addToolbarAction(mSpeechResultAction, ITranslatorWidget::ResultTextToolbar);
+
+        connect(mSpeechSourceAction, SIGNAL(triggered()), this, SLOT(pronounceSourceText()));
+        connect(mSpeechResultAction, SIGNAL(triggered()), this, SLOT(pronounceResultText()));
         connect(mPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(removeTmpFile()));
         mIsLoaded = true;
     }
@@ -59,9 +64,11 @@ bool Speech::load() {
 bool Speech::unload() {
     qDebug() << "UNLOADING!";
     if(isLoaded()) {
-        disconnect(mSpeechAction, SIGNAL(triggered()), this, SLOT(say()));
+        disconnect(mSpeechSourceAction, SIGNAL(triggered()), this, SLOT(pronounceSourceText()));
+        disconnect(mSpeechResultAction, SIGNAL(triggered()), this, SLOT(pronounceResultText()));
         disconnect(mPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(removeTmpFile()));
-        delete mSpeechAction;
+        delete mSpeechSourceAction;
+        delete mSpeechResultAction;
         delete mPlayer;
         mIsLoaded = false;
     }
@@ -69,11 +76,24 @@ bool Speech::unload() {
     return true;
 }
 
-void Speech::say() {
+void Speech::pronounceSourceText() {
+    const QString text = mTranslatorIface->getSourceText();
+    const QString lang = mTranslatorIface->getSourceLanguageCode();
+    say(text, lang);
+}
+
+void Speech::pronounceResultText() {
+    const QString text = mTranslatorIface->getResultText();
+    const QString lang = mTranslatorIface->getResultLanguageCode();
+    say(text, lang);
+}
+
+
+void Speech::say(const QString &text, const QString &lang) {
     if(mPlayer->state() == QMediaPlayer::PlayingState)
         return;
-    const QString text = mConnector.QP_TRANSLATOR_WIDGET->srcText()->toPlainText();
-    const QString lang = "en";
+//    const QString text = mTranslatorIface->getSourceText();
+//    const QString lang = mTranslatorIface->getSourceLanguageCode();
     const QUrl url  = QString(TTS_URL) + QString("?tl=%1&q=%2").arg(lang, text);
     const QByteArray filedata = HTTP::GET(url);
     mMp3File.open();
@@ -96,5 +116,5 @@ void Speech::removeTmpFile() {
 }
 
 void Speech::setPluginConnector(PluginConnector connector) {
-    mConnector = connector;
+    mTranslatorIface = connector.QP_TRANSLATOR_WIDGET;
 }

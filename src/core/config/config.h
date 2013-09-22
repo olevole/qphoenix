@@ -19,7 +19,7 @@ class QPushButton;
  *  All config pages MUST include ConfigPageInteface.
  */
 
-class Config : public QDialog,  IConfig
+class Config : public QDialog, public IConfig
 {
     Q_OBJECT
     Q_INTERFACES(IConfig)

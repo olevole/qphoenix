@@ -34,9 +34,9 @@ public:
     }
     bool isLoaded() const {return mLoaded;}
 
-    QWidget *configWidget() {
-        return new QWidget();
-    }
+//    QWidget *configWidget() {
+//        return new QWidget();
+//    }
 
     LanguageTable table() const {
         LanguageTable myTable;

@@ -62,26 +62,51 @@ public:
     explicit TranslationWidget(QWidget *parent = 0);
     virtual ~TranslationWidget();
 
-    virtual QComboBox   *srcComboBox()      { return mSrcComboBox;      }
-    virtual QComboBox   *resComboBox()      { return mResComboBox;      }
-    virtual QTextEdit   *srcText()          { return mSrcText;          }
-    virtual QTextBrowser*resText()          { return mResText;          }
-    virtual QPushButton *translateButton()  { return mTranslateButton;  }
-    virtual QToolButton *swapButton()       { return mSwapButton;       }
-    virtual QToolBar    *srcToolbar()       { return mSrcToolbar;       }
-    virtual QToolBar    *resToolbar()       { return mResToolbar;       }
-    virtual QToolBar    *mainToolBar()      { return mMainToolBar;      }
+
+    /*
+     * begin of API methods
+     */
+    virtual QString getSourceText() const;
+    virtual QString getResultText() const;
+
+    virtual void setSourceText(const QString &text);
+    virtual void setResultText(const QString &text);
+
+    virtual void clearSourceText();
+    virtual void clearResultText();
+
+    virtual QString getSourceLanguageCode();
+    virtual QString getResultLanguageCode();
+
+    virtual QObject *qobject();
+
+    virtual void addToolbarAction(QAction *action, TranslationWidgetToolbar toolbar);
+
+    /*
+     * end of API methods
+     */
+
+    QToolBar    *mainToolBar()      { return mMainToolBar;      }
 
     void setNativeNames(const bool b)           {mNativeNames = b;}
     void setTranslator(ITranslator *t);
     void setEnabledKeys(const QStringList &keys){mKeys = keys;}
     void setTranslatorsConfig(TranslatorsConfig *cfg);
 
-     operator QObject*() {return this;}
 public slots:
+    /*
+     * begin of API methods
+     */
     virtual void swap();
+    virtual void undo();
+    virtual void redo();
+    virtual void translate();
+
     virtual void copySrcText();
     virtual void copyResText();
+    /*
+     * end of API methods
+     */
 private slots:
     void onSourceLanguageChanged();
     void onResultLanguageChanged();
@@ -94,7 +119,7 @@ private slots:
      * \param key key to set
      */
     void setIndexByKey(QComboBox *cb, const QString &key);
-    void translate();
+
     // Update languages if translator was changed TODO: finish it!
     void updateLanguages();
 

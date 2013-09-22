@@ -119,14 +119,16 @@ void TranslatorsConfig::onIndexChange(const int i) {
         iface->load();
 
     QWidget *cw = iface->configWidget();
+
     QLayoutItem *child;
-    while ( (child = mOptionsLayout->takeAt(0)) != 0) {
-        QWidget *w = child->widget();
-        if(w != cw) {
+    while ((child = mOptionsLayout->takeAt(0)) != 0) {
+        if(child->widget() != cw) {
             delete child->widget();
             delete child;
         }
     }
+    if(cw == NULL)
+        return;
     mOptionsLayout->addWidget(cw);
     mOptionsLayout->addStretch(); //TODO: Does not work. Fix!
 }

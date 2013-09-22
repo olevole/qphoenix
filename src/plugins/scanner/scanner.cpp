@@ -27,7 +27,6 @@
 #include <QTextBrowser>
 #include <QToolTip>
 
-#include "translationwidget.h"
 #include "itranslatorwidget.h"
 #include "scanner.h"
 
@@ -45,7 +44,7 @@ bool Scanner::load() {
         button = new QPushButton;
         clipboard = qApp->clipboard();
         connect(clipboard, SIGNAL(selectionChanged()), this, SLOT(translate()));
-        connect(*mConnector.QP_TRANSLATOR_WIDGET, SIGNAL(finished()), this, SLOT(show()));
+        connect(mTranslatorIface->qobject(), SIGNAL(finished()), this, SLOT(show()));
         mIsLoaded = true;
     }
     return true;
@@ -55,7 +54,7 @@ bool Scanner::unload() {
     if(isLoaded()) {
         delete button;
         disconnect(clipboard, SIGNAL(selectionChanged()), this, SLOT(translate()));
-//        disconnect(mConnector.QP_TRANSLATOR_WIDGET, SIGNAL(finished()), this, SLOT(show()));
+        disconnect(mTranslatorIface->qobject(), SIGNAL(finished()), this, SLOT(show()));
         mIsLoaded = false;
     }
     return true;
@@ -63,15 +62,14 @@ bool Scanner::unload() {
 
 void Scanner::translate() {
     mLastCursorPos = QCursor::pos();
-    mConnector.QP_TRANSLATOR_WIDGET->srcText()->setText(clipboard->text(QClipboard::Selection));
-    mConnector.QP_TRANSLATOR_WIDGET->translateButton()->click();
-
+    mTranslatorIface->setSourceText(clipboard->text(QClipboard::Selection));
+    mTranslatorIface->translate();
 }
 
 void Scanner::show() {
-    QToolTip::showText(mLastCursorPos, mConnector.QP_TRANSLATOR_WIDGET->resText()->toPlainText());
+    QToolTip::showText(mLastCursorPos, mTranslatorIface->getResultText());
 }
 
 void Scanner::setPluginConnector(PluginConnector connector) {
-    mConnector = connector;
+    mTranslatorIface = connector.QP_TRANSLATOR_WIDGET;
 }

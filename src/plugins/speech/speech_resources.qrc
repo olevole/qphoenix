@@ -1,1 +1,5 @@
-<RCC/>
+<RCC>
+    <qresource prefix="/">
+        <file>icons/media-playback-start.png</file>
+    </qresource>
+</RCC>

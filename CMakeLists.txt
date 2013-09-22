@@ -57,6 +57,7 @@ src/core/config/translatorsconfig.h
 src/core/config/pluginsconfig.h
 src/core/config/languageconfig.h
 src/core/config/dictionaryconfig.h
+src/core/config/commonconfig.h
 src/core/translationwidget.h
 src/core/dictionarywidget.h
 src/core/querywrappers.h
@@ -74,6 +75,7 @@ src/core/config/translatorsconfig.cpp
 src/core/config/pluginsconfig.cpp
 src/core/config/languageconfig.cpp
 src/core/config/dictionaryconfig.cpp
+src/core/config/commonconfig.cpp
 src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
 src/core/querywrappers.cpp

@@ -78,7 +78,7 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mMainToolBar->addWidget(new QLabel(tr("  Translator: "), this));
 
     mMainLayout->addWidget(mSrcToolbar);
-    mMainLayout->addWidget(srcText());
+    mMainLayout->addWidget(mSrcText);
     mMainLayout->addLayout(mButtonsLayout);
     mMainLayout->addWidget(mResText);
     setLayout(mMainLayout);
@@ -100,8 +100,8 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     connect(mSwapButton, SIGNAL(clicked()), this, SLOT(swap()));
     connect(mSrcToolbar, SIGNAL(copyRequest()), this, SLOT(copySrcText()));
     connect(mResToolbar, SIGNAL(copyRequest()), this, SLOT(copyResText()));
-    connect(&mWorker, SIGNAL(reply(QString)), resText(), SLOT(setPlainText(QString)));
-    connect(this->translateButton(), SIGNAL(clicked()), this, SLOT(translate()));
+    connect(&mWorker, SIGNAL(reply(QString)), mResText, SLOT(setPlainText(QString)));
+    connect(mTranslateButton, SIGNAL(clicked()), this, SLOT(translate()));
     connect(mResText, SIGNAL(textChanged()), this, SIGNAL(finished()));
 
     updateButtonState();
@@ -113,6 +113,57 @@ TranslationWidget::~TranslationWidget() {
 }
 
 
+QString TranslationWidget::getSourceText() const {
+    return mSrcText->toPlainText();
+}
+
+QString TranslationWidget::getResultText() const {
+    return mResText->toPlainText();
+}
+
+void TranslationWidget::setSourceText(const QString &text) {
+    mSrcText->setPlainText(text);
+}
+
+void TranslationWidget::setResultText(const QString &text) {
+    mResText->setPlainText(text);
+}
+
+void TranslationWidget::clearSourceText() {
+    mSrcText->clear();
+}
+
+void TranslationWidget::clearResultText() {
+    mResText->clear();
+}
+
+QString TranslationWidget::getSourceLanguageCode() {
+    return mSrcComboBox->itemData(mSrcComboBox->currentIndex()).toString();
+}
+
+QString TranslationWidget::getResultLanguageCode() {
+    return mResComboBox->itemData(mResComboBox->currentIndex()).toString();
+}
+
+QObject *TranslationWidget::qobject() {
+    return this;
+}
+
+void TranslationWidget::addToolbarAction(QAction *action, TranslationWidgetToolbar toolbar) {
+    switch(toolbar) {
+    case MainToolbar:
+        mMainToolBar->addAction(action);
+        break;
+    case SourceTextToolbar:
+        mSrcToolbar->addAction(action);
+        break;
+    case ResultTextToolbar:
+        mResToolbar->addAction(action);
+        break;
+    default:
+        qWarning("Unknown TranslationWidgetToolbar");
+    }
+}
 
 void TranslationWidget::setTranslator(ITranslator *t) {
     qDebug() << "Setting translator!!!!";
@@ -143,14 +194,22 @@ void TranslationWidget::onResultLanguageChanged() {
 }
 
 void TranslationWidget::updateButtonState() {
-    const bool ready = (srcComboboxData() != resComboboxData()) && !srcText()->toPlainText().isEmpty();
+    const bool ready = (srcComboboxData() != resComboboxData()) && !mSrcText->toPlainText().isEmpty();
     mTranslateButton->setEnabled(ready);
 }
 
 void TranslationWidget::swap() {
-    const int i = srcComboBox()->currentIndex();
+    const int i = mSrcComboBox->currentIndex();
     mSrcComboBox->setCurrentIndex(mResComboBox->currentIndex());
     mResComboBox->setCurrentIndex(i);
+}
+
+void TranslationWidget::undo() {
+    mSrcText->undo();
+}
+
+void TranslationWidget::redo() {
+    mSrcText->redo();
 }
 
 void TranslationWidget::copySrcText() {
@@ -193,7 +252,7 @@ void TranslationWidget::setIndexByKey(QComboBox *cb, const QString &key) {
 }
 
 void TranslationWidget::translate() {
-    QString src_text = srcText()->toPlainText();
+    QString src_text = mSrcText->toPlainText();
     mWorker.query(srcComboboxData(), resComboboxData(), src_text);
 }
 
@@ -264,9 +323,9 @@ void TranslationWidget::readCfg() {
 }
 
 QString TranslationWidget::srcComboboxData() {
-    return  srcComboBox()->itemData(srcComboBox()->currentIndex()).toString();
+    return  mSrcComboBox->itemData(mSrcComboBox->currentIndex()).toString();
 }
 
 QString TranslationWidget::resComboboxData() {
-    return resComboBox()->itemData(resComboBox()->currentIndex()).toString();
+    return mResComboBox->itemData(mResComboBox->currentIndex()).toString();
 }

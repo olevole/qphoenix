@@ -21,32 +21,43 @@
 
 #pragma once
 
-class QComboBox;
-class QTextEdit;
-class QTextBrowser;
-class QPushButton;
-class QToolButton;
-class QToolBar;
+class QObject;
+class QAction;
 
 // Inherited by TranslatorWidget
 class ITranslatorWidget {
 public:
-    virtual operator QObject*() = 0;
     virtual ~ITranslatorWidget() {}
 
-    virtual QComboBox   *srcComboBox() = 0;
-    virtual QComboBox   *resComboBox() = 0;
-    virtual QTextEdit   *srcText() = 0;
-    virtual QTextBrowser*resText() = 0;
-    virtual QPushButton *translateButton() = 0;
-    virtual QToolButton *swapButton() = 0;
-    virtual QToolBar    *mainToolBar() = 0;
-    virtual QToolBar    *srcToolbar() = 0;
-    virtual QToolBar    *resToolbar() = 0;
+    virtual QString getSourceText() const = 0;
+    virtual QString getResultText() const = 0;
+
+    virtual void setSourceText(const QString &text) = 0;
+    virtual void setResultText(const QString &text) = 0;
+
+    virtual void clearSourceText() = 0;
+    virtual void clearResultText() = 0;
+
+    enum TranslationWidgetToolbar {
+        MainToolbar,
+        SourceTextToolbar,
+        ResultTextToolbar,
+    };
+
+
+    virtual QString getSourceLanguageCode() = 0;
+    virtual QString getResultLanguageCode() = 0;
+
+    virtual void addToolbarAction(QAction *action, TranslationWidgetToolbar toolbar) = 0;
+    virtual QObject *qobject() = 0;
+
+
 // Slots
     virtual void swap() = 0;
+    virtual void undo() = 0;
+    virtual void redo() = 0;
+    virtual void translate() = 0;
 // Signals
-signals:
     virtual void finished() = 0;
 };
 

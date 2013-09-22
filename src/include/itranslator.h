@@ -51,8 +51,7 @@ public:
      * \brief configWidget
      * \return pointer to Translator config widget
      */
-    virtual QWidget *configWidget()
-    {return new QWidget();        }
+    virtual QWidget *configWidget() {return NULL;}
 
     /*!
      * \brief table

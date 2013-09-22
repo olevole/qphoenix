@@ -54,10 +54,6 @@ int main(int argc, char *argv[])
     QDir::addSearchPath("translators", QP_TRANSLATORS_PATH);
     QDir::addSearchPath("dictionaries", QP_DICTIONARIES_PATH);
 
-//    QTemporaryFile f;
-//    f.open();
-//    qDebug() << "PATH: " << f.fileName();
-
     MainWindow mw;
     mw.show();
     mw.setWindowIcon(QP_ICON("dictionary"));

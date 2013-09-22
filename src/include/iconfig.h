@@ -1,6 +1,9 @@
 #pragma once
 
-#include <QGroupBox>
+#include <QtPlugin>
+
+class QWidget;
+
 
 /*!
  * \brief The ConfigInterface class
@@ -33,5 +36,5 @@ public:
     virtual QWidget *pageAt(const int i) = 0;
 };
 
-Q_DECLARE_INTERFACE(IConfig, "com.qphoenix.interfaces.settingspage/1.0")
+Q_DECLARE_INTERFACE(IConfig, "com.qphoenix.interfaces.configpage/1.0")
 
