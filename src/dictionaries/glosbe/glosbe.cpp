@@ -1,4 +1,4 @@
-#include "wordreference.h"
+#include "glosbe.h"
 #include "http.h"
 #include <QObject>
 #include <QCheckBox>
@@ -19,28 +19,28 @@
 
 
 
-QStringList WordReference::mLangs = QStringList()  << "ru" << "ar" << "zh" << "cz" << "fr" << "gr" << "it"
-                                                           << "ja" << "ko" << "pl" << "pt" << "ro" << "es" << "tr";
-QString WordReference::mApiKey = "284e7";
-QString WordReference::mApiVer = "0.8";
+QStringList Glosbe::mLangs = QStringList()  << "ru" << "da" << "cs" << "it";\
 
-WordReference::WordReference(QObject *parent)
+LanguagePairList Glosbe::mPairList = LanguagePairList() << LanguagePair("it", "ru") << LanguagePair("ru", "it");
+
+QString Glosbe::mApiKey = "284e7";
+QString Glosbe::mApiVer = "0.8";
+
+Glosbe::Glosbe(QObject *parent)
     :QObject(parent)
 {
-    setName("WordReference");
+    setName("Glosbe");
     setDescription(tr("Word reference is a free online dictionary service"));
     setVersion(DICTIONARY_VERSION);
 }
 
 
-QStringList WordReference::query(const QString &text, const LanguagePair &pair, unsigned int max_count)  {
+QStringList Glosbe::query(const QString &text, const LanguagePair &pair, unsigned int max_count)  {
     QJsonDocument doc = queryData(text, pair);
     QJsonObject root = doc.object().value("term0").toObject();
     QJsonObject principal = root.value("PrincipalTranslations").toObject();
     QStringList lst;
 
-
-    // Parse principal translations
     for (int i = 0; i < 20; i++) {
 
         QJsonObject orig = principal.value(QString::number(i)).toObject();
@@ -58,20 +58,17 @@ QStringList WordReference::query(const QString &text, const LanguagePair &pair, 
         QString res_sense = oterm2.value("sense").toString();
 
 
-        lst << QString(
-                   "[b]%1 (%2)[/b]\n\n"
-//                   "[i]%2[/i]\n\n"
-                   "[u]%3[/u][b]%4[/b]"
-                   ).arg(src_term, src_sense, res_sense, res_term);
+        lst << QString("[b]%1[/b]\n\n[i]%2[/i]\n\n[u]%3[/u][b]%4[/b]").arg(src_term, src_sense, res_sense, res_term);
+
     }
    return lst;
 }
 
 
-QJsonDocument WordReference::queryData(const QString &text, const LanguagePair &pair) const {
+QJsonDocument Glosbe::queryData(const QString &text, const LanguagePair &pair) const {
     const QString langs = pair.first + pair.second;
     const QByteArray html = text.toUtf8();
-    const QUrl url = QString("http://api.wordreference.com/%2/json/%3/%4").arg(mApiKey, langs, html.toPercentEncoding());
+    const QUrl url = QString("http://api.Glosbe.com/%2/json/%3/%4").arg(mApiKey, langs, html.toPercentEncoding());
     //TODO: percent encoding fails!
 
 
@@ -87,7 +84,7 @@ QJsonDocument WordReference::queryData(const QString &text, const LanguagePair &
 
 
 
-QStringList WordReference::completions(const QString &str, const LanguagePair &pair) const {
+QStringList Glosbe::completions(const QString &str, const LanguagePair &pair) const {
     QJsonDocument doc = queryData(str, pair);
     QJsonObject root = doc.object().value("term0").toObject();
     QJsonObject principal = root.value("PrincipalTranslations").toObject();

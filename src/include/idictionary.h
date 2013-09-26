@@ -37,6 +37,8 @@ typedef QPair<QString, QString> LanguagePair;
 typedef QList<LanguagePair> LanguagePairList;
 typedef QList<IDictionary *> DictionaryList;
 
+
+
 class IDictionary : public IModule {
 public:
     virtual ~IDictionary(){}
@@ -46,7 +48,7 @@ public:
      * \return a pointer to configuration widget for this dictionary (optional)
      * If you don't want to provide any config widget, just don't reimplement it
      */
-    virtual QWidget *configWidget(){return new QWidget();}
+    virtual QWidget *configWidget(){return NULL;}
 
     /*!
      * \brief pairs
@@ -60,7 +62,7 @@ public:
      * \param pair language pair (for example, en, ru)
      * \return DictionaryVariantList with dictionary reply
      */
-    virtual QStringList query(const QString &text, const LanguagePair &pair, const int max_count = QP_DICT_MAX)  = 0;
+    virtual QStringList query(const QString &text, const LanguagePair &pair, unsigned int max_count = QP_DICT_MAX)  = 0;
 
     /*!
      * \brief completions return a word completions variants

@@ -34,7 +34,6 @@ public:
     virtual void setCurrentIndex(int i) = 0;
     virtual void setStatusBarMessage(const QString &msg, int timeout = 0) = 0;
 
-
     // Methods
     virtual QString getStatusBarMessage() const = 0;
 

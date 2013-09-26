@@ -88,7 +88,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mCompleter->setModel(mCompleterModel);
     mSrcText->setCompleter(mCompleter);
 
-    mSrcText->setPlaceholderText("Put some word here..");
+    mSrcText->setPlaceholderText(tr("Enter word here.."));
 
     QAction *aZoomOut = new QAction(QP_ICON("zoom-out"), tr("Zoom Out"), this);
     QAction *aZoomIn = new QAction(QP_ICON("zoom-in"), tr("Zoom In"), this);
@@ -128,10 +128,11 @@ void DictionaryWidget::displayData(const QStringList &lst, const QString &name) 
         mTemplate->createSection(lst, name);
         mResText->setHtml(mTemplate->toHtml());
     }
-
 }
 
 void DictionaryWidget::setDictionaryList(QList<IDictionary *> dicts) {
+    LanguagePairList list;
+
     if(dicts.isEmpty()) {
         mSrcText->setDisabled(true);
         qWarning() << "Warning! Dictionaries is empty!";
@@ -141,9 +142,13 @@ void DictionaryWidget::setDictionaryList(QList<IDictionary *> dicts) {
     mDicts = dicts;
     mDictWorker.setDictionaryList(mDicts);
     foreach(IDictionary *dict, dicts) {
-        Q_ASSERT(dict->isLoaded());
-        setLangPairs(dict->pairs());
+        foreach(LanguagePair pair, dict->pairs()) {
+            if(!list.contains(pair))
+                list.append(pair);
+        }
     }
+    qSort(list);
+    setLangPairs(list);
 }
 
 void DictionaryWidget::zoomIn() {
@@ -157,11 +162,18 @@ void DictionaryWidget::zoomOut() {
 void DictionaryWidget::setLangPairs(const LanguagePairList lst) {
     mLanguagesComboBox->clear();
     foreach(LanguagePair pair, lst) {
-        QString first = QP_LANG_FACTORY[pair.first].name();
-        QString second = QP_LANG_FACTORY[pair.second].name();
+        QString first, second;
+        if(mNativeNames) {
+            first = QP_LANG_FACTORY[pair.first].nativeName();
+            second = QP_LANG_FACTORY[pair.second].nativeName();
+        } else {
+            first = QP_LANG_FACTORY[pair.first].name();
+            second = QP_LANG_FACTORY[pair.second].name();
+        }
 
         if(!first.isEmpty() && !second.isEmpty()) {
-            QString str = QString("%1 -> %2").arg(first, second);
+            qDebug() << "ADD PAIR: " << pair;
+            QString str = QString("%1-%2").arg(first, second);
             mLanguagesComboBox->addItem(str);
             mPairs << pair;
         } else {
@@ -176,7 +188,6 @@ void DictionaryWidget::onQueryComp() {
 }
 
 void DictionaryWidget::onQueryWord() {
-    qDebug() << "WORD QUERY!" << mDictWorker.isRunning();
     mIsEmpty = true;
     mLock = true;
     mDictWorker.query(mPairs.at(mLanguagesComboBox->currentIndex()), mSrcText->text());

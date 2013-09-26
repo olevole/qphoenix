@@ -71,5 +71,5 @@ void Scanner::show() {
 }
 
 void Scanner::setPluginConnector(PluginConnector connector) {
-    mTranslatorIface = connector.QP_TRANSLATOR_WIDGET;
+    mTranslatorIface = connector.translationwidget;
 }

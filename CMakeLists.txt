@@ -48,7 +48,8 @@ src/include/idictionary.h
 src/include/info.h
 src/include/imodule.h
 src/include/api.h
-src/include/pluginconnector.h)
+src/include/pluginconnector.h
+src/include/languagetable.h)
 
 SET(HEADERS
 src/core/mainwindow.h

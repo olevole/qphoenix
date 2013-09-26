@@ -229,10 +229,10 @@ void MainWindow::onConfigAccept() {
      * Plugins processing
      */
     PluginConnector connector;
-    connector.QP_CONFIG_DIALOG = mSettingsDialog;
-    connector.QP_MAIN_WINDOW = this;
-    connector.QP_TRANSLATOR_WIDGET = mTranslationWidget;
-    connector.QP_DICTIONARY_WIDGET = mDictionaryWidget;
+    connector.configdialog = mSettingsDialog;
+    connector.mainwindow = this;
+    connector.translationwidget = mTranslationWidget;
+    connector.dictionarywidget = mDictionaryWidget;
 
     QObjectList *lst = mPluginsConfig->pluginsList();
     for(int i = 0; i < lst->count(); i++) {
@@ -256,6 +256,7 @@ void MainWindow::onConfigAccept() {
 
     mLanguageConfig->setNativeNames(mCommonConfig->useNativeNames());
     mTranslationWidget->setNativeNames(mCommonConfig->useNativeNames());
+    mDictionaryWidget->setNativeNames(mCommonConfig->useNativeNames());
     qDebug() << "DICTS COUNT: " << mDictionaryConfig->dictionaries().count();
     mDictionaryWidget->setDictionaryList(mDictionaryConfig->dictionaries());
 }

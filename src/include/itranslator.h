@@ -21,26 +21,9 @@
 
 #pragma once
 
-#include <QMap>
 #include <QWidget>
 #include "imodule.h"
-
-
-/*!
- * \brief LanguageTable
- *
- * Provide a table for translators without linear
- * translation betwen languages. (for example, you
- * can translate English word to German or Russian,
- * but you can translate Russian word only to English
- * The key QString is a source langauge, the value -
- * possible result languages. This hash must contain
- * ONLY keys for LanguageList, not a values!
- * The key's MUST be an ISO 639-1 codes.
- * More information: en.wikipedia.org/wiki/List_of_ISO_639-1_codes
- */
-
-typedef QMap <QString, QStringList> LanguageTable;
+#include "languagetable.h"
 
 class ITranslator : public IModule {
 public:
@@ -69,18 +52,6 @@ public:
     virtual QString translate(const QString &src_text, const QString &src_lang,
                                const QString &dest_lang) = 0;
 
-    /*!
-     * \brief isSupportDetection
-     * \return true if module support language detection, or false
-     */
-    virtual bool isSupportDetection() {return false;}
-
-    /*!
-     * \brief detectLanguage
-     * \param pattern text pattern for detection of language
-     * \return language code found by pattern, or empty string if detection is not supported or failed.
-     */
-    virtual QString detectLanguage(const QString &pattern) {return QString();}
 };
 
 Q_DECLARE_INTERFACE(ITranslator, "com.qphoenix.interfaces.translator/1.0");

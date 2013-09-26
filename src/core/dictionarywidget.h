@@ -45,7 +45,7 @@ class QToolBar;
 class QLineEdit;
 class DictionaryTemplate;
 
-class DictionaryWidget : public QWidget, IDictionaryWidget, Info
+class DictionaryWidget : public QWidget, public IDictionaryWidget, Info
 {
     Q_OBJECT
     Q_INTERFACES(IDictionaryWidget Info)
@@ -60,6 +60,7 @@ public:
 public slots:
     void setNativeNames(const bool b) { mNativeNames = b;}
     void setDictionaryList(QList<IDictionary *>dicts);
+
     //TODO: Implement those two functions reactions
     void setMaxVariants(const int count){mMaxVarCount = count;}
     void setInputTimeout(const int t) {mQueryTimer->setInterval(t);}

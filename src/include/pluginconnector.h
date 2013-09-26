@@ -1,30 +1,30 @@
 #pragma once
 
 class IMainWindow;
-class Config;
+class IConfig;
 class ITranslationWidget;
-class DictionaryWidget;
-
+class IDictionaryWidget;
 
 /*!
  * \brief The PluginConnector struct
  * Structure with public pointers to plugin interfaces
- * QP_MAIN_WINDOW - Main Window interface
- * QP_CONFIG_DIALOG - Config dialog iface
- * QP_TRANSLATOR_WIDGET - Translator widget iface
- * QP_DICTIONARY_WIDGET - Dictionary widget iface
+ * mainwindow - Main Window interface
+ * configdialog - Config dialog iface
+ * translationwidget - Translator widget iface
+ * dictionarywidget - Dictionary widget iface
  */
+
 struct PluginConnector
 {
     PluginConnector() {
-        QP_MAIN_WINDOW = NULL;
-        QP_CONFIG_DIALOG = NULL;
-        QP_TRANSLATOR_WIDGET = NULL;
-        QP_DICTIONARY_WIDGET = NULL;
+        mainwindow = NULL;
+        configdialog = NULL;
+        translationwidget = NULL;
+        dictionarywidget = NULL;
     }
-    IMainWindow *QP_MAIN_WINDOW;
-    IConfig *QP_CONFIG_DIALOG;
-    ITranslationWidget *QP_TRANSLATOR_WIDGET;
-    DictionaryWidget *QP_DICTIONARY_WIDGET;
+    IMainWindow *mainwindow;
+    IConfig *configdialog;
+    ITranslationWidget *translationwidget;
+    IDictionaryWidget *dictionarywidget;
 };
 

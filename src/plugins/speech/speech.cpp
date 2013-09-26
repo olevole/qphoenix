@@ -108,5 +108,5 @@ void Speech::removeTmpFile() {
 }
 
 void Speech::setPluginConnector(PluginConnector connector) {
-    mTranslatorIface = connector.QP_TRANSLATOR_WIDGET;
+    mTranslatorIface = connector.translationwidget;
 }

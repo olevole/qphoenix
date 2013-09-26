@@ -35,7 +35,6 @@ CommonConfig::CommonConfig(QWidget *parent) :
     mTabWidget->addTab(page1, tr("Language"));
 }
 
-
 void CommonConfig::save() {
     QSettings s;
     s.beginGroup("Common");

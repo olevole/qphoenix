@@ -14,6 +14,7 @@
 #include "idictionary.h"
 #include "itranslator.h"
 #include "dictionarytemplate.h"
+#include "languagetable.h"
 
 void qpMsgHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {

@@ -27,6 +27,7 @@ class IConfigPage : public Info
 {
 public:
     virtual ~IConfigPage(){}
+
     virtual void save() = 0;
     virtual void read() = 0;
     virtual void reset() = 0;

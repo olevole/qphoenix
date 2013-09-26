@@ -30,16 +30,6 @@ class IDictionaryWidget {
 public:
     virtual ~IDictionaryWidget() {}
 
-//    virtual void zoomIn() = 0;
-//    virtual void zoomOut() = 0;
-
-//    virtual void addToolbarAction(QAction *action);
-
-//    virtual QString getResult() const = 0;
-//    virtual QStringList getCompletions(const QString &word);
-
-//slots
-//    virtual void query(const QString &text, const QPair &langs);
 };
 
 Q_DECLARE_INTERFACE(IDictionaryWidget, "com.qphoenix.interfaces.dictionarywidget/1.0")

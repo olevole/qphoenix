@@ -8,10 +8,10 @@ class QObject;
 
 
 /*!
- * \brief The BaseModule class
+ * \brief The IModule class
  *
  * This is a base class for ALL modules (translators, dictionaries, plugins)
- * Class BaseModule MUST be inherited by all kinds of modules.
+ * Class IModule MUST be inherited by all kinds of modules.
  */
 
 class IModule : public Info {
