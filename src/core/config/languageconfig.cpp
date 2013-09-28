@@ -15,7 +15,7 @@ LanguageConfig::LanguageConfig(QWidget *parent) :
     mNativeNames(false),
     mUnsetButton(new QPushButton(tr("Unset All"),this))
 {
-    mLangList = LanguageEngine::instance()->languages();
+    mLangList = LanguageDB::instance()->languages();
 
     QHBoxLayout *buttons  = new QHBoxLayout;
     buttons->addWidget(mSetButton);
@@ -96,10 +96,7 @@ void LanguageConfig::createTable() {
     int i = 0;
     for(; it != mLangList.end(); ++it) {
         QString name;
-        if(mNativeNames)
-            name = it.value().nativeName();
-        else
-            name = it.value().name();
+        name = it.value().name(mNativeNames);
         QString icon = QString(":/flags/flags/%1.png").arg(it.key());
         mTable->insertRow(i);
 

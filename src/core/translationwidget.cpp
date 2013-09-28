@@ -228,14 +228,10 @@ void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
         QString key =  keys[i];
         QString icon = QString(":/flags/%1.png").arg(key);
         QString name;
-        Language entry = QP_LANG_FACTORY[key];
-        if(mNativeNames)
-            name = entry.nativeName();
-        else
-            name = entry.name();
+        Language entry = QP_LANGUAGE_DB->find(key);
+        name = entry.name(mNativeNames);
         cb->addItem(QIcon(icon), name, key);
         cb->setItemData(i, key);
-
     }
 }
 

@@ -16,35 +16,40 @@ public:
     explicit Language(const QString &name,
                       const QString &native)
     {
-       setName(name);
-       setNativeName(native);
+        mName = name;
+        mNativeName = native;
     }
 
-    explicit Language(){}
+    explicit Language() {}
 
-    QString name() const        {return mName;      }
-    QString nativeName() const  {return mNativeName;}
-    void setName(const QString &name)           {mName = name;          }
-    void setNativeName(const QString &native)   {mNativeName = native;  }
+    QString name(bool native = false) {
+        return native ? mNativeName : mName;
+    }
+
+    QString name() const {return mName;}
 private:
     QString mName, mNativeName;
 };
 
-#define QP_LANG_FACTORY LanguageEngine::instance()->languages()
+#define QP_LANGUAGE_DB LanguageDB::instance()
 
-class LanguageEngine : public QObject {
+class LanguageDB : public QObject {
 public:
-    static  LanguageEngine* instance()
+    static  LanguageDB* instance()
     {
         static QMutex mutex;
-        static LanguageEngine *singleton = 0;
+        static LanguageDB *singleton = 0;
 
         if(!singleton) {
             mutex.lock();
-            singleton =  new LanguageEngine;
+            singleton =  new LanguageDB;
             mutex.unlock();
         }
         return singleton;
+    }
+
+    Language find(const QString &key) const {
+        return mLangList[key];
     }
 
     /*!
@@ -54,7 +59,7 @@ public:
     LanguageList languages() const {return mLangList;}
 private:
     LanguageList mLangList;
-    LanguageEngine();
-    LanguageEngine(const LanguageEngine& root);
-    LanguageEngine& operator=(const LanguageEngine&);
+    LanguageDB();
+    LanguageDB(const LanguageDB& root);
+    LanguageDB& operator=(const LanguageDB&);
 };

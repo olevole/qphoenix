@@ -163,13 +163,8 @@ void DictionaryWidget::setLangPairs(const LanguagePairList lst) {
     mLanguagesComboBox->clear();
     foreach(LanguagePair pair, lst) {
         QString first, second;
-        if(mNativeNames) {
-            first = QP_LANG_FACTORY[pair.first].nativeName();
-            second = QP_LANG_FACTORY[pair.second].nativeName();
-        } else {
-            first = QP_LANG_FACTORY[pair.first].name();
-            second = QP_LANG_FACTORY[pair.second].name();
-        }
+        first = QP_LANGUAGE_DB->find(pair.first).name(mNativeNames);
+        second = QP_LANGUAGE_DB->find(pair.second).name(mNativeNames);
 
         if(!first.isEmpty() && !second.isEmpty()) {
             qDebug() << "ADD PAIR: " << pair;
