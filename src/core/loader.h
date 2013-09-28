@@ -4,37 +4,25 @@
 #include <QObject>
 #include <QList>
 
-//typedef QList<QObject *> ModuleList;
+/*!
+ * \brief The Loader class
+ * ModuleLoader
+ */
 
 class Loader : public QObject
 {
     Q_OBJECT
 public:
-    Loader(QObject *parent = 0) :QObject(parent){}
+    Loader(QObject *parent = 0) :QObject(parent) {}
+    Loader(const QString &path) {addSearchPath(path);}
+    Loader(const QStringList &paths) {addSearchPath(paths);}
 
-    Loader(const QString &path)
-    { addSearchPath(path);  }
-
-    Loader(const QStringList &paths)
-    { addSearchPath(paths); }
-
-    // ---------------------------------------------------------
-
-    void addSearchPath(const QString &path)
-    { addSearchPath(QStringList() << path); }
-    void addSearchPath(const QStringList &paths)
-    { mSearchPaths += paths; }
-
-    QStringList searchPaths() const
-    { return mSearchPaths; }
-
-    void clearSearchPaths()
-    { mSearchPaths.clear(); }
-
-    // ---------------------------------------------------------
+    void addSearchPath(const QString &path) {addSearchPath(QStringList() << path);}
+    void addSearchPath(const QStringList &paths) {mSearchPaths += paths;}
+    QStringList searchPaths() const {return mSearchPaths;}
+    void clearSearchPaths() {mSearchPaths.clear();}
 
     QObjectList modules();
-//    void update();
 private:
     QStringList mSearchPaths;
 };

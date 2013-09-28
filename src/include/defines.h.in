@@ -1,9 +1,7 @@
 #pragma once
 
-
-#include <QDir>
 #include <QString>
-//#include <QtGui/con>
+#include <QIcon>
 
 #define QP_APP_VERSION "0.01a"
 #define QP_APP_NAME "QPhoenix"
@@ -13,7 +11,6 @@
 
 #define QP_TRANSLATOR_TIMEOUT 10000
 #define QP_DICTIONARY_TIMEOUT 10000
-
 
 #define QP_DLIB_PREFIX "${CMAKE_SHARED_LIBRARY_PREFIX}"
 #define QP_DLIB_SUFFIX "${CMAKE_SHARED_LIBRARY_SUFFIX}"

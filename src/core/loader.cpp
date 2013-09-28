@@ -24,7 +24,6 @@ QObjectList Loader::modules() {
 
     /*
      * Now we have a list with absolute paths to EACH plugin
-     * Let's try load them
      */
     QObjectList list;
     foreach(QString module, abs) {
@@ -34,7 +33,7 @@ QObjectList Loader::modules() {
         if(l->load() && (instance = l->instance()) != NULL)
             list.append(instance);
         else
-            qWarning() << "Couldn't load plugin: " << l->fileName() << l->errorString();
+            qWarning() << "Couldn't load plugin: " << l->fileName() << "reason: " << l->errorString();
     }
     return list;
 }
