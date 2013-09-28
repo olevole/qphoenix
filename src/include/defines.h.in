@@ -7,7 +7,7 @@
 
 #define QP_APP_VERSION "0.01a"
 #define QP_APP_NAME "QPhoenix"
-#define QP_ORG_NAME "QPhoenix"
+#define QP_ORG_NAME "QPhoenix Inc."
 #define QP_ORG_DOMAIN "http://qphoenix.org"
 #define QP_GIT_REV "${GIT_HASH}"
 
@@ -15,16 +15,9 @@
 #define QP_DICTIONARY_TIMEOUT 10000
 
 
-/*!
- * Functionality definitions
- */
-
-#define QP_DICTIONARY_ENABLED
-#define QP_TRANSLATOR_ENABLED
-
 #define QP_DLIB_PREFIX "${CMAKE_SHARED_LIBRARY_PREFIX}"
 #define QP_DLIB_SUFFIX "${CMAKE_SHARED_LIBRARY_SUFFIX}"
-#define QP_MODULE_SIGNATURE QP_DLIB_PREFIX "*" QP_DLIB_SUFFIX
+#define QP_MODULE_SIGNATURE (QP_DLIB_PREFIX "*" QP_DLIB_SUFFIX)
 
 #define QP_ICON(x) QIcon::fromTheme(x, QIcon(QString(":/icons/" + QString(x) + ".png")))
 
