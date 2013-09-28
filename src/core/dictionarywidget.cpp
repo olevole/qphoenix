@@ -80,9 +80,9 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mMainLayout->addWidget(fr);
     setLayout(mMainLayout);
 
-    // A Validator for query input
-//    QRegExpValidator *v = new QRegExpValidator(QRegExp("[^\Q ,.\E].*"), this);
-//    mSrcText->setValidator(v);
+//     A Validator for query input
+    QRegExpValidator *v = new QRegExpValidator(QRegExp("[^\\Q ,.\E].*"), this);
+    mSrcText->setValidator(v);
 
     // A Completer for query input
     mCompleter->setModel(mCompleterModel);

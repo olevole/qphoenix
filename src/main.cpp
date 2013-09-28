@@ -16,6 +16,8 @@
 #include "dictionarytemplate.h"
 #include "languagetable.h"
 
+#include "specparser.h"
+
 void qpMsgHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     QByteArray localMsg = msg.toLocal8Bit();

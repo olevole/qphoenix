@@ -2,6 +2,7 @@
 
 #include <QObject>
 
+
 class MainWindow;
 class DictionaryWorker;
 class TranslatorWorker;
@@ -24,3 +25,7 @@ private:
     MainWindow *mMainWindow;
     
 };
+
+
+
+

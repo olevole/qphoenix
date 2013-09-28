@@ -38,7 +38,6 @@ typedef QList<LanguagePair> LanguagePairList;
 typedef QList<IDictionary *> DictionaryList;
 
 
-
 class IDictionary : public IModule {
 public:
     virtual ~IDictionary(){}

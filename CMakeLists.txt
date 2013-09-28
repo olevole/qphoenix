@@ -34,7 +34,8 @@ ${CMAKE_CURRENT_BINARY_DIR}/src/include
 src/core
 src/core/config
 src/include
-src/libphoenix)
+src/libphoenix
+)
 
 SET(IFACES
 src/include/iconfigpage.h
@@ -66,6 +67,7 @@ src/core/loader.h
 src/core/infodialog.h
 src/core/dictionarytemplate.h
 src/core/languages.h
+src/core/specparser.h
 src/core/core.h)
 
 SET(SOURCES
@@ -84,6 +86,7 @@ src/core/loader.cpp
 src/core/infodialog.cpp
 src/core/dictionarytemplate.cpp
 src/core/languages.cpp
+src/core/specparser.cpp
 src/core/core.cpp)
 
 SET(RESOURCES resources/resources.qrc)
@@ -110,6 +113,7 @@ ADD_SUBDIRECTORY(src/plugins)
 ADD_SUBDIRECTORY(src/translators)
 ADD_SUBDIRECTORY(src/dictionaries)
 ADD_SUBDIRECTORY(src/libphoenix)
+#ADD_SUBDIRECTORY(src/tests)
 
 CONFIGURE_FILE(src/include/defines.h.in src/include/defines.h)
 

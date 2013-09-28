@@ -1,21 +1,18 @@
-SET(QT_USE_QTTEST TRUE)
+project(tests)
+set(QT_USE_QTTEST TRUE)
 
-SET(PLUGINTEST_SRC plugintest.cpp )
-SET(PLUGINTEST_HDR plugintest.h )
+include_directories(../core)
 
-
-set(DICTEST_SRC dictionarytest.cpp)
-set(DICTEST_HDR dictionarytest.h)
-
-
-
-
-
+macro(mktest NAME HDR SRC)
+	qt5_wrap_cpp(MOC_HDR ${HDR})
+        add_executable(${NAME} ${HDR} ${SRC})
+        qt5_use_modules(${NAME} Core Gui)
+    add_test(NAME ${NAME} COMMAND ${NAME})
+endmacro(mktest)
 
 
+SET(PARSER_HDRS ../core/specparser.h)
+SET(PARSER_SRCS ../core/specparser.cpp parsertest.cpp )
 
-QT4_WRAP_CPP(MOC_SOURCES ${PLUGINTEST_HDR})
-ADD_EXECUTABLE(plugintest ${PLUGINTEST_SRC} ${MOC_SOURCES})
 
-TARGET_LINK_LIBRARIES(plugintest ${STATICLIB} ${QT_QTTEST_LIBRARY}  ${QT_QTCORE_LIBRARY})
-ADD_TEST( NAME plugintest COMMAND plugintest )
+mktest( parsertest ${PARSER_HDRS} ${PARSER_SRCS})

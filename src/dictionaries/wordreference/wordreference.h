@@ -19,11 +19,15 @@ public:
 
     LanguagePairList pairs() const {
         LanguagePairList list;
-        for(int i = 0; i < mLangs.count(); i++) {
-            list << LanguagePair("en", mLangs.at(i))
-                 << LanguagePair(mLangs.at(i), "en");
-        }
 
+
+//        for(int i = 0; i < mLangs.count(); i++) {
+//            list << LanguagePair("en", mLangs.at(i))
+//                 << LanguagePair(mLangs.at(i), "en");
+//        }
+
+
+//        list << LanguagePair
         return list;
     }
 
