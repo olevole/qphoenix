@@ -22,17 +22,10 @@
 #define QP_DICTIONARY_ENABLED
 #define QP_TRANSLATOR_ENABLED
 
+#define QP_DLIB_PREFIX "${CMAKE_SHARED_LIBRARY_PREFIX}"
+#define QP_DLIB_SUFFIX "${CMAKE_SHARED_LIBRARY_SUFFIX}"
+#define QP_MODULE_SIGNATURE QP_DLIB_PREFIX "*" QP_DLIB_SUFFIX
 
-
-#if defined(Q_OS_UNIX)
-    #define QP_DLIB_SUFFIX "so"
-#elif defined(Q_OS_WIN32)
-    #define QP_DLIB_SUFFIX "dll"
-#elif defined(Q_OS_MAC)
-    #define QP_DLIB_SUFFIX "dylib"
-#endif
-
-#define QP_MODULE_SIGNATURE QString("%1%2").arg("lib*.").arg(QP_DLIB_SUFFIX)
 #define QP_ICON(x) QIcon::fromTheme(x, QIcon(QString(":/icons/" + QString(x) + ".png")))
 
 /*!
