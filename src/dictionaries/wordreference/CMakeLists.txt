@@ -1,12 +1,16 @@
-SET(TARGET wordreference)
-SET(SRC wordreference.cpp)
-SET(HDR wordreference.h)
-ADD_DEFINITIONS(-DQT_PLUGIN)
+set(TARGET wordreference)
+set(SRC wordreference.cpp)
+set(HDR wordreference.h)
+set(SPEC wordreference.spec)
 
-QT5_WRAP_CPP(MOC_SOURCES ${HDR})
+configure_file(wordreference.spec.in ${SPEC})
 
-ADD_LIBRARY(${TARGET} SHARED ${HDR} ${SRC}  ${MOC_SOURCES})
-QT5_USE_MODULES(${TARGET} Network Core Gui Widgets)
-INSTALL(TARGETS ${TARGET} DESTINATION ${DICTIONARIES_PATH} )
+
+qt5_wrap_cpp(MOC_SOURCES ${HDR})
+add_library(${TARGET} SHARED ${HDR} ${SRC}  ${MOC_SOURCES})
+qt5_use_modules(${TARGET} Network Core Gui Widgets)
+
+install(TARGETS ${TARGET} DESTINATION ${DICTIONARIES_PATH} )
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${SPEC} DESTINATION ${PLUGINS_PATH})
 
 

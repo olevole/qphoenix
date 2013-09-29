@@ -1,15 +1,17 @@
-SET(TARGET "yandex_translator")
+set(TARGET "yandex_translator")
+set(SOURCES yandex_translator.cpp)
+set(HEADERS yandex_translator.h)
 
-SET(SOURCES yandex_translator.cpp)
-SET(HEADERS yandex_translator.h)
+set(SPEC yandex_translator.spec)
 
+configure_file(yandex_translator.spec.in yandex_translator.spec)
 
-QT5_WRAP_CPP(MOC_SOURCES ${HEADERS})
+qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
+add_library( ${TARGET} SHARED ${HEDARS} ${SOURCES}  ${MOC_SOURCES})
+qt5_use_modules(${TARGET} Core Network Widgets)
+target_link_libraries(${TARGET} phoenix)
 
-
-ADD_LIBRARY( ${TARGET} SHARED ${HEDARS} ${SOURCES}  ${MOC_SOURCES})
-QT5_USE_MODULES(${TARGET} Core Network Widgets)
-TARGET_LINK_LIBRARIES(${TARGET} phoenix )
-
-INSTALL(TARGETS ${TARGET} DESTINATION ${TRANSLATORS_PATH} )
+message(${CMAKE_CURRENT_BINARY_DIR})
+install(TARGETS ${TARGET} DESTINATION ${TRANSLATORS_PATH})
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${SPEC} DESTINATION ${TRANSLATORS_PATH})
 

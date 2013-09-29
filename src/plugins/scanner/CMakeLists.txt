@@ -1,17 +1,13 @@
-SET(TARGET scanner)
+set(TARGET scanner)
+set(SOURCES scanner.cpp)
+set(HEADERS scanner.h)
+set(SPEC scanner.spec)
 
+configure_file(scanner.spec.in ${SPEC})
 
-SET(SOURCES scanner.cpp)
+qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
+add_library(${TARGET}  SHARED ${HEDARS} ${SOURCES}  ${MOC_SOURCES})
+qt5_use_modules(${TARGET} Widgets Core)
 
-SET(HEADERS scanner.h)
-add_definitions(-DQT_PLUGIN)
-
-QT5_WRAP_CPP(MOC_SOURCES ${HEADERS})
-
-ADD_LIBRARY(${TARGET}  SHARED ${HEDARS} ${SOURCES}  ${MOC_SOURCES})
-QT5_USE_MODULES(${TARGET} Widgets Core)
-
-#QT5_ADD_PLUGIN(${TARGET}  SHARED ${HEDARS} ${SOURCES}  ${MOC_SOURCES}
-
-INSTALL(TARGETS ${TARGET} DESTINATION ${PLUGINS_PATH})
-
+install(TARGETS ${TARGET} DESTINATION ${PLUGINS_PATH})
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${SPEC} DESTINATION ${PLUGINS_PATH})

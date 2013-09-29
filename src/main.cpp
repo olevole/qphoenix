@@ -7,16 +7,6 @@
 
 #include "mainwindow.h"
 #include "defines.h"
-#include "languages.h"
-#include "dictionaryconfig.h"
-#include "querywrappers.h"
-#include "dictionarywidget.h"
-#include "idictionary.h"
-#include "itranslator.h"
-#include "dictionarytemplate.h"
-#include "languagetable.h"
-
-#include "specparser.h"
 
 void qpMsgHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
