@@ -26,7 +26,7 @@ void DictionaryWorker::run() {
         single:
         qDebug() << "Creating reply...";
         foreach(IDictionary *dict, mDictList) {
-            emit reply(dict->query(mQuery, mPair), dict->name());
+//            emit reply(dict->query(mQuery, mPair), dict->name()); TODO
         }
     }
     qDebug() << "Finished!";

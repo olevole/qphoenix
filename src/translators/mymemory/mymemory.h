@@ -1,7 +1,6 @@
 #pragma once
 
 #include "itranslator.h"
-#include "info.h"
 #include <QObject>
 #include <QCheckBox>
 #include <QDebug>

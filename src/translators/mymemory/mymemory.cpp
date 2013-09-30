@@ -24,8 +24,6 @@ QStringList MyMemory::mLangs = QStringList()   << "sq" <<"ar" <<"bg" <<"ca"
 MyMemory::MyMemory(QObject *parent)
     :QObject(parent)
 {
-    setName("MyMemory");
-    setUrl("http://mymemory.translated.net");
 }
 
 QString MyMemory::translate(const QString &src_text, const QString &src_lang, const QString &dest_lang) {

@@ -27,7 +27,6 @@ LanguageConfig::LanguageConfig(QWidget *parent) :
     main->addLayout(buttons);
     this->setLayout(main);
 
-    setName("Languages");
     createTable();
 
     connect(mSetButton, SIGNAL(clicked()), this, SLOT(setAll()));

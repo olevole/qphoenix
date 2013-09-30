@@ -19,6 +19,8 @@ public:
     virtual void save();
     virtual void read();
     virtual void reset();
+    QString name() const{return "";}
+    QIcon icon() const{return QIcon("");}
 
     bool useNativeNames();
 private:

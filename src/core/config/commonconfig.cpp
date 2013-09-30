@@ -14,7 +14,6 @@ CommonConfig::CommonConfig(QWidget *parent) :
     mLanguageCombobox(new QComboBox(this)),
     mLanguageLabel(new QLabel(this))
 {
-    setName("Common");
     mUseNativeCheckbox->setText(tr("Use native language names"));
     mLanguageLabel->setText(tr("Inteface language"));
 

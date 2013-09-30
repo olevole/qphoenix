@@ -4,8 +4,9 @@ set(HEADERS speech.h)
 set(RESOURCES speech_resources.qrc)
 set(SPEC speech.spec)
 
-configure_file(speech.spec.in ${SPEC})
+set(FULL_TARGET_NAME ${CMAKE_SHARED_LIBRARY_PREFIX}${TARGET}${CMAKE_SHARED_LIBRARY_SUFFIX})
 
+configure_file(speech.spec.in ${SPEC})
 
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
 qt5_add_resources(SPEECH_RC ${RESOURCES})

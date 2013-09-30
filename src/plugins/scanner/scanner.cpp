@@ -34,9 +34,6 @@ Scanner::Scanner(QObject *parent) :
     QObject(parent),
     mIsLoaded(false)
 {
-    this->setName("Scanner");
-    this->setDescription("Scans selection buffer for text");
-    this->setVersion("0.999999");
 }
 
 bool Scanner::load() {

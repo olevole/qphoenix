@@ -25,10 +25,10 @@
 #include <QWebView>
 #include <QStringList>
 #include <QListWidget>
-#include "info.h"
 #include "idictionarywidget.h"
 #include "idictionary.h"
 #include "querywrappers.h"
+#include "dictionaryconfig.h"
 
 class QComboBox;
 class QTextBrowser;
@@ -45,10 +45,9 @@ class QToolBar;
 class QLineEdit;
 class DictionaryTemplate;
 
-class DictionaryWidget : public QWidget, public IDictionaryWidget, Info
+class DictionaryWidget : public QWidget, public IDictionaryWidget
 {
     Q_OBJECT
-    Q_INTERFACES(IDictionaryWidget Info)
 public:
     explicit DictionaryWidget(QWidget *parent = 0);
 
@@ -59,7 +58,7 @@ public:
     virtual QWidget *instance() {return this;}
 public slots:
     void setNativeNames(const bool b) { mNativeNames = b;}
-    void setDictionaryList(QList<IDictionary *>dicts);
+    void setDictionaryList(QPDictionaryList dicts);
 
     //TODO: Implement those two functions reactions
     void setMaxVariants(const int count){mMaxVarCount = count;}
@@ -98,7 +97,7 @@ private:
     QCompleter *mCompleter;
     QStringListModel *mCompleterModel;
 
-    QList<IDictionary *>mDicts;
+    QPDictionaryList mDicts;
     DictionaryWorker mDictWorker;
     LanguagePairList mPairs;
     DictionaryTemplate *mTemplate;

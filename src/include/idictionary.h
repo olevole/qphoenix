@@ -35,7 +35,7 @@ class IDictionary;
 
 typedef QPair<QString, QString> LanguagePair;
 typedef QList<LanguagePair> LanguagePairList;
-typedef QList<IDictionary *> DictionaryList;
+//typedef QList<IDictionary *> DictionaryList;
 
 
 class IDictionary : public IModule {

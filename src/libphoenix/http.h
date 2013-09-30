@@ -15,7 +15,7 @@ class HTTP : public QObject
 {
     Q_OBJECT
 public:
-    static QByteArray GET( QUrl req);
+    static QByteArray GET(QUrl req);
     static QByteArray POST(const QUrl &url, const QString &data);
 private:
     HTTP(QObject *parent = 0);

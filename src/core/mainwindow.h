@@ -39,13 +39,6 @@ public:
         Dictionary = 1,
     };
 
-
-    IDictionaryWidget *dictionaryWidget()
-    {return qobject_cast<IDictionaryWidget *>(mDictionaryWidget); }
-
-    ITranslationWidget *translatorWidget()
-    {return qobject_cast<ITranslationWidget *>(mTranslationWidget);}
-
     QMainWindow *instance() {return this;}
 
     /*

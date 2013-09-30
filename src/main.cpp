@@ -8,6 +8,9 @@
 #include "mainwindow.h"
 #include "defines.h"
 
+#include "loader.h"
+#include "specparser.h"
+
 void qpMsgHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     QByteArray localMsg = msg.toLocal8Bit();

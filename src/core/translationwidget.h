@@ -25,7 +25,6 @@
 #include <QToolBar>
 #include <QSettings>
 #include "itranslationwidget.h"
-#include "info.h"
 #include "itranslator.h"
 #include "languages.h"
 #include "querywrappers.h"
@@ -54,10 +53,9 @@ private:
 };
 
 
-class TranslationWidget : public QWidget, public ITranslationWidget, Info
+class TranslationWidget : public QWidget, public ITranslationWidget
 {
     Q_OBJECT
-    Q_INTERFACES(ITranslationWidget Info)
 public:
     explicit TranslationWidget(QWidget *parent = 0);
     virtual ~TranslationWidget();

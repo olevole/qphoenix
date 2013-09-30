@@ -2,6 +2,7 @@ set(TARGET "mymemory")
 set(SOURCES mymemory.cpp)
 set(HEADERS mymemory.h)
 set(SPEC mymemory.spec)
+set(FULL_TARGET_NAME ${CMAKE_SHARED_LIBRARY_PREFIX}${TARGET}${CMAKE_SHARED_LIBRARY_SUFFIX})
 
 configure_file(mymemory.spec.in ${SPEC})
 

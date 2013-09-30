@@ -16,8 +16,7 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
       mResultCountLabel(new QLabel(tr("Maximum dictionary results to show"), this)),
       mResultCountSpin(new QSpinBox(this))
 {
-    setIcon(QP_ICON("dictionary"));
-    Loader ldr("dictionaries:");
+    NewLoader ldr("dictionaries:");
     mDictionaries = ldr.modules();
 
     QVBoxLayout *tab1 = new QVBoxLayout;
@@ -40,7 +39,6 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(mTabWidget);
     this->setLayout(mainLayout);
-    this->setName("Dictionaries");
 
     mTable->setColumnCount(4);
     mTable->verticalHeader()->hide();
@@ -50,18 +48,22 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
     mTable->setHorizontalHeaderItem(3, new QTableWidgetItem("#"));
 
     for (int i = 0; i < mDictionaries.count(); ++i) {
-        QObject *d = mDictionaries[i];
-        IDictionary *iface = qobject_cast<IDictionary *>(d);
+        Module module = mDictionaries[i];
+        IDictionary *iface = qobject_cast<IDictionary *>(module.instance);
         iface->load();
 
-        mConvertedDicts.append(iface);
+        QPDictionary dict;
+        dict.instance = iface;
+        dict.data = module.data;
+
+        mConvertedDicts.append(dict);
 
         mTable->insertRow(i);
         mTable->setRowHeight(i, 20);
 
-        mTable->setItem(i, 0, new QTableWidgetItem(iface->name()));
-        mTable->setItem(i, 1, new QTableWidgetItem(iface->description()));
-        mTable->setItem(i, 2, new QTableWidgetItem(iface->version()));
+        mTable->setItem(i, 0, new QTableWidgetItem(module.data.name));
+        mTable->setItem(i, 1, new QTableWidgetItem(module.data.description));
+        mTable->setItem(i, 2, new QTableWidgetItem(module.data.version));
     }
 }
 

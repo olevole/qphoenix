@@ -1,6 +1,5 @@
 #include "pluginsconfig.h"
 #include "defines.h"
-#include "info.h"
 #include "iplugin.h"
 
 #include <QTableWidget>
@@ -18,7 +17,6 @@ PluginsConfig::PluginsConfig(QWidget *parent)
     mainLayoit->addWidget(mTable);
 
     this->setLayout(mainLayoit);
-    this->setName("Plugins");
 
     mTable->setColumnCount(4);
     mTable->verticalHeader()->hide();
@@ -79,12 +77,13 @@ void PluginsConfig::reset() {
 }
 
 void PluginsConfig::updateTable() {
-    Loader loader("plugins:");
+    NewLoader loader("plugins:");
 
     mPlugins = loader.modules();
 
-    for (int i = 0; i < mPlugins.count(); ++i) {
-        IPlugin *iface = qobject_cast<IPlugin *>(mPlugins.at(i));
+    foreach(Module plugin, mPlugins) {
+
+        IPlugin *iface = qobject_cast<IPlugin *>(plugin.instance);
 
         const int row = mTable->rowCount();
         mTable->insertRow(row);
@@ -92,7 +91,7 @@ void PluginsConfig::updateTable() {
         mTable->setRowHeight(row, 20);
 
         QStringList data;
-        data << iface->name() << iface->description() << iface->version();
+        data << plugin.data.name << plugin.data.description << plugin.data.version;
 
         for (int i = 0; i < data.count(); ++i) {
             QString item_data = data[i];

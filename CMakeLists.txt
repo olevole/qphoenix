@@ -46,7 +46,6 @@ src/include/iconfig.h
 src/include/iplugin.h
 src/include/itranslator.h
 src/include/idictionary.h
-src/include/info.h
 src/include/imodule.h
 src/include/api.h
 src/include/pluginconnector.h

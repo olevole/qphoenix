@@ -23,9 +23,10 @@
 
 #include <QWidget>
 #include <QList>
+#include <QComboBox>
 #include "iconfigpage.h"
 #include "itranslator.h"
-#include <QComboBox>
+#include "loader.h"
 
 class QLabel;
 class QComboBox;
@@ -50,14 +51,19 @@ public:
     void read();
     void reset();
 
+    QString name() const{return "";}
+    QIcon icon() const{return QIcon("");}
+
     QComboBox *getEmbeddedComboBox() {
         return mEmbeddedTranslatorComboBox;
     }
 
     ITranslator *currentTranslator() {
         const int i = mTranslatorComboBox->currentIndex();
-        if(i > -1) return mTranslatorsList[i];
-        else       return NULL;
+        if(i > -1)
+            return qobject_cast<ITranslator *>(mModuleList[i].instance);
+        else
+            return NULL;
     }
 private slots:
     void onIndexChange(const int i);
@@ -70,6 +76,7 @@ private:
     QGroupBox *mOptionsGroupBox;
     QHBoxLayout *mOptionsLayout;
     QVBoxLayout *mTab1;
-    QList <ITranslator *>mTranslatorsList;
+//    QList <ITranslator *>mTranslatorsList;
     QTabWidget *mTabWidget;
+    ModuleList mModuleList;
 };

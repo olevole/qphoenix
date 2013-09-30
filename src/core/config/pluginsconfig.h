@@ -1,7 +1,6 @@
 #pragma once
 
 #include "iconfigpage.h"
-#include "info.h"
 #include "loader.h"
 #include <QWidget>
 #include <QList>
@@ -22,7 +21,7 @@ public:
      * \brief pluginsList
      * \return list of loaded plugin QObject's pointers
      */
-    QObjectList *pluginsList() {
+    ModuleList *pluginsList() {
         return &mPlugins;
     }
 
@@ -41,11 +40,13 @@ public:
     void save();
     void read();
     void reset();
+    QString name() const{return "";}
+    QIcon icon() const{return QIcon("");}
 protected:
     void updateTable();
 private:
     QTableWidget *mTable;
-    QObjectList mPlugins;
+    ModuleList mPlugins;
     QStringList mEnabledList;
 
     QList<QCheckBox *>mCheckboxList;

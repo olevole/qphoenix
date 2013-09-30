@@ -8,7 +8,7 @@
 
 
 void ModuleSpecParser::keyError(const QString &key) {
-    qWarning() << "Invalid spec format: cannot find key'" << key << "' in :" << mSpecFile;
+    qWarning() << "Invalid spec format: cannot find key" << key << " in " << mSpecFile;
 }
 
 ModuleSpecData ModuleSpecParser::parse(const QString &specfile) {
@@ -16,11 +16,10 @@ ModuleSpecData ModuleSpecParser::parse(const QString &specfile) {
 
     ModuleSpecData data;
     QFile file(specfile);
-    if(!file.open(QFile::ReadOnly)) {
-        qWarning() << "Cannot parse spec file: " << specfile;
+    if(!file.open(QFile::ReadOnly | QFile::Text)) {
+        qWarning() << "Cannot read spec file: " << specfile << " " << file.errorString();
         return data;
     }
-
     QJsonObject root = QJsonDocument::fromJson(file.readAll()).object();
 
     if(!root.contains("qphoenix"))
@@ -31,10 +30,19 @@ ModuleSpecData ModuleSpecParser::parse(const QString &specfile) {
     if(!qphoenix_root.contains("module"))
         keyError("module");
 
-
     QJsonObject module_root = qphoenix_root.value("module").toObject();
 
-    data.type = module_root.value("type").toString();
+    const QString type = module_root.value("type").toString();
+
+    if(type == "plugin")
+        data.type = Plugin;
+    else if(type == "dictionary")
+        data.type = Dictionary;
+    else if(type == "translator")
+        data.type = Translator;
+    else
+        qWarning() << "Wrong module type: " << type;
+
     data.libname = module_root.value("libname").toString();
 
     if(!module_root.contains("info"))
@@ -62,7 +70,6 @@ ModuleSpecData ModuleSpecParser::parse(const QString &specfile) {
                 destlangs << var.toString();
             }
             data.lang_table[key] = destlangs;
-
         }
     }
     return data;

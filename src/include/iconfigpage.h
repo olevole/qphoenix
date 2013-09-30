@@ -21,9 +21,10 @@
 
 #pragma once
 
-#include "info.h"
+#include <QString>
+#include <QIcon>
 
-class IConfigPage : public Info
+class IConfigPage
 {
 public:
     virtual ~IConfigPage(){}
@@ -31,6 +32,9 @@ public:
     virtual void save() = 0;
     virtual void read() = 0;
     virtual void reset() = 0;
+
+    virtual QString name() const = 0;
+    virtual QIcon icon() const = 0;
 };
 
 Q_DECLARE_INTERFACE(IConfigPage, "com.qphoenix.interfaces.settings/1.0");

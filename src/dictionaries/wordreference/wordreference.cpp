@@ -27,9 +27,6 @@ QString WordReference::mApiVer = "0.8";
 WordReference::WordReference(QObject *parent)
     :QObject(parent)
 {
-    setName("WordReference");
-    setDescription(tr("Word reference is a free online dictionary service"));
-    setVersion(DICTIONARY_VERSION);
 }
 
 

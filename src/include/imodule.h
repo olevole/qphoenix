@@ -1,6 +1,5 @@
 #pragma once
 
-#include "info.h"
 #include <QString>
 
 class QObject;
@@ -14,7 +13,7 @@ class QObject;
  * Class IModule MUST be inherited by all kinds of modules.
  */
 
-class IModule : public Info {
+class IModule/* : public Info */{
 public:
     virtual ~IModule() {}
 

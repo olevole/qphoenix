@@ -20,7 +20,6 @@
  */
 
 #include "translatorsconfig.h"
-#include "loader.h"
 #include "defines.h"
 
 #include <QLabel>
@@ -46,9 +45,6 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     mTab1(new QVBoxLayout),
     mTabWidget(new QTabWidget(this))
 {
-    setName(tr("Translators"));
-    setIcon(QP_ICON("translator"));
-
     mTranslatorComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     mTranslatorLayout->addWidget(mTranslatorLabel);
     mTranslatorLayout->addWidget(mTranslatorComboBox);
@@ -74,16 +70,13 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), mEmbeddedTranslatorComboBox, SLOT(setCurrentIndex(int)));
     connect(mEmbeddedTranslatorComboBox, SIGNAL(currentIndexChanged(int)), mTranslatorComboBox, SLOT(setCurrentIndex(int)));
 
-    Loader ldr("translators:");
+    NewLoader ldr("translators:");
 
-    QObjectList list = ldr.modules();
+    mModuleList = ldr.modules();
 
-    foreach (QObject *obj, list) {
-
-        ITranslator *iface = qobject_cast<ITranslator *>(obj);
-        mTranslatorsList <<  iface;
-        mTranslatorComboBox->addItem(iface->name());
-        mEmbeddedTranslatorComboBox->addItem(iface->name());
+    foreach (Module module, mModuleList) {
+        mTranslatorComboBox->addItem(module.data.name);
+        mEmbeddedTranslatorComboBox->addItem(module.data.name);
     }
 }
 
@@ -111,10 +104,10 @@ void TranslatorsConfig::reset() {
 }
 
 void TranslatorsConfig::onIndexChange(const int i) {
-    if(i >= mTranslatorsList.size() || i < 0)
+    if(i >= mModuleList.size() || i < 0)
         qFatal("Translator index out of range!");
     qDebug() << "INDEX IS: " << i;
-    ITranslator *iface = mTranslatorsList[i];
+    ITranslator *iface = qobject_cast<ITranslator *>(mModuleList[i].instance);
     if(!iface->isLoaded())
         iface->load();
 

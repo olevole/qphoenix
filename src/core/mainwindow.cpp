@@ -134,8 +134,11 @@ MainWindow::MainWindow(QWidget *parent) :
     this->addToolBar(mDictionaryWidget->mainToolBar());
     this->addToolBar(mTranslationWidget->mainToolBar());
 
-    this->addPage(mTranslationWidget);
-    this->addPage(mDictionaryWidget);
+
+    mTabWidget->insertTab(mTabWidget->count(), mTranslationWidget, QP_ICON("translator"), tr("Translate"));
+    mTabWidget->insertTab(mTabWidget->count(), mDictionaryWidget, QP_ICON("dictionary"), tr("Dictionary"));
+
+
 
     if(mTabWidget->count() > 1)
         mTabWidget->setCurrentIndex(0);
@@ -198,14 +201,14 @@ void MainWindow::addToolBarAction(QAction *action) {
 }
 
 void MainWindow::addPage(QWidget *page) {
-    Info *i = qobject_cast<Info *>(page);
-    if(i == NULL) {
-        //TODO: Error processing
-        return;
-    }
-    QIcon icon = i->icon();
-    QString name = i->name();
-    mTabWidget->insertTab(mTabWidget->count(), page, icon, name);
+//    Info *i = qobject_cast<Info *>(page);
+//    if(i == NULL) {
+//        //TODO: Error processing
+//        return;
+//    }
+//    QIcon icon = i->icon();
+//    QString name = i->name();
+//    mTabWidget->insertTab(mTabWidget->count(), page, icon, name);
 }
 
 void MainWindow::removePage(const QWidget *page) {
@@ -234,9 +237,9 @@ void MainWindow::onConfigAccept() {
     connector.translationwidget = mTranslationWidget;
     connector.dictionarywidget = mDictionaryWidget;
 
-    QObjectList *lst = mPluginsConfig->pluginsList();
+    ModuleList *lst = mPluginsConfig->pluginsList();
     for(int i = 0; i < lst->count(); i++) {
-        IPlugin *iface =  qobject_cast<IPlugin *>(lst->at(i));
+        IPlugin *iface =  qobject_cast<IPlugin *>(lst->at(i).instance);
 
         bool enabled = mPluginsConfig->isEnabled(i);
         if(enabled) {

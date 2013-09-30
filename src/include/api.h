@@ -10,7 +10,6 @@
 #include "iconfigpage.h"
 #include "idictionary.h"
 #include "idictionarywidget.h"
-#include "info.h"
 #include "imainwindow.h"
 #include "iplugin.h"
 #include "itranslator.h"

@@ -86,9 +86,6 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mSrcComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     mResComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
-    setName("Translation");
-    setIcon(QP_ICON("translator"));
-
     mWorker.setTimeout(QP_TRANSLATOR_TIMEOUT);
 
     connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onSourceLanguageChanged()));

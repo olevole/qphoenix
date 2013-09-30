@@ -1,5 +1,4 @@
-#ifndef SPECPARSER_H
-#define SPECPARSER_H
+#pragma once
 
 #include <QObject>
 #include <QString>
@@ -9,16 +8,16 @@
 
 typedef QMap<QString, QStringList> LanguageTable;
 
-
-//enum ModuleType {
-//    Plugin,
-//    Translator,
-//    Dictionary
-//};
+enum ModuleType {
+    Plugin,
+    Translator,
+    Dictionary
+};
 
 struct ModuleSpecData {
-    QString type;
+    ModuleType type;
     QString name;
+    QString description;
     QString libname;
     QString version;
     QString url;
@@ -35,8 +34,3 @@ private:
     void keyError(const QString &key);
     QString mSpecFile;
 };
-
-
-
-
-#endif // SPECPARSER_H

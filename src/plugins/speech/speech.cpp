@@ -38,9 +38,6 @@ Speech::Speech(QObject *parent) :
     QObject(parent),
     mIsLoaded(false)
 {
-    this->setName("Speech");
-    this->setDescription("Text to speech plugin");
-    this->setVersion("0.999999");
     mMp3File.setFileTemplate(QDir::tempPath() + "/qphoenixXXXXX.mp3");
 }
 

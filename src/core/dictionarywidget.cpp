@@ -57,8 +57,6 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mTemplate(new DictionaryTemplate(this))
 
 {
-    setName(tr("Dictionary"));
-    setIcon(QP_ICON("dictionary"));
     setInputTimeout(1000);
 
     mResText->setZoomFactor(QP_DICT_DEFAULT_ZOOM_FACTOR);
@@ -130,7 +128,7 @@ void DictionaryWidget::displayData(const QStringList &lst, const QString &name) 
     }
 }
 
-void DictionaryWidget::setDictionaryList(QList<IDictionary *> dicts) {
+void DictionaryWidget::setDictionaryList(QPDictionaryList dicts) {
     LanguagePairList list;
 
     if(dicts.isEmpty()) {
@@ -140,12 +138,22 @@ void DictionaryWidget::setDictionaryList(QList<IDictionary *> dicts) {
     }
 
     mDicts = dicts;
-    mDictWorker.setDictionaryList(mDicts);
-    foreach(IDictionary *dict, dicts) {
-        foreach(LanguagePair pair, dict->pairs()) {
-            if(!list.contains(pair))
-                list.append(pair);
-        }
+//    mDictWorker.setDictionaryList(mDicts);
+   foreach(QPDictionary dict, dicts) {
+       LanguageTable table = dict.data.lang_table;
+       foreach(QString key, table.keys()) {
+           const QStringList values = table[key];
+           foreach(QString value, values) {
+               list << LanguagePair(key, value);
+               list << LanguagePair(value, key);
+           }
+
+       }
+
+//        foreach(LanguagePair pair, dict->pairs()) {
+//            if(!list.contains(pair))
+//                list.append(pair);
+//        }
     }
     qSort(list);
     setLangPairs(list);

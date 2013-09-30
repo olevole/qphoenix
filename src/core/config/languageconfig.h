@@ -19,7 +19,8 @@ public:
     void save();
     void read();
     void reset();
-
+    QString name() const{return "";}
+    QIcon icon() const{return QIcon("");}
     /*!
      * \brief keysForEnabled
      * \return  list with keys of enabled languages

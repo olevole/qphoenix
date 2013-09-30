@@ -3,6 +3,7 @@
 #include "api.h"
 #include "loader.h"
 #include <QWidget>
+#include <QList>
 
 class QTableWidget;
 class QTabWidget;
@@ -12,6 +13,13 @@ class QLabel;
 
 
 #define QP_DEFAULT_RESULT_COUNT 15
+
+struct QPDictionary {
+    IDictionary *instance;
+    ModuleSpecData data;
+};
+
+typedef QList<QPDictionary> QPDictionaryList;
 
 class DictionaryConfig : public QWidget, IConfigPage
 {
@@ -23,14 +31,16 @@ public:
     void save();
     void read();
     void reset();
+    QString name() const{return "";}
+    QIcon icon() const{return QIcon("");}
 
-    DictionaryList dictionaries() {
+    QPDictionaryList dictionaries() {
         return mConvertedDicts;
     }
 private:
     Loader mLoader;
-    QObjectList mDictionaries;
-    QList<IDictionary *>mConvertedDicts;
+    ModuleList mDictionaries;
+    QPDictionaryList mConvertedDicts;
     QTableWidget *mTable;
     QTabWidget *mTabWidget;
     QSpinBox *mResultCountSpin;
