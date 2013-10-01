@@ -63,12 +63,12 @@ private:
      */
     static QString bb2html(const QString &bb);
     static inline QString getTemplate(const QString &path) {
-        QFile f(path);
-        if(!f.open(QFile::ReadOnly))
+        QFile file(path);
+        if(!file.open(QFile::ReadOnly))
             qFatal("Unable to open templates for dictionary!");
 
-        const QByteArray data = f.readAll();
-        f.close();
+        const QByteArray data = file.readAll();
+        file.close();
 
         if(data.isEmpty())
             qFatal("Oops! Something is wrong with templates");

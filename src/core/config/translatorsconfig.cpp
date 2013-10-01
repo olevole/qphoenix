@@ -34,9 +34,9 @@
 
 TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     QWidget(parent),
+    mTranslatorIndex(0),
     mTranslatorLabel(new QLabel(tr("Translator"), this)),
     mTranslatorComboBox(new QComboBox(this)),
-    mEmbeddedTranslatorComboBox(new QComboBox(this)),
     mTranslatorGroupBox(new QGroupBox(this)),
     mTranslatorLayout(new QHBoxLayout),
 
@@ -67,49 +67,78 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     mTranslatorGroupBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 
     connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onIndexChange(int)));
-    connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), mEmbeddedTranslatorComboBox, SLOT(setCurrentIndex(int)));
-    connect(mEmbeddedTranslatorComboBox, SIGNAL(currentIndexChanged(int)), mTranslatorComboBox, SLOT(setCurrentIndex(int)));
-
-    NewLoader ldr("translators:");
+    connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(translatorIndexChanged(int)));
+    QPPluginLoader ldr("translators:");
 
     mModuleList = ldr.modules();
 
-    foreach (Module module, mModuleList) {
+
+
+    foreach (QPModule module, mModuleList)
         mTranslatorComboBox->addItem(module.data.name);
-        mEmbeddedTranslatorComboBox->addItem(module.data.name);
-    }
+
+    qDebug() << mTranslatorComboBox->count() << " " << mTranslatorIndex;
+    mTranslatorComboBox->setCurrentIndex(mTranslatorIndex == -1 ? 0 : mTranslatorIndex);
 }
 
 TranslatorsConfig::~TranslatorsConfig() {
+}
+
+void TranslatorsConfig::save() {
     QSettings s;
     s.beginGroup("Translators");
     s.setValue("CurrentTranslator", mTranslatorComboBox->currentIndex());
     s.endGroup();
 }
 
-void TranslatorsConfig::save() {
-}
-
 void TranslatorsConfig::read() {
     QSettings s;
     s.beginGroup("Translators");
-    const int index = s.value("CurrentTranslator", 0).toInt();
+    mTranslatorIndex = s.value("CurrentTranslator", 0).toInt();
     s.endGroup();
-
-    mTranslatorComboBox->setCurrentIndex(index == -1 ? 0 : index);
-
 }
 
 void TranslatorsConfig::reset() {
 }
 
+QStringList TranslatorsConfig::getTranslatorsNames() const {
+    QStringList names;
+    foreach(QPModule module, mModuleList)
+        names << module.data.name;
+    qDebug() << "NAMES___" << names;
+    return names;
+}
+
+QPTranslator TranslatorsConfig::currentTranslator() {
+    const int i = mTranslatorComboBox->currentIndex();
+
+    if(i == -1)
+        return QPTranslator();
+
+    qDebug() << "IN____";
+    QPModule module = mModuleList[i];
+    QPTranslator translator;
+    translator.instance = qobject_cast<ITranslator *>(module.instance);
+    translator.data = module.data;
+    qDebug() << "OUT____";
+    return translator;
+}
+
+void TranslatorsConfig::setTranslatorIndex(int idx) {
+    if(idx >= mTranslatorComboBox->count() || idx == -1)
+        return;
+    mTranslatorComboBox->setCurrentIndex(idx);
+}
+
 void TranslatorsConfig::onIndexChange(const int i) {
     if(i >= mModuleList.size() || i < 0)
         qFatal("Translator index out of range!");
-    qDebug() << "INDEX IS: " << i;
+
     ITranslator *iface = qobject_cast<ITranslator *>(mModuleList[i].instance);
+
     if(!iface->isLoaded())
         iface->load();
+
 
     QWidget *cw = iface->configWidget();
 

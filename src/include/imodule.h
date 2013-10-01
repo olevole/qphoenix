@@ -35,14 +35,6 @@ public:
 
     virtual bool unload() = 0;
 
-    /*!
-     * \brief errorString
-     * \return Description of plugin load\unload error
-     * this is optional.
-     */
-    virtual QString errorString() const
-    {return QString();}
-
 
     /*!
      * \brief isLoaded

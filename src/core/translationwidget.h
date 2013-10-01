@@ -29,6 +29,7 @@
 #include "languages.h"
 #include "querywrappers.h"
 #include "translatorsconfig.h"
+#include "loader.h"
 
 class QTextEdit;
 class QTextBrowser;
@@ -87,9 +88,10 @@ public:
     QToolBar    *mainToolBar()      { return mMainToolBar;      }
 
     void setNativeNames(const bool b) {mNativeNames = b; updateLanguages();}
-    void setTranslator(ITranslator *t);
+    void setTranslator(QPTranslator t);
     void setEnabledKeys(const QStringList &keys){mKeys = keys;}
-    void setTranslatorsConfig(TranslatorsConfig *cfg);
+    void setTranslatorsNames(const QStringList &lst);
+//    void setTranslatorsConfig(TranslatorsConfig *cfg);
 
 public slots:
     /*
@@ -105,6 +107,8 @@ public slots:
     /*
      * end of API methods
      */
+
+    void setTranslatorIndex(int idx);
 private slots:
     void onSourceLanguageChanged();
     void onResultLanguageChanged();
@@ -128,7 +132,7 @@ private:
     QString resComboboxData();
 
     TranslatorsConfig *mTranslatorConfig;
-    QComboBox *mEmbeddedComboBox;
+    QComboBox *mTranslatorsComboBox;
 
     /*!
      *  Widgets
@@ -161,6 +165,8 @@ private:
 
 
     QString mLastSrcName, mLastDestName;
+
+    QPTranslator mTranslator;
 signals:
     /*
      * begin of API methods
@@ -170,4 +176,6 @@ signals:
     /*
      * end of API methods
      */
+
+    void translatorIndexChanged(int);
 };

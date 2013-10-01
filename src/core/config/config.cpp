@@ -54,7 +54,7 @@ Config::Config(QWidget *parent) :
 }
 
 Config::~Config() {
-
+    save();
 }
 
 void Config::addPage(QWidget *page, bool is_plugin) {

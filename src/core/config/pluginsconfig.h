@@ -21,7 +21,7 @@ public:
      * \brief pluginsList
      * \return list of loaded plugin QObject's pointers
      */
-    ModuleList *pluginsList() {
+    QPModuleList *pluginsList() {
         return &mPlugins;
     }
 
@@ -46,7 +46,7 @@ protected:
     void updateTable();
 private:
     QTableWidget *mTable;
-    ModuleList mPlugins;
+    QPModuleList mPlugins;
     QStringList mEnabledList;
 
     QList<QCheckBox *>mCheckboxList;

@@ -17,24 +17,9 @@ public:
     WordReference(QObject *parent = 0);
 
 
-    LanguagePairList pairs() const {
-        LanguagePairList list;
-
-
-//        for(int i = 0; i < mLangs.count(); i++) {
-//            list << LanguagePair("en", mLangs.at(i))
-//                 << LanguagePair(mLangs.at(i), "en");
-//        }
-
-
-//        list << LanguagePair
-        return list;
-    }
-
-
     QStringList query( const QString &text, const LanguagePair &pair, unsigned int max_count);
-
     QStringList completions(const QString &str, const LanguagePair &pair) const;
+
     bool load(){}
     bool unload(){}
     bool isLoaded()const{return true;}

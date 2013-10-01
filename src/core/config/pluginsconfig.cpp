@@ -77,11 +77,11 @@ void PluginsConfig::reset() {
 }
 
 void PluginsConfig::updateTable() {
-    NewLoader loader("plugins:");
+    QPPluginLoader loader("plugins:");
 
     mPlugins = loader.modules();
 
-    foreach(Module plugin, mPlugins) {
+    foreach(QPModule plugin, mPlugins) {
 
         IPlugin *iface = qobject_cast<IPlugin *>(plugin.instance);
 

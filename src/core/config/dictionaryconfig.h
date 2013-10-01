@@ -16,7 +16,7 @@ class QLabel;
 
 struct QPDictionary {
     IDictionary *instance;
-    ModuleSpecData data;
+    QPModuleData data;
 };
 
 typedef QList<QPDictionary> QPDictionaryList;
@@ -38,8 +38,7 @@ public:
         return mConvertedDicts;
     }
 private:
-    Loader mLoader;
-    ModuleList mDictionaries;
+    QPModuleList mDictionaries;
     QPDictionaryList mConvertedDicts;
     QTableWidget *mTable;
     QTabWidget *mTabWidget;

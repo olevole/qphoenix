@@ -24,6 +24,7 @@
 #include <QWidget>
 #include <QList>
 #include <QComboBox>
+#include <QDebug>
 #include "iconfigpage.h"
 #include "itranslator.h"
 #include "loader.h"
@@ -37,6 +38,13 @@ class QTabWidget;
 class QCheckBox;
 class QSpinBox;
 
+struct QPTranslator {
+    ITranslator *instance;
+    QPModuleData data;
+};
+
+//typedef QList<QPTranslator>QPTranslatorList;
+
 class TranslatorsConfig : public QWidget, IConfigPage
 {
     Q_OBJECT
@@ -45,8 +53,6 @@ public:
     explicit TranslatorsConfig(QWidget *parent = 0);
     ~TranslatorsConfig();
 
-
-
     void save();
     void read();
     void reset();
@@ -54,29 +60,25 @@ public:
     QString name() const{return "";}
     QIcon icon() const{return QIcon("");}
 
-    QComboBox *getEmbeddedComboBox() {
-        return mEmbeddedTranslatorComboBox;
-    }
+    QStringList getTranslatorsNames() const;
 
-    ITranslator *currentTranslator() {
-        const int i = mTranslatorComboBox->currentIndex();
-        if(i > -1)
-            return qobject_cast<ITranslator *>(mModuleList[i].instance);
-        else
-            return NULL;
-    }
+    QPTranslator currentTranslator();
+public slots:
+    void setTranslatorIndex(int idx);
 private slots:
     void onIndexChange(const int i);
 private:
     QLabel *mTranslatorLabel;
     QComboBox *mTranslatorComboBox;
-    QComboBox *mEmbeddedTranslatorComboBox;
     QGroupBox *mTranslatorGroupBox;
     QHBoxLayout *mTranslatorLayout;
     QGroupBox *mOptionsGroupBox;
     QHBoxLayout *mOptionsLayout;
     QVBoxLayout *mTab1;
-//    QList <ITranslator *>mTranslatorsList;
     QTabWidget *mTabWidget;
-    ModuleList mModuleList;
+
+    QPModuleList mModuleList;
+    int mTranslatorIndex;
+signals:
+    void translatorIndexChanged(int);
 };

@@ -35,8 +35,6 @@ class IDictionary;
 
 typedef QPair<QString, QString> LanguagePair;
 typedef QList<LanguagePair> LanguagePairList;
-//typedef QList<IDictionary *> DictionaryList;
-
 
 class IDictionary : public IModule {
 public:
@@ -48,12 +46,6 @@ public:
      * If you don't want to provide any config widget, just don't reimplement it
      */
     virtual QWidget *configWidget(){return NULL;}
-
-    /*!
-     * \brief pairs
-     * \return List of supported language pairs
-     */
-    virtual LanguagePairList pairs() const = 0;
 
     /*!
      * \brief query execute a dictionary query

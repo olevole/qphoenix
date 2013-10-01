@@ -8,14 +8,14 @@
 
 typedef QMap<QString, QStringList> LanguageTable;
 
-enum ModuleType {
+enum QPModuleType {
     Plugin,
     Translator,
     Dictionary
 };
 
-struct ModuleSpecData {
-    ModuleType type;
+struct QPModuleData {
+    QPModuleType type;
     QString name;
     QString description;
     QString libname;
@@ -25,11 +25,11 @@ struct ModuleSpecData {
     LanguageTable lang_table;
 };
 
-class ModuleSpecParser : public QObject {
+class QPModuleSpecParser : public QObject {
     Q_OBJECT
 public:
-    ModuleSpecParser(QObject *parent = 0) {}
-    ModuleSpecData parse(const QString &specfile);
+    QPModuleSpecParser(QObject *parent = 0) {}
+    QPModuleData parse(const QString &specfile);
 private:
     void keyError(const QString &key);
     QString mSpecFile;

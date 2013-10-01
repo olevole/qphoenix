@@ -7,14 +7,14 @@
 #include <QJsonDocument>
 
 
-void ModuleSpecParser::keyError(const QString &key) {
+void QPModuleSpecParser::keyError(const QString &key) {
     qWarning() << "Invalid spec format: cannot find key" << key << " in " << mSpecFile;
 }
 
-ModuleSpecData ModuleSpecParser::parse(const QString &specfile) {
+QPModuleData QPModuleSpecParser::parse(const QString &specfile) {
     mSpecFile = specfile;
 
-    ModuleSpecData data;
+    QPModuleData data;
     QFile file(specfile);
     if(!file.open(QFile::ReadOnly | QFile::Text)) {
         qWarning() << "Cannot read spec file: " << specfile << " " << file.errorString();

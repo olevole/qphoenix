@@ -134,11 +134,8 @@ MainWindow::MainWindow(QWidget *parent) :
     this->addToolBar(mDictionaryWidget->mainToolBar());
     this->addToolBar(mTranslationWidget->mainToolBar());
 
-
     mTabWidget->insertTab(mTabWidget->count(), mTranslationWidget, QP_ICON("translator"), tr("Translate"));
     mTabWidget->insertTab(mTabWidget->count(), mDictionaryWidget, QP_ICON("dictionary"), tr("Dictionary"));
-
-
 
     if(mTabWidget->count() > 1)
         mTabWidget->setCurrentIndex(0);
@@ -150,12 +147,9 @@ MainWindow::MainWindow(QWidget *parent) :
     mSettingsDialog->addPage(mPluginsConfig);
     mSettingsDialog->addPage(mCommonConfig);
 
-
     connect(mActionOpen, SIGNAL(triggered()), this, SLOT(open()));
     connect(mActionPrint, SIGNAL(triggered()), this, SLOT(print()));
-
     connect(mActionSave, SIGNAL(triggered()), this, SLOT(save()));
-
     connect(mActionSaveAs, SIGNAL(triggered()), this, SLOT(saveAs()));
 
     connect(mActionExit, SIGNAL(triggered()), this, SLOT(exit()));
@@ -167,14 +161,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mActionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(mActionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
-
-    connect(mTranslatorsConfig->getEmbeddedComboBox(), SIGNAL(currentIndexChanged(int)), this, SLOT(updateTranslatorConfig()));
+//    connect(mTranslatorsConfig->getEmbeddedComboBox(), SIGNAL(currentIndexChanged(int)), this, SLOT(updateTranslatorConfig()));
 
     // Widgets , Dialogs, etc
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
     connect(mTabWidget, SIGNAL(currentChanged(int)), this, SLOT(onIndexChange(int)));
 
-    mTranslationWidget->setTranslatorsConfig(mTranslatorsConfig);
+    mTranslationWidget->setTranslatorsNames(mTranslatorsConfig->getTranslatorsNames());
+    connect(mTranslatorsConfig, SIGNAL(translatorIndexChanged(int)), mTranslationWidget, SLOT(setTranslatorIndex(int)));
+    connect(mTranslationWidget, SIGNAL(translatorIndexChanged(int)), mTranslatorsConfig, SLOT(setTranslatorIndex(int)));
 
     readCfg();
     // Read configs
@@ -237,7 +232,7 @@ void MainWindow::onConfigAccept() {
     connector.translationwidget = mTranslationWidget;
     connector.dictionarywidget = mDictionaryWidget;
 
-    ModuleList *lst = mPluginsConfig->pluginsList();
+    QPModuleList *lst = mPluginsConfig->pluginsList();
     for(int i = 0; i < lst->count(); i++) {
         IPlugin *iface =  qobject_cast<IPlugin *>(lst->at(i).instance);
 
@@ -265,11 +260,11 @@ void MainWindow::onConfigAccept() {
 }
 
 void MainWindow::updateTranslatorConfig() {
-    ITranslator *tr = mTranslatorsConfig->currentTranslator();
-    if(tr == NULL) {
-        qWarning() << "Translators are not loaded!";
-        return;
-    }
+    QPTranslator tr = mTranslatorsConfig->currentTranslator();
+//    if(tr == NULL) {
+//        qWarning() << "Translators are not loaded!";
+//        return;
+//    }
     qDebug() << "Called!";
         mTranslationWidget->setEnabledKeys(mLanguageConfig->keysForEnabled());
         mTranslationWidget->setTranslator(tr);

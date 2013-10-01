@@ -16,7 +16,7 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
       mResultCountLabel(new QLabel(tr("Maximum dictionary results to show"), this)),
       mResultCountSpin(new QSpinBox(this))
 {
-    NewLoader ldr("dictionaries:");
+    QPPluginLoader ldr("dictionaries:");
     mDictionaries = ldr.modules();
 
     QVBoxLayout *tab1 = new QVBoxLayout;
@@ -48,7 +48,7 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
     mTable->setHorizontalHeaderItem(3, new QTableWidgetItem("#"));
 
     for (int i = 0; i < mDictionaries.count(); ++i) {
-        Module module = mDictionaries[i];
+        QPModule module = mDictionaries[i];
         IDictionary *iface = qobject_cast<IDictionary *>(module.instance);
         iface->load();
 
