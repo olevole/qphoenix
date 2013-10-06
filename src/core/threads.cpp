@@ -11,12 +11,12 @@ void QPDictionaryThread::run() {
 //    Q_ASSERT(!mPair.first.isEmpty() && !mPair.second.isEmpty());
     if(mQuery.isEmpty())
         return;
-    //TODO: Solve this part
+    //TODO: fix this code
     if(mCompletions) {
         QStringList comp;
-        foreach(IDictionary *dict, mDictList)
-            if(dict->isSupportCompletions())
-                comp += dict->completions(mQuery, mSrcLang, mDestLang);
+        foreach(QPDictionary dict, mDictList)
+            if(dict.instance->isSupportCompletions())
+                comp += dict.instance->completions(mQuery, mSrcLang, mDestLang);
         comp.removeDuplicates();
         qDebug() << "Completions list: " << comp;
         if(comp.count() == 1)
@@ -25,8 +25,8 @@ void QPDictionaryThread::run() {
     } else {
         single:
         qDebug() << "Creating reply...";
-        foreach(IDictionary *dict, mDictList) {
-//            emit reply(dict->query(mQuery, mPair), dict->name()); TODO
+        foreach(QPDictionary dict, mDictList) {
+            emit reply(dict.instance->query(mQuery, mSrcLang, mDestLang), dict.data.name);
         }
     }
     qDebug() << "Finished!";

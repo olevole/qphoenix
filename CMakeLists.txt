@@ -1,43 +1,42 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.6)
-PROJECT(QPhoenix)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.10)
-SET(EXECUTABLE_NAME qphoenix)
-SET(PROJECT_VERSION 0.999999)
-SET(CMAKE_BUILD_TYPE Debug)
-ENABLE_TESTING(TRUE)
-
-EXEC_PROGRAM("git" ${CMAKE_CURRENT_SOURCE_DIR} ARGS "rev-parse HEAD" OUTPUT_VARIABLE VERSION)
-STRING(SUBSTRING ${VERSION} 0 7 GIT_HASH)
-
-IF(CMAKE_BUILD_TYPE STREQUAL Debug)
-    ADD_DEFINITIONS(-DQP_DEBUG)
-ENDIF()
+project(QPhoenix)
+cmake_minimum_required(VERSION 2.8.10)
+set(EXECUTABLE_NAME qphoenix)
+set(PROJECT_VERSION 0.999999)
+set(CMAKE_BUILD_TYPE Release)
+set(TESTING_ENABLED TRUE)
 
 
-IF(NOT MSVC)
-    IF("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
-    ENDIF("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
-ENDIF()
+exec_program("git" ${CMAKE_CURRENT_SOURCE_DIR} ARGS "rev-parse HEAD" OUTPUT_VARIABLE VERSION)
+string(SUBSTRING ${VERSION} 0 7 GIT_HASH)
 
-FIND_PACKAGE(Qt5Widgets REQUIRED)
-FIND_PACKAGE(Qt5Core REQUIRED)
-FIND_PACKAGE(Qt5Network REQUIRED)
-FIND_PACKAGE(Qt5WebKit REQUIRED)
-FIND_PACKAGE(Qt5WebKitWidgets REQUIRED)
-FIND_PACKAGE(Qt5Multimedia REQUIRED)
+if(CMAKE_BUILD_TYPE STREQUAL Debug)
+    add_definitions(-DQP_DEBUG)
+endif()
 
-INCLUDE_DIRECTORIES(
+
+if(NOT MSVC)
+    if("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+    endif("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
+endif()
+
+find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Network REQUIRED)
+find_package(Qt5WebKit REQUIRED)
+find_package(Qt5WebKitWidgets REQUIRED)
+find_package(Qt5Multimedia REQUIRED)
+
+include_directories(
 ${CMAKE_CURRENT_BINARY_DIR}
 ${CMAKE_INCLUDE_PATH}
 ${CMAKE_CURRENT_BINARY_DIR}/src/include
 src/core
 src/core/config
 src/include
-src/libphoenix
-)
+src/libphoenix)
 
-SET(IFACES
+set(IFACES
 src/include/iconfigpage.h
 src/include/imainwindow.h
 src/include/itranslationwidget.h
@@ -51,7 +50,7 @@ src/include/api.h
 src/include/pluginconnector.h
 src/include/languagetable.h)
 
-SET(HEADERS
+set(HEADERS
 src/core/mainwindow.h
 src/core/config/config.h
 src/core/config/translatorsconfig.h
@@ -69,8 +68,7 @@ src/core/languages.h
 src/core/specparser.h
 src/core/core.h)
 
-SET(SOURCES
-src/main.cpp
+set(SOURCES
 src/core/mainwindow.cpp
 src/core/config/config.cpp
 src/core/config/translatorsconfig.cpp
@@ -88,43 +86,49 @@ src/core/languages.cpp
 src/core/specparser.cpp
 src/core/core.cpp)
 
-SET(RESOURCES resources/resources.qrc)
-QT5_ADD_RESOURCES(RC_SOURCES ${RESOURCES})
+set(RESOURCES resources/resources.qrc)
+qt5_add_resources(RC_SOURCES ${RESOURCES})
 
 
-SET(PREFIX ${CMAKE_INSTALL_PREFIX})
+set(PREFIX ${CMAKE_INSTALL_PREFIX})
 
-IF(UNIX)
-        SET(MPREFIX ${PREFIX}/share/qphoenix)
-        SET(INSTALLPATH ${PREFIX}/bin)
-ELSEIF(WIN32)
-        SET(MPREFIX ${PREFIX})
-        SET(INSTALLPATH ${PREFIX})
-ENDIF()
-
-
-SET(PLUGINS_PATH        ${MPREFIX}/plugins        CACHE INTERNAL "")
-SET(TRANSLATORS_PATH    ${MPREFIX}/translators    CACHE INTERNAL "")
-SET(DICTIONARIES_PATH   ${MPREFIX}/dictionaries   CACHE INTERNAL "")
-SET(LIBRARY_PATH        ${PREFIX}/lib             CACHE INTERNAL "")
-
-ADD_SUBDIRECTORY(src/plugins)
-ADD_SUBDIRECTORY(src/translators)
-ADD_SUBDIRECTORY(src/dictionaries)
-ADD_SUBDIRECTORY(src/libphoenix)
-#ADD_SUBDIRECTORY(src/tests)
-
-CONFIGURE_FILE(src/include/defines.h.in src/include/defines.h)
-
-QT5_WRAP_CPP(MOC_SOURCES ${HEADERS})
-
-ADD_EXECUTABLE(${EXECUTABLE_NAME} src/main.cpp ${RC_SOURCES} ${SOURCES} ${MOC_SOURCES}  ${QM_FILES} ${GLOBAL_HEADERS} ${IFACES})
-QT5_USE_MODULES(${EXECUTABLE_NAME} Widgets Core Network WebKit WebKitWidgets)
+if(UNIX)
+        set(MPREFIX ${PREFIX}/share/qphoenix)
+        set(INSTALLPATH ${PREFIX}/bin)
+elseif(WIN32)
+        set(MPREFIX ${PREFIX})
+        set(INSTALLPATH ${PREFIX})
+endif()
 
 
-INSTALL(TARGETS ${EXECUTABLE_NAME} DESTINATION ${INSTALLPATH})
-INSTALL(DIRECTORY src/include/ DESTINATION ${PREFIX}/include/qphoenix)
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qphoenix.desktop DESTINATION ${PREFIX}/share/applications)
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qphoenix.png DESTINATION ${PREFIX}/share/pixmaps/)
+set(PLUGINS_PATH        ${MPREFIX}/plugins        CACHE INTERNAL "")
+set(TRANSLATORS_PATH    ${MPREFIX}/translators    CACHE INTERNAL "")
+set(DICTIONARIES_PATH   ${MPREFIX}/dictionaries   CACHE INTERNAL "")
+set(LIBRARY_PATH        ${PREFIX}/lib             CACHE INTERNAL "")
+
+add_subdirectory(src/plugins)
+add_subdirectory(src/translators)
+add_subdirectory(src/dictionaries)
+add_subdirectory(src/libphoenix)
 
 
+
+configure_file(src/include/defines.h.in src/include/defines.h)
+
+qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
+
+if(TESTING_ENABLED)
+    enable_testing(TRUE)
+    add_library(qphoenix_testlib STATIC ${RC_SOURCES} ${SOURCES} ${MOC_SOURCES}  ${QM_FILES} ${GLOBAL_HEADERS} ${IFACES})
+    qt5_use_modules(qphoenix_testlib Widgets Core Network WebKit WebKitWidgets)
+    add_subdirectory(src/tests)
+endif()
+
+add_executable(${EXECUTABLE_NAME} src/main.cpp ${RC_SOURCES} ${SOURCES} ${MOC_SOURCES}  ${QM_FILES} ${GLOBAL_HEADERS} ${IFACES})
+qt5_use_modules(${EXECUTABLE_NAME} Widgets Core Network WebKit WebKitWidgets)
+
+
+install(TARGETS ${EXECUTABLE_NAME} DESTINATION ${INSTALLPATH})
+install(DIRECTORY src/include/ DESTINATION ${PREFIX}/include/qphoenix)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qphoenix.desktop DESTINATION ${PREFIX}/share/applications)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qphoenix.png DESTINATION ${PREFIX}/share/pixmaps/)

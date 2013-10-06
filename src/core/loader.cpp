@@ -15,6 +15,8 @@ QPModuleList QPModuleLoader::modules() {
             QPModule module;
 
             QPModuleData data = mParser.parse(dir.absoluteFilePath(rpath));
+            if(mParser.hasError())
+                continue;
             const QString libpath = dir.absoluteFilePath(data.libname);
             QPluginLoader *l = new QPluginLoader(libpath, this);
             QObject *instance;
@@ -29,6 +31,5 @@ QPModuleList QPModuleLoader::modules() {
             delete l;
         }
     }
-    qDebug() << "??????????" << modules.count();
     return modules;
 }

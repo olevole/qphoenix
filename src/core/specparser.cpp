@@ -7,17 +7,28 @@
 #include <QJsonDocument>
 
 
+
+QPModuleSpecParser::QPModuleSpecParser(QObject *parent) :
+    QObject(parent),
+    mError(false)
+{
+
+}
+
 void QPModuleSpecParser::keyError(const QString &key) {
     qWarning() << "Invalid spec format: cannot find key" << key << " in " << mSpecFile;
+    mError = true;
 }
 
 QPModuleData QPModuleSpecParser::parse(const QString &specfile) {
+    mError = false;
     mSpecFile = specfile;
 
     QPModuleData data;
     QFile file(specfile);
     if(!file.open(QFile::ReadOnly | QFile::Text)) {
         qWarning() << "Cannot read spec file: " << specfile << " " << file.errorString();
+        mError = true;
         return data;
     }
     QJsonObject root = QJsonDocument::fromJson(file.readAll()).object();
@@ -51,6 +62,7 @@ QPModuleData QPModuleSpecParser::parse(const QString &specfile) {
     QJsonObject info = module_root.value("info").toObject();
 
     data.name = info.value("name").toString();
+    data.description = info.value("description").toString();
     data.version = info.value("version").toString();
     data.url = info.value("url").toString();
 
@@ -73,4 +85,8 @@ QPModuleData QPModuleSpecParser::parse(const QString &specfile) {
         }
     }
     return data;
+}
+
+bool QPModuleSpecParser::hasError() {
+    return mError;
 }

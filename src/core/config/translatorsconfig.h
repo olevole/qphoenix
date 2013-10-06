@@ -43,15 +43,13 @@ struct QPTranslator {
     QPModuleData data;
 };
 
-//typedef QList<QPTranslator>QPTranslatorList;
-
-class TranslatorsConfig : public QWidget, IConfigPage
+class QPTranslatorsConfig : public QWidget, IConfigPage
 {
     Q_OBJECT
     Q_INTERFACES(IConfigPage)
 public:
-    explicit TranslatorsConfig(QWidget *parent = 0);
-    ~TranslatorsConfig();
+    explicit QPTranslatorsConfig(QWidget *parent = 0);
+    ~QPTranslatorsConfig();
 
     void save();
     void read();

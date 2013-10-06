@@ -12,11 +12,6 @@ struct QPModule {
 
 typedef QList<QPModule>QPModuleList;
 
-/*!
- * \brief The Loader class
- * ModuleLoader
- */
-
 class QPModuleLoader : public QObject
 {
     Q_OBJECT

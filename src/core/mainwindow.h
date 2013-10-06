@@ -20,7 +20,7 @@ class QCloseEvent;
 
 class Config;
 class PluginsConfig;
-class TranslatorsConfig;
+class QPTranslatorsConfig;
 class LanguageConfig;
 class DictionaryConfig;
 class CommonConfig;
@@ -33,38 +33,19 @@ class MainWindow : public  QMainWindow, public IMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    enum Page {
-        Translator = 0,
-        Dictionary = 1,
-    };
 
     QMainWindow *instance() {return this;}
 
-    /*
-     * Begin API methods
-     */
+    //Begin API methods
     virtual QString getStatusBarMessage() const;
     virtual void addStatusBarWidget(QWidget *widget);
     virtual void addToolBarAction(QAction *action);
-
-    virtual void addPage(QWidget *page);
-    virtual void removePage(const QWidget *page);
-    virtual QWidget *pageAt(const int i);
-
-    virtual int currentIndex() const;
-
-    /*
-     * End API methods
-     */
+    //End API methods
 public slots:
-    /*
-     * Begin API methods
-     */
+    //Begin API methods
     virtual void setCurrentIndex(int i);
     virtual void setStatusBarMessage(const QString &msg, int timeout);
-    /*
-     * End API methods
-     */
+    //End API methods
 private slots:
 
     //! Update plugins, etc information from config dialog.
@@ -73,11 +54,11 @@ private slots:
 
     //! Handle table index change
     void onIndexChange(const int i);
-//    void onTranslatorKeysUpdate();
+
     void readCfg();
     void saveCfg();
 
-    // Menu actions
+    // Menu actions slots
     void open();
     void save();
     void saveAs();
@@ -112,7 +93,6 @@ private:
     // Edit Menu
     QAction
     *mActionClear,
-//    *mActionCopy,
     *mActionUndo,
     *mActionRedo,
     *mActionSwap,
@@ -130,10 +110,11 @@ private:
      */
     Config *mSettingsDialog;
     PluginsConfig *mPluginsConfig;
-    TranslatorsConfig *mTranslatorsConfig;
+    QPTranslatorsConfig *mTranslatorsConfig;
     LanguageConfig *mLanguageConfig;
     DictionaryConfig *mDictionaryConfig;\
     CommonConfig *mCommonConfig;
+
     static QString mAboutStr;
 signals:
     void currentIndexChanged(const int i);

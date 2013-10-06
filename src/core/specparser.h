@@ -28,9 +28,12 @@ struct QPModuleData {
 class QPModuleSpecParser : public QObject {
     Q_OBJECT
 public:
-    QPModuleSpecParser(QObject *parent = 0) {}
+    QPModuleSpecParser(QObject *parent = 0);
     QPModuleData parse(const QString &specfile);
+
+    bool hasError();
 private:
     void keyError(const QString &key);
     QString mSpecFile;
+    bool mError;
 };

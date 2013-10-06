@@ -32,7 +32,7 @@
 #include <QSettings>
 
 
-TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
+QPTranslatorsConfig::QPTranslatorsConfig(QWidget *parent) :
     QWidget(parent),
     mTranslatorIndex(0),
     mTranslatorLabel(new QLabel(tr("Translator"), this)),
@@ -79,34 +79,34 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
     mTranslatorComboBox->setCurrentIndex(mTranslatorIndex == -1 ? 0 : mTranslatorIndex);
 }
 
-TranslatorsConfig::~TranslatorsConfig() {
+QPTranslatorsConfig::~QPTranslatorsConfig() {
 }
 
-void TranslatorsConfig::save() {
+void QPTranslatorsConfig::save() {
     QSettings s;
     s.beginGroup("Translators");
     s.setValue("CurrentTranslator", mTranslatorComboBox->currentIndex());
     s.endGroup();
 }
 
-void TranslatorsConfig::read() {
+void QPTranslatorsConfig::read() {
     QSettings s;
     s.beginGroup("Translators");
     mTranslatorIndex = s.value("CurrentTranslator", 0).toInt();
     s.endGroup();
 }
 
-void TranslatorsConfig::reset() {
+void QPTranslatorsConfig::reset() {
 }
 
-QStringList TranslatorsConfig::getTranslatorsNames() const {
+QStringList QPTranslatorsConfig::getTranslatorsNames() const {
     QStringList names;
     foreach(QPModule module, mModuleList)
         names << module.data.name;
     return names;
 }
 
-QPTranslator TranslatorsConfig::currentTranslator() {
+QPTranslator QPTranslatorsConfig::currentTranslator() {
     const int i = mTranslatorComboBox->currentIndex();
 
     if(i == -1)
@@ -121,13 +121,13 @@ QPTranslator TranslatorsConfig::currentTranslator() {
     return translator;
 }
 
-void TranslatorsConfig::setTranslatorIndex(int idx) {
+void QPTranslatorsConfig::setTranslatorIndex(int idx) {
     if(idx >= mTranslatorComboBox->count() || idx == -1)
         return;
     mTranslatorComboBox->setCurrentIndex(idx);
 }
 
-void TranslatorsConfig::onIndexChange(const int i) {
+void QPTranslatorsConfig::onIndexChange(const int i) {
     if(i >= mModuleList.size() || i < 0)
         qFatal("Translator index out of range!");
 

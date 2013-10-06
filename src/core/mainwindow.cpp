@@ -86,7 +86,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mSettingsDialog(new Config(this)),
 
     mPluginsConfig(new PluginsConfig),
-    mTranslatorsConfig(new TranslatorsConfig(this)),
+    mTranslatorsConfig(new QPTranslatorsConfig(this)),
     mLanguageConfig(new LanguageConfig(this)),
     mDictionaryConfig(new DictionaryConfig(this)),
     mCommonConfig(new CommonConfig(this)),
@@ -196,23 +196,6 @@ void MainWindow::addToolBarAction(QAction *action) {
     mToolBar->addAction(action);
 }
 
-void MainWindow::addPage(QWidget *page) {
-//    Info *i = qobject_cast<Info *>(page);
-//    if(i == NULL) {
-//        //TODO: Error processing
-//        return;
-//    }
-//    QIcon icon = i->icon();
-//    QString name = i->name();
-//    mTabWidget->insertTab(mTabWidget->count(), page, icon, name);
-}
-
-void MainWindow::removePage(const QWidget *page) {
-}
-
-QWidget *MainWindow::pageAt(const int i) {
-    return new QWidget();
-}
 
 void MainWindow::setCurrentIndex(int i) {
     mTabWidget->setCurrentIndex(i);
@@ -301,7 +284,7 @@ void MainWindow::print() {
     QPrinter printer;
       QPrintDialog print_dialog(&printer);
       if(print_dialog.exec() == QPrintDialog::Accepted) {
-          const int i = currentIndex();
+          const int i = mTabWidget->currentIndex();
           switch(i){
               case 0:
 //                  mTranslationWidget->srcText()->print(&printer);
@@ -327,7 +310,7 @@ void MainWindow::save() {
 
     file.open(QFile::Truncate | QFile::ReadWrite);
 
-    const int i = currentIndex();
+    const int i = mTabWidget->currentIndex();
     switch(i){
         case 0:
             file.write(mTranslationWidget->getResultText().toUtf8());
@@ -357,7 +340,7 @@ void MainWindow::exit() {
 }
 
 void MainWindow::clear() {
-    const int i = currentIndex();
+    const int i = mTabWidget->currentIndex();
     switch(i){
         case 0:
             mTranslationWidget->clearSourceText();
@@ -371,12 +354,12 @@ void MainWindow::clear() {
 }
 
 void MainWindow::undo() {
-    currentIndex() == 0 ? mTranslationWidget->undo()
+    mTabWidget->currentIndex() == 0 ? mTranslationWidget->undo()
                         : mDictionaryWidget->srcText()->undo();
 }
 
 void MainWindow::redo() {
-    currentIndex() == 0 ? mTranslationWidget->redo()
+    mTabWidget->currentIndex() == 0 ? mTranslationWidget->redo()
                         : mDictionaryWidget->srcText()->redo();
 }
 
@@ -384,6 +367,3 @@ void MainWindow::about() {
     QMessageBox::about(this, tr("About QPhoenix"), mAboutStr);
 }
 
-int MainWindow::currentIndex() const {
-    return mTabWidget->currentIndex();
-}

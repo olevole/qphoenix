@@ -1,2 +1,2 @@
-ADD_SUBDIRECTORY(wordreference)
-#ADD_SUBDIRECTORY(glosbe)
+add_subdirectory(wordreference)
+#add_subdirectory(glosbe)

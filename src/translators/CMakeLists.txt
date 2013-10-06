@@ -1,3 +1,3 @@
-ADD_SUBDIRECTORY(mymemory)
-ADD_SUBDIRECTORY(yandex)
+add_subdirectory(mymemory)
+add_subdirectory(yandex)
 #ADD_SUBDIRECTORY(mstranslator)

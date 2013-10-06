@@ -5,6 +5,7 @@
 #include <QDebug>
 #include "itranslator.h"
 #include "idictionary.h"
+#include "dictionaryconfig.h"
 
 
 class IThread : public QThread
@@ -40,11 +41,11 @@ class QPDictionaryThread : public IThread {
     Q_OBJECT
 public:
     QPDictionaryThread();
-    QPDictionaryThread(QList<IDictionary *>lst) {
+    QPDictionaryThread(QPDictionaryList lst) {
         QPDictionaryThread();
         this->setDictionaryList(lst);
     }
-    void setDictionaryList(QList<IDictionary *>lst){ mDictList = lst; }
+    void setDictionaryList(QPDictionaryList &lst){ mDictList = lst; }
     int count(){ return mDictList.count();}
 protected:
     void run();
@@ -60,7 +61,7 @@ private:
     QString mSrcLang;
     QString mDestLang;
     QString mQuery;
-    QList<IDictionary *> mDictList;
+    QPDictionaryList mDictList;
 };
 
 /*!

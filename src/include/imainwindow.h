@@ -40,10 +40,6 @@ public:
 
     virtual void addToolBarAction(QAction *action) = 0;
 
-//    virtual void addPage(QWidget *page) = 0;
-//    virtual void removePage(const QWidget *page) = 0;
-//    virtual QWidget *pageAt(const int i) = 0;
-//    virtual int currentIndex() const = 0;
 };
 
 Q_DECLARE_INTERFACE(IMainWindow, "com.qphoenix.interfaces.mainwindow/1.0")

@@ -138,22 +138,17 @@ void DictionaryWidget::setDictionaryList(QPDictionaryList dicts) {
     }
 
     mDicts = dicts;
-//    mDictWorker.setDictionaryList(mDicts);
-   foreach(QPDictionary dict, dicts) {
-       LanguageTable table = dict.data.lang_table;
-       foreach(QString key, table.keys()) {
-           const QStringList values = table[key];
-           foreach(QString value, values) {
-               list << LanguagePair(key, value);
-               list << LanguagePair(value, key);
-           }
+    mDictWorker.setDictionaryList(mDicts);
+    foreach(QPDictionary dict, dicts) {
+        LanguageTable table = dict.data.lang_table;
+        foreach(QString key, table.keys()) {
+            const QStringList values = table[key];
+            foreach(QString value, values) {
+                list << LanguagePair(key, value);
+                list << LanguagePair(value, key);
+            }
 
-       }
-
-//        foreach(LanguagePair pair, dict->pairs()) {
-//            if(!list.contains(pair))
-//                list.append(pair);
-//        }
+        }
     }
     qSort(list);
     setLangPairs(list);
