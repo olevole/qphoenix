@@ -167,7 +167,7 @@ void DictionaryWidget::zoomOut() {
     mResText->setZoomFactor(mResText->zoomFactor()-0.1);
 }
 
-void DictionaryWidget::setLangPairs(const LanguagePairList lst) {
+void DictionaryWidget::setLangPairs(const LanguagePairList &lst) {
     mLanguagesComboBox->clear();
     foreach(LanguagePair pair, lst) {
         QString first, second;
@@ -187,13 +187,17 @@ void DictionaryWidget::setLangPairs(const LanguagePairList lst) {
 
 void DictionaryWidget::onQueryComp() {
     if(!mLock)
-        mDictWorker.queryCompletions(mPairs.at(mLanguagesComboBox->currentIndex()), mSrcText->text());
+        mDictWorker.queryCompletions(mPairs.at(mLanguagesComboBox->currentIndex()).first,
+                                     mPairs.at(mLanguagesComboBox->currentIndex()).second,
+                                     mSrcText->text());
 }
 
 void DictionaryWidget::onQueryWord() {
     mIsEmpty = true;
     mLock = true;
-    mDictWorker.query(mPairs.at(mLanguagesComboBox->currentIndex()), mSrcText->text());
+    mDictWorker.query(mPairs.at(mLanguagesComboBox->currentIndex()).first,
+                      mPairs.at(mLanguagesComboBox->currentIndex()).second,
+                      mSrcText->text());
 }
 
 void DictionaryWidget::onFinish() {

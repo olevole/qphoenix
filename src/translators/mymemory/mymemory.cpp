@@ -7,7 +7,6 @@
 #include <QTextCodec>
 #include <QTextDocumentFragment>
 
-
 QStringList MyMemory::mLangs = QStringList()   << "sq" <<"ar" <<"bg" <<"ca"
                                                <<"zh-CN" <<"zh-TW" <<"hr"
                                                <<"cs" <<"da" <<"nl" <<"en"

@@ -4,8 +4,8 @@
 
 
 class MainWindow;
-class DictionaryWorker;
-class TranslatorWorker;
+class QPDictionaryThread;
+class QPTranslatorThread;
 
 
 class Core : public QObject
@@ -13,8 +13,8 @@ class Core : public QObject
     Q_OBJECT
 public:
     Core(MainWindow *mw, QObject *parent = 0);
-    DictionaryWorker *dictionaryWorker();
-    TranslatorWorker *translatorWorker();
+    QPDictionaryThread *dictionaryWorker();
+    QPTranslatorThread *translatorWorker();
     
 signals:
     

@@ -5,7 +5,7 @@
 #include <QDebug>
 
 
-QPModuleList QPPluginLoader::modules() {
+QPModuleList QPModuleLoader::modules() {
     QPModuleList modules;
     mSearchPaths.removeDuplicates();
     foreach(QString path, mSearchPaths) {

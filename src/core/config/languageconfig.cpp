@@ -37,7 +37,7 @@ LanguageConfig::LanguageConfig(QWidget *parent) :
 void LanguageConfig::save() {
     QSettings s;
     s.beginGroup("Languages");
-    s.setValue("EnabledLanguages", keysForEnabled());
+    s.setValue("EnabledLanguages", getEnabledLanguages());
     s.endGroup();
 }
 
@@ -65,7 +65,7 @@ void LanguageConfig::reset() {
     setCbState(true);
 }
 
-QStringList LanguageConfig::keysForEnabled() const {
+QStringList LanguageConfig::getEnabledLanguages() const {
     QStringList enabled;
     const QStringList keys = mLangList.keys();
 

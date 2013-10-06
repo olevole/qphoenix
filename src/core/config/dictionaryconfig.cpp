@@ -16,7 +16,7 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
       mResultCountLabel(new QLabel(tr("Maximum dictionary results to show"), this)),
       mResultCountSpin(new QSpinBox(this))
 {
-    QPPluginLoader ldr("dictionaries:");
+    QPModuleLoader ldr("dictionaries:");
     mDictionaries = ldr.modules();
 
     QVBoxLayout *tab1 = new QVBoxLayout;

@@ -27,7 +27,7 @@
 #include <QListWidget>
 #include "idictionarywidget.h"
 #include "idictionary.h"
-#include "querywrappers.h"
+#include "threads.h"
 #include "dictionaryconfig.h"
 
 class QComboBox;
@@ -44,6 +44,10 @@ class QWebView;
 class QToolBar;
 class QLineEdit;
 class DictionaryTemplate;
+
+
+typedef QPair<QString, QString> LanguagePair;
+typedef QList<LanguagePair> LanguagePairList;
 
 class DictionaryWidget : public QWidget, public IDictionaryWidget
 {
@@ -69,7 +73,7 @@ private slots:
 
     void zoomIn();
     void zoomOut();
-    void setLangPairs(const LanguagePairList lst);
+    void setLangPairs(const LanguagePairList &lst);
     void onQueryComp();
     void onQueryWord();
     void onFinish();
@@ -82,7 +86,8 @@ private:
      * if 0 - unlimited
      */
     int mMaxVarCount;
-    bool mNativeNames, mLock;
+    bool mNativeNames;
+    bool mLock;
     bool mIsEmpty;
     QToolBar *mMainToolBar;
     QTimer *mQueryTimer;
@@ -98,7 +103,7 @@ private:
     QStringListModel *mCompleterModel;
 
     QPDictionaryList mDicts;
-    DictionaryWorker mDictWorker;
+    QPDictionaryThread mDictWorker;
     LanguagePairList mPairs;
     DictionaryTemplate *mTemplate;
 };

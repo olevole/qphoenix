@@ -68,11 +68,9 @@ TranslatorsConfig::TranslatorsConfig(QWidget *parent) :
 
     connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onIndexChange(int)));
     connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(translatorIndexChanged(int)));
-    QPPluginLoader ldr("translators:");
+    QPModuleLoader ldr("translators:");
 
     mModuleList = ldr.modules();
-
-
 
     foreach (QPModule module, mModuleList)
         mTranslatorComboBox->addItem(module.data.name);
@@ -105,7 +103,6 @@ QStringList TranslatorsConfig::getTranslatorsNames() const {
     QStringList names;
     foreach(QPModule module, mModuleList)
         names << module.data.name;
-    qDebug() << "NAMES___" << names;
     return names;
 }
 

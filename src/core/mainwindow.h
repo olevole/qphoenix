@@ -7,7 +7,6 @@
 #include "idictionarywidget.h"
 #include "dictionarywidget.h"
 #include "translationwidget.h"
-#include "querywrappers.h"
 
 class QStatusBar;
 class QToolBar;
@@ -123,7 +122,7 @@ private:
     QAction *mActionAbout, *mActionAboutQt;
 
     // Main widgets
-    TranslationWidget *mTranslationWidget;
+    QPTranslationWidget *mTranslationWidget;
     DictionaryWidget *mDictionaryWidget;
 
     /*!

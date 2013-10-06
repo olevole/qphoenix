@@ -24,10 +24,11 @@
 #include <QWidget>
 #include <QToolBar>
 #include <QSettings>
+#include <QComboBox>
 #include "itranslationwidget.h"
 #include "itranslator.h"
 #include "languages.h"
-#include "querywrappers.h"
+#include "threads.h"
 #include "translatorsconfig.h"
 #include "loader.h"
 
@@ -35,16 +36,15 @@ class QTextEdit;
 class QTextBrowser;
 class QToolButton;
 class QPushButton;
-class QComboBox;
 class QLabel;
 class QVBoxLayout;
 class QHBoxLayout;
 class QToolBar;
 
-class TranslationToolBar : public QToolBar {
+class QPTranslationToolBar : public QToolBar {
 Q_OBJECT
 public:
-    explicit TranslationToolBar(QWidget *parent = 0);
+    explicit QPTranslationToolBar(QWidget *parent = 0);
 public slots:
     void setCopyActionEnabled(bool);
 signals:
@@ -53,129 +53,81 @@ private:
     QAction *mCopyAction;
 };
 
+class QPLanguageComboBox : public QComboBox {
+public:
+    explicit QPLanguageComboBox(QWidget *parent = 0);
+    QString currentData() const;
+};
 
-class TranslationWidget : public QWidget, public ITranslationWidget
+class QPTranslationWidget : public QWidget, public ITranslationWidget
 {
     Q_OBJECT
 public:
-    explicit TranslationWidget(QWidget *parent = 0);
-    virtual ~TranslationWidget();
+    explicit QPTranslationWidget(QWidget *parent = 0);
+    virtual ~QPTranslationWidget();
 
 
-    /*
-     * begin of API methods
-     */
+    //begin of API methods
     virtual QString getSourceText() const;
     virtual QString getResultText() const;
-
     virtual void setSourceText(const QString &text);
     virtual void setResultText(const QString &text);
-
     virtual void clearSourceText();
     virtual void clearResultText();
-
     virtual QString getSourceLanguageCode();
     virtual QString getResultLanguageCode();
-
     virtual QObject *qobject();
-
     virtual void addToolbarAction(QAction *action, TranslationWidgetToolbar toolbar);
+    //end of API methods
 
-    /*
-     * end of API methods
-     */
+    QToolBar    *mainToolBar() {return mMainToolBar;}
 
-    QToolBar    *mainToolBar()      { return mMainToolBar;      }
-
-    void setNativeNames(const bool b) {mNativeNames = b; updateLanguages();}
-    void setTranslator(QPTranslator t);
-    void setEnabledKeys(const QStringList &keys){mKeys = keys;}
+    // Config section
+    void setNativeNames(const bool b) {mNativeNames = b;}
     void setTranslatorsNames(const QStringList &lst);
-//    void setTranslatorsConfig(TranslatorsConfig *cfg);
-
+    void setTranslator(QPTranslator &translator);
+    void setEnabledLanguages(const QStringList &lst) {mEnabledLanguages = lst;}
+private:
+    void setIndexByKey(QComboBox *combobox, const QString &key);
 public slots:
-    /*
-     * begin of API methods
-     */
+    //begin of API methods
     virtual void swap();
     virtual void undo();
     virtual void redo();
     virtual void translate();
-
-    virtual void copySrcText();
-    virtual void copyResText();
-    /*
-     * end of API methods
-     */
-
+    virtual void copySourceText();
+    virtual void copyResultText();
+    //end of API methods
     void setTranslatorIndex(int idx);
 private slots:
-    void onSourceLanguageChanged();
-    void onResultLanguageChanged();
-    void updateButtonState();
-    void fillCombobox(QComboBox *cb, QStringList keys);
-
-    /*!
-     * \brief setIndexByKey sets combobox index by text (or 0 if not match)
-     * \param cb combobox to set
-     * \param key key to set
-     */
-    void setIndexByKey(QComboBox *cb, const QString &key);
-
-    // Update languages if translator was changed TODO: finish it!
-    void updateLanguages();
-
+    void updateComboxes();
+    void updateResultComboBox();
     void saveCfg();
     void readCfg();
 private:
-    QString srcComboboxData();
-    QString resComboboxData();
-
-    TranslatorsConfig *mTranslatorConfig;
     QComboBox *mTranslatorsComboBox;
-
-    /*!
-     *  Widgets
-     */
     QToolBar *mMainToolBar;
-
-    QComboBox
-    *mSrcComboBox,
-    *mResComboBox;
+    QPTranslationToolBar *mSrcToolbar, *mResToolbar;
+    QPLanguageComboBox *mSrcComboBox;
+    QPLanguageComboBox *mResComboBox;
     QTextEdit *mSrcText;
     QTextBrowser *mResText;
-
     QPushButton *mTranslateButton;
     QToolButton *mSwapButton;
-
     QVBoxLayout *mMainLayout;
     QHBoxLayout *mButtonsLayout;
 
-    TranslationToolBar *mSrcToolbar, *mResToolbar;
-
-    /*!
-     *  Logic parts
-     */
-    QStringList mKeys;
+    QPTranslatorThread mThread;
+    QStringList mEnabledLanguages;
     LanguageTable mTable;
-    TranslatorWorker mWorker;
-
-    bool mIsLinear, mNativeNames;
-    int mTranslatorIndex;
-
-
-    QString mLastSrcName, mLastDestName;
-
-    QPTranslator mTranslator;
+    ITranslator *mTranslator;
+    bool mNativeNames;
+    bool mLanguageTableIsFlat;
 signals:
-    /*
-     * begin of API methods
-     */
+   //begin of API methods
     void finished();
     void started();
-    /*
-     * end of API methods
-     */
+    //end of API methods
 
     void translatorIndexChanged(int);
 };

@@ -6,20 +6,19 @@
 #include "itranslator.h"
 #include "idictionary.h"
 
-//-------------------------------------------------------------------------------------
 
-class IWorker : public QThread
+class IThread : public QThread
 {
     Q_OBJECT
 public:
-    IWorker()
+    IThread()
         :mTimer(new QTimer(this))
     {
         connect(mTimer, SIGNAL(timeout()), this, SIGNAL(timeout()));
         connect(mTimer, SIGNAL(timeout()), this, SLOT(quit()));
 
         mTimer->setSingleShot(true);
-        setTimeout(1000);
+        setTimeout(100000000);
     }
 
     void setTimeout(const int msec)
@@ -36,14 +35,13 @@ signals:
     void timeout();
 };
 
-//-------------------------------------------------------------------------------------
 
-class DictionaryWorker : public IWorker {
+class QPDictionaryThread : public IThread {
     Q_OBJECT
 public:
-    DictionaryWorker();
-    DictionaryWorker(QList<IDictionary *>lst) {
-        DictionaryWorker();
+    QPDictionaryThread();
+    QPDictionaryThread(QList<IDictionary *>lst) {
+        QPDictionaryThread();
         this->setDictionaryList(lst);
     }
     void setDictionaryList(QList<IDictionary *>lst){ mDictList = lst; }
@@ -51,33 +49,32 @@ public:
 protected:
     void run();
 public slots:
-    void query(const LanguagePair &pair, const QString &query);
-    void queryCompletions(const LanguagePair &pair, const QString &query);
+    void query(const QString &src_lang, const QString &dest_lang, const QString &query);
+    void queryCompletions(const QString &src_lang, const QString &dest_lang, const QString &query);
 signals:
     void reply(QStringList, QString);
     void reply(QStringList);
     void finished();
 private:
     bool mCompletions;
-    LanguagePair mPair;
+    QString mSrcLang;
+    QString mDestLang;
     QString mQuery;
     QList<IDictionary *> mDictList;
 };
-
-//-------------------------------------------------------------------------------------
 
 /*!
  * \brief The TranslatorWrapper class
  * Wrapper for execute translation query in separated thread
  */
 
-class TranslatorWorker : public IWorker
+class QPTranslatorThread : public IThread
 {
     Q_OBJECT
 public:
-    TranslatorWorker();
-    TranslatorWorker(ITranslator *t) {
-        TranslatorWorker();
+    QPTranslatorThread();
+    QPTranslatorThread(ITranslator *t) {
+        QPTranslatorThread();
         setTranslator(t);
     }
     void setTranslator(ITranslator *ptr){mPtr = ptr;}

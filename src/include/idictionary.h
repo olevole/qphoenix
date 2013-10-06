@@ -33,8 +33,8 @@ class QString;
 class IDictionary;
 
 
-typedef QPair<QString, QString> LanguagePair;
-typedef QList<LanguagePair> LanguagePairList;
+//typedef QPair<QString, QString> LanguagePair;
+//typedef QList<LanguagePair> LanguagePairList;
 
 class IDictionary : public IModule {
 public:
@@ -53,7 +53,8 @@ public:
      * \param pair language pair (for example, en, ru)
      * \return DictionaryVariantList with dictionary reply
      */
-    virtual QStringList query(const QString &text, const LanguagePair &pair, unsigned int max_count = QP_DICT_MAX)  = 0;
+    virtual QStringList query(const QString &text, const QString &src_lang, const QString &dest_lang,
+                              unsigned int max_count = QP_DICT_MAX)  = 0;
 
     /*!
      * \brief completions return a word completions variants
@@ -64,7 +65,7 @@ public:
      * Note: If there's only one completion, or if dictionary doesn't support
      * this feature, this function MUST return an empty QStringList
      */
-    virtual QStringList completions(const QString &str, const LanguagePair &pair) const = 0;
+    virtual QStringList completions(const QString &str, const QString &src_lang, const QString &dest_lang) const = 0;
 
     /*!
      * \brief isSupportCompletions

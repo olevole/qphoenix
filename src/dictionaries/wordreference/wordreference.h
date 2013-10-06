@@ -17,8 +17,8 @@ public:
     WordReference(QObject *parent = 0);
 
 
-    QStringList query( const QString &text, const LanguagePair &pair, unsigned int max_count);
-    QStringList completions(const QString &str, const LanguagePair &pair) const;
+    QStringList query(const QString &text, const QString &src_lang, const QString &dest_lang, unsigned int max_count);
+    QStringList completions(const QString &str, const QString &src_lang, const QString &dest_lang) const;
 
     bool load(){}
     bool unload(){}
@@ -31,5 +31,5 @@ private:
     static QString mApiKey;
     static QString mApiVer;
 
-    QJsonDocument queryData(const QString &str, const LanguagePair &pair) const;
+    QJsonDocument queryData(const QString &str, const QString &src_lang, const QString &dest_lang) const;
 };

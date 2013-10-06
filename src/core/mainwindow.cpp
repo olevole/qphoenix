@@ -16,7 +16,6 @@
 #include <QTextBrowser>
 #include <QLineEdit>
 #include <QClipboard>
-#include <QThread>
 #include <QFrame>
 #include <QTabWidget>
 #include <QToolButton>
@@ -29,7 +28,6 @@
 
 #include "mainwindow.h"
 #include "iplugin.h"
-#include "querywrappers.h"
 #include "translationwidget.h"
 #include "dictionarywidget.h"
 #include "config.h"
@@ -83,7 +81,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mActionAbout(new QAction(QIcon::fromTheme("help-about"), tr("About"), this)),
     mActionAboutQt(new QAction(tr("About Qt"), this)),
 
-    mTranslationWidget(new TranslationWidget(this)),
+    mTranslationWidget(new QPTranslationWidget(this)),
     mDictionaryWidget(new DictionaryWidget(this)),
     mSettingsDialog(new Config(this)),
 
@@ -134,7 +132,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->addToolBar(mDictionaryWidget->mainToolBar());
     this->addToolBar(mTranslationWidget->mainToolBar());
 
-    mTabWidget->insertTab(mTabWidget->count(), mTranslationWidget, QP_ICON("translator"), tr("Translate"));
+    mTabWidget->insertTab(mTabWidget->count(), mTranslationWidget, QP_ICON("translator"), tr("Translator"));
     mTabWidget->insertTab(mTabWidget->count(), mDictionaryWidget, QP_ICON("dictionary"), tr("Dictionary"));
 
     if(mTabWidget->count() > 1)
@@ -167,14 +165,17 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
     connect(mTabWidget, SIGNAL(currentChanged(int)), this, SLOT(onIndexChange(int)));
 
-    mTranslationWidget->setTranslatorsNames(mTranslatorsConfig->getTranslatorsNames());
+//    mTranslationWidget->setTranslatorsNames(mTranslatorsConfig->getTranslatorsNames());
     connect(mTranslatorsConfig, SIGNAL(translatorIndexChanged(int)), mTranslationWidget, SLOT(setTranslatorIndex(int)));
     connect(mTranslationWidget, SIGNAL(translatorIndexChanged(int)), mTranslatorsConfig, SLOT(setTranslatorIndex(int)));
+
+    connect(mTranslationWidget, SIGNAL(translatorIndexChanged(int)), this, SLOT(updateTranslatorConfig()));
 
     readCfg();
     // Read configs
     updateTranslatorConfig();
     onConfigAccept();
+
 
 }
 
@@ -246,28 +247,21 @@ void MainWindow::onConfigAccept() {
         }
     }
 
-    /*!
-     * Updating translators information...
-     */
-
-    QStringList enabledKeys = mLanguageConfig->keysForEnabled();
-
     mLanguageConfig->setNativeNames(mCommonConfig->useNativeNames());
     mTranslationWidget->setNativeNames(mCommonConfig->useNativeNames());
+    mTranslationWidget->setTranslatorsNames(mTranslatorsConfig->getTranslatorsNames());
+
     mDictionaryWidget->setNativeNames(mCommonConfig->useNativeNames());
     qDebug() << "DICTS COUNT: " << mDictionaryConfig->dictionaries().count();
     mDictionaryWidget->setDictionaryList(mDictionaryConfig->dictionaries());
+
+    updateTranslatorConfig();
 }
 
 void MainWindow::updateTranslatorConfig() {
     QPTranslator tr = mTranslatorsConfig->currentTranslator();
-//    if(tr == NULL) {
-//        qWarning() << "Translators are not loaded!";
-//        return;
-//    }
-    qDebug() << "Called!";
-        mTranslationWidget->setEnabledKeys(mLanguageConfig->keysForEnabled());
-        mTranslationWidget->setTranslator(tr);
+    mTranslationWidget->setEnabledLanguages(mLanguageConfig->getEnabledLanguages());
+    mTranslationWidget->setTranslator(tr);
 }
 
 void MainWindow::onIndexChange(const int i) {
@@ -337,11 +331,9 @@ void MainWindow::save() {
     switch(i){
         case 0:
             file.write(mTranslationWidget->getResultText().toUtf8());
-//            mTranslationWidget->srcText()->print(&printer);
         break;
         case 1:
             file.write(mDictionaryWidget->resText()->page()->mainFrame()->toHtml().toUtf8());
-//           mDictionaryWidget->resText()->print(&printer);
         break;
     }
 
@@ -357,7 +349,6 @@ void MainWindow::save() {
 void MainWindow::saveAs() {
     mSavePath = "";
     save();
-
 }
 
 void MainWindow::exit() {
@@ -388,12 +379,6 @@ void MainWindow::redo() {
     currentIndex() == 0 ? mTranslationWidget->redo()
                         : mDictionaryWidget->srcText()->redo();
 }
-
-//void MainWindow::swap() {
-//    mTranslationWidget->
-//}
-
-//----------------------------------------------------------------------------------------------
 
 void MainWindow::about() {
     QMessageBox::about(this, tr("About QPhoenix"), mAboutStr);

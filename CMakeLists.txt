@@ -61,7 +61,7 @@ src/core/config/dictionaryconfig.h
 src/core/config/commonconfig.h
 src/core/translationwidget.h
 src/core/dictionarywidget.h
-src/core/querywrappers.h
+src/core/threads.h
 src/core/loader.h
 src/core/infodialog.h
 src/core/dictionarytemplate.h
@@ -80,7 +80,7 @@ src/core/config/dictionaryconfig.cpp
 src/core/config/commonconfig.cpp
 src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
-src/core/querywrappers.cpp
+src/core/threads.cpp
 src/core/loader.cpp
 src/core/infodialog.cpp
 src/core/dictionarytemplate.cpp

@@ -1,0 +1,13 @@
+
+{	"qphoenix" : {
+		"module": {
+			"type" : "plugin",
+			"libname" : "${FULL_TARGET_NAME}",
+			"info" : {
+				"name" : "Scanner",
+				"version" : "1.9999",
+				"url" : ""
+			}
+		}
+	}
+}

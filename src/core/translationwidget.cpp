@@ -38,7 +38,7 @@
 #include <QLabel>
 #include <QSizePolicy>
 
-TranslationToolBar::TranslationToolBar(QWidget *parent)
+QPTranslationToolBar::QPTranslationToolBar(QWidget *parent)
     :QToolBar(parent),
       mCopyAction(new QAction(QIcon::fromTheme("edit-copy"), "Copy", this))
 {
@@ -47,15 +47,24 @@ TranslationToolBar::TranslationToolBar(QWidget *parent)
     connect(mCopyAction,SIGNAL(triggered()), this, SIGNAL(copyRequest()));
 }
 
-void TranslationToolBar::setCopyActionEnabled(const bool b) {
+void QPTranslationToolBar::setCopyActionEnabled(const bool b) {
     mCopyAction->setEnabled(b);
 }
 
-TranslationWidget::TranslationWidget(QWidget *parent) :
+QPLanguageComboBox::QPLanguageComboBox(QWidget *parent)
+    :QComboBox(parent)
+{
+}
+
+QString QPLanguageComboBox::currentData() const {
+    return this->itemData(this->currentIndex()).toString();
+}
+
+QPTranslationWidget::QPTranslationWidget(QWidget *parent) :
     QWidget(parent),
     mTranslatorsComboBox(new QComboBox(this)),
-    mSrcComboBox(new QComboBox(this)),
-    mResComboBox(new QComboBox(this)),
+    mSrcComboBox(new QPLanguageComboBox(this)),
+    mResComboBox(new QPLanguageComboBox(this)),
     mSrcText(new QTextEdit(this)),
     mResText(new QTextBrowser(this)),
     mTranslateButton(new QPushButton(tr("Translate"),this)),
@@ -63,10 +72,11 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mMainLayout(new QVBoxLayout()),
     mButtonsLayout(new QHBoxLayout()),
 
-    mSrcToolbar(new TranslationToolBar(this)),
-    mResToolbar(new TranslationToolBar(this)),
+    mSrcToolbar(new QPTranslationToolBar(this)),
+    mResToolbar(new QPTranslationToolBar(this)),
     mMainToolBar(new QToolBar(this)),
-    mNativeNames(true)
+    mNativeNames(true),
+    mLanguageTableIsFlat(false)
 {
     mButtonsLayout->addWidget(mResToolbar);
     mButtonsLayout->addWidget(mSrcComboBox);
@@ -88,68 +98,69 @@ TranslationWidget::TranslationWidget(QWidget *parent) :
     mSrcComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     mResComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
-    mWorker.setTimeout(QP_TRANSLATOR_TIMEOUT);
-
-//    connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onSourceLanguageChanged()));
-//    connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateButtonState()));
-//    connect(mResComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateButtonState()));
-//    connect(mResComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onResultLanguageChanged()));
     connect(mTranslatorsComboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(translatorIndexChanged(int)));
+    connect(mTranslatorsComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateComboxes()));
 
-    connect(mSrcText, SIGNAL(textChanged()), this, SLOT(updateButtonState()));
+
     connect(mSwapButton, SIGNAL(clicked()), this, SLOT(swap()));
-    connect(mSrcToolbar, SIGNAL(copyRequest()), this, SLOT(copySrcText()));
-    connect(mResToolbar, SIGNAL(copyRequest()), this, SLOT(copyResText()));
-    connect(&mWorker, SIGNAL(reply(QString)), mResText, SLOT(setPlainText(QString)));
+    connect(mSrcToolbar, SIGNAL(copyRequest()), this, SLOT(copySourceText()()));
+    connect(mResToolbar, SIGNAL(copyRequest()), this, SLOT(copyResultText()));
     connect(mTranslateButton, SIGNAL(clicked()), this, SLOT(translate()));
     connect(mResText, SIGNAL(textChanged()), this, SIGNAL(finished()));
 
-    updateButtonState();
-    this->readCfg();
+    connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateResultComboBox()));
+
+    connect(&mThread, SIGNAL(reply(QString)), mResText, SLOT(setText(QString)));
+
+//    this->readCfg();
 }
 
-TranslationWidget::~TranslationWidget() {
+QPTranslationWidget::~QPTranslationWidget() {
     saveCfg();
 }
 
 
-QString TranslationWidget::getSourceText() const {
+//----------------------------------------------------------------------------
+// !!Begin API methods!!
+//----------------------------------------------------------------------------
+
+QString QPTranslationWidget::getSourceText() const {
     return mSrcText->toPlainText();
 }
 
-QString TranslationWidget::getResultText() const {
+QString QPTranslationWidget::getResultText() const {
     return mResText->toPlainText();
 }
 
-void TranslationWidget::setSourceText(const QString &text) {
+void QPTranslationWidget::setSourceText(const QString &text) {
     mSrcText->setPlainText(text);
 }
 
-void TranslationWidget::setResultText(const QString &text) {
+void QPTranslationWidget::setResultText(const QString &text) {
     mResText->setPlainText(text);
 }
 
-void TranslationWidget::clearSourceText() {
+void QPTranslationWidget::clearSourceText() {
     mSrcText->clear();
 }
 
-void TranslationWidget::clearResultText() {
+void QPTranslationWidget::clearResultText() {
     mResText->clear();
 }
 
-QString TranslationWidget::getSourceLanguageCode() {
+QString QPTranslationWidget::getSourceLanguageCode() {
     return mSrcComboBox->itemData(mSrcComboBox->currentIndex()).toString();
 }
 
-QString TranslationWidget::getResultLanguageCode() {
+QString QPTranslationWidget::getResultLanguageCode() {
     return mResComboBox->itemData(mResComboBox->currentIndex()).toString();
 }
 
-QObject *TranslationWidget::qobject() {
+QObject *QPTranslationWidget::qobject() {
     return this;
 }
 
-void TranslationWidget::addToolbarAction(QAction *action, TranslationWidgetToolbar toolbar) {
+void QPTranslationWidget::addToolbarAction(QAction *action, TranslationWidgetToolbar toolbar) {
     switch(toolbar) {
     case MainToolbar:
         mMainToolBar->addAction(action);
@@ -165,179 +176,123 @@ void TranslationWidget::addToolbarAction(QAction *action, TranslationWidgetToolb
     }
 }
 
-void TranslationWidget::setTranslator(QPTranslator t) {
-    qDebug() << "Setting translator!!!!";
-    mTranslator = t;
-    mWorker.setTranslator(t.instance);
-    qDebug() << "Updating languages!!!!";
-    updateLanguages();
-}
-
-
-void TranslationWidget::setTranslatorsNames(const QStringList &lst) {
-    mTranslatorsComboBox->clear();
-    foreach(QString name, lst)
-        mTranslatorsComboBox->addItem(name);
-}
-
-void TranslationWidget::setTranslatorIndex(int idx) {
-    if(idx == -1 && idx <= mTranslatorsComboBox->count())
-        return;
-    mTranslatorsComboBox->setCurrentIndex(idx);
-}
-
-void TranslationWidget::onSourceLanguageChanged() {
-    mLastSrcName = mSrcComboBox->currentText();
-    if(mTable.isEmpty() || mIsLinear)
-        return;
-
-    QList<QStringList> values = mTable.values();
-    fillCombobox(mResComboBox, values.at(mSrcComboBox->currentIndex()));
-}
-
-void TranslationWidget::onResultLanguageChanged() {
-    mLastDestName = mResComboBox->currentText();
-}
-
-void TranslationWidget::updateButtonState() {
-    const bool ready = (srcComboboxData() != resComboboxData()) && !mSrcText->toPlainText().isEmpty();
-    mTranslateButton->setEnabled(ready);
-}
-
-void TranslationWidget::swap() {
+void QPTranslationWidget::swap() {
     const int i = mSrcComboBox->currentIndex();
     mSrcComboBox->setCurrentIndex(mResComboBox->currentIndex());
     mResComboBox->setCurrentIndex(i);
 }
 
-void TranslationWidget::undo() {
+void QPTranslationWidget::undo() {
     mSrcText->undo();
 }
 
-void TranslationWidget::redo() {
+void QPTranslationWidget::redo() {
     mSrcText->redo();
 }
 
-void TranslationWidget::copySrcText() {
+void QPTranslationWidget::copySourceText() {
     qApp->clipboard()->setText(mSrcText->toPlainText());
 }
 
-void TranslationWidget::copyResText() {
+void QPTranslationWidget::copyResultText() {
     qApp->clipboard()->setText(mResText->toPlainText());
 }
 
-void TranslationWidget::fillCombobox(QComboBox *cb, QStringList keys) {
-//    onSourceLanguageChanged();    +<<
-//    onResultLanguageChanged();
-    cb->clear();
-    for (int i = 0; i < keys.count(); ++i) {
-        QString key = keys[i];
-        QString icon = QString(":/flags/%1.png").arg(key);
-        QString name;
-        qDebug() << "KEY: " << key;
-        Language entry = QP_LANGUAGE_DB->find(key);
-        name = entry.name(mNativeNames);
-
-//        cb->addItem(QIcon(icon), name, key);
-        qDebug() << "KEY: " << key;
-//        cb->addItem("Bla");
-//        cb->addItem(key, key);
-//        cb->setItemData(i, key);
-    }
-}
-
-void TranslationWidget::setIndexByKey(QComboBox *cb, const QString &key) {
-    int match_index = 0;
-    for (int i = 0; i < cb->count(); ++i) {
-        if(cb->itemText(i) == key) {
-            match_index = i;
-            break;
-        }
-    }
-    qDebug() << "Setting index: " << match_index;
-    cb->setCurrentIndex(match_index);
-}
-
-void TranslationWidget::translate() {
+void QPTranslationWidget::translate() {
     emit started();
-    QString src_text = mSrcText->toPlainText();
-    mWorker.query(srcComboboxData(), resComboboxData(), src_text);
+    const QString src_text = mSrcText->toPlainText();
+    mThread.query(mSrcComboBox->currentData(), mResComboBox->currentData(), src_text);
+
 }
 
-void TranslationWidget::updateLanguages() {
-    LanguageTable table = mTranslator.data.lang_table;
+//----------------------------------------------------------------------------
+// !!End of API methods!!
+//----------------------------------------------------------------------------
 
-    Q_ASSERT(tr != NULL);
-//    Q_ASSERT(!mKeys.isEmpty());
+void QPTranslationWidget::setTranslatorsNames(const QStringList &lst) {
+    mTranslatorsComboBox->clear();
+    foreach(QString name, lst)
+        mTranslatorsComboBox->addItem(name);
+}
 
-    /*!
-     * Processing table (remove disbled language codes)
-     */
+void QPTranslationWidget::setTranslator(QPTranslator &translator) {
+    mTranslator = translator.instance;
+    mThread.setTranslator(mTranslator);
+    mTable = translator.data.lang_table;
+    mLanguageTableIsFlat = true;
+    foreach(QStringList langs, mTable)
+        if(!langs.isEmpty())
+            mLanguageTableIsFlat = false;
+    updateComboxes();
+}
 
-    for(LanguageTable::iterator i = table.begin(); i != table.end();) {
-        const QString &key = i.key();
-        if(!mKeys.contains(key)) {
-            i = table.erase(i);
-        } else {
-            QStringList values = i.value();
-            for (int j = 0; j < values.count(); ++j) {
-                if(!mKeys.contains(values.at(j)))
-                    values.removeAt(j);
-            }
-            table[key] = values;
-            ++i;
+void QPTranslationWidget::setIndexByKey(QComboBox *combobox, const QString &key) {
+    for (int i = 0; i < combobox->count(); ++i) {
+        const QString itemtext = combobox->itemText(i);
+        if(itemtext == key) {
+            combobox->setCurrentIndex(i);
+            qDebug() << "FOUND KEY: " << key;
         }
     }
-
-    /*!
-     * Updating comboboxes..
-     */
-    mIsLinear = true;
-
-    for(LanguageTable::iterator it = table.begin();it != table.end(); it++)
-        if(it.value().count() > 1)
-            mIsLinear = false;
-    mTable = table;
-     qDebug() << "LAST SRC NAME: " << mLastSrcName << "LAST DEST NAME: " << mLastDestName;
-    const QString src = mLastSrcName;
-    const QString dest = mLastDestName;
-
-
-    fillCombobox(mSrcComboBox, table.keys());
-
-    if(mIsLinear)
-        fillCombobox(mResComboBox, table.keys());
-    qDebug() << "!!!!!!!!!!!!!!!!!!!!!!!!!!!";
-
-    qDebug() << "LAST SRC NAME: " << src << "LAST DEST NAME: " << dest;
-
-//    setIndexByKey(mSrcComboBox, src);
-//    setIndexByKey(mResComboBox, dest);
-
 }
 
-void TranslationWidget::saveCfg() {
+void QPTranslationWidget::setTranslatorIndex(int idx) {
+    mTranslatorsComboBox->setCurrentIndex(idx);
+}
+
+void QPTranslationWidget::updateComboxes() {
+    mSrcComboBox->clear();
+    mResComboBox->clear();
+
+    int counter = 0;
+    foreach(QString key, mTable.keys()) {
+        const QString name = QP_LANGUAGE_DB->find(key).name(mNativeNames);
+        const QIcon icon = QIcon(QString(":/flags/%1.png").arg(key));
+        if(mEnabledLanguages.contains(key)) {
+            mSrcComboBox->addItem(icon, name, key);
+            if(mLanguageTableIsFlat) {
+                mResComboBox->addItem(icon, name, key);
+            }
+        }
+        counter++;
+    }
+    updateResultComboBox();
+    readCfg();
+}
+
+void QPTranslationWidget::updateResultComboBox() {
+    if(mLanguageTableIsFlat)
+        return;
+
+    mResComboBox->clear();
+    const QString key = mSrcComboBox->itemData(mSrcComboBox->currentIndex()).toString();
+    qDebug() << "KEY: " << key;
+
+    const QStringList langs = mTable[key];
+    qDebug() << "LANGS: " << langs;
+    int counter = 0;
+    foreach(QString lang, langs) {
+        const QString name = QP_LANGUAGE_DB->find(lang).name(mNativeNames);
+        const QIcon icon = QIcon(QString(":/flags/%1.png").arg(lang));
+        if(mEnabledLanguages.contains(lang)) {
+            mResComboBox->addItem(icon, name, lang);
+        }
+        counter++;
+    }
+}
+
+void QPTranslationWidget::saveCfg() {
     QSettings s;
     s.beginGroup("TranslationWidget");
-    s.setValue("src_index", mSrcComboBox->currentIndex());
-    s.setValue("res_index", mResComboBox->currentIndex());
+    s.setValue("SourceLanguage", mSrcComboBox->currentData());
+    s.setValue("ResultLanguage", mResComboBox->currentData());
     s.endGroup();
 }
 
-void TranslationWidget::readCfg() {
-        QSettings s;
-        s.beginGroup("TranslationWidget");
-        const int src  = s.value("src_index", 0).toInt();
-        const int res  = s.value("res_index", 0).toInt();
-        s.endGroup();
-        mSrcComboBox->setCurrentIndex(mSrcComboBox->count() >= src ? src : -1);
-        mResComboBox->setCurrentIndex(mResComboBox->count() >= res ? res : -1);
-}
-
-QString TranslationWidget::srcComboboxData() {
-    return  mSrcComboBox->itemData(mSrcComboBox->currentIndex()).toString();
-}
-
-QString TranslationWidget::resComboboxData() {
-    return mResComboBox->itemData(mResComboBox->currentIndex()).toString();
+void QPTranslationWidget::readCfg() {
+    QSettings s;
+    s.beginGroup("TranslationWidget");
+    setIndexByKey(mSrcComboBox, s.value("SourceLanguage", "").toString());
+    setIndexByKey(mResComboBox, s.value("ResultLanguage", "").toString());
+    s.endGroup();
 }

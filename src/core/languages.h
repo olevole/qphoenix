@@ -52,11 +52,7 @@ public:
         return mLangList[key];
     }
 
-    /*!
-     * \brief keysForEnabled
-     * \return a keys for enabled languages
-     */
-    LanguageList languages() const {return mLangList;}
+    LanguageList languages() {return mLangList;}
 private:
     LanguageList mLangList;
     LanguageDB();

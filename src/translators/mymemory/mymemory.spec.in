@@ -4,14 +4,15 @@
 			"type" : "translator",
 			"libname" : "${FULL_TARGET_NAME}",
 			"info" : {
-				"name" : "Yandex",
+				"name" : "MyMemory",
 				"version" : "1.9999",
-				"url" : "http://www.yandex.ru"
+				"url" : "http://www.mymemory.translated.net"
 			},
 
 			"languages" : {
-				"es" : ["en", "fr", "pg" ],
-				"en" : ["ru", "fr", "de" ]
+				"es" : "",
+				"ru" : "",
+				"en" : ""
 			}
 		}
 	}

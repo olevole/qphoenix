@@ -38,19 +38,20 @@ public:
     virtual void clearSourceText() = 0;
     virtual void clearResultText() = 0;
 
+    virtual void copySourceText() = 0;
+    virtual void copyResultText() = 0;
+
     enum TranslationWidgetToolbar {
         MainToolbar,
         SourceTextToolbar,
         ResultTextToolbar,
     };
 
-
     virtual QString getSourceLanguageCode() = 0;
     virtual QString getResultLanguageCode() = 0;
 
     virtual void addToolbarAction(QAction *action, TranslationWidgetToolbar toolbar) = 0;
     virtual QObject *qobject() = 0;
-
 
 // Slots
     virtual void swap() = 0;

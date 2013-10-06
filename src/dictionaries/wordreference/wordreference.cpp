@@ -30,8 +30,8 @@ WordReference::WordReference(QObject *parent)
 }
 
 
-QStringList WordReference::query(const QString &text, const LanguagePair &pair, unsigned int max_count)  {
-    QJsonDocument doc = queryData(text, pair);
+QStringList WordReference::query(const QString &text, const QString &src_lang, const QString &dest_lang, unsigned int max_count)  {
+    QJsonDocument doc = queryData(text, src_lang, dest_lang);
     QJsonObject root = doc.object().value("term0").toObject();
     QJsonObject principal = root.value("PrincipalTranslations").toObject();
     QStringList lst;
@@ -65,12 +65,9 @@ QStringList WordReference::query(const QString &text, const LanguagePair &pair, 
 }
 
 
-QJsonDocument WordReference::queryData(const QString &text, const LanguagePair &pair) const {
-    const QString langs = pair.first + pair.second;
+QJsonDocument WordReference::queryData(const QString &text, const QString &src_lang, const QString &dest_lang) const {
     const QByteArray html = text.toUtf8();
-    const QUrl url = QString("http://api.wordreference.com/%2/json/%3/%4").arg(mApiKey, langs, html.toPercentEncoding());
-    //TODO: percent encoding fails!
-
+    const QUrl url = QString("http://api.wordreference.com/%2/json/%3/%4").arg(mApiKey, src_lang+dest_lang, html.toPercentEncoding());
 
     QNetworkAccessManager mManager;
     QEventLoop loop;
@@ -84,8 +81,8 @@ QJsonDocument WordReference::queryData(const QString &text, const LanguagePair &
 
 
 
-QStringList WordReference::completions(const QString &str, const LanguagePair &pair) const {
-    QJsonDocument doc = queryData(str, pair);
+QStringList WordReference::completions(const QString &str,const QString &src_lang, const QString &dest_lang) const {
+    QJsonDocument doc = queryData(str, src_lang, dest_lang);
     QJsonObject root = doc.object().value("term0").toObject();
     QJsonObject principal = root.value("PrincipalTranslations").toObject();
 

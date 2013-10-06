@@ -21,16 +21,8 @@ public:
     void reset();
     QString name() const{return "";}
     QIcon icon() const{return QIcon("");}
-    /*!
-     * \brief keysForEnabled
-     * \return  list with keys of enabled languages
-     */
-    QStringList keysForEnabled() const;
 
-    /*!
-     * \brief setNativeNames
-     * \param b enable native names if true, disable otherwise
-     */
+    QStringList getEnabledLanguages() const;
     void setNativeNames(const bool b) {
         mNativeNames = b;
     }

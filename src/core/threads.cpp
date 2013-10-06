@@ -1,14 +1,14 @@
-#include "querywrappers.h"
+#include "threads.h"
 
-DictionaryWorker::DictionaryWorker()
+QPDictionaryThread::QPDictionaryThread()
 {
     connect(this, SIGNAL(reply(DictionaryVariantList)), this, SLOT(quit()));
     connect(this, SIGNAL(reply(QStringList)), this, SLOT(quit()));
     mCompletions = false;
 }
 
-void DictionaryWorker::run() {
-    Q_ASSERT(!mPair.first.isEmpty() && !mPair.second.isEmpty());
+void QPDictionaryThread::run() {
+//    Q_ASSERT(!mPair.first.isEmpty() && !mPair.second.isEmpty());
     if(mQuery.isEmpty())
         return;
     //TODO: Solve this part
@@ -16,7 +16,7 @@ void DictionaryWorker::run() {
         QStringList comp;
         foreach(IDictionary *dict, mDictList)
             if(dict->isSupportCompletions())
-                comp += dict->completions(mQuery, mPair);
+                comp += dict->completions(mQuery, mSrcLang, mDestLang);
         comp.removeDuplicates();
         qDebug() << "Completions list: " << comp;
         if(comp.count() == 1)
@@ -33,37 +33,38 @@ void DictionaryWorker::run() {
     emit finished();
 }
 
-void DictionaryWorker::query(const LanguagePair &pair, const QString &query)
+void QPDictionaryThread::query(const QString &src_lang, const QString &dest_lang, const QString &query)
 {
     mCompletions = false;
-    mPair = pair;
+    mSrcLang = src_lang;
+    mDestLang = dest_lang;
     mQuery = query;
     start();
 }
 
-void DictionaryWorker::queryCompletions(const LanguagePair &pair, const QString &query)
+void QPDictionaryThread::queryCompletions(const QString &src_lang, const QString &dest_lang, const QString &query)
 {
     mCompletions = true;
-    mPair = pair;
+    mSrcLang = src_lang;
+    mDestLang = dest_lang;
     mQuery = query;
     start();
 }
 
-//-------------------------------------------------------------------------------------
 
-TranslatorWorker::TranslatorWorker()
+QPTranslatorThread::QPTranslatorThread()
     :mPtr(NULL)
 {
     connect(this, SIGNAL(reply(QString)), this, SLOT(quit()));
 }
 
-void TranslatorWorker::run()
+void QPTranslatorThread::run()
 {
     const QString _result = mPtr->translate(mSrcText, mSrcLang, mDestLang);
     emit reply(_result);
 }
 
-void TranslatorWorker::query(const QString &src_lang, const QString &res_lang, const QString &src_text)
+void QPTranslatorThread::query(const QString &src_lang, const QString &res_lang, const QString &src_text)
 {
     Q_ASSERT(mPtr);
     Q_ASSERT(mPtr->isLoaded());

@@ -17,13 +17,13 @@ typedef QList<QPModule>QPModuleList;
  * ModuleLoader
  */
 
-class QPPluginLoader : public QObject
+class QPModuleLoader : public QObject
 {
     Q_OBJECT
 public:
-    QPPluginLoader(QObject *parent = 0) :QObject(parent) {}
-    QPPluginLoader(const QString &path) {addSearchPath(path);}
-    QPPluginLoader(const QStringList &paths) {addSearchPath(paths);}
+    QPModuleLoader(QObject *parent = 0) :QObject(parent) {}
+    QPModuleLoader(const QString &path) {addSearchPath(path);}
+    QPModuleLoader(const QStringList &paths) {addSearchPath(paths);}
 
     void addSearchPath(const QString &path) {addSearchPath(QStringList() << path);}
     void addSearchPath(const QStringList &paths) {mSearchPaths += paths;}
