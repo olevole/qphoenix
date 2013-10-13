@@ -45,17 +45,16 @@
 
 DictionaryWidget::DictionaryWidget(QWidget *parent) :
     QWidget(parent),
+    mLock(false),
+    mIsEmpty(true),
+    mMainToolBar(new QToolBar(this)),
+    mQueryTimer(new QTimer(this)),
     mLanguagesComboBox(new QComboBox(this)),
     mSrcText(new QLineEdit(this)),
     mResText(new QWebView(this)),
     mCompleter(new QCompleter(this)),
     mCompleterModel(new QStringListModel(this)),
-    mQueryTimer(new QTimer(this)),
-    mMainToolBar(new QToolBar(this)),
-    mLock(false),
-    mIsEmpty(true),
     mTemplate(new DictionaryTemplate(this))
-
 {
     setInputTimeout(1000);
 

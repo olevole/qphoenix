@@ -34,6 +34,10 @@ PluginsConfig::PluginsConfig(QWidget *parent)
     updateTable();
 }
 
+QPPluginList *PluginsConfig::pluginsList() {
+    return &mPlugins;
+}
+
 QStringList PluginsConfig::enabledPluginsList()  {
     QStringList lst;
     for (int i = 0; i < mTable->rowCount(); i++)
@@ -79,11 +83,16 @@ void PluginsConfig::reset() {
 void PluginsConfig::updateTable() {
     QPModuleLoader loader("plugins:");
 
-    mPlugins = loader.modules();
 
-    foreach(QPModule plugin, mPlugins) {
+    QPModuleList modules = loader.modules();
+
+    foreach(QPModule plugin, modules) {
 
         IPlugin *iface = qobject_cast<IPlugin *>(plugin.instance);
+
+        QPPlugin pl;
+        pl.data = plugin.data;
+        pl.instance = iface;
 
         const int row = mTable->rowCount();
         mTable->insertRow(row);

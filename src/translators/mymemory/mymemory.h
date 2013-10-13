@@ -3,12 +3,6 @@
 #include "itranslator.h"
 #include <QObject>
 #include <QCheckBox>
-#include <QDebug>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QStringList>
-#include <QDebug>
 
 class MyMemory : public QObject, ITranslator
 {
@@ -16,28 +10,18 @@ class MyMemory : public QObject, ITranslator
     Q_PLUGIN_METADATA(IID "org.qphoenix.translators.mymemory")
     Q_INTERFACES(ITranslator)
 private:
-    QWidget *mConfigWidget;
     bool mLoaded;
-    static QStringList mLangs;
 public:
     MyMemory(QObject *parent = 0);
 
     bool load() {
-        if(!isLoaded()) {
-            mConfigWidget = new QWidget;
-            mLoaded = true;
-            return true;
-        }
-        return false;
+        mLoaded = true;
+        return true;
     }
 
     bool unload() {
-        if(isLoaded()) {
-            delete mConfigWidget;
-            mLoaded = false;
-            return true;
-        }
-        return false;
+        mLoaded = false;
+        return true;
     }
 
     bool isLoaded() const {return mLoaded;}
@@ -46,12 +30,6 @@ public:
         return new QCheckBox("test");
     }
 
-    LanguageTable table() const {
-        LanguageTable myTable;
-        foreach(QString lang, mLangs)
-            myTable.insert(lang, QStringList());
-        return myTable;
-    }
     QString translate(const QString &src_text, const QString &src_lang, const QString &dest_lang);
 };
 

@@ -63,6 +63,9 @@ QString QPLanguageComboBox::currentData() const {
 QPTranslationWidget::QPTranslationWidget(QWidget *parent) :
     QWidget(parent),
     mTranslatorsComboBox(new QComboBox(this)),
+    mMainToolBar(new QToolBar(this)),
+    mSrcToolbar(new QPTranslationToolBar(this)),
+    mResToolbar(new QPTranslationToolBar(this)),
     mSrcComboBox(new QPLanguageComboBox(this)),
     mResComboBox(new QPLanguageComboBox(this)),
     mSrcText(new QTextEdit(this)),
@@ -71,10 +74,6 @@ QPTranslationWidget::QPTranslationWidget(QWidget *parent) :
     mSwapButton(new QToolButton(this)),
     mMainLayout(new QVBoxLayout()),
     mButtonsLayout(new QHBoxLayout()),
-
-    mSrcToolbar(new QPTranslationToolBar(this)),
-    mResToolbar(new QPTranslationToolBar(this)),
-    mMainToolBar(new QToolBar(this)),
     mNativeNames(true),
     mLanguageTableIsFlat(false)
 {

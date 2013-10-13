@@ -20,8 +20,8 @@ public:
     QStringList query(const QString &text, const QString &src_lang, const QString &dest_lang, unsigned int max_count);
     QStringList completions(const QString &str, const QString &src_lang, const QString &dest_lang) const;
 
-    bool load(){}
-    bool unload(){}
+    bool load(){return true;}
+    bool unload(){return true;}
     bool isLoaded()const{return true;}
 
 

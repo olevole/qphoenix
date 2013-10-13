@@ -5,14 +5,13 @@
 #include <QWidget>
 #include <QList>
 
+#define QP_DEFAULT_RESULT_COUNT 15
+
 class QTableWidget;
 class QTabWidget;
 class QCheckBox;
 class QSpinBox;
 class QLabel;
-
-
-#define QP_DEFAULT_RESULT_COUNT 15
 
 struct QPDictionary {
     IDictionary *instance;
@@ -31,12 +30,8 @@ public:
     void save();
     void read();
     void reset();
-    QString name() const{return "";}
-    QIcon icon() const{return QIcon("");}
 
-    QPDictionaryList dictionaries() {
-        return mConvertedDicts;
-    }
+    QPDictionaryList dictionaries();
 private:
     QPModuleList mDictionaries;
     QPDictionaryList mConvertedDicts;

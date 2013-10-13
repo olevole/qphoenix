@@ -2,7 +2,6 @@
 
 #include "iconfig.h"
 #include "iconfigpage.h"
-#include <QTreeWidget>
 #include <QDialogButtonBox>
 #include <QDialog>
 
@@ -14,10 +13,8 @@ class QGroupBox;
 class QTreeWidgetItem;
 class QPushButton;
 
-/*
- *  This is an implementation of main settings dialog.
- *  All config pages MUST include ConfigPageInteface.
- */
+#define QP_CONFIG_DIALOG_DEFAULT_WIDTH 800
+#define QP_CONFIG_DIALOG_DEFAULT_HEIGH 600
 
 class Config : public QDialog, public IConfig
 {
@@ -28,22 +25,21 @@ public:
     explicit Config(QWidget *parent = 0);
     ~Config();
 
-    void addPage(QWidget *page, bool is_plugin=false);
-    void removePage(const QWidget *page);
-    QWidget *pageAt(const int i);
+    void addPage(QWidget *page, const QString &name, const QIcon &icon = QIcon());
+    void removePage(QWidget *page);
+    QWidget *pageAt(int i);
 private:
     QList<IConfigPage *> mPagesList;
 
-    // GUI elements
     QVBoxLayout *mMainLayout;
     QHBoxLayout *mHorizontalLayout;
     QHBoxLayout *mBottomLayout;
     QStackedLayout *mStackedLayout;
-    QTreeWidget *mTree;
+    QListWidget *mListWidget;
     QDialogButtonBox *mButtons;
     QPushButton *mDefaultsButton;
 private slots:
-    void itemChangeHandle();
+    void onWidgetRemove(int idx);
     void save();
     void read();
     void reset();

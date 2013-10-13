@@ -34,26 +34,23 @@
 
 QPTranslatorsConfig::QPTranslatorsConfig(QWidget *parent) :
     QWidget(parent),
-    mTranslatorIndex(0),
     mTranslatorLabel(new QLabel(tr("Translator"), this)),
     mTranslatorComboBox(new QComboBox(this)),
     mTranslatorGroupBox(new QGroupBox(this)),
     mTranslatorLayout(new QHBoxLayout),
-
     mOptionsGroupBox(new QGroupBox(tr("Config"), this)),
     mOptionsLayout(new QHBoxLayout),
     mTab1(new QVBoxLayout),
-    mTabWidget(new QTabWidget(this))
+    mTabWidget(new QTabWidget(this)),
+    mTranslatorIndex(0)
 {
     mTranslatorComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     mTranslatorLayout->addWidget(mTranslatorLabel);
     mTranslatorLayout->addWidget(mTranslatorComboBox);
     mTranslatorGroupBox->setLayout(mTranslatorLayout);
 
-    // Second layout
     mOptionsGroupBox->setLayout(mOptionsLayout);
 
-    // Finally, main layout
     mTab1->addWidget(mTranslatorGroupBox);
     mTab1->addWidget(mOptionsGroupBox);
 
@@ -67,16 +64,12 @@ QPTranslatorsConfig::QPTranslatorsConfig(QWidget *parent) :
     mTranslatorGroupBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 
     connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onIndexChange(int)));
-    connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(translatorIndexChanged(int)));
     QPModuleLoader ldr("translators:");
 
     mModuleList = ldr.modules();
 
     foreach (QPModule module, mModuleList)
         mTranslatorComboBox->addItem(module.data.name);
-
-    qDebug() << mTranslatorComboBox->count() << " " << mTranslatorIndex;
-    mTranslatorComboBox->setCurrentIndex(mTranslatorIndex == -1 ? 0 : mTranslatorIndex);
 }
 
 QPTranslatorsConfig::~QPTranslatorsConfig() {
@@ -112,32 +105,31 @@ QPTranslator QPTranslatorsConfig::currentTranslator() {
     if(i == -1)
         return QPTranslator();
 
-    qDebug() << "IN____";
     QPModule module = mModuleList[i];
     QPTranslator translator;
     translator.instance = qobject_cast<ITranslator *>(module.instance);
     translator.data = module.data;
-    qDebug() << "OUT____";
     return translator;
 }
 
 void QPTranslatorsConfig::setTranslatorIndex(int idx) {
-    if(idx >= mTranslatorComboBox->count() || idx == -1)
-        return;
     mTranslatorComboBox->setCurrentIndex(idx);
 }
 
 void QPTranslatorsConfig::onIndexChange(const int i) {
-    if(i >= mModuleList.size() || i < 0)
-        qFatal("Translator index out of range!");
+    emit translatorIndexChanged(i);
+    if(i == -1)
+        return;
 
     ITranslator *iface = qobject_cast<ITranslator *>(mModuleList[i].instance);
 
     if(!iface->isLoaded())
         iface->load();
 
-
     QWidget *cw = iface->configWidget();
+
+    if(cw == NULL)
+        return;
 
     QLayoutItem *child;
     while ((child = mOptionsLayout->takeAt(0)) != 0) {
@@ -146,8 +138,5 @@ void QPTranslatorsConfig::onIndexChange(const int i) {
             delete child;
         }
     }
-    if(cw == NULL)
-        return;
     mOptionsLayout->addWidget(cw);
-    mOptionsLayout->addStretch(); //TODO: Does not work. Fix!
 }

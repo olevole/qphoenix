@@ -7,6 +7,7 @@ set(SPEC speech.spec)
 set(FULL_TARGET_NAME ${CMAKE_SHARED_LIBRARY_PREFIX}${TARGET}${CMAKE_SHARED_LIBRARY_SUFFIX})
 
 configure_file(speech.spec.in ${SPEC})
+compress_json(${CMAKE_CURRENT_BINARY_DIR}/${SPEC})
 
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
 qt5_add_resources(SPEECH_RC ${RESOURCES})
@@ -17,4 +18,3 @@ target_link_libraries(${TARGET} phoenix)
 
 install(TARGETS ${TARGET} DESTINATION ${PLUGINS_PATH})
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${SPEC} DESTINATION ${PLUGINS_PATH})
-

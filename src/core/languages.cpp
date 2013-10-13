@@ -12,8 +12,7 @@ LanguageDB::LanguageDB()
         QString str = in.readLine();
         QStringList result = str.split(",");
 
-        Language lang(result.at(1), result.last());
-        mLangList[result.first()] = lang;
+        mLangList << Language(result.first(), result.at(1), result.last());
     }
     file.close();
 }

@@ -1,5 +1,4 @@
-#ifndef COMMONCONFIG_H
-#define COMMONCONFIG_H
+#pragma once
 
 #include <QWidget>
 #include "iconfigpage.h"
@@ -19,16 +18,11 @@ public:
     virtual void save();
     virtual void read();
     virtual void reset();
-    QString name() const{return "";}
-    QIcon icon() const{return QIcon("");}
 
-    bool useNativeNames();
+    bool getNativeNamesEnabled();
 private:
     QTabWidget *mTabWidget;
     QCheckBox *mUseNativeCheckbox;
     QComboBox *mLanguageCombobox;
     QLabel *mLanguageLabel;
-
 };
-
-#endif // COMMONCONFIG_H

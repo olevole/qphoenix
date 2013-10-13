@@ -48,9 +48,9 @@ void CommonConfig::read() {
 }
 
 void CommonConfig::reset() {
-
+    mUseNativeCheckbox->setChecked(false);
 }
 
-bool CommonConfig::useNativeNames() {
+bool CommonConfig::getNativeNamesEnabled() {
     return mUseNativeCheckbox->isChecked();
 }

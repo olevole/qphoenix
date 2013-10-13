@@ -107,7 +107,8 @@ private slots:
 private:
     QComboBox *mTranslatorsComboBox;
     QToolBar *mMainToolBar;
-    QPTranslationToolBar *mSrcToolbar, *mResToolbar;
+    QPTranslationToolBar *mSrcToolbar;
+    QPTranslationToolBar *mResToolbar;
     QPLanguageComboBox *mSrcComboBox;
     QPLanguageComboBox *mResComboBox;
     QTextEdit *mSrcText;

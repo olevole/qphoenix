@@ -19,5 +19,3 @@
  */
 
 typedef QMap <QString, QStringList> LanguageTable;
-
-#define QP_ADD_LANG(X,Y,Z) X.insert(Y,QString(Z).split(','))

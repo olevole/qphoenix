@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QtPlugin>
+#include <QIcon>
 
 class QWidget;
 
@@ -20,20 +21,20 @@ public:
      *  settings dialog. All settings pages are
      *  presented by the following interface:
      */
-    virtual void addPage(QWidget *page, bool is_plugin = false) = 0;
+    virtual void addPage(QWidget *page, const QString &name, const QIcon &icon = QIcon()) = 0;
 
     /*!
      * \brief removePage removing page
      * \param page page to remove
      */
-    virtual void removePage(const QWidget *page) = 0;
+    virtual void removePage(QWidget *page) = 0;
 
     /*!
      * \brief pageAt returns page by index
      * \param index of page
      * \return page widget
      */
-    virtual QWidget *pageAt(const int i) = 0;
+    virtual QWidget *pageAt(int i) = 0;
 };
 
 Q_DECLARE_INTERFACE(IConfig, "com.qphoenix.interfaces.configpage/1.0")

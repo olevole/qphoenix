@@ -3,11 +3,10 @@
 
 DictionaryTemplate::DictionaryTemplate(QObject *parent)
     :QObject(parent),
+     mLastSectionClosed(true),
      mTemplateRoot(getTemplate(":/templates/root.html")),
      mTemplateSection(getTemplate(":/templates/section.html")),
-     mTemplateItem(getTemplate(":/templates/item.html")),
-     mLastSectionClosed(true)
-
+     mTemplateItem(getTemplate(":/templates/item.html"))
 {
 }
 
@@ -27,7 +26,7 @@ void DictionaryTemplate::createSection(const QStringList &lst, const QString &ti
     endSection();
 }
 
-bool DictionaryTemplate::addItem(const QString &str) {
+void DictionaryTemplate::addItem(const QString &str) {
     QString s = mTemplateItem;
     mSection += s.replace("{ITEM_DATA}", bb2html(str));
 }

@@ -1,11 +1,11 @@
 #pragma once
 
 #include <QWidget>
-#include "iconfigpage.h"
 #include <QList>
+#include <QTableWidget>
+#include "iconfigpage.h"
 #include "languages.h"
 
-class QTableWidget;
 class QPushButton;
 class QCheckBox;
 
@@ -19,24 +19,18 @@ public:
     void save();
     void read();
     void reset();
-    QString name() const{return "";}
-    QIcon icon() const{return QIcon("");}
 
     QStringList getEnabledLanguages() const;
-    void setNativeNames(const bool b) {
-        mNativeNames = b;
-    }
+    void setNativeNames(bool b);
 private slots:
-    void setAll();
-    void unsetAll();
+    void pickAll();
+    void unpickAll();
 private:
-    void createTable();
-    void setCbState(const bool state);
-    LanguageList mLangList;
-
-    QList<QCheckBox *> mCheckboxList;
-    QTableWidget *mTable;
-    QPushButton *mSetButton, *mUnsetButton;
     bool mNativeNames;
+    QList <QCheckBox *> mCheckBoxList;
+    LanguageList mLangList;
+    QTableWidget *mTableWidget;
+
+    QPushButton *mSetButton, *mUnsetButton;
 };
 

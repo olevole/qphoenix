@@ -33,12 +33,5 @@ public:
     }
     bool isLoaded() const {return mLoaded;}
 
-    LanguageTable table() const {
-        LanguageTable myTable;
-        foreach(QString lang, mLangs)
-            myTable.insert(lang, QStringList());
-        return myTable;
-    }
     QString translate(const QString &src_text, const QString &src_lang, const QString &dest_lang);
-    QString detectLanguage(const QString &pattern);
 };

@@ -11,6 +11,7 @@
  */
 
 class DictionaryTemplate : public QObject {
+    Q_OBJECT
 public:
     explicit DictionaryTemplate(QObject *parent = 0);
 
@@ -35,7 +36,7 @@ public:
      * \return true if beginSection was set correct
      * false - otherwise
      */
-    bool addItem(const QString &var);
+    void addItem(const QString &var);
 
     /*!
      * \brief endSection end of section

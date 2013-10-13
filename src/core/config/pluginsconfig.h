@@ -1,6 +1,7 @@
 #pragma once
 
 #include "iconfigpage.h"
+#include "api.h"
 #include "loader.h"
 #include <QWidget>
 #include <QList>
@@ -10,6 +11,13 @@ class QTableWidget;
 class QHBoxLayout;
 class QPushButton;
 
+struct QPPlugin {
+    IPlugin *instance;
+    QPModuleData data;
+};
+
+typedef QList<QPPlugin> QPPluginList;
+
 class PluginsConfig : public QWidget, IConfigPage
 {
     Q_OBJECT
@@ -17,37 +25,17 @@ class PluginsConfig : public QWidget, IConfigPage
 public:
     PluginsConfig(QWidget *parent = 0);
 
-    /*!
-     * \brief pluginsList
-     * \return list of loaded plugin QObject's pointers
-     */
-    QPModuleList *pluginsList() {
-        return &mPlugins;
-    }
-
-    /*!
-     * \brief enabledPluginsList
-     * \return list of enabled plugins names
-     */
+    QPPluginList *pluginsList();
     QStringList enabledPluginsList();
 
-    /*!
-     * \brief isEnabled
-     * \param index index of plugin
-     * \return true if plugin is enabled, false otherwise
-     */
     bool isEnabled(const int index) const ;
     void save();
     void read();
     void reset();
-    QString name() const{return "";}
-    QIcon icon() const{return QIcon("");}
 protected:
     void updateTable();
 private:
     QTableWidget *mTable;
-    QPModuleList mPlugins;
-    QStringList mEnabledList;
-
+    QPPluginList mPlugins;
     QList<QCheckBox *>mCheckboxList;
 };

@@ -55,9 +55,6 @@ public:
     void read();
     void reset();
 
-    QString name() const{return "";}
-    QIcon icon() const{return QIcon("");}
-
     QStringList getTranslatorsNames() const;
 
     QPTranslator currentTranslator();

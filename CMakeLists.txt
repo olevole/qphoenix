@@ -2,17 +2,20 @@ project(QPhoenix)
 cmake_minimum_required(VERSION 2.8.10)
 set(EXECUTABLE_NAME qphoenix)
 set(PROJECT_VERSION 0.999999)
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE Debug)
 set(TESTING_ENABLED TRUE)
 
+include(cmake/json_compress.txt)
 
 exec_program("git" ${CMAKE_CURRENT_SOURCE_DIR} ARGS "rev-parse HEAD" OUTPUT_VARIABLE VERSION)
 string(SUBSTRING ${VERSION} 0 7 GIT_HASH)
 
 if(CMAKE_BUILD_TYPE STREQUAL Debug)
     add_definitions(-DQP_DEBUG)
+    if(CMAKE_COMPILER_IS_GNUCC)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")
+    endif(CMAKE_COMPILER_IS_GNUCC)
 endif()
-
 
 if(NOT MSVC)
     if("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")

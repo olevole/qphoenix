@@ -8,7 +8,6 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 
-QStringList YandexTranslator::mLangs = QStringList()    <<"en" <<"ru";
 QString YandexTranslator::mApiKey = "trnsl.1.1.20130623T124051Z.0700cd74def1a0f5.a64b755e8f8f1312a82edd26c0bc6585be02c695";
 
 YandexTranslator::YandexTranslator(QObject *parent)
@@ -27,7 +26,7 @@ QString YandexTranslator::translate(const QString &src_text, const QString &src_
 
     const int code = obj.value("code").toDouble();
     const QString pair = obj.value("lang").toString();
-    const QString text = obj.value("text").toArray()[0].toString();
+    const QString text = obj.value("text").toArray().first().toString();
 
     switch (code) {
     case 200:
@@ -58,13 +57,4 @@ QString YandexTranslator::translate(const QString &src_text, const QString &src_
         break;
     }
     return text;
-}
-
-QString YandexTranslator::detectLanguage(const QString &pattern) {
-    const QString req = QString("key=%1&text=%4").arg(mApiKey, pattern);
-    QUrl url("https://translate.yandex.net/api/v1.5/tr.json/detect");
-
-    const QString reply =  HTTP::POST(url, req);
-    QJsonObject obj = QJsonDocument::fromJson(reply.toUtf8()).object();
-    return obj.value("lang").toString();
 }

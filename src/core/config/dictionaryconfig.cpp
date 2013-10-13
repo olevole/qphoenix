@@ -13,8 +13,8 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
     :QWidget(parent),
       mTable(new QTableWidget(this)),
       mTabWidget(new QTabWidget(this)),
-      mResultCountLabel(new QLabel(tr("Maximum dictionary results to show"), this)),
-      mResultCountSpin(new QSpinBox(this))
+      mResultCountSpin(new QSpinBox(this)),
+      mResultCountLabel(new QLabel(tr("Maximum dictionary results to show"), this))
 {
     QPModuleLoader ldr("dictionaries:");
     mDictionaries = ldr.modules();
@@ -77,11 +77,16 @@ void DictionaryConfig::save() {
 void DictionaryConfig::read() {
     QSettings s;
     s.beginGroup("Dictionaries");
-    const int index = s.value("MaxResults", 0).toInt();
+    const int index = s.value("MaxResults", QP_DEFAULT_RESULT_COUNT).toInt();
     mResultCountSpin->setValue(index);
     s.endGroup();
 }
 
 void DictionaryConfig::reset() {
     mResultCountSpin->setValue(QP_DEFAULT_RESULT_COUNT);
+}
+
+
+QPDictionaryList DictionaryConfig::dictionaries() {
+    return mConvertedDicts;
 }

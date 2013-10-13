@@ -1,0 +1,9 @@
+# Simple json compression function.
+# TODO: Must be able to remove whitespaces
+
+macro(compress_json FILEPATH)
+	file(READ ${FILEPATH} JSONDATA)
+        string(REGEX REPLACE "[\n\t]+" "" JSON_OUTPUT ${JSONDATA})
+        string(REGEX REPLACE " " "" JSON_OUTPUT ${JSON_OUTPUT})
+        file(WRITE ${FILEPATH} ${JSON_OUTPUT})
+endmacro(compress_json)

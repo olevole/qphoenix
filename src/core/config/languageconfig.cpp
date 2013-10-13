@@ -1,117 +1,110 @@
-#include <QTableWidget>
 #include <QPushButton>
 #include <QCheckBox>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QHeaderView>
 #include <QSettings>
-#include <QDebug>
+
 #include "languageconfig.h"
+
 
 LanguageConfig::LanguageConfig(QWidget *parent) :
     QWidget(parent),
-    mTable(new QTableWidget(this)),
+    mTableWidget(new QTableWidget(this)),
     mSetButton(new QPushButton(tr("Set All"),this)),
-    mNativeNames(false),
     mUnsetButton(new QPushButton(tr("Unset All"),this))
-{
-    mLangList = LanguageDB::instance()->languages();
-
+{    
     QHBoxLayout *buttons  = new QHBoxLayout;
     buttons->addWidget(mSetButton);
     buttons->addWidget(mUnsetButton);
     buttons->addStretch();
 
     QVBoxLayout *main = new QVBoxLayout;
-    main->addWidget(mTable);
+    main->addWidget(mTableWidget);
     main->addLayout(buttons);
     this->setLayout(main);
 
-    createTable();
+    mTableWidget->setColumnCount(2);
+    mTableWidget->verticalHeader()->hide();
+    mTableWidget->horizontalHeader()->setStretchLastSection(true);
+    mTableWidget->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Name")));
+    mTableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem("*"));
 
-    connect(mSetButton, SIGNAL(clicked()), this, SLOT(setAll()));
-    connect(mUnsetButton, SIGNAL(clicked()), this, SLOT(unsetAll()));
+    mLangList = QP_LANGUAGE_DB->languages();
+
+    mTableWidget->resizeColumnsToContents();
+    mTableWidget->setRowCount(mLangList.size());
+
+    for (int i = 0; i < mLangList.count(); ++i) {
+        Language lang = mLangList[i];
+        const QIcon icon = QIcon(QString(":/icons/%1.png").arg(lang.code()));
+        const QString name = lang.name(mNativeNames);
+
+        QTableWidgetItem *item_name = new QTableWidgetItem;
+        item_name->setText(name);
+        item_name->setFlags(item_name->flags() & (~(Qt::ItemIsEditable | Qt::ItemIsSelectable)));
+        mTableWidget->setItem(i, 0, item_name);
+
+        QCheckBox *enabled = new QCheckBox(this);
+        mCheckBoxList << enabled;
+        mTableWidget->setCellWidget(i, 1, enabled);
+    }
+    mTableWidget->resizeColumnsToContents();
+    connect(mSetButton, SIGNAL(clicked()), this, SLOT(pickAll()));
+    connect(mUnsetButton, SIGNAL(clicked()), this, SLOT(unpickAll()));
 }
-
 
 void LanguageConfig::save() {
     QSettings s;
-    s.beginGroup("Languages");
+    s.beginGroup("LanguageConfig");
     s.setValue("EnabledLanguages", getEnabledLanguages());
     s.endGroup();
 }
 
 void LanguageConfig::read() {
-    QStringList keys = mLangList.keys();
-
     QSettings s;
-    s.beginGroup("Languages");
-    QStringList enabled = s.value("EnabledLanguages", keys).toStringList();
-    s.endGroup();
+    s.beginGroup("LanguageConfig");
+    const QStringList list = s.value("EnabledLanguages").toStringList();
+    if(list.isEmpty()) {
+        pickAll();
+        return;
+    }
 
-    if(enabled.isEmpty()) {
-        unsetAll();
-    } else if(enabled == keys) {
-        setAll();
-    } else {
-        for (int i = 0; i < keys.count(); ++i) {
-            bool b = enabled.contains(keys.at(i));
-            mCheckboxList.at(i)->setChecked(b);
+    unpickAll();
+    foreach(QString lang, list) {
+        for (int i = 0; i < mCheckBoxList.size(); ++i) {
+            Language lang0 = mLangList[i];
+            if(lang0.code() == lang)
+                mCheckBoxList[i]->setChecked(true);
         }
     }
+    s.endGroup();
 }
 
 void LanguageConfig::reset() {
-    setCbState(true);
+    pickAll();
 }
 
 QStringList LanguageConfig::getEnabledLanguages() const {
-    QStringList enabled;
-    const QStringList keys = mLangList.keys();
-
-    for (int i = 0; i < mTable->rowCount(); ++i)
-        if(mCheckboxList.at(i)->isChecked())
-            enabled << keys.at(i);
-    return enabled;
-}
-
-void LanguageConfig::setAll() {
-    setCbState(true);
-}
-
-void LanguageConfig::unsetAll() {
-    setCbState(false);
-}
-
-void LanguageConfig::createTable() {
-    mTable->setColumnCount(2);
-    mTable->verticalHeader()->hide();
-    mTable->setHorizontalHeaderItem(0, new QTableWidgetItem("Name"));
-    mTable->setHorizontalHeaderItem(1, new QTableWidgetItem("*"));
-
-    LanguageList::Iterator it = mLangList.begin();
-
-    //TODO: Fix issue with ugly columns
-    int i = 0;
-    for(; it != mLangList.end(); ++it) {
-        QString name;
-        name = it.value().name(mNativeNames);
-        QString icon = QString(":/flags/flags/%1.png").arg(it.key());
-        mTable->insertRow(i);
-
-        QCheckBox *cb = new QCheckBox(this);
-        mCheckboxList << cb;
-
-        mTable->setCellWidget(i, 1, cb);
-        mTable->setItem(i, 0, new QTableWidgetItem(QIcon(icon), name));
-        mTable->setRowHeight(i, 20);
-        i++;
+    QStringList list;
+    for (int i = 0; i < mLangList.count(); ++i) {
+        Language lang = mLangList[i];
+        if(mCheckBoxList[i]->isChecked()) {
+            list << lang.code();
+        }
     }
-//    mTable->setColumnWidth(1, 20);
-    mTable->resizeColumnsToContents();
+    return list;
 }
 
-void LanguageConfig::setCbState(const bool state) {
-    foreach(QCheckBox *cb, mCheckboxList)
-        cb->setChecked(state);
+void LanguageConfig::setNativeNames(bool b) {
+}
+
+void LanguageConfig::pickAll() {
+    foreach(QCheckBox *checkbox, mCheckBoxList)
+        checkbox->setChecked(true);
+}
+
+void LanguageConfig::unpickAll() {
+    foreach(QCheckBox *checkbox, mCheckBoxList)
+        checkbox->setChecked(false);
 }

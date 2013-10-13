@@ -20,7 +20,6 @@ void Test_Specparser::parse()
     QCOMPARE(QString(data.url), QString("http://slashdot.com"));
     QCOMPARE(QString(data.description), QString("This is very nice plugin!"));
     QCOMPARE(QString(data.libname), QString("target.so"));
-
 }
 
 QTEST_MAIN(Test_Specparser)

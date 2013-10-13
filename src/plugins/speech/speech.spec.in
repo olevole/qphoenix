@@ -1,11 +1,11 @@
-
 {	"qphoenix" : {
 		"module": {
 			"type" : "plugin",
 			"libname" : "${FULL_TARGET_NAME}",
 			"info" : {
 				"name" : "Speech",
-				"version" : "1.9999"
+                                "version" : "1.9999",
+                                "description" : "Speech support"
 			}
 		}
 	}

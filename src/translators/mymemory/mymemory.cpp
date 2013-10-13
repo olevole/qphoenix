@@ -7,18 +7,6 @@
 #include <QTextCodec>
 #include <QTextDocumentFragment>
 
-QStringList MyMemory::mLangs = QStringList()   << "sq" <<"ar" <<"bg" <<"ca"
-                                               <<"zh-CN" <<"zh-TW" <<"hr"
-                                               <<"cs" <<"da" <<"nl" <<"en"
-                                               <<"et" <<"tl" <<"fi" <<"fr"
-                                               <<"gl" <<"de" <<"el" <<"iw"
-                                               <<"hi" <<"hu" <<"id" <<"it"
-                                               <<"ja" <<"ko" <<"lv" <<"lt"
-                                               <<"mt" <<"no" <<"pl" <<"pt"
-                                               <<"ro" <<"ru" <<"sr" <<"sk"
-                                               <<"sl" <<"es" <<"sv" <<"th"
-                                               <<"tr" <<"uk" <<"vi";
-
 
 MyMemory::MyMemory(QObject *parent)
     :QObject(parent)
@@ -44,7 +32,5 @@ QString MyMemory::translate(const QString &src_text, const QString &src_lang, co
     QJsonObject obj = QJsonDocument::fromJson(rawdata.toUtf8()).object();
     QString res = obj.value("responseData").toObject().value("translatedText").toString();
 
-    qDebug() << "QMM DATA: " << res;
-    qDebug() << "You has been called mymemory!\n";
     return QTextDocumentFragment::fromHtml(res).toPlainText();
 }

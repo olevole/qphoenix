@@ -54,6 +54,7 @@ QString MainWindow::mAboutStr = "Trasnaltor and dictionary with plugins support.
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
+    mSavePath(""),
     mStatusBar(new QStatusBar(this)),
     mToolBar(new QToolBar(this)),
     mMenuBar(new QMenuBar(this)),
@@ -89,8 +90,8 @@ MainWindow::MainWindow(QWidget *parent) :
     mTranslatorsConfig(new QPTranslatorsConfig(this)),
     mLanguageConfig(new LanguageConfig(this)),
     mDictionaryConfig(new DictionaryConfig(this)),
-    mCommonConfig(new CommonConfig(this)),
-    mSavePath("")
+    mCommonConfig(new CommonConfig(this))
+
 {
     setWindowTitle(qApp->applicationName());
 
@@ -139,11 +140,11 @@ MainWindow::MainWindow(QWidget *parent) :
         mTabWidget->setCurrentIndex(0);
 
     // Configuring settings pages
-    mSettingsDialog->addPage(mTranslatorsConfig);
-    mSettingsDialog->addPage(mDictionaryConfig);
-    mSettingsDialog->addPage(mLanguageConfig);
-    mSettingsDialog->addPage(mPluginsConfig);
-    mSettingsDialog->addPage(mCommonConfig);
+    mSettingsDialog->addPage(mTranslatorsConfig, "Translators");
+    mSettingsDialog->addPage(mDictionaryConfig, "Dictionaries");
+    mSettingsDialog->addPage(mLanguageConfig, "Languages");
+    mSettingsDialog->addPage(mPluginsConfig, "Plugins");
+    mSettingsDialog->addPage(mCommonConfig, "Generic");
 
     connect(mActionOpen, SIGNAL(triggered()), this, SLOT(open()));
     connect(mActionPrint, SIGNAL(triggered()), this, SLOT(print()));
@@ -159,8 +160,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mActionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(mActionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
-//    connect(mTranslatorsConfig->getEmbeddedComboBox(), SIGNAL(currentIndexChanged(int)), this, SLOT(updateTranslatorConfig()));
-
     // Widgets , Dialogs, etc
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
     connect(mTabWidget, SIGNAL(currentChanged(int)), this, SLOT(onIndexChange(int)));
@@ -175,8 +174,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // Read configs
     updateTranslatorConfig();
     onConfigAccept();
-
-
 }
 
 MainWindow::~MainWindow()
@@ -216,25 +213,25 @@ void MainWindow::onConfigAccept() {
     connector.translationwidget = mTranslationWidget;
     connector.dictionarywidget = mDictionaryWidget;
 
-    QPModuleList *lst = mPluginsConfig->pluginsList();
+    QPPluginList *lst = mPluginsConfig->pluginsList();
     for(int i = 0; i < lst->count(); i++) {
-        IPlugin *iface =  qobject_cast<IPlugin *>(lst->at(i).instance);
-
+//        IPlugin *iface =  qobject_cast<IPlugin *>(lst->at(i).instance);
+        QPPlugin plugin = lst->at(i);
         bool enabled = mPluginsConfig->isEnabled(i);
         if(enabled) {
-            iface->setPluginConnector(connector);
-            iface->load();
+            plugin.instance->setPluginConnector(connector);
+            plugin.instance->load();
 
-        } else if(iface->isLoaded()) {
-                iface->unload();
+        } else if(plugin.instance->isLoaded()) {
+                plugin.instance->unload();
         }
     }
 
-    mLanguageConfig->setNativeNames(mCommonConfig->useNativeNames());
-    mTranslationWidget->setNativeNames(mCommonConfig->useNativeNames());
+    mLanguageConfig->setNativeNames(mCommonConfig->getNativeNamesEnabled());
+    mTranslationWidget->setNativeNames(mCommonConfig->getNativeNamesEnabled());
     mTranslationWidget->setTranslatorsNames(mTranslatorsConfig->getTranslatorsNames());
 
-    mDictionaryWidget->setNativeNames(mCommonConfig->useNativeNames());
+    mDictionaryWidget->setNativeNames(mCommonConfig->getNativeNamesEnabled());
     qDebug() << "DICTS COUNT: " << mDictionaryConfig->dictionaries().count();
     mDictionaryWidget->setDictionaryList(mDictionaryConfig->dictionaries());
 

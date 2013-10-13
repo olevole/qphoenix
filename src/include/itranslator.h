@@ -29,18 +29,11 @@ class ITranslator : public IModule {
 public:
     virtual ~ITranslator(){}
 
-
     /*!
      * \brief configWidget
      * \return pointer to Translator config widget
      */
     virtual QWidget *configWidget() {return NULL;}
-
-    /*!
-     * \brief table
-     * \return  a table with supported language directions
-     */
-    virtual LanguageTable table() const = 0;
 
     /*!
      * \brief translate
@@ -51,7 +44,6 @@ public:
      */
     virtual QString translate(const QString &src_text, const QString &src_lang,
                                const QString &dest_lang) = 0;
-
 };
 
 Q_DECLARE_INTERFACE(ITranslator, "com.qphoenix.interfaces.translator/1.0");

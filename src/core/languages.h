@@ -3,19 +3,20 @@
 #include <QMap>
 #include <QString>
 #include <QPair>
+#include <QList>
 #include <QStringList>
 #include <QObject>
 #include <QDebug>
 #include <QMutex>
 
 class Language;
-typedef QMap<QString, Language> LanguageList;
+typedef QList<Language> LanguageList;
 
 class Language {
 public:
-    explicit Language(const QString &name,
-                      const QString &native)
+    explicit Language(const QString &code, const QString &name, const QString &native)
     {
+        mCode = code;
         mName = name;
         mNativeName = native;
     }
@@ -26,14 +27,17 @@ public:
         return native ? mNativeName : mName;
     }
 
-    QString name() const {return mName;}
+    QString code() const {return mCode;}
 private:
-    QString mName, mNativeName;
+    QString mName;
+    QString mNativeName;
+    QString mCode;
 };
 
 #define QP_LANGUAGE_DB LanguageDB::instance()
 
 class LanguageDB : public QObject {
+    Q_OBJECT
 public:
     static  LanguageDB* instance()
     {
@@ -49,7 +53,11 @@ public:
     }
 
     Language find(const QString &key) const {
-        return mLangList[key];
+        foreach(Language lang, mLangList) {
+            if(lang.code() == key)
+                return lang;
+        }
+        return Language();
     }
 
     LanguageList languages() {return mLangList;}
