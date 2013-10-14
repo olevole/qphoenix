@@ -1,16 +1,16 @@
 <RCC>
     <qresource prefix="/icons">
-        <file>dictionary.png</file>
-        <file>translator.png</file>
+        <file>icons/dictionary.png</file>
+        <file>icons/translator.png</file>
     </qresource>
     <qresource prefix="/files">
         <file>langmap.csv</file>
     </qresource>
     <qresource prefix="/templates">
-        <file>item.html</file>
-        <file>root.html</file>
-        <file>section.html</file>
-        <file>notfound.html</file>
+        <file>templates/item.html</file>
+        <file>templates/notfound.html</file>
+        <file>templates/root.html</file>
+        <file>templates/section.html</file>
     </qresource>
     <qresource prefix="/flags">
         <file>flags/ar.png</file>

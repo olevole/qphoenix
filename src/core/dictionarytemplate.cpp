@@ -4,9 +4,9 @@
 DictionaryTemplate::DictionaryTemplate(QObject *parent)
     :QObject(parent),
      mLastSectionClosed(true),
-     mTemplateRoot(getTemplate(":/templates/root.html")),
-     mTemplateSection(getTemplate(":/templates/section.html")),
-     mTemplateItem(getTemplate(":/templates/item.html"))
+     mTemplateRoot(getTemplate(":/templates/templates/root.html")),
+     mTemplateSection(getTemplate(":/templates/templates/section.html")),
+     mTemplateItem(getTemplate(":/templates/templates/item.html"))
 {
 }
 

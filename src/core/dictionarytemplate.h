@@ -44,7 +44,7 @@ public:
     void endSection();
 
     static QString NotFound() {
-        return getTemplate(":/templates/notfound.html");
+        return getTemplate(":/templates/templates/notfound.html");
     }
 
     void clear();

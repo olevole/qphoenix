@@ -96,6 +96,17 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     setWindowTitle(qApp->applicationName());
 
+    mActionOpen->setShortcut(QKeySequence("Ctrl+O"));
+    mActionSave->setShortcut(QKeySequence("Ctrl+S"));
+    mActionSaveAs->setShortcut(QKeySequence("Ctrl+Shift+S"));
+    mActionPrint->setShortcut(QKeySequence("Ctrl+P"));
+    mActionExit->setShortcut(QKeySequence("Ctrl+Q"));
+
+    mActionUndo->setShortcut(QKeySequence("Ctrl+U"));
+    mActionRedo->setShortcut(QKeySequence("Ctrl+R"));
+    mActionSwap->setShortcut(QKeySequence("Ctrl+Shift+S"));
+
+
     mFileMenu->addAction(mActionOpen);
     mFileMenu->addSeparator();
     mFileMenu->addAction(mActionSave);
