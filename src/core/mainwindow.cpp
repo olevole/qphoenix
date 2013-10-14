@@ -92,7 +92,6 @@ MainWindow::MainWindow(QWidget *parent) :
     mLanguageConfig(new LanguageConfig(this)),
     mDictionaryConfig(new DictionaryConfig(this)),
     mCommonConfig(new CommonConfig(this))
-
 {
     setWindowTitle(qApp->applicationName());
 

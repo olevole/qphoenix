@@ -5,7 +5,6 @@ set(SPEC yandex_translator.spec)
 set(FULL_TARGET_NAME ${CMAKE_SHARED_LIBRARY_PREFIX}${TARGET}${CMAKE_SHARED_LIBRARY_SUFFIX})
 
 configure_file(yandex_translator.spec.in yandex_translator.spec)
-compress_json(${CMAKE_CURRENT_BINARY_DIR}/${SPEC})
 
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
 add_library( ${TARGET} SHARED ${HEDARS} ${SOURCES}  ${MOC_SOURCES})

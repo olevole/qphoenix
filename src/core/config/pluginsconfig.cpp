@@ -108,6 +108,7 @@ void PluginsConfig::updateTable() {
 
             QTableWidgetItem *item = new QTableWidgetItem;
             item->setText(item_data);
+            item->setFlags(item->flags() & (~(Qt::ItemIsEditable | Qt::ItemIsSelectable)));
             mTable->setItem(row, i, item);
         }
 
