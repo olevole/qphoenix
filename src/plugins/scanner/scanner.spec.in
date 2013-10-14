@@ -4,8 +4,8 @@
 			"libname" : "${FULL_TARGET_NAME}",
 			"info" : {
 				"name" : "Scanner",
-				"version" : "1.9999",
-				"url" : ""
+                                "version" : "${PROJECT_VERSION}",
+                                "description" : "Scan selection buffer for text (X11 only feature)"
 			}
 		}
 	}

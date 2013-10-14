@@ -1,17 +1,17 @@
-
 {	"qphoenix" : {
 		"module": {
 			"type" : "dictionary",
 			"libname" : "${FULL_TARGET_NAME}",
 			"info" : {
 				"name" : "WordReference",
-				"version" : "1.9999",
-				"url" : "http://www.wordreference.com"
+                                "version" : "${PROJECT_VERSION}",
+                                "url" : "http://www.wordreference.com",
+                                "description" : "WordReference dictionary support"
 			},
 
 			"languages" : {
-				"es" : ["en", "fr", "pg" ],
-				"ru" : []
+                                "es" : ["en", "pg" ],
+                                "ru" : ["en", "fr"]
 			}
 		}
 	}

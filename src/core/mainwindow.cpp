@@ -25,6 +25,7 @@
 #include <QPrinter>
 #include <QPrintDialog>
 #include <QWebFrame>
+#include <QPainter>
 
 #include "mainwindow.h"
 #include "iplugin.h"
@@ -214,9 +215,13 @@ void MainWindow::onConfigAccept() {
     connector.dictionarywidget = mDictionaryWidget;
 
     QPPluginList *lst = mPluginsConfig->pluginsList();
+
+    qDebug() << "Plugins Count: " <<  lst->size();
+
     for(int i = 0; i < lst->count(); i++) {
-//        IPlugin *iface =  qobject_cast<IPlugin *>(lst->at(i).instance);
+
         QPPlugin plugin = lst->at(i);
+        qDebug() << "Loading plugin: " <<  plugin.data.name;
         bool enabled = mPluginsConfig->isEnabled(i);
         if(enabled) {
             plugin.instance->setPluginConnector(connector);
@@ -252,16 +257,16 @@ void MainWindow::onIndexChange(const int i) {
 void MainWindow::readCfg() {
     QSettings s;
     s.beginGroup("MainWindow");
-    this->setCurrentIndex(s.value("tabIndex", 0).toInt());
-    this->restoreGeometry(s.value("geometry").toByteArray());
+    this->setCurrentIndex(s.value("TabIndex", 0).toInt());
+    this->restoreGeometry(s.value("Geometry").toByteArray());
     s.endGroup();
 }
 
 void MainWindow::saveCfg() {
     QSettings s;
     s.beginGroup("MainWindow");
-    s.setValue("tabIndex", mTabWidget->currentIndex());
-    s.setValue("geometry", saveGeometry());
+    s.setValue("TabIndex", mTabWidget->currentIndex());
+    s.setValue("Geometry", saveGeometry());
     s.endGroup();
 }
 
@@ -279,18 +284,26 @@ void MainWindow::open() {
 
 void MainWindow::print() {
     QPrinter printer;
-      QPrintDialog print_dialog(&printer);
-      if(print_dialog.exec() == QPrintDialog::Accepted) {
-          const int i = mTabWidget->currentIndex();
-          switch(i){
-              case 0:
-//                  mTranslationWidget->srcText()->print(&printer);
-              break;
-              case 1:
-//                 mDictionaryWidget->resText()->print(&printer);
-              break;
-          }
-      }
+    QPrintDialog *dialog = new QPrintDialog(&printer);
+
+    if(dialog->exec() != QPrintDialog::Accepted)
+        return;
+
+    const int i = mTabWidget->currentIndex();
+    QString text;
+    QPainter painter;
+    painter.begin(&printer);
+
+    switch(i){
+    case 0:
+        text = mTranslationWidget->getSourceText();
+        break;
+    case 1:
+        text = mDictionaryWidget->getResultText();
+        break;
+    }
+    painter.drawText(100, 100, 500, 500, Qt::AlignLeft|Qt::AlignTop, text);
+    painter.end();
 }
 
 void MainWindow::save() {
@@ -313,17 +326,11 @@ void MainWindow::save() {
             file.write(mTranslationWidget->getResultText().toUtf8());
         break;
         case 1:
-            file.write(mDictionaryWidget->resText()->page()->mainFrame()->toHtml().toUtf8());
+            file.write(mDictionaryWidget->getResultText().toUtf8());
         break;
     }
 
     file.close();
-
-
-//    if(file.exists()) {
-//        path = QFileDialog::getSaveFileName(this, tr("Save file"), QDir::homePath(), tr("Image Files (*.png *.jpg *.bmp)"));
-//    } //else if()
-
 }
 
 void MainWindow::saveAs() {
@@ -344,20 +351,19 @@ void MainWindow::clear() {
             mTranslationWidget->clearResultText();
         break;
         case 1:
-            mDictionaryWidget->srcText()->clear();
-            mDictionaryWidget->resText()->setHtml("<html><body></body></html>");
+            mDictionaryWidget->clearSourceText();
         break;
     }
 }
 
 void MainWindow::undo() {
     mTabWidget->currentIndex() == 0 ? mTranslationWidget->undo()
-                        : mDictionaryWidget->srcText()->undo();
+                        : mDictionaryWidget->undo();
 }
 
 void MainWindow::redo() {
     mTabWidget->currentIndex() == 0 ? mTranslationWidget->redo()
-                        : mDictionaryWidget->srcText()->redo();
+                        : mDictionaryWidget->redo();
 }
 
 void MainWindow::about() {

@@ -104,6 +104,8 @@ private slots:
     void updateResultComboBox();
     void saveCfg();
     void readCfg();
+
+    void changeHandler();
 private:
     QComboBox *mTranslatorsComboBox;
     QToolBar *mMainToolBar;

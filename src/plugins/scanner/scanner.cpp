@@ -27,7 +27,6 @@
 #include <QTextBrowser>
 #include <QToolTip>
 
-#include "itranslationwidget.h"
 #include "scanner.h"
 
 Scanner::Scanner(QObject *parent) :

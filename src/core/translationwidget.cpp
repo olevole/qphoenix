@@ -111,6 +111,10 @@ QPTranslationWidget::QPTranslationWidget(QWidget *parent) :
 
     connect(&mThread, SIGNAL(reply(QString)), mResText, SLOT(setText(QString)));
 
+    connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(changeHandler()));
+    connect(mResComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(changeHandler()));
+    connect(mSrcText, SIGNAL(textChanged()), this, SLOT(changeHandler()));
+
 //    this->readCfg();
 }
 
@@ -246,7 +250,7 @@ void QPTranslationWidget::updateComboxes() {
     int counter = 0;
     foreach(QString key, mTable.keys()) {
         const QString name = QP_LANGUAGE_DB->find(key).name(mNativeNames);
-        const QIcon icon = QIcon(QString(":/flags/%1.png").arg(key));
+        const QIcon icon = QIcon(QString(":/flags/flags/%1.png").arg(key));
         if(mEnabledLanguages.contains(key)) {
             mSrcComboBox->addItem(icon, name, key);
             if(mLanguageTableIsFlat) {
@@ -294,4 +298,12 @@ void QPTranslationWidget::readCfg() {
     setIndexByKey(mSrcComboBox, s.value("SourceLanguage", "").toString());
     setIndexByKey(mResComboBox, s.value("ResultLanguage", "").toString());
     s.endGroup();
+}
+
+void QPTranslationWidget::changeHandler() {
+    if(mSrcText->toPlainText().isEmpty() || (mSrcComboBox->currentData() == mResComboBox->currentData())) {
+        mTranslateButton->setDisabled(true);
+    } else {
+        mTranslateButton->setEnabled(true);
+    }
 }

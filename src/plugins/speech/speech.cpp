@@ -26,11 +26,8 @@
 #include <QTextEdit>
 #include <QTextBrowser>
 #include <QToolTip>
-#include <QMediaPlaylist>
+#include <QMediaPlayer>
 
-
-#include "translationwidget.h"
-#include "itranslationwidget.h"
 #include "speech.h"
 #include "http.h"
 

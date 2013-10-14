@@ -1,12 +1,9 @@
 #include "yandex_translator.h"
 #include "http.h"
-#include <QtGui>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
-#include <QNetworkRequest>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
+#include <QUrl>
 
 QString YandexTranslator::mApiKey = "trnsl.1.1.20130623T124051Z.0700cd74def1a0f5.a64b755e8f8f1312a82edd26c0bc6585be02c695";
 

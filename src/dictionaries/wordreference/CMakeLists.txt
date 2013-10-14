@@ -10,6 +10,7 @@ compress_json(${CMAKE_CURRENT_BINARY_DIR}/${SPEC})
 qt5_wrap_cpp(MOC_SOURCES ${HDR})
 add_library(${TARGET} SHARED ${HDR} ${SRC}  ${MOC_SOURCES})
 qt5_use_modules(${TARGET} Network Core Gui Widgets)
+target_link_libraries(${TARGET} phoenix)
 
 install(TARGETS ${TARGET} DESTINATION ${DICTIONARIES_PATH} )
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${SPEC} DESTINATION ${DICTIONARIES_PATH})

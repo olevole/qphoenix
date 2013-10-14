@@ -1,7 +1,7 @@
 project(QPhoenix)
 cmake_minimum_required(VERSION 2.8.10)
 set(EXECUTABLE_NAME qphoenix)
-set(PROJECT_VERSION 0.999999)
+set(PROJECT_VERSION 0.999999 CACHE INTERNAL "")
 set(CMAKE_BUILD_TYPE Debug)
 set(TESTING_ENABLED TRUE)
 
@@ -13,7 +13,7 @@ string(SUBSTRING ${VERSION} 0 7 GIT_HASH)
 if(CMAKE_BUILD_TYPE STREQUAL Debug)
     add_definitions(-DQP_DEBUG)
     if(CMAKE_COMPILER_IS_GNUCC)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror ")
     endif(CMAKE_COMPILER_IS_GNUCC)
 endif()
 
@@ -49,9 +49,7 @@ src/include/iplugin.h
 src/include/itranslator.h
 src/include/idictionary.h
 src/include/imodule.h
-src/include/api.h
-src/include/pluginconnector.h
-src/include/languagetable.h)
+src/include/api.h)
 
 set(HEADERS
 src/core/mainwindow.h
@@ -65,7 +63,6 @@ src/core/translationwidget.h
 src/core/dictionarywidget.h
 src/core/threads.h
 src/core/loader.h
-src/core/infodialog.h
 src/core/dictionarytemplate.h
 src/core/languages.h
 src/core/specparser.h
@@ -83,7 +80,6 @@ src/core/translationwidget.cpp
 src/core/dictionarywidget.cpp
 src/core/threads.cpp
 src/core/loader.cpp
-src/core/infodialog.cpp
 src/core/dictionarytemplate.cpp
 src/core/languages.cpp
 src/core/specparser.cpp

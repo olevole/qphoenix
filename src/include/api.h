@@ -5,7 +5,6 @@
  */
 
 #include "defines.h"
-#include "imodule.h"
 #include "iconfig.h"
 #include "iconfigpage.h"
 #include "idictionary.h"
@@ -14,5 +13,4 @@
 #include "iplugin.h"
 #include "itranslator.h"
 #include "itranslationwidget.h"
-#include "pluginsconfig.h"
 

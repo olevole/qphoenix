@@ -21,16 +21,14 @@
 
 #pragma once
 
+#include "iplugin.h"
 #include <QObject>
 #include <QTemporaryFile>
-#include <QMediaPlayer>
-#include "iplugin.h"
-#include "imodule.h"
-#include "pluginconnector.h"
 
 class QPushButton;
 class QClipboard;
 class QAction;
+class QMediaPlayer;
 
 #define TTS_URL "http://translate.google.com/translate_tts"
 

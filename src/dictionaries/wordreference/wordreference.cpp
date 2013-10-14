@@ -1,26 +1,12 @@
 #include "wordreference.h"
 #include "http.h"
 #include <QObject>
-#include <QCheckBox>
-#include <QHBoxLayout>
-#include <QDebug>
-#include <QThread>
-#include <QTime>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QTextDocumentFragment>
-#include <QEventLoop>
 #include <QStringList>
-#include <QDebug>
-#include <QtGui>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QUrl>
 
 
-
-QStringList WordReference::mLangs = QStringList()  << "ru" << "ar" << "zh" << "cz" << "fr" << "gr" << "it"
-                                                           << "ja" << "ko" << "pl" << "pt" << "ro" << "es" << "tr";
 QString WordReference::mApiKey = "284e7";
 QString WordReference::mApiVer = "0.8";
 
@@ -29,13 +15,11 @@ WordReference::WordReference(QObject *parent)
 {
 }
 
-
 QStringList WordReference::query(const QString &text, const QString &src_lang, const QString &dest_lang, unsigned int max_count)  {
     QJsonDocument doc = queryData(text, src_lang, dest_lang);
     QJsonObject root = doc.object().value("term0").toObject();
     QJsonObject principal = root.value("PrincipalTranslations").toObject();
     QStringList lst;
-
 
     // Parse principal translations
     for (int i = 0; i < 20; i++) {
@@ -54,7 +38,6 @@ QStringList WordReference::query(const QString &text, const QString &src_lang, c
         QString res_term = oterm2.value("term").toString();
         QString res_sense = oterm2.value("sense").toString();
 
-
         lst << QString(
                    "[b]%1 (%2)[/b]\n\n"
 //                   "[i]%2[/i]\n\n"
@@ -64,22 +47,13 @@ QStringList WordReference::query(const QString &text, const QString &src_lang, c
    return lst;
 }
 
-
 QJsonDocument WordReference::queryData(const QString &text, const QString &src_lang, const QString &dest_lang) const {
     const QByteArray html = text.toUtf8();
     const QUrl url = QString("http://api.wordreference.com/%2/json/%3/%4").arg(mApiKey, src_lang+dest_lang, html.toPercentEncoding());
 
-    QNetworkAccessManager mManager;
-    QEventLoop loop;
-    QObject::connect(&mManager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
-    QNetworkReply *reply  = mManager.get(QNetworkRequest(url));
-    loop.exec();
-
-    const QString  rawdata = reply->readAll();
+    const QString  rawdata = HTTP::GET(url);
     return QJsonDocument::fromJson(rawdata.toUtf8());
 }
-
-
 
 QStringList WordReference::completions(const QString &str,const QString &src_lang, const QString &dest_lang) const {
     QJsonDocument doc = queryData(str, src_lang, dest_lang);

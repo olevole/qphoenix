@@ -1,11 +1,11 @@
 #include "mymemory.h"
 #include "http.h"
-#include <QtGui>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QTextCodec>
 #include <QTextDocumentFragment>
+#include <QUrl>
 
 
 MyMemory::MyMemory(QObject *parent)

@@ -17,18 +17,12 @@ public:
     YandexTranslator(QObject *parent = 0);
 
     bool load() {
-        if(!isLoaded()) {
-            mLoaded = true;
-            return true;
-        }
-        return false;
+        mLoaded = true;
+        return true;
     }
 
     bool unload() {
-        if(isLoaded()) {
-            mLoaded = false;
-            return true;
-        }
+        mLoaded = false;
         return false;
     }
     bool isLoaded() const {return mLoaded;}

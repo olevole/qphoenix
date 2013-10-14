@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QString>
+#include <QtPlugin>
 
 class QObject;
 
@@ -10,10 +11,10 @@ class QObject;
  * \brief The IModule class
  *
  * This is a base class for ALL modules (translators, dictionaries, plugins)
- * Class IModule MUST be inherited by all kinds of modules.
+ * Class IModule MUST be inherited by any kinds of modules.
  */
 
-class IModule/* : public Info */{
+class IModule {
 public:
     virtual ~IModule() {}
 

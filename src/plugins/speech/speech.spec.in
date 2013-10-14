@@ -4,8 +4,8 @@
 			"libname" : "${FULL_TARGET_NAME}",
 			"info" : {
 				"name" : "Speech",
-                                "version" : "1.9999",
-                                "description" : "Speech support"
+                                "version" : "${PROJECT_VERSION}",
+                                "description" : "Text speect support"
 			}
 		}
 	}

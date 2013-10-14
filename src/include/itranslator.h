@@ -23,7 +23,6 @@
 
 #include <QWidget>
 #include "imodule.h"
-#include "languagetable.h"
 
 class ITranslator : public IModule {
 public:

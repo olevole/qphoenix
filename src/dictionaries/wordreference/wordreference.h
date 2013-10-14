@@ -16,18 +16,15 @@ class WordReference : public QObject, IDictionary
 public:
     WordReference(QObject *parent = 0);
 
-
     QStringList query(const QString &text, const QString &src_lang, const QString &dest_lang, unsigned int max_count);
     QStringList completions(const QString &str, const QString &src_lang, const QString &dest_lang) const;
 
-    bool load(){return true;}
-    bool unload(){return true;}
-    bool isLoaded()const{return true;}
+    bool load() {return true;}
+    bool unload() {return true;}
+    bool isLoaded() const {return true;}
 
-
-    bool isSupportCompletions() const { return true; }
+    bool isSupportCompletions() {return true;}
 private:
-    static QStringList mLangs;
     static QString mApiKey;
     static QString mApiVer;
 

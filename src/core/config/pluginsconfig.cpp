@@ -35,6 +35,7 @@ PluginsConfig::PluginsConfig(QWidget *parent)
 }
 
 QPPluginList *PluginsConfig::pluginsList() {
+    qDebug() << "Plugins Count: " <<  mPlugins.size();
     return &mPlugins;
 }
 
@@ -82,8 +83,6 @@ void PluginsConfig::reset() {
 
 void PluginsConfig::updateTable() {
     QPModuleLoader loader("plugins:");
-
-
     QPModuleList modules = loader.modules();
 
     foreach(QPModule plugin, modules) {
@@ -93,6 +92,8 @@ void PluginsConfig::updateTable() {
         QPPlugin pl;
         pl.data = plugin.data;
         pl.instance = iface;
+
+        mPlugins << pl;
 
         const int row = mTable->rowCount();
         mTable->insertRow(row);
@@ -107,7 +108,6 @@ void PluginsConfig::updateTable() {
 
             QTableWidgetItem *item = new QTableWidgetItem;
             item->setText(item_data);
-            item->setFlags(item->flags() & (~(Qt::ItemIsEditable | Qt::ItemIsSelectable)));
             mTable->setItem(row, i, item);
         }
 

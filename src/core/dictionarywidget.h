@@ -24,7 +24,6 @@
 #include <QLabel>
 #include <QWebView>
 #include <QStringList>
-#include <QListWidget>
 #include "idictionarywidget.h"
 #include "idictionary.h"
 #include "threads.h"
@@ -55,16 +54,21 @@ class DictionaryWidget : public QWidget, public IDictionaryWidget
 public:
     explicit DictionaryWidget(QWidget *parent = 0);
 
-    virtual QComboBox   *languagesComboBox() {return mLanguagesComboBox;   }
-    virtual QLineEdit   *srcText()      {return mSrcText;       }
-    virtual QWebView    *resText()      {return mResText;       }
-    virtual QToolBar    *mainToolBar()  { return mMainToolBar;       }
-    virtual QWidget *instance() {return this;}
+
+    virtual QString getSourceText() const;
+    virtual QString getResultText() const;
+
+    virtual void clearSourceText();
+    virtual void clearResultText();
+
+    QToolBar    *mainToolBar()  { return mMainToolBar;       }
 public slots:
+    virtual void undo();
+    virtual void redo();
+
     void setNativeNames(const bool b) { mNativeNames = b;}
     void setDictionaryList(QPDictionaryList dicts);
 
-    //TODO: Implement those two functions reactions
     void setMaxVariants(const int count){mMaxVarCount = count;}
     void setInputTimeout(const int t) {mQueryTimer->setInterval(t);}
 private slots:
@@ -78,13 +82,9 @@ private slots:
     void onQueryWord();
     void onFinish();
 signals:
-    void start();
-    void finish();
+    void started();
+    void finished();
 private:
-    /*!
-     * Maximal count of displaying variants per dictionary
-     * if 0 - unlimited
-     */
     int mMaxVarCount;
     bool mNativeNames;
     bool mLock;

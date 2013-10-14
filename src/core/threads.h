@@ -75,7 +75,6 @@ class QPTranslatorThread : public IThread
 public:
     QPTranslatorThread();
     QPTranslatorThread(ITranslator *t) {
-        QPTranslatorThread();
         setTranslator(t);
     }
     void setTranslator(ITranslator *ptr){mPtr = ptr;}

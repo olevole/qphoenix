@@ -37,11 +37,12 @@ LanguageConfig::LanguageConfig(QWidget *parent) :
 
     for (int i = 0; i < mLangList.count(); ++i) {
         Language lang = mLangList[i];
-        const QIcon icon = QIcon(QString(":/icons/%1.png").arg(lang.code()));
+        const QIcon icon = QIcon(QString(":/flags/flags/%1.png").arg(lang.code()));
         const QString name = lang.name(mNativeNames);
 
         QTableWidgetItem *item_name = new QTableWidgetItem;
         item_name->setText(name);
+        item_name->setIcon(icon);
         item_name->setFlags(item_name->flags() & (~(Qt::ItemIsEditable | Qt::ItemIsSelectable)));
         mTableWidget->setItem(i, 0, item_name);
 

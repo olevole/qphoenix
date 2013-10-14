@@ -32,12 +32,18 @@ public:
 
 //    virtual QString getSourceLanguageCode() const = 0;
 //    virtual QString getResultLanguageCode() const = 0;
-//    virtual QString getResult() const = 0;
-////Slots
+    virtual QString getSourceText() const = 0;
+    virtual QString getResultText() const = 0;
+
+    virtual void clearSourceText() = 0;
+    virtual void clearResultText() = 0;
+//Slots
 //    virtual void query(const QString &word, const QString &src_lang, const QString &dest_lang) = 0;
-////Signals
-//    virtual void started() = 0;
-//    virtual void finished() = 0;
+    virtual void undo() = 0;
+    virtual void redo() = 0;
+//Signals
+    virtual void started() = 0;
+    virtual void finished() = 0;
 
 };
 

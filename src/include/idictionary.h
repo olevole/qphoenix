@@ -72,7 +72,7 @@ public:
      * \return true if dictionary support completions provided by \def completions
      * otherwise - false
      */
-    virtual bool isSupportCompletions() const = 0;
+    virtual bool isSupportCompletions() = 0;
 };
 
 Q_DECLARE_INTERFACE(IDictionary, "com.qphoenix.interfaces.dictionary/1.0");

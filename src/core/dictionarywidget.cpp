@@ -38,6 +38,7 @@
 #include <QAction>
 #include <QFile>
 #include <QTime>
+#include <QWebFrame>
 #include "dictionarywidget.h"
 #include "dictionarytemplate.h"
 #include "defines.h"
@@ -98,9 +99,9 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     connect(&mDictWorker, SIGNAL(reply(QStringList)), this, SLOT(setCompletions(QStringList)));
 //    connect(&mDictWorker, SIGNAL(reply(QStringList)), this, SLOT(setCompletions(QStringList)));
     connect(&mDictWorker, SIGNAL(finished()), this, SLOT(onFinish()));
-    connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
+    connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(started()));
     connect(mQueryTimer, SIGNAL(timeout()), this, SLOT(onQueryComp()));
-    connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(start()));
+    connect(mSrcText, SIGNAL(textChanged(QString)), mQueryTimer, SLOT(started()));
     connect(mQueryTimer, SIGNAL(timeout()), this, SLOT(onQueryComp()));
     connect(mCompleter, SIGNAL(activated(QString)), this, SLOT(onQueryWord()));
     connect(mSrcText, SIGNAL(returnPressed()), this, SLOT(onQueryWord()));
@@ -109,6 +110,33 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 
     mDictWorker.setTimeout(QP_DICTIONARY_TIMEOUT);
 }
+
+// API Methods
+QString DictionaryWidget::getSourceText() const {
+    return mSrcText->text();
+}
+
+QString DictionaryWidget::getResultText() const {
+    return mResText->page()->mainFrame()->toHtml();
+}
+
+void DictionaryWidget::clearSourceText() {
+    mSrcText->clear();
+}
+
+void DictionaryWidget::clearResultText() {
+    mResText->setHtml("");
+}
+
+void DictionaryWidget::undo() {
+    mSrcText->undo();
+}
+
+void DictionaryWidget::redo() {
+    mSrcText->redo();
+}
+
+// End of API methods
 
 void DictionaryWidget::setCompletions(const QStringList &comp) {
     QStringList tmp = mCompleterModel->stringList() + comp;

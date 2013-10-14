@@ -1,15 +1,34 @@
 #pragma once
 
+#include "imodule.h"
 
-/*
- * This is a basic interface for ALL plugins
+/*!
+ * \brief The PluginConnector struct
+ * Structure with public pointers to plugin interfaces
+ * mainwindow - Main Window interface
+ * configdialog - Config dialog iface
+ * translationwidget - Translator widget iface
+ * dictionarywidget - Dictionary widget iface
  */
 
 #include "imainwindow.h"
 #include "iconfig.h"
-#include "imodule.h"
-#include "pluginconnector.h"
+#include "itranslationwidget.h"
+#include "idictionarywidget.h"
 
+struct PluginConnector
+{
+    IMainWindow *mainwindow;
+    IConfig *configdialog;
+    ITranslationWidget *translationwidget;
+    IDictionaryWidget *dictionarywidget;
+};
+
+
+/*!
+ * \brief The IPlugin class
+ * Interface for plugins
+ */
 class IPlugin : public IModule
 {
 

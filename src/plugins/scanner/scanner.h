@@ -24,8 +24,6 @@
 #include <QObject>
 #include <QPoint>
 #include "iplugin.h"
-#include "imodule.h"
-#include "pluginconnector.h"
 
 class QPushButton;
 class QClipboard;
