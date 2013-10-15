@@ -9,29 +9,10 @@
 
 CommonConfig::CommonConfig(QWidget *parent) :
     QWidget(parent),
-    mTabWidget(new QTabWidget(this)),
-    mUseNativeCheckbox(new QCheckBox(this)),
-    mLanguageCombobox(new QComboBox(this)),
-    mLanguageLabel(new QLabel(this))
+    mTabWidget(new QTabWidget(this))
 {
-    mUseNativeCheckbox->setText(tr("Use native language names"));
-    mLanguageLabel->setText(tr("Inteface language"));
-
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    this->setLayout(mainLayout);
-    mainLayout->addWidget(mTabWidget);
-
-    QWidget *page1 = new QWidget(mTabWidget);
-    QVBoxLayout *page1_layout = new QVBoxLayout;
-    QHBoxLayout *languageLayout = new QHBoxLayout;
-    languageLayout->addWidget(mLanguageLabel);
-    languageLayout->addWidget(mLanguageCombobox);
-    page1->setLayout(page1_layout);
-    page1_layout->addWidget(mUseNativeCheckbox);
-    page1_layout->addLayout(languageLayout);
-    page1_layout->addStretch();
-
-    mTabWidget->addTab(page1, tr("Language"));
+    createLanguagePage();
+    createNetworkPage();
 }
 
 void CommonConfig::save() {
@@ -53,4 +34,34 @@ void CommonConfig::reset() {
 
 bool CommonConfig::getNativeNamesEnabled() {
     return mUseNativeCheckbox->isChecked();
+}
+
+void CommonConfig::createLanguagePage() {
+
+    mUseNativeCheckbox = new QCheckBox(this);
+    mLanguageCombobox = new QComboBox(this);
+    mLanguageLabel = new QLabel(this);
+
+    mUseNativeCheckbox->setText(tr("Use native language names"));
+    mLanguageLabel->setText(tr("Inteface language"));
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    this->setLayout(mainLayout);
+    mainLayout->addWidget(mTabWidget);
+
+    QWidget *page1 = new QWidget(mTabWidget);
+    QVBoxLayout *page1_layout = new QVBoxLayout;
+    QHBoxLayout *languageLayout = new QHBoxLayout;
+    languageLayout->addWidget(mLanguageLabel);
+    languageLayout->addWidget(mLanguageCombobox);
+    page1->setLayout(page1_layout);
+    page1_layout->addWidget(mUseNativeCheckbox);
+    page1_layout->addLayout(languageLayout);
+    page1_layout->addStretch();
+
+    mTabWidget->addTab(page1, tr("Language"));
+}
+
+void CommonConfig::createNetworkPage() {
+
 }

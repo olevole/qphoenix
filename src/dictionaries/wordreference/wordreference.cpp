@@ -71,4 +71,5 @@ QStringList WordReference::completions(const QString &str,const QString &src_lan
     }
    lst.prepend(str);
    return lst;
+//   return QStringList() << "foo" << "bar";
 }

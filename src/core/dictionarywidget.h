@@ -44,7 +44,6 @@ class QToolBar;
 class QLineEdit;
 class DictionaryTemplate;
 
-
 typedef QPair<QString, QString> LanguagePair;
 typedef QList<LanguagePair> LanguagePairList;
 
@@ -61,15 +60,14 @@ public:
     virtual void clearSourceText();
     virtual void clearResultText();
 
-    QToolBar    *mainToolBar()  { return mMainToolBar;       }
+    QToolBar    *getToolBar() {return mMainToolBar;}
 public slots:
     virtual void undo();
     virtual void redo();
 
-    void setNativeNames(const bool b) { mNativeNames = b;}
+    void setNativeNames(bool b);
     void setDictionaryList(QPDictionaryList dicts);
-
-    void setMaxVariants(const int count){mMaxVarCount = count;}
+    void setMaxItems(unsigned int count);
     void setInputTimeout(const int t) {mQueryTimer->setInterval(t);}
 private slots:
     void setCompletions(const QStringList &comp);
@@ -77,7 +75,7 @@ private slots:
 
     void zoomIn();
     void zoomOut();
-    void setLangPairs(const LanguagePairList &lst);
+    void setLanguagePairs(const LanguagePairList &lst);
     void onQueryComp();
     void onQueryWord();
     void onFinish();
@@ -85,10 +83,11 @@ signals:
     void started();
     void finished();
 private:
-    int mMaxVarCount;
+    int mMaxItemCount;
     bool mNativeNames;
     bool mLock;
     bool mIsEmpty;
+
     QToolBar *mMainToolBar;
     QTimer *mQueryTimer;
     QComboBox *mLanguagesComboBox;
@@ -96,9 +95,6 @@ private:
     QWebView *mResText;
     QGroupBox   *mGroupbox;
 
-    /*!
-     *  A completer and model for input lineedit
-     */
     QCompleter *mCompleter;
     QStringListModel *mCompleterModel;
 

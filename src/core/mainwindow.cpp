@@ -77,8 +77,8 @@ MainWindow::MainWindow(QWidget *parent) :
     mActionClear(new QAction(QP_ICON("edit-clear"), tr("Clear"), this)),
     mActionUndo(new QAction(QP_ICON("edit-undo"),tr("Undo"), this)),
     mActionRedo(new QAction(QP_ICON("edit-redo"),tr("Redo"), this)),
-    mActionSwap(new QAction(tr("Swap"), this)),
-    mActionOptions(new QAction(tr("Options"), this)),
+    mActionSwap(new QAction(QP_ICON("system-switch-user"), tr("Swap"), this)),
+    mActionOptions(new QAction(QP_ICON("configure"), tr("Options"), this)),
 
     mActionAbout(new QAction(QIcon::fromTheme("help-about"), tr("About"), this)),
     mActionAboutQt(new QAction(tr("About Qt"), this)),
@@ -103,7 +103,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mActionUndo->setShortcut(QKeySequence("Ctrl+U"));
     mActionRedo->setShortcut(QKeySequence("Ctrl+R"));
-    mActionSwap->setShortcut(QKeySequence("Ctrl+Shift+S"));
+    mActionSwap->setShortcut(QKeySequence("Ctrl+Alt+S"));
 
 
     mFileMenu->addAction(mActionOpen);
@@ -129,6 +129,10 @@ MainWindow::MainWindow(QWidget *parent) :
     mMenuBar->addMenu(mEditMenu);
     mMenuBar->addMenu(mHelpMenu);
 
+    mToolBar->addAction(mActionOpen);
+    mToolBar->addAction(mActionSave);
+    mToolBar->addAction(mActionSaveAs);
+    mToolBar->addSeparator();
     mToolBar->addAction(mActionClear);
     mToolBar->addAction(mActionUndo);
     mToolBar->addAction(mActionRedo);
@@ -141,7 +145,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setMenuBar(mMenuBar);
 
     this->addToolBar(mToolBar);
-    this->addToolBar(mDictionaryWidget->mainToolBar());
+    this->addToolBar(mDictionaryWidget->getToolBar());
     this->addToolBar(mTranslationWidget->mainToolBar());
 
     mTabWidget->insertTab(mTabWidget->count(), mTranslationWidget, QP_ICON("translator"), tr("Translator"));
@@ -260,7 +264,7 @@ void MainWindow::updateTranslatorConfig() {
 }
 
 void MainWindow::onIndexChange(const int i) {
-    mDictionaryWidget->mainToolBar()->setVisible(i == 1);
+    mDictionaryWidget->getToolBar()->setVisible(i == 1);
     mTranslationWidget->mainToolBar()->setVisible(i == 0);
 }
 

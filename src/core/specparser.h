@@ -18,6 +18,7 @@ struct QPModuleData {
     QPModuleType type;
     QString name;
     QString description;
+    QString copyright;
     QString libname;
     QString version;
     QString url;

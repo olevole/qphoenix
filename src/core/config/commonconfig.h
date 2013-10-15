@@ -21,7 +21,11 @@ public:
 
     bool getNativeNamesEnabled();
 private:
+    void createLanguagePage();
+    void createNetworkPage();
+private:
     QTabWidget *mTabWidget;
+
     QCheckBox *mUseNativeCheckbox;
     QComboBox *mLanguageCombobox;
     QLabel *mLanguageLabel;

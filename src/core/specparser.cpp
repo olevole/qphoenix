@@ -63,6 +63,7 @@ QPModuleData QPModuleSpecParser::parse(const QString &specfile) {
 
     data.name = info.value("name").toString();
     data.description = info.value("description").toString();
+    data.copyright = info.value("copyright").toString();
     data.version = info.value("version").toString();
     data.url = info.value("url").toString();
 

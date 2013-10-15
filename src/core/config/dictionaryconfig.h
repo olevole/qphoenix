@@ -32,6 +32,7 @@ public:
     void reset();
 
     QPDictionaryList dictionaries();
+    unsigned int maxResults();
 private:
     QPModuleList mDictionaries;
     QPDictionaryList mConvertedDicts;
@@ -39,4 +40,6 @@ private:
     QTabWidget *mTabWidget;
     QSpinBox *mResultCountSpin;
     QLabel *mResultCountLabel;
+
+    QList<QCheckBox *> mCheckBoxList;
 };

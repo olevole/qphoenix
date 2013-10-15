@@ -48,10 +48,10 @@ void DictionaryTemplate::clear() {
 
 QString DictionaryTemplate::bb2html(const QString &bb) {
     QString str = bb;
-    str.replace("[b]", "<b>").replace("[/b]", "</b>", Qt::CaseInsensitive);
-    str.replace("[i]", "<i>").replace("[/i]", "</i>", Qt::CaseInsensitive);
-    str.replace("[u]", "<u>").replace("[/u]", "</u>", Qt::CaseInsensitive);
-    str.replace("[quote]", "<blockquote><p>").replace("[/quote]", "</p></blockquote>", Qt::CaseInsensitive);
+    str.replace("[b]", "<b>", Qt::CaseInsensitive).replace("[/b]", "</b>", Qt::CaseInsensitive);
+    str.replace("[i]", "<i>", Qt::CaseInsensitive).replace("[/i]", "</i>", Qt::CaseInsensitive);
+    str.replace("[u]", "<u>", Qt::CaseInsensitive).replace("[/u]", "</u>", Qt::CaseInsensitive);
+    str.replace("[quote]", "<blockquote><p>", Qt::CaseInsensitive).replace("[/quote]", "</p></blockquote>", Qt::CaseInsensitive);
     str.replace("\n", "<br>");
     return str;
 }

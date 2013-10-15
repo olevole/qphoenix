@@ -77,6 +77,9 @@ QPTranslationWidget::QPTranslationWidget(QWidget *parent) :
     mNativeNames(true),
     mLanguageTableIsFlat(false)
 {
+    mSwapButton->setIcon(QP_ICON("system-switch-user"));
+    mTranslateButton->setIcon(QP_ICON("go-next"));
+    mTranslateButton->setShortcut(QKeySequence("Ctrl+T"));
     mButtonsLayout->addWidget(mResToolbar);
     mButtonsLayout->addWidget(mSrcComboBox);
     mButtonsLayout->addWidget(mSwapButton);
@@ -93,6 +96,7 @@ QPTranslationWidget::QPTranslationWidget(QWidget *parent) :
     mMainLayout->addLayout(mButtonsLayout);
     mMainLayout->addWidget(mResText);
     setLayout(mMainLayout);
+
 
     mSrcComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     mResComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);

@@ -5,8 +5,6 @@ set(PROJECT_VERSION 0.999999 CACHE INTERNAL "")
 set(CMAKE_BUILD_TYPE Debug)
 set(TESTING_ENABLED TRUE)
 
-include(cmake/json_compress.txt)
-
 exec_program("git" ${CMAKE_CURRENT_SOURCE_DIR} ARGS "rev-parse HEAD" OUTPUT_VARIABLE VERSION)
 string(SUBSTRING ${VERSION} 0 7 GIT_HASH)
 

@@ -45,7 +45,7 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
     mTable->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Name")));
     mTable->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("Description")));
     mTable->setHorizontalHeaderItem(2, new QTableWidgetItem(tr("Version")));
-    mTable->setHorizontalHeaderItem(3, new QTableWidgetItem("#"));
+    mTable->setHorizontalHeaderItem(3, new QTableWidgetItem(tr("Enabled")));
 
     for (int i = 0; i < mDictionaries.count(); ++i) {
         QPModule module = mDictionaries[i];
@@ -61,10 +61,19 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
         mTable->insertRow(i);
         mTable->setRowHeight(i, 20);
 
-        mTable->setItem(i, 0, new QTableWidgetItem(module.data.name));
-        mTable->setItem(i, 1, new QTableWidgetItem(module.data.description));
-        mTable->setItem(i, 2, new QTableWidgetItem(module.data.version));
+        QStringList columns;
+        columns << module.data.name << module.data.description << module.data.version;
+
+        for (int j = 0; j < columns.size(); ++j) {
+            QTableWidgetItem *item = new QTableWidgetItem(columns[j]);
+            item->setFlags(item->flags() & (~(Qt::ItemIsEditable | Qt::ItemIsSelectable)));
+            mTable->setItem(i, j, item);
+        }
+        QCheckBox *checkbox = new QCheckBox(this);
+        mCheckBoxList << checkbox;
+        mTable->setCellWidget(i, 3, checkbox);
     }
+    mTable->resizeColumnsToContents();
 }
 
 void DictionaryConfig::save() {
@@ -86,7 +95,10 @@ void DictionaryConfig::reset() {
     mResultCountSpin->setValue(QP_DEFAULT_RESULT_COUNT);
 }
 
-
 QPDictionaryList DictionaryConfig::dictionaries() {
     return mConvertedDicts;
+}
+
+unsigned int DictionaryConfig::maxResults() {
+    return mResultCountSpin->value();
 }

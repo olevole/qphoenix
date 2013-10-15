@@ -25,7 +25,7 @@ PluginsConfig::PluginsConfig(QWidget *parent)
     mTable->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Name")));
     mTable->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("Description")));
     mTable->setHorizontalHeaderItem(2, new QTableWidgetItem(tr("Version")));
-    mTable->setHorizontalHeaderItem(3, new QTableWidgetItem("*"));
+    mTable->setHorizontalHeaderItem(3, new QTableWidgetItem(tr("Enabled")));
 
     mTable->setColumnWidth(0, 70);
     mTable->setColumnWidth(1, 300);

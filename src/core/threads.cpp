@@ -8,27 +8,22 @@ QPDictionaryThread::QPDictionaryThread()
 }
 
 void QPDictionaryThread::run() {
-//    Q_ASSERT(!mPair.first.isEmpty() && !mPair.second.isEmpty());
     if(mQuery.isEmpty())
         return;
-    //TODO: fix this code
+
     if(mCompletions) {
         QStringList comp;
         foreach(QPDictionary dict, mDictList)
             if(dict.instance->isSupportCompletions())
                 comp += dict.instance->completions(mQuery, mSrcLang, mDestLang);
-        comp.removeDuplicates();
-        qDebug() << "Completions list: " << comp;
-        if(comp.count() == 1)
-            goto single;
-        emit reply(comp);
-    } else {
-        single:
-        qDebug() << "Creating reply...";
-        foreach(QPDictionary dict, mDictList) {
-            emit reply(dict.instance->query(mQuery, mSrcLang, mDestLang), dict.data.name);
+        qDebug() << "Completions: " << comp;
+        if(comp.count() > 1) {
+            emit reply(comp);
+            return;
         }
     }
+    foreach(QPDictionary dict, mDictList)
+       emit reply(dict.instance->query(mQuery, mSrcLang, mDestLang), dict.data.name);
     qDebug() << "Finished!";
     emit finished();
 }

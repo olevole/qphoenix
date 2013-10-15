@@ -28,7 +28,7 @@ LanguageConfig::LanguageConfig(QWidget *parent) :
     mTableWidget->verticalHeader()->hide();
     mTableWidget->horizontalHeader()->setStretchLastSection(true);
     mTableWidget->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Name")));
-    mTableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem("*"));
+    mTableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("Enabled")));
 
     mLangList = QP_LANGUAGE_DB->languages();
 
