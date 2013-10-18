@@ -63,13 +63,16 @@ QPTranslatorsConfig::QPTranslatorsConfig(QWidget *parent) :
 
     mTranslatorGroupBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 
-    connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onIndexChange(int)));
     QPModuleLoader ldr("translators:");
 
     mModuleList = ldr.modules();
 
     foreach (QPModule module, mModuleList)
         mTranslatorComboBox->addItem(module.data.name);
+
+    connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onIndexChange(int)));
+
+//TODO:
 }
 
 QPTranslatorsConfig::~QPTranslatorsConfig() {

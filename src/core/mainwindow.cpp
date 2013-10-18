@@ -126,7 +126,6 @@ MainWindow::MainWindow(QWidget *parent) :
     mActionRedo->setShortcut(QKeySequence("Ctrl+R"));
     mActionSwap->setShortcut(QKeySequence("Ctrl+Alt+S"));
 
-
     mFileMenu->addAction(mActionOpen);
     mFileMenu->addSeparator();
     mFileMenu->addAction(mActionSave);
@@ -280,6 +279,8 @@ void MainWindow::onConfigAccept() {
 
 void MainWindow::updateTranslatorConfig() {
     QPTranslator tr = mTranslatorsConfig->currentTranslator();
+    qDebug() << "Updating translator idx..." << tr.data.name;
+
     mTranslationWidget->setEnabledLanguages(mLanguageConfig->getEnabledLanguages());
     mTranslationWidget->setTranslator(tr);
 }
@@ -404,4 +405,3 @@ void MainWindow::redo() {
 void MainWindow::about() {
     QMessageBox::about(this, tr("About QPhoenix"), mAboutStr);
 }
-

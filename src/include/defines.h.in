@@ -24,7 +24,7 @@
 #include <QString>
 #include <QIcon>
 
-#define QP_APP_VERSION "0.01a"
+#define QP_APP_VERSION "${PROJECT_VERSION}"
 #define QP_APP_NAME "QPhoenix"
 #define QP_ORG_NAME "QPhoenix Inc."
 #define QP_ORG_DOMAIN "http://qphoenix.org"

@@ -28,7 +28,6 @@
 #include <QJsonDocument>
 
 
-
 QPModuleSpecParser::QPModuleSpecParser(QObject *parent) :
     QObject(parent),
     mError(false)

@@ -85,10 +85,6 @@ private:
     QPDictionaryList mDictList;
 };
 
-/*!
- * \brief The TranslatorWrapper class
- * Wrapper for execute translation query in separated thread
- */
 
 class QPTranslatorThread : public IThread
 {

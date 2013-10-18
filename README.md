@@ -1,44 +1,42 @@
-================================
 QPhoenix
 ================================
 
 
+What it is?
+-----------
 
-About
---------------------
+  QPhoenix was designed to provide easy and useful interface to most popular
+  online (and not only) translation and dictionary services, like Yandex Translate,
+  WordReference. It supports three kinds of plugins: 
+  - Dictionary plugins (which adds support of dictionaries)
+  - Translator plugins (which adds support of translators)
+  - Interface plugins (for GUI features like history, spelling, clipboard scanning, etc)
 
-      QPhoenix is an advanced translation tool.
-      This is a graphical interface for much dictionaries  and 
-      translation services. 
+QPhoenix dzen
+-------------
+
+  - Be useful and beautiful for end-user.
+  - Be extensible by plugins.
+  - Don't be depend of service (every service support done via plugin, so it can be easily replaced)
+  - Fuck you, NVIDIA!
       
-
-      
-Main Features
---------------------
-
-  - Extendability (very rich plugin api)
-  - Usability (best GUI solutions)
-  - Killer features (selection buffer, etc)
-  - Support for any kind of translation or dictionary services could be implemented with a provided feature-rich API.
-  - Open Source software with open sources and development infrastructure
-
 
 Project Status
---------------------
+--------------
 
-	Deep alpha version
+  In development
 
 	
 Contribute
---------------------
+----------
 
-      Contact flareguner at gmail dotcom to get any instructions.
+  Contact flareguner at gmail dotcom
 
       
 Build Dependencies
---------------------
+------------------
 
-  - Qt 5.0.1 or higher
-  - cmake 2.8 or higher
-  - gcc (not tested with other compilers, yet (FIXME))
+  - Qt >= 5.0.1 
+  - cmake >= 2.8
+  - gcc, clang, or msvc + beer
       

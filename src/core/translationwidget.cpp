@@ -97,13 +97,11 @@ QPTranslationWidget::QPTranslationWidget(QWidget *parent) :
     mMainLayout->addWidget(mResText);
     setLayout(mMainLayout);
 
-
     mSrcComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     mResComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
     connect(mTranslatorsComboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(translatorIndexChanged(int)));
     connect(mTranslatorsComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateComboxes()));
-
 
     connect(mSwapButton, SIGNAL(clicked()), this, SLOT(swap()));
     connect(mSrcToolbar, SIGNAL(copyRequest()), this, SLOT(copySourceText()()));
@@ -118,8 +116,6 @@ QPTranslationWidget::QPTranslationWidget(QWidget *parent) :
     connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(changeHandler()));
     connect(mResComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(changeHandler()));
     connect(mSrcText, SIGNAL(textChanged()), this, SLOT(changeHandler()));
-
-//    this->readCfg();
 }
 
 QPTranslationWidget::~QPTranslationWidget() {
@@ -127,9 +123,7 @@ QPTranslationWidget::~QPTranslationWidget() {
 }
 
 
-//----------------------------------------------------------------------------
 // !!Begin API methods!!
-//----------------------------------------------------------------------------
 
 QString QPTranslationWidget::getSourceText() const {
     return mSrcText->toPlainText();
@@ -212,9 +206,7 @@ void QPTranslationWidget::translate() {
 
 }
 
-//----------------------------------------------------------------------------
-// !!End of API methods!!
-//----------------------------------------------------------------------------
+// !!End API methods!!
 
 void QPTranslationWidget::setTranslatorsNames(const QStringList &lst) {
     mTranslatorsComboBox->clear();
@@ -223,7 +215,13 @@ void QPTranslationWidget::setTranslatorsNames(const QStringList &lst) {
 }
 
 void QPTranslationWidget::setTranslator(QPTranslator &translator) {
+    qDebug() << "Current translator: " << translator.data.name;
     mTranslator = translator.instance;
+    bool ret = mTranslator->load();
+    if(!ret) {
+        qWarning() << "Cannot load translator: " << translator.data.name;
+        return;
+    }
     mThread.setTranslator(mTranslator);
     mTable = translator.data.lang_table;
     mLanguageTableIsFlat = true;
@@ -238,7 +236,6 @@ void QPTranslationWidget::setIndexByKey(QComboBox *combobox, const QString &key)
         const QString itemtext = combobox->itemText(i);
         if(itemtext == key) {
             combobox->setCurrentIndex(i);
-            qDebug() << "FOUND KEY: " << key;
         }
     }
 }
@@ -273,14 +270,12 @@ void QPTranslationWidget::updateResultComboBox() {
 
     mResComboBox->clear();
     const QString key = mSrcComboBox->itemData(mSrcComboBox->currentIndex()).toString();
-    qDebug() << "KEY: " << key;
 
     const QStringList langs = mTable[key];
-    qDebug() << "LANGS: " << langs;
     int counter = 0;
     foreach(QString lang, langs) {
         const QString name = QP_LANGUAGE_DB->find(lang).name(mNativeNames);
-        const QIcon icon = QIcon(QString(":/flags/%1.png").arg(lang));
+        const QIcon icon = QIcon(QString(":/flags/flags/bg%1.png").arg(lang));
         if(mEnabledLanguages.contains(lang)) {
             mResComboBox->addItem(icon, name, lang);
         }

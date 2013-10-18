@@ -24,6 +24,7 @@
 #include <QLabel>
 #include <QWebView>
 #include <QStringList>
+#include <QLineEdit>
 #include "idictionarywidget.h"
 #include "idictionary.h"
 #include "threads.h"
@@ -41,11 +42,26 @@ class QStringListModel;
 class QTimer;
 class QWebView;
 class QToolBar;
-class QLineEdit;
 class DictionaryTemplate;
 
 typedef QPair<QString, QString> LanguagePair;
 typedef QList<LanguagePair> LanguagePairList;
+
+class DictionaryQueryLine : public QLineEdit {
+    Q_OBJECT
+public:
+    DictionaryQueryLine(QPDictionaryThread *thread, QWidget *parent = 0);
+
+    void setInputTimeout(int msec);
+private:
+    QTimer *mQueryTimer;
+    QCompleter *mCompleter;
+    QStringListModel *mModel;
+    QPDictionaryThread *mThread;
+signals:
+    void inputFinished(const QString &);
+    void selected(const QString &);
+};
 
 class DictionaryWidget : public QWidget, public IDictionaryWidget
 {
@@ -68,9 +84,7 @@ public slots:
     void setNativeNames(bool b);
     void setDictionaryList(QPDictionaryList dicts);
     void setMaxItems(unsigned int count);
-    void setInputTimeout(const int t) {mQueryTimer->setInterval(t);}
 private slots:
-    void setCompletions(const QStringList &comp);
     void displayData(const QStringList &lst, const QString &name);
 
     void zoomIn();
@@ -89,17 +103,14 @@ private:
     bool mIsEmpty;
 
     QToolBar *mMainToolBar;
-    QTimer *mQueryTimer;
     QComboBox *mLanguagesComboBox;
-    QLineEdit *mSrcText;
+    DictionaryQueryLine *mSrcText;
     QWebView *mResText;
     QGroupBox   *mGroupbox;
 
-    QCompleter *mCompleter;
-    QStringListModel *mCompleterModel;
 
     QPDictionaryList mDicts;
-    QPDictionaryThread mDictWorker;
+    QPDictionaryThread mDictThread;
     LanguagePairList mPairs;
     DictionaryTemplate *mTemplate;
 };

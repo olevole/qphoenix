@@ -28,7 +28,6 @@
 
 #include "mainwindow.h"
 #include "defines.h"
-
 #include "loader.h"
 #include "specparser.h"
 

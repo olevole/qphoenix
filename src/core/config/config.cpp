@@ -104,7 +104,6 @@ QWidget *Config::pageAt(int i) {
 
 
 void Config::onWidgetRemove(int idx) {
-    qDebug() << "DELETE IDX: " << idx;
     delete mPagesList[idx];
     delete mListWidget->itemAt(idx, 0);
 }

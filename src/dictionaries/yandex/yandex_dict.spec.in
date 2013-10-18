@@ -1,0 +1,19 @@
+{	"qphoenix" : {
+		"module": {
+			"type" : "dictionary",
+			"libname" : "${FULL_TARGET_NAME}",
+			"info" : {
+                                "name" : "Yandex",
+                                "version" : "${PROJECT_VERSION}",
+                                "url" : "http://api.yandex.ru/dictionary/",
+                                "description" : "Yandex dictionary support",
+                                "copyright" : "Реализовано с помощью сервиса Яндекс.Словарь"
+			},
+
+			"languages" : {
+                                "es" : ["en", "pg" ],
+                                "ru" : ["en", "fr"]
+			}
+		}
+	}
+}
