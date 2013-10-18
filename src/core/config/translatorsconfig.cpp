@@ -106,7 +106,7 @@ QPTranslator QPTranslatorsConfig::currentTranslator() {
     const int i = mTranslatorComboBox->currentIndex();
 
     if(i == -1)
-        return QPTranslator();
+        qFatal("Invalid translator index!");
 
     QPModule module = mModuleList[i];
     QPTranslator translator;
@@ -121,8 +121,7 @@ void QPTranslatorsConfig::setTranslatorIndex(int idx) {
 
 void QPTranslatorsConfig::onIndexChange(const int i) {
     emit translatorIndexChanged(i);
-    if(i == -1)
-        return;
+
 
     ITranslator *iface = qobject_cast<ITranslator *>(mModuleList[i].instance);
 

@@ -43,8 +43,8 @@
  * Paths. Do not use them! Use qt paths instead.
  * See src/main.cpp
  */
-#define QP_PLUGINS_PATH  "${PLUGINS_PATH}"
-#define QP_TRANSLATORS_PATH  "${TRANSLATORS_PATH}"
+#define QP_PLUGINS_PATH "${PLUGINS_PATH}"
+#define QP_TRANSLATORS_PATH "${TRANSLATORS_PATH}"
 #define QP_DICTIONARIES_PATH "${DICTIONARIES_PATH}"
 
 /*!

@@ -209,6 +209,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // Read configs
     updateTranslatorConfig();
     onConfigAccept();
+
+    mTranslationWidget->setTranslatorsNames(mTranslatorsConfig->getTranslatorsNames());
+
 }
 
 MainWindow::~MainWindow()
@@ -268,7 +271,6 @@ void MainWindow::onConfigAccept() {
 
     mLanguageConfig->setNativeNames(mCommonConfig->getNativeNamesEnabled());
     mTranslationWidget->setNativeNames(mCommonConfig->getNativeNamesEnabled());
-    mTranslationWidget->setTranslatorsNames(mTranslatorsConfig->getTranslatorsNames());
 
     mDictionaryWidget->setNativeNames(mCommonConfig->getNativeNamesEnabled());
     qDebug() << "DICTS COUNT: " << mDictionaryConfig->dictionaries().count();
@@ -279,8 +281,6 @@ void MainWindow::onConfigAccept() {
 
 void MainWindow::updateTranslatorConfig() {
     QPTranslator tr = mTranslatorsConfig->currentTranslator();
-    qDebug() << "Updating translator idx..." << tr.data.name;
-
     mTranslationWidget->setEnabledLanguages(mLanguageConfig->getEnabledLanguages());
     mTranslationWidget->setTranslator(tr);
 }

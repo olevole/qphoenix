@@ -37,6 +37,7 @@
 #include <QClipboard>
 #include <QLabel>
 #include <QSizePolicy>
+#include <QSettings>
 
 QPTranslationToolBar::QPTranslationToolBar(QWidget *parent)
     :QToolBar(parent),
@@ -62,6 +63,7 @@ QString QPLanguageComboBox::currentData() const {
 
 QPTranslationWidget::QPTranslationWidget(QWidget *parent) :
     QWidget(parent),
+    mSettings(new QSettings(this)),
     mTranslatorsComboBox(new QComboBox(this)),
     mMainToolBar(new QToolBar(this)),
     mSrcToolbar(new QPTranslationToolBar(this)),
@@ -96,6 +98,8 @@ QPTranslationWidget::QPTranslationWidget(QWidget *parent) :
     mMainLayout->addLayout(mButtonsLayout);
     mMainLayout->addWidget(mResText);
     setLayout(mMainLayout);
+
+    mSettings->beginGroup("TranslationWidget");
 
     mSrcComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     mResComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -215,7 +219,6 @@ void QPTranslationWidget::setTranslatorsNames(const QStringList &lst) {
 }
 
 void QPTranslationWidget::setTranslator(QPTranslator &translator) {
-    qDebug() << "Current translator: " << translator.data.name;
     mTranslator = translator.instance;
     bool ret = mTranslator->load();
     if(!ret) {
@@ -284,19 +287,13 @@ void QPTranslationWidget::updateResultComboBox() {
 }
 
 void QPTranslationWidget::saveCfg() {
-    QSettings s;
-    s.beginGroup("TranslationWidget");
-    s.setValue("SourceLanguage", mSrcComboBox->currentData());
-    s.setValue("ResultLanguage", mResComboBox->currentData());
-    s.endGroup();
+    mSettings->setValue("SourceLanguage", mSrcComboBox->currentData());
+    mSettings->setValue("ResultLanguage", mResComboBox->currentData());
 }
 
 void QPTranslationWidget::readCfg() {
-    QSettings s;
-    s.beginGroup("TranslationWidget");
-    setIndexByKey(mSrcComboBox, s.value("SourceLanguage", "").toString());
-    setIndexByKey(mResComboBox, s.value("ResultLanguage", "").toString());
-    s.endGroup();
+    setIndexByKey(mSrcComboBox, mSettings->value("SourceLanguage", "").toString());
+    setIndexByKey(mResComboBox, mSettings->value("ResultLanguage", "").toString());
 }
 
 void QPTranslationWidget::changeHandler() {

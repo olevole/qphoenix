@@ -30,7 +30,7 @@ public:
 
     /*!
      * \brief configWidget
-     * \return pointer to Translator config widget
+     * \return pointer to configuration widget
      */
     virtual QWidget *configWidget() {return NULL;}
 

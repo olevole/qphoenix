@@ -27,7 +27,6 @@
 class QObject;
 
 
-
 /*!
  * \brief The IModule class
  *

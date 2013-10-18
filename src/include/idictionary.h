@@ -32,10 +32,6 @@ class QWidget;
 class QString;
 class IDictionary;
 
-
-//typedef QPair<QString, QString> LanguagePair;
-//typedef QList<LanguagePair> LanguagePairList;
-
 class IDictionary : public IModule {
 public:
     virtual ~IDictionary(){}

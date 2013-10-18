@@ -23,7 +23,6 @@
 
 #include <QWidget>
 #include <QToolBar>
-#include <QSettings>
 #include <QComboBox>
 #include "itranslationwidget.h"
 #include "itranslator.h"
@@ -40,6 +39,7 @@ class QLabel;
 class QVBoxLayout;
 class QHBoxLayout;
 class QToolBar;
+class QSettings;
 
 class QPTranslationToolBar : public QToolBar {
 Q_OBJECT
@@ -107,6 +107,8 @@ private slots:
 
     void changeHandler();
 private:
+    QSettings *mSettings;
+
     QComboBox *mTranslatorsComboBox;
     QToolBar *mMainToolBar;
     QPTranslationToolBar *mSrcToolbar;
