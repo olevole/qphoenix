@@ -57,6 +57,7 @@ class QPLanguageComboBox : public QComboBox {
 public:
     explicit QPLanguageComboBox(QWidget *parent = 0);
     QString currentData() const;
+    void setIndexByKey(const QString &key);
 };
 
 class QPTranslationWidget : public QWidget, public ITranslationWidget
@@ -87,8 +88,6 @@ public:
     void setTranslatorsNames(const QStringList &lst);
     void setTranslator(QPTranslator &translator);
     void setEnabledLanguages(const QStringList &lst) {mEnabledLanguages = lst;}
-private:
-    void setIndexByKey(QComboBox *combobox, const QString &key);
 public slots:
     //begin of API methods
     virtual void swap();
