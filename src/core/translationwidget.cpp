@@ -278,7 +278,7 @@ void QPTranslationWidget::updateResultComboBox() {
     int counter = 0;
     foreach(QString lang, langs) {
         const QString name = QP_LANGUAGE_DB->find(lang).name(mNativeNames);
-        const QIcon icon = QIcon(QString(":/flags/flags/bg%1.png").arg(lang));
+        const QIcon icon = QIcon(QString(":/flags/flags/%1.png").arg(lang));
         if(mEnabledLanguages.contains(lang)) {
             mResComboBox->addItem(icon, name, lang);
         }
