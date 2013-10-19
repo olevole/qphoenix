@@ -31,6 +31,7 @@
 
 LanguageConfig::LanguageConfig(QWidget *parent) :
     QWidget(parent),
+    mSettings(new QSettings(this)),
     mTableWidget(new QTableWidget(this)),
     mSetButton(new QPushButton(tr("Set All"),this)),
     mUnsetButton(new QPushButton(tr("Unset All"),this))
@@ -74,19 +75,17 @@ LanguageConfig::LanguageConfig(QWidget *parent) :
     mTableWidget->resizeColumnsToContents();
     connect(mSetButton, SIGNAL(clicked()), this, SLOT(pickAll()));
     connect(mUnsetButton, SIGNAL(clicked()), this, SLOT(unpickAll()));
+
+    mSettings->beginGroup(QP_LANGUAGE_CONFIG_GROUP);
 }
 
 void LanguageConfig::save() {
-    QSettings s;
-    s.beginGroup("LanguageConfig");
-    s.setValue("EnabledLanguages", getEnabledLanguages());
-    s.endGroup();
+    mSettings->setValue("EnabledLanguages", getEnabledLanguages());
 }
 
 void LanguageConfig::read() {
-    QSettings s;
-    s.beginGroup("LanguageConfig");
-    const QStringList list = s.value("EnabledLanguages").toStringList();
+
+    const QStringList list = mSettings->value("EnabledLanguages").toStringList();
     if(list.isEmpty()) {
         pickAll();
         return;
@@ -100,7 +99,6 @@ void LanguageConfig::read() {
                 mCheckBoxList[i]->setChecked(true);
         }
     }
-    s.endGroup();
 }
 
 void LanguageConfig::reset() {

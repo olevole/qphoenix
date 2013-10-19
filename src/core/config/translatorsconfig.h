@@ -29,6 +29,8 @@
 #include "itranslator.h"
 #include "loader.h"
 
+#define QP_TRANSLATORS_CONFIG_GROUP "Translators"
+
 class QLabel;
 class QComboBox;
 class QHBoxLayout;
@@ -37,11 +39,13 @@ class QGroupBox;
 class QTabWidget;
 class QCheckBox;
 class QSpinBox;
+class QSettings;
 
 struct QPTranslator {
     ITranslator *instance;
     QPModuleData data;
 };
+
 
 class QPTranslatorsConfig : public QWidget, IConfigPage
 {
@@ -72,8 +76,8 @@ private:
     QVBoxLayout *mTab1;
     QTabWidget *mTabWidget;
 
+    QSettings *mSettings;
     QPModuleList mModuleList;
-    int mTranslatorIndex;
 signals:
     void translatorIndexChanged(int);
 };

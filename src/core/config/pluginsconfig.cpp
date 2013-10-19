@@ -32,6 +32,7 @@
 
 PluginsConfig::PluginsConfig(QWidget *parent)
     :QWidget(parent),
+      mSettings(new QSettings(this)),
       mTable(new QTableWidget(this))
 {
     QVBoxLayout *mainLayoit = new QVBoxLayout;
@@ -53,6 +54,8 @@ PluginsConfig::PluginsConfig(QWidget *parent)
     mTable->setColumnWidth(3, 70);
 
     updateTable();
+
+    mSettings->beginGroup(QP_PLUGINS_CONFIG_GROUP);
 }
 
 QPPluginList *PluginsConfig::pluginsList() {
@@ -77,20 +80,11 @@ bool PluginsConfig::isEnabled(const int index) const {
 }
 
 void PluginsConfig::save() {
-    QSettings s;
-
-    s.beginGroup("Plugins");
-    s.setValue("EnabledPlugins", enabledPluginsList());
-    s.endGroup();
+    mSettings->setValue("EnabledPlugins", enabledPluginsList());
 }
 
 void PluginsConfig::read() {
-    QSettings s;
-    QStringList enabled;
-
-    s.beginGroup("Plugins");
-    enabled = s.value("EnabledPlugins").toStringList();
-    s.endGroup();
+    QStringList enabled = mSettings->value("EnabledPlugins").toStringList();
 
     for (int i = 0; i < mTable->rowCount(); ++i) {
         bool contains = enabled.contains(mTable->itemAt(0, i)->text());

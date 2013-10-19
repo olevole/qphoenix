@@ -199,10 +199,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mSettingsDialog, SIGNAL(accepted()), this, SLOT(onConfigAccept()));
     connect(mTabWidget, SIGNAL(currentChanged(int)), this, SLOT(onIndexChange(int)));
 
-//    mTranslationWidget->setTranslatorsNames(mTranslatorsConfig->getTranslatorsNames());
     connect(mTranslatorsConfig, SIGNAL(translatorIndexChanged(int)), mTranslationWidget, SLOT(setTranslatorIndex(int)));
     connect(mTranslationWidget, SIGNAL(translatorIndexChanged(int)), mTranslatorsConfig, SLOT(setTranslatorIndex(int)));
-
     connect(mTranslationWidget, SIGNAL(translatorIndexChanged(int)), this, SLOT(updateTranslatorConfig()));
 
     readCfg();
@@ -212,6 +210,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mTranslationWidget->setTranslatorsNames(mTranslatorsConfig->getTranslatorsNames());
 
+    mTranslatorsConfig->read();
 }
 
 MainWindow::~MainWindow()
@@ -273,7 +272,6 @@ void MainWindow::onConfigAccept() {
     mTranslationWidget->setNativeNames(mCommonConfig->getNativeNamesEnabled());
 
     mDictionaryWidget->setNativeNames(mCommonConfig->getNativeNamesEnabled());
-    qDebug() << "DICTS COUNT: " << mDictionaryConfig->dictionaries().count();
     mDictionaryWidget->setDictionaryList(mDictionaryConfig->dictionaries());
 
     updateTranslatorConfig();

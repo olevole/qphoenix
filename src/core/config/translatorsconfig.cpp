@@ -42,7 +42,7 @@ QPTranslatorsConfig::QPTranslatorsConfig(QWidget *parent) :
     mOptionsLayout(new QHBoxLayout),
     mTab1(new QVBoxLayout),
     mTabWidget(new QTabWidget(this)),
-    mTranslatorIndex(0)
+    mSettings(new QSettings(this))
 {
     mTranslatorComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     mTranslatorLayout->addWidget(mTranslatorLabel);
@@ -72,24 +72,18 @@ QPTranslatorsConfig::QPTranslatorsConfig(QWidget *parent) :
 
     connect(mTranslatorComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onIndexChange(int)));
 
-//TODO:
+    mSettings->beginGroup(QP_TRANSLATORS_CONFIG_GROUP);
 }
 
 QPTranslatorsConfig::~QPTranslatorsConfig() {
 }
 
 void QPTranslatorsConfig::save() {
-    QSettings s;
-    s.beginGroup("Translators");
-    s.setValue("CurrentTranslator", mTranslatorComboBox->currentIndex());
-    s.endGroup();
+    mSettings->setValue("CurrentTranslator", mTranslatorComboBox->currentIndex());
 }
 
 void QPTranslatorsConfig::read() {
-    QSettings s;
-    s.beginGroup("Translators");
-    mTranslatorIndex = s.value("CurrentTranslator", 0).toInt();
-    s.endGroup();
+    mTranslatorComboBox->setCurrentIndex(mSettings->value("CurrentTranslator", 0).toInt());
 }
 
 void QPTranslatorsConfig::reset() {

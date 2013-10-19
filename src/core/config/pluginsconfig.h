@@ -28,9 +28,12 @@
 #include <QList>
 #include <QCheckBox>
 
+#define QP_PLUGINS_CONFIG_GROUP "Plugins"
+
 class QTableWidget;
 class QHBoxLayout;
 class QPushButton;
+class QSettings;
 
 struct QPPlugin {
     IPlugin *instance;
@@ -56,6 +59,7 @@ public:
 protected:
     void updateTable();
 private:
+    QSettings *mSettings;
     QTableWidget *mTable;
     QPPluginList mPlugins;
     QList<QCheckBox *>mCheckboxList;

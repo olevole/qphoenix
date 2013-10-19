@@ -27,8 +27,11 @@
 #include "iconfigpage.h"
 #include "languages.h"
 
+#define QP_LANGUAGE_CONFIG_GROUP "Languages"
+
 class QPushButton;
 class QCheckBox;
+class QSettings;
 
 class LanguageConfig : public QWidget, IConfigPage
 {
@@ -47,6 +50,7 @@ private slots:
     void pickAll();
     void unpickAll();
 private:
+    QSettings *mSettings;
     bool mNativeNames;
     QList <QCheckBox *> mCheckBoxList;
     LanguageList mLangList;
