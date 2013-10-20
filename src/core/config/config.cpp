@@ -34,6 +34,7 @@
 
 Config::Config(QWidget *parent) :
     QDialog(parent),
+    mSettings(new QSettings(this)),
     mMainLayout(new QVBoxLayout),
     mHorizontalLayout(new QHBoxLayout),
     mBottomLayout(new QHBoxLayout),
@@ -72,6 +73,8 @@ Config::Config(QWidget *parent) :
     connect(mButtons, SIGNAL(clicked(QDialogButtonBox::Apply)), this, SLOT(save()));
     connect(mStackedLayout, SIGNAL(widgetRemoved(int)), this, SLOT(onWidgetRemove(int)));
 
+
+    mSettings->beginGroup(QP_CONFIG_DIALOG_CONFIG_GROUP);
     read();
 }
 
@@ -109,10 +112,7 @@ void Config::onWidgetRemove(int idx) {
 }
 
 void Config::save() {
-    QSettings s;
-    s.beginGroup("ConfigDialog");
-    s.setValue("Geometry", saveGeometry());
-    s.endGroup();
+    mSettings->setValue("Geometry", saveGeometry());
 
     foreach (IConfigPage *i, mPagesList)
         i->save();
@@ -120,10 +120,8 @@ void Config::save() {
 }
 
 void Config::read() {
-    QSettings s;
-    s.beginGroup("ConfigDialog");
-    restoreGeometry(s.value("Geometry").toByteArray());
-    s.endGroup();
+
+    restoreGeometry(mSettings->value("Geometry").toByteArray());
 
     foreach(IConfigPage *i, mPagesList)
         i->read();

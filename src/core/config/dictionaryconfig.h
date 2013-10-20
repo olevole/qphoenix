@@ -27,12 +27,14 @@
 #include <QList>
 
 #define QP_DEFAULT_RESULT_COUNT 15
+#define QP_DICTIONARY_CONFIG_GROUP "Dictionaries"
 
 class QTableWidget;
 class QTabWidget;
 class QCheckBox;
 class QSpinBox;
 class QLabel;
+class QSettings;
 
 struct QPDictionary {
     IDictionary *instance;
@@ -55,6 +57,7 @@ public:
     QPDictionaryList dictionaries();
     unsigned int maxResults();
 private:
+    QSettings *mSettings;
     QPModuleList mDictionaries;
     QPDictionaryList mConvertedDicts;
     QTableWidget *mTable;

@@ -76,6 +76,7 @@ QString MainWindow::mAboutStr = "Trasnaltor and dictionary with plugins support.
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
+    mSettings(new QSettings(this)),
     mSavePath(""),
     mStatusBar(new QStatusBar(this)),
     mToolBar(new QToolBar(this)),
@@ -203,6 +204,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mTranslationWidget, SIGNAL(translatorIndexChanged(int)), mTranslatorsConfig, SLOT(setTranslatorIndex(int)));
     connect(mTranslationWidget, SIGNAL(translatorIndexChanged(int)), this, SLOT(updateTranslatorConfig()));
 
+
+    mSettings->beginGroup(QP_MAINWINDOW_CONFIG_GROUP);
+
     readCfg();
     // Read configs
     updateTranslatorConfig();
@@ -289,19 +293,13 @@ void MainWindow::onIndexChange(const int i) {
 }
 
 void MainWindow::readCfg() {
-    QSettings s;
-    s.beginGroup("MainWindow");
-    this->setCurrentIndex(s.value("TabIndex", 0).toInt());
-    this->restoreGeometry(s.value("Geometry").toByteArray());
-    s.endGroup();
+    setCurrentIndex(mSettings->value("TabIndex", 0).toInt());
+    restoreGeometry(mSettings->value("Geometry").toByteArray());
 }
 
 void MainWindow::saveCfg() {
-    QSettings s;
-    s.beginGroup("MainWindow");
-    s.setValue("TabIndex", mTabWidget->currentIndex());
-    s.setValue("Geometry", saveGeometry());
-    s.endGroup();
+    mSettings->setValue("TabIndex", mTabWidget->currentIndex());
+    mSettings->setValue("Geometry", saveGeometry());
 }
 
 //----------------------------------------------------------------------------------------------

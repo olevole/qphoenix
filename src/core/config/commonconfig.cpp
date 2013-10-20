@@ -29,23 +29,21 @@
 
 CommonConfig::CommonConfig(QWidget *parent) :
     QWidget(parent),
+    mSettings(new QSettings(this)),
     mTabWidget(new QTabWidget(this))
 {
     createLanguagePage();
     createNetworkPage();
+
+    mSettings->beginGroup(QP_COMMON_CONFIG_GROUP);
 }
 
 void CommonConfig::save() {
-    QSettings s;
-    s.beginGroup("Common");
-    s.setValue("UseNativeNames", mUseNativeCheckbox->isChecked());
-
+    mSettings->setValue("UseNativeNames", mUseNativeCheckbox->isChecked());
 }
 
 void CommonConfig::read() {
-    QSettings s;
-    s.beginGroup("Common");
-    mUseNativeCheckbox->setChecked(s.value("UseNativeNames", false).toBool());
+    mUseNativeCheckbox->setChecked(mSettings->value("UseNativeNames", false).toBool());
 }
 
 void CommonConfig::reset() {

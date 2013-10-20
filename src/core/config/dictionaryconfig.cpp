@@ -32,6 +32,7 @@
 
 DictionaryConfig::DictionaryConfig(QWidget *parent)
     :QWidget(parent),
+      mSettings(new QSettings(this)),
       mTable(new QTableWidget(this)),
       mTabWidget(new QTabWidget(this)),
       mResultCountSpin(new QSpinBox(this)),
@@ -95,21 +96,17 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
         mTable->setCellWidget(i, 3, checkbox);
     }
     mTable->resizeColumnsToContents();
+
+    mSettings->beginGroup(QP_DICTIONARY_CONFIG_GROUP);
 }
 
 void DictionaryConfig::save() {
-    QSettings s;
-    s.beginGroup("Dictionaries");
-    s.setValue("MaxResults", mResultCountSpin->value());
-    s.endGroup();
+    mSettings->setValue("MaxResults", mResultCountSpin->value());
 }
 
 void DictionaryConfig::read() {
-    QSettings s;
-    s.beginGroup("Dictionaries");
-    const int index = s.value("MaxResults", QP_DEFAULT_RESULT_COUNT).toInt();
+    const int index = mSettings->value("MaxResults", QP_DEFAULT_RESULT_COUNT).toInt();
     mResultCountSpin->setValue(index);
-    s.endGroup();
 }
 
 void DictionaryConfig::reset() {

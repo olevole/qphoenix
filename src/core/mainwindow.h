@@ -29,6 +29,8 @@
 #include "dictionarywidget.h"
 #include "translationwidget.h"
 
+#define QP_MAINWINDOW_CONFIG_GROUP "MainWindow"
+
 class QStatusBar;
 class QToolBar;
 class QMenuBar;
@@ -38,6 +40,7 @@ class QClipboard;
 class QTabWidget;
 class QTimer;
 class QCloseEvent;
+class QSettings;
 
 class Config;
 class PluginsConfig;
@@ -45,6 +48,7 @@ class QPTranslatorsConfig;
 class LanguageConfig;
 class DictionaryConfig;
 class CommonConfig;
+
 
 class MainWindow : public  QMainWindow, public IMainWindow
 {
@@ -94,6 +98,7 @@ private slots:
 //    void swap();
     void about();
 private:
+    QSettings *mSettings;
     QString mSavePath;
 
     QStatusBar  *mStatusBar;

@@ -32,7 +32,9 @@ class QHBoxLayout;
 class QGroupBox;
 class QTreeWidgetItem;
 class QPushButton;
+class QSettings;
 
+#define QP_CONFIG_DIALOG_CONFIG_GROUP "ConfigDialog"
 #define QP_CONFIG_DIALOG_DEFAULT_WIDTH 800
 #define QP_CONFIG_DIALOG_DEFAULT_HEIGH 600
 
@@ -51,6 +53,7 @@ public:
 private:
     QList<IConfigPage *> mPagesList;
 
+    QSettings *mSettings;
     QVBoxLayout *mMainLayout;
     QHBoxLayout *mHorizontalLayout;
     QHBoxLayout *mBottomLayout;

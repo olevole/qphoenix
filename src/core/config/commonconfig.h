@@ -28,6 +28,11 @@ class QTabWidget;
 class QCheckBox;
 class QLabel;
 class QComboBox;
+class QSettings;
+
+
+#define QP_COMMON_CONFIG_GROUP "Common"
+
 
 class CommonConfig : public QWidget, public IConfigPage
 {
@@ -45,6 +50,7 @@ private:
     void createLanguagePage();
     void createNetworkPage();
 private:
+    QSettings *mSettings;
     QTabWidget *mTabWidget;
 
     QCheckBox *mUseNativeCheckbox;
