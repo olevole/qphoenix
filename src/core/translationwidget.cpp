@@ -117,7 +117,7 @@ QPTranslationWidget::QPTranslationWidget(QWidget *parent) :
     connect(mTranslatorsComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateComboxes()));
 
     connect(mSwapButton, SIGNAL(clicked()), this, SLOT(swap()));
-    connect(mSrcToolbar, SIGNAL(copyRequest()), this, SLOT(copySourceText()()));
+    connect(mSrcToolbar, SIGNAL(copyRequest()), this, SLOT(copySourceText()));
     connect(mResToolbar, SIGNAL(copyRequest()), this, SLOT(copyResultText()));
     connect(mTranslateButton, SIGNAL(clicked()), this, SLOT(translate()));
     connect(mResText, SIGNAL(textChanged()), this, SIGNAL(finished()));

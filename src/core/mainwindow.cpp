@@ -325,6 +325,7 @@ void MainWindow::print() {
     QString text;
     QPainter painter;
     painter.begin(&printer);
+    painter.drawLine(0, 0, 800, 0);
 
     switch(i){
     case 0:
@@ -366,7 +367,7 @@ void MainWindow::save() {
 }
 
 void MainWindow::saveAs() {
-    mSavePath = "";
+    mSavePath.clear();
     save();
 }
 
@@ -384,13 +385,22 @@ void MainWindow::clear() {
         break;
         case 1:
             mDictionaryWidget->clearSourceText();
+            mDictionaryWidget->clearResultText();
         break;
     }
 }
 
 void MainWindow::undo() {
-    mTabWidget->currentIndex() == 0 ? mTranslationWidget->undo()
-                        : mDictionaryWidget->undo();
+    switch (mTabWidget->currentIndex()) {
+    case 0:
+        mTranslationWidget->undo();
+        break;
+    case 1:
+        mDictionaryWidget->undo();
+        break;
+    default:
+        break;
+    }
 }
 
 void MainWindow::redo() {

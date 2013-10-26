@@ -23,7 +23,7 @@
 
 QPDictionaryThread::QPDictionaryThread()
 {
-    connect(this, SIGNAL(reply(DictionaryVariantList)), this, SLOT(quit()));
+    connect(this, SIGNAL(reply(QStringList, QString)), this, SLOT(quit()));
     connect(this, SIGNAL(reply(QStringList)), this, SLOT(quit()));
     mCompletions = false;
 }

@@ -25,6 +25,7 @@
 #include <QWebView>
 #include <QStringList>
 #include <QLineEdit>
+#include <QTimer>
 #include "idictionarywidget.h"
 #include "idictionary.h"
 #include "threads.h"
@@ -42,26 +43,12 @@ class QStringListModel;
 class QTimer;
 class QWebView;
 class QToolBar;
+
 class DictionaryTemplate;
 
 typedef QPair<QString, QString> LanguagePair;
 typedef QList<LanguagePair> LanguagePairList;
 
-class DictionaryQueryLine : public QLineEdit {
-    Q_OBJECT
-public:
-    DictionaryQueryLine(QPDictionaryThread *thread, QWidget *parent = 0);
-
-    void setInputTimeout(int msec);
-private:
-    QTimer *mQueryTimer;
-    QCompleter *mCompleter;
-    QStringListModel *mModel;
-    QPDictionaryThread *mThread;
-signals:
-    void inputFinished(const QString &);
-    void selected(const QString &);
-};
 
 class DictionaryWidget : public QWidget, public IDictionaryWidget
 {
@@ -69,48 +56,66 @@ class DictionaryWidget : public QWidget, public IDictionaryWidget
 public:
     explicit DictionaryWidget(QWidget *parent = 0);
 
+    //!! API METHODS!!
+    virtual QString getSourceLanguageCode() const;
+    virtual QString getResultLanguageCode() const;
 
     virtual QString getSourceText() const;
     virtual QString getResultText() const;
 
     virtual void clearSourceText();
     virtual void clearResultText();
+    //!! END API METHODS!!
 
     QToolBar    *getToolBar() {return mMainToolBar;}
 public slots:
+    //!! API METHODS!!
     virtual void undo();
     virtual void redo();
+    //!! END API METHODS!!
 
     void setNativeNames(bool b);
     void setDictionaryList(QPDictionaryList dicts);
     void setMaxItems(unsigned int count);
 private slots:
-    void displayData(const QStringList &lst, const QString &name);
+    void showData(const QStringList &lst, const QString &name);
+    void showCompletions(const QStringList &comp);
 
     void zoomIn();
     void zoomOut();
     void setLanguagePairs(const LanguagePairList &lst);
-    void onQueryComp();
-    void onQueryWord();
-    void onFinish();
+
+    void requestCompletions();
+    void requestData(const QString &word);
+    void requestData();
+    void finish();
 signals:
+    //!!API METHODS!!
     void started();
     void finished();
+    //!! END API METHODS!!
 private:
+    enum State {Idle = 0, WaitingCompletions, WaitingResponse};
+
+    State mState;
+
     int mMaxItemCount;
     bool mNativeNames;
-    bool mLock;
     bool mIsEmpty;
+
+    QTimer mTimer;
 
     QToolBar *mMainToolBar;
     QComboBox *mLanguagesComboBox;
-    DictionaryQueryLine *mSrcText;
+
+    QCompleter *mCompleter;
+    QLineEdit *mSrcText;
+
     QWebView *mResText;
     QGroupBox   *mGroupbox;
 
-
     QPDictionaryList mDicts;
-    QPDictionaryThread mDictThread;
+    QPDictionaryThread mThread;
     LanguagePairList mPairs;
     DictionaryTemplate *mTemplate;
 };

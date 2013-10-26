@@ -44,26 +44,17 @@
 #include "defines.h"
 #include "languages.h"
 
-DictionaryQueryLine::DictionaryQueryLine(QPDictionaryThread *thread, QWidget *parent)
-    : QLineEdit(parent),
-      mQueryTimer(new QTimer(this)),
-      mCompleter(new QCompleter(this)),
-      mModel(new QStringListModel(this)),
-      mThread(thread)
-{
-    mModel->setStringList(QStringList() << "a" << "b" << "foo" << "bar");
-    mCompleter->setModel(mModel);
-    setCompleter(mCompleter);
-    setPlaceholderText(tr("Input text..."));
-}
+
 
 DictionaryWidget::DictionaryWidget(QWidget *parent) :
     QWidget(parent),
-    mLock(false),
+    mState(Idle),
+
     mIsEmpty(true),
     mMainToolBar(new QToolBar(this)),
     mLanguagesComboBox(new QComboBox(this)),
-    mSrcText(new DictionaryQueryLine(&mDictThread, this)),
+    mCompleter(new QCompleter(this)),
+    mSrcText(new QLineEdit(this)),
     mResText(new QWebView(this)),
     mTemplate(new DictionaryTemplate(this))
 {
@@ -94,17 +85,39 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
     mMainToolBar->addAction(aZoomOut);
     mMainToolBar->addAction(aZoomIn);
 
-    connect(&mDictThread, SIGNAL(reply(QStringList, QString)), this, SLOT(displayData(QStringList,QString)));
-    connect(&mDictThread, SIGNAL(reply(QStringList)), this, SLOT(setCompletions(QStringList)));
-    connect(&mDictThread, SIGNAL(finished()), this, SLOT(onFinish()));
+    mSrcText->setCompleter(mCompleter);
+
+
+    connect(mSrcText, SIGNAL(textChanged(QString)), &mTimer, SLOT(start()));
+    connect(&mTimer, SIGNAL(timeout()), this, SLOT(requestCompletions()));
+
+    connect(mCompleter, SIGNAL(activated(QString)), this, SLOT(requestData(QString)));
+    connect(mSrcText, SIGNAL(returnPressed()), this, SLOT(requestData()));
+
+
+    connect(&mThread, SIGNAL(reply(QStringList)), this, SLOT(showCompletions(QStringList)));
+    connect(&mThread, SIGNAL(reply(QStringList,QString)), this, SLOT(showData(QStringList,QString)));
+    connect(&mThread, SIGNAL(finished()), this, SLOT(finish()));
+
 
     connect(aZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
     connect(aZoomIn, SIGNAL(triggered()), this, SLOT(zoomIn()));
 
-    mDictThread.setTimeout(QP_DICTIONARY_TIMEOUT);
+    mTimer.setInterval(3000);
+    mTimer.setSingleShot(true);
+    mThread.setTimeout(QP_DICTIONARY_TIMEOUT);
 }
 
 // API Methods
+
+QString DictionaryWidget::getSourceLanguageCode() const {
+    return mPairs.at(mLanguagesComboBox->currentIndex()).first;
+}
+
+QString DictionaryWidget::getResultLanguageCode() const {
+    return mPairs.at(mLanguagesComboBox->currentIndex()).second;
+}
+
 QString DictionaryWidget::getSourceText() const {
     return mSrcText->text();
 }
@@ -132,11 +145,22 @@ void DictionaryWidget::redo() {
 // End of API methods
 
 
-void DictionaryWidget::displayData(const QStringList &lst, const QString &name) {
-    if(!lst.isEmpty()) {
+void DictionaryWidget::showData(const QStringList &lst, const QString &name) {
+    qDebug() << "Data response received!";
+    if(!lst.isEmpty() && mState == WaitingResponse) {
         mIsEmpty = false;
         mTemplate->createSection(lst, name);
         mResText->setHtml(mTemplate->toHtml());
+    }
+}
+
+void DictionaryWidget::showCompletions(const QStringList &comp) {
+    qDebug() << "Completions response received!";
+    if(mState == WaitingCompletions) {
+        mTimer.stop();
+        mCompleter->setModel(new QStringListModel(comp));
+        mCompleter->complete();
+//        mState = Idle;
     }
 }
 
@@ -158,7 +182,7 @@ void DictionaryWidget::setDictionaryList(QPDictionaryList dicts) {
     }
 
     mDicts = dicts;
-    mDictThread.setDictionaryList(mDicts);
+    mThread.setDictionaryList(mDicts);
     foreach(QPDictionary dict, dicts) {
         LanguageTable table = dict.data.lang_table;
         foreach(QString key, table.keys()) {
@@ -198,26 +222,35 @@ void DictionaryWidget::setLanguagePairs(const LanguagePairList &lst) {
     }
 }
 
-void DictionaryWidget::onQueryComp() {
-    if(!mLock)
-        mDictThread.queryCompletions(mPairs.at(mLanguagesComboBox->currentIndex()).first,
-                                     mPairs.at(mLanguagesComboBox->currentIndex()).second,
-                                     mSrcText->text());
+void DictionaryWidget::requestCompletions() {
+    if(mState == Idle) {
+        mState = WaitingCompletions;
+        mThread.queryCompletions(getSourceLanguageCode(), getResultLanguageCode(), mSrcText->text());
+    }
 }
 
-void DictionaryWidget::onQueryWord() {
-    mIsEmpty = true;
-    mLock = true;
-    mDictThread.query(mPairs.at(mLanguagesComboBox->currentIndex()).first,
-                      mPairs.at(mLanguagesComboBox->currentIndex()).second,
-                      mSrcText->text());
+void DictionaryWidget::requestData(const QString &word) {
+    if(mState == Idle || mState == WaitingCompletions) {
+        mTimer.stop();
+        mState = WaitingResponse;
+        mThread.query(getSourceLanguageCode(), getResultLanguageCode(), word);
+    }
 }
 
-void DictionaryWidget::onFinish() {
-    mLock = false;
+void DictionaryWidget::requestData() {
+    const QString text = mSrcText->text();
+    requestData(text);
+}
+
+void DictionaryWidget::finish() {
+    mState = Idle;
+    mTemplate->clear();
+    mThread.quit();
+
     if(mIsEmpty) {
         mResText->setHtml(DictionaryTemplate::NotFound());
         mResText->update();
     }
-    mTemplate->clear();
 }
+
+

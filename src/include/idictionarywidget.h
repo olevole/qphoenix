@@ -30,8 +30,8 @@ class IDictionaryWidget {
 public:
     virtual ~IDictionaryWidget() {}
 
-//    virtual QString getSourceLanguageCode() const = 0;
-//    virtual QString getResultLanguageCode() const = 0;
+    virtual QString getSourceLanguageCode() const = 0;
+    virtual QString getResultLanguageCode() const = 0;
     virtual QString getSourceText() const = 0;
     virtual QString getResultText() const = 0;
 
