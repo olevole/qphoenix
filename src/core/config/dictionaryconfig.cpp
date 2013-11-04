@@ -93,6 +93,7 @@ DictionaryConfig::DictionaryConfig(QWidget *parent)
         }
         QCheckBox *checkbox = new QCheckBox(this);
         mCheckBoxList << checkbox;
+        checkbox->setChecked(true);
         mTable->setCellWidget(i, 3, checkbox);
     }
     mTable->resizeColumnsToContents();
@@ -114,7 +115,13 @@ void DictionaryConfig::reset() {
 }
 
 QPDictionaryList DictionaryConfig::dictionaries() {
-    return mConvertedDicts;
+    QPDictionaryList enabled;
+    for (int i = 0; i < mConvertedDicts.count(); ++i) {
+        if(mCheckBoxList.at(i)->isChecked())
+            enabled.append(mConvertedDicts.at(i));
+    }
+    return enabled;
+//    return mConvertedDicts;
 }
 
 unsigned int DictionaryConfig::maxResults() {

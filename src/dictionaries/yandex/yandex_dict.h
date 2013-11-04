@@ -1,4 +1,4 @@
-frie/*
+/*
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation; either version 2 of the License, or
@@ -44,10 +44,7 @@ public:
     bool unload() {return true;}
     bool isLoaded() const {return true;}
 
-    bool isSupportCompletions() {return true;}
+    bool isSupportCompletions() {return false;}
 private:
     static QString mApiKey;
-    static QString mApiVer;
-
-    QJsonDocument queryData(const QString &str, const QString &src_lang, const QString &dest_lang) const;
 };

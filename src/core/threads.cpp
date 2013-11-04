@@ -38,10 +38,11 @@ void QPDictionaryThread::run() {
             if(dict.instance->isSupportCompletions())
                 comp += dict.instance->completions(mQuery, mSrcLang, mDestLang);
         qDebug() << "Completions: " << comp;
-        if(comp.count() > 1) {
+//        if(comp.count() > 1) {
+            comp.removeDuplicates();
             emit reply(comp);
             return;
-        }
+//        }
     }
     foreach(QPDictionary dict, mDictList)
        emit reply(dict.instance->query(mQuery, mSrcLang, mDestLang), dict.data.name);
@@ -51,6 +52,7 @@ void QPDictionaryThread::run() {
 
 void QPDictionaryThread::query(const QString &src_lang, const QString &dest_lang, const QString &query)
 {
+    qDebug() << "thread: request word: " << query;
     mCompletions = false;
     mSrcLang = src_lang;
     mDestLang = dest_lang;

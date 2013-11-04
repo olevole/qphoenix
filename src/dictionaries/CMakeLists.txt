@@ -1,2 +1,2 @@
 add_subdirectory(wordreference)
-#add_subdirectory(yandex)
+add_subdirectory(yandex)

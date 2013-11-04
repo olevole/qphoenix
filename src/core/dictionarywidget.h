@@ -94,6 +94,8 @@ signals:
     void started();
     void finished();
     //!! END API METHODS!!
+
+    void message(const QString &msg);
 private:
     enum State {Idle = 0, WaitingCompletions, WaitingResponse};
 

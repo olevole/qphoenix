@@ -69,7 +69,7 @@ public:
 public slots:
     //Begin API methods
     virtual void setCurrentIndex(int i);
-    virtual void setStatusBarMessage(const QString &msg, int timeout);
+    virtual void setStatusBarMessage(const QString &msg, int timeout = 0);
     //End API methods
 private slots:
 

@@ -87,23 +87,20 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) :
 
     mSrcText->setCompleter(mCompleter);
 
-
     connect(mSrcText, SIGNAL(textChanged(QString)), &mTimer, SLOT(start()));
     connect(&mTimer, SIGNAL(timeout()), this, SLOT(requestCompletions()));
 
     connect(mCompleter, SIGNAL(activated(QString)), this, SLOT(requestData(QString)));
     connect(mSrcText, SIGNAL(returnPressed()), this, SLOT(requestData()));
 
-
     connect(&mThread, SIGNAL(reply(QStringList)), this, SLOT(showCompletions(QStringList)));
     connect(&mThread, SIGNAL(reply(QStringList,QString)), this, SLOT(showData(QStringList,QString)));
     connect(&mThread, SIGNAL(finished()), this, SLOT(finish()));
 
-
     connect(aZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
     connect(aZoomIn, SIGNAL(triggered()), this, SLOT(zoomIn()));
 
-    mTimer.setInterval(3000);
+    mTimer.setInterval(1000);
     mTimer.setSingleShot(true);
     mThread.setTimeout(QP_DICTIONARY_TIMEOUT);
 }
@@ -146,7 +143,6 @@ void DictionaryWidget::redo() {
 
 
 void DictionaryWidget::showData(const QStringList &lst, const QString &name) {
-    qDebug() << "Data response received!";
     if(!lst.isEmpty() && mState == WaitingResponse) {
         mIsEmpty = false;
         mTemplate->createSection(lst, name);
@@ -155,12 +151,15 @@ void DictionaryWidget::showData(const QStringList &lst, const QString &name) {
 }
 
 void DictionaryWidget::showCompletions(const QStringList &comp) {
-    qDebug() << "Completions response received!";
+    qDebug() << Q_FUNC_INFO;
     if(mState == WaitingCompletions) {
         mTimer.stop();
-        mCompleter->setModel(new QStringListModel(comp));
-        mCompleter->complete();
-//        mState = Idle;
+        if(comp.size() <= 1) {
+            requestData();
+        } else {
+            mCompleter->setModel(new QStringListModel(comp));
+            mCompleter->complete();
+        }
     }
 }
 
@@ -175,11 +174,9 @@ void DictionaryWidget::setMaxItems(unsigned int count) {
 void DictionaryWidget::setDictionaryList(QPDictionaryList dicts) {
     LanguagePairList list;
 
-    if(dicts.isEmpty()) {
-        mSrcText->setDisabled(true);
-        qWarning() << "Warning! Dictionaries is empty!";
+    mSrcText->setDisabled(dicts.isEmpty());
+    if(dicts.isEmpty())
         return;
-    }
 
     mDicts = dicts;
     mThread.setDictionaryList(mDicts);
@@ -188,8 +185,12 @@ void DictionaryWidget::setDictionaryList(QPDictionaryList dicts) {
         foreach(QString key, table.keys()) {
             const QStringList values = table[key];
             foreach(QString value, values) {
-                list << LanguagePair(key, value);
-                list << LanguagePair(value, key);
+                LanguagePair pair1(key, value);
+                LanguagePair pair2(value, key);
+                if(!list.contains(pair1))
+                    list << pair1;
+                if(!list.contains(pair2))
+                    list << pair2;
             }
         }
     }
@@ -206,6 +207,7 @@ void DictionaryWidget::zoomOut() {
 }
 
 void DictionaryWidget::setLanguagePairs(const LanguagePairList &lst) {
+    qDebug() << Q_FUNC_INFO;
     mLanguagesComboBox->clear();
     foreach(LanguagePair pair, lst) {
         QString first, second;
@@ -238,11 +240,13 @@ void DictionaryWidget::requestData(const QString &word) {
 }
 
 void DictionaryWidget::requestData() {
-    const QString text = mSrcText->text();
-    requestData(text);
+    requestData(mSrcText->text());
 }
 
 void DictionaryWidget::finish() {
+    if(mState != WaitingResponse)
+        return;
+
     mState = Idle;
     mTemplate->clear();
     mThread.quit();

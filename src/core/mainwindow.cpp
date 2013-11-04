@@ -204,6 +204,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mTranslationWidget, SIGNAL(translatorIndexChanged(int)), mTranslatorsConfig, SLOT(setTranslatorIndex(int)));
     connect(mTranslationWidget, SIGNAL(translatorIndexChanged(int)), this, SLOT(updateTranslatorConfig()));
 
+    connect(mTranslationWidget, SIGNAL(message(QString)), this, SLOT(setStatusBarMessage(QString)));
+    connect(mDictionaryWidget, SIGNAL(message(QString)), this, SLOT(setStatusBarMessage(QString)));
+
 
     mSettings->beginGroup(QP_MAINWINDOW_CONFIG_GROUP);
 

@@ -214,6 +214,7 @@ void QPTranslationWidget::copyResultText() {
 
 void QPTranslationWidget::translate() {
     emit started();
+    emit message(tr("Translating...."));
     const QString src_text = mSrcText->toPlainText();
     mThread.query(mSrcComboBox->currentData(), mResComboBox->currentData(), src_text);
 

@@ -44,10 +44,12 @@ public:
     bool unload() {return true;}
     bool isLoaded() const {return true;}
 
-    bool isSupportCompletions() {return true;}
+    bool isSupportCompletions() {return false;}
 private:
     static QString mApiKey;
     static QString mApiVer;
 
+
+    QString parseVariant(QJsonObject obj) const;
     QJsonDocument queryData(const QString &str, const QString &src_lang, const QString &dest_lang) const;
 };

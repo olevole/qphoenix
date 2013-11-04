@@ -1,4 +1,4 @@
-/*
+ /*
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation; either version 2 of the License, or
@@ -41,7 +41,7 @@ Speech::Speech(QObject *parent) :
 bool Speech::load() {
     if(!isLoaded()) {
         mSpeechSourceAction = new QAction(QIcon(":icons/media-playback-start.png"), "Say it!", 0);
-        mSpeechResultAction = new QAction(QIcon(":icons/media-playback-start.png"),"Say it!", 0);
+        mSpeechResultAction = new QAction(QIcon(":icons/media-playback-start.png"), "Say it!", 0);
 
         mPlayer = new QMediaPlayer;
         mTranslatorIface->addToolbarAction(mSpeechSourceAction, ITranslationWidget::SourceTextToolbar);

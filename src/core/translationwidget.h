@@ -134,4 +134,7 @@ signals:
     //end of API methods
 
     void translatorIndexChanged(int);
+
+    void message(const QString &msg);
+
 };

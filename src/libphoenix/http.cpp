@@ -25,6 +25,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+#include <QDebug>
 
 HTTP::HTTP(QObject *parent) :
     QObject(parent)
@@ -39,11 +40,15 @@ QByteArray HTTP::GET(QUrl req){
     QNetworkReply *reply  = mManager.get(QNetworkRequest(req));
 
     loop.exec();
+
+//    qDebug() << "HTTP GET REPLY DATA: " << reply->readAll();
+//    qDebug() << "HTTP GET ERROR STRING: " << reply->errorString();
+//    qDebug() << "HTTP GET ERROR CODE: " << reply->error();
+
     return reply->readAll();
 }
 
 QByteArray HTTP::POST(const QUrl &url, const QString &data) {
-    QByteArray _data = data.toUtf8();
     QNetworkAccessManager mManager;
     QEventLoop loop;
 
@@ -53,7 +58,7 @@ QByteArray HTTP::POST(const QUrl &url, const QString &data) {
     req.setRawHeader("Content-Length", QByteArray::number(data.size()));
 
     QObject::connect(&mManager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
-    QNetworkReply *reply  = mManager.post(req, _data);
+    QNetworkReply *reply  = mManager.post(req, data.toUtf8());
 
     loop.exec();
     return reply->readAll();

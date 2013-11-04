@@ -22,6 +22,7 @@
 #pragma once
 
 #include <QObject>
+#include <QMutex>
 
 
 class MainWindow;
@@ -33,18 +34,23 @@ class Core : public QObject
 {
     Q_OBJECT
 public:
-    Core(MainWindow *mw, QObject *parent = 0);
-    QPDictionaryThread *dictionaryWorker();
-    QPTranslatorThread *translatorWorker();
-    
-signals:
-    
-public slots:
+    static  Core* instance()
+    {
+        static QMutex mutex;
+        static Core *singleton = 0;
+
+        if(!singleton) {
+            mutex.lock();
+            singleton =  new Core;
+            mutex.unlock();
+        }
+        return singleton;
+    }
+
 private:
-    Core(QObject *parent = 0);
     Core();
-    MainWindow *mMainWindow;
-    
+    Core(const Core&);
+    Core& operator=(const Core&);
 };
 
 
