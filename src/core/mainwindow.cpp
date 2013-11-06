@@ -259,8 +259,6 @@ void MainWindow::onConfigAccept() {
 
     QPPluginList *lst = mPluginsConfig->pluginsList();
 
-    qDebug() << "Plugins Count: " <<  lst->size();
-
     for(int i = 0; i < lst->count(); i++) {
 
         QPPlugin plugin = lst->at(i);

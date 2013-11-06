@@ -41,10 +41,6 @@ QByteArray HTTP::GET(QUrl req){
 
     loop.exec();
 
-//    qDebug() << "HTTP GET REPLY DATA: " << reply->readAll();
-//    qDebug() << "HTTP GET ERROR STRING: " << reply->errorString();
-//    qDebug() << "HTTP GET ERROR CODE: " << reply->error();
-
     return reply->readAll();
 }
 
@@ -61,5 +57,6 @@ QByteArray HTTP::POST(const QUrl &url, const QString &data) {
     QNetworkReply *reply  = mManager.post(req, data.toUtf8());
 
     loop.exec();
+
     return reply->readAll();
 }

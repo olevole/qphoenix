@@ -151,7 +151,6 @@ void DictionaryWidget::showData(const QStringList &lst, const QString &name) {
 }
 
 void DictionaryWidget::showCompletions(const QStringList &comp) {
-    qDebug() << Q_FUNC_INFO;
     if(mState == WaitingCompletions) {
         mTimer.stop();
         if(comp.size() <= 1) {
@@ -207,7 +206,6 @@ void DictionaryWidget::zoomOut() {
 }
 
 void DictionaryWidget::setLanguagePairs(const LanguagePairList &lst) {
-    qDebug() << Q_FUNC_INFO;
     mLanguagesComboBox->clear();
     foreach(LanguagePair pair, lst) {
         QString first, second;

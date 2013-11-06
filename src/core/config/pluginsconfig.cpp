@@ -59,7 +59,6 @@ PluginsConfig::PluginsConfig(QWidget *parent)
 }
 
 QPPluginList *PluginsConfig::pluginsList() {
-    qDebug() << "Plugins Count: " <<  mPlugins.size();
     return &mPlugins;
 }
 

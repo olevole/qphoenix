@@ -47,4 +47,8 @@ public:
     bool isSupportCompletions() {return false;}
 private:
     static QString mApiKey;
+    QString parseTree(QJsonObject root, bool header = false);
+
+//    QString parseText(QJsonObject &text);
+//    QString mLastData;
 };

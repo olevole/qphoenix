@@ -1,4 +1,4 @@
-/*
+ /*
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation; either version 2 of the License, or
@@ -29,6 +29,11 @@
 #include <QUrl>
 #include <QDebug>
 
+#include <QNetworkAccessManager>
+#include <QEventLoop>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+
 
 QString YandexDictionary::mApiKey = "dict.1.1.20131027T162417Z.02f762c5e8f46667.ce8d3c6adf6c5c6f3bf20ce0f9040dccae8ab082";
 
@@ -38,20 +43,64 @@ YandexDictionary::YandexDictionary(QObject *parent)
 }
 
 QStringList YandexDictionary::query(const QString &text, const QString &src_lang, const QString &dest_lang, unsigned int max_count)  {
-    const QUrl url = QString("https://dictionary.yandex.net/api/v1/dicservice.json/lookup");
-    const QString params = QString("key=%1&lang=%2-%3&text=%4").
-            arg(mApiKey, src_lang, dest_lang, text.toUtf8().toPercentEncoding());
+    const QString url = "https://dictionary.yandex.net/api/v1/dicservice.json/lookup";
+    const QString request = QString("%1?key=%2&lang=%3-%4&text=%5").
+            arg(url, mApiKey, src_lang, dest_lang, text.toUtf8().toPercentEncoding());
 
-    const QString  rawdata = HTTP::POST(url, params);
+    const QString  rawdata = HTTP::GET(request);
+
+    QJsonDocument doc = QJsonDocument::fromJson(rawdata.toUtf8());
+
+    QJsonArray def = doc.object().value("def").toArray();
+    QStringList reply;
+    for (int i = 0; i < def.size(); ++i) {
+        const QString ret = parseTree(def.takeAt(i).toObject(), true);
+        if(!ret.isEmpty())
+            reply << ret;
+    }
+    return reply;
+}
 
 
-    qDebug() << "Request URI: " << url;
-    qDebug() << "Request parameters: " << params;
-    qDebug() << "Reply data: " << rawdata;
+QString YandexDictionary::parseTree(QJsonObject root, bool header) {
+    QString buf;
+
+    const QString text = root.value("text").toString();
+    const QString pos = root.value("pos").toString();
+
+    if(!text.isEmpty()) {
+        if(header)
+            buf += QString("[b]%1[/b] ").arg(text);
+        else
+            buf += text;
+    }
+
+    if(!pos.isEmpty())
+        buf += QString("([i]%1[/i])").arg(pos);
+
+    if(!pos.isEmpty() || !text.isEmpty())
+        buf += "\n";
 
 
+    QJsonArray tr = root.value("tr").toArray();
+    foreach(QJsonValue val, tr)
+        buf += parseTree(val.toObject());
 
-    return QStringList();
+
+    QJsonArray mean = root.value("mean").toArray();
+    foreach(QJsonValue val, mean)
+        buf += parseTree(val.toObject());
+
+    QJsonArray syn = root.value("syn").toArray();
+    foreach(QJsonValue val, syn)
+        buf += parseTree(val.toObject());
+
+    QJsonArray ex = root.value("ex").toArray();
+    foreach(QJsonValue val, ex)
+        buf += parseTree(val.toObject());
+
+
+    return buf;
 }
 
 

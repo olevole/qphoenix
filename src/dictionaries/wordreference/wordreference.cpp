@@ -44,53 +44,18 @@ QStringList WordReference::query(const QString &text, const QString &src_lang, c
 
     QStringList lst;
 
-
     for(int i = 0;;i++) {
         QJsonObject variant = principal.value(QString::number(i)).toObject();
         if(variant.isEmpty())
             break;
-
         lst << parseVariant(variant);
-        qDebug() << "ITer no: " << i;
     }
 
-    // Parse principal translations
-//    for (int i = 0; i < principal.count(); i++) {
-
-//        QJsonObject orig = principal[i].toObject();
-
-//        if(orig.isEmpty()) break;
-
-//        QJsonObject oterm = orig.value("OriginalTerm").toObject();
-
-//        QString src_term = oterm.value("term").toString();
-//        QString src_sense = oterm.value("sense").toString();
-
-//        QJsonObject oterm2 = orig.value("FirstTranslation").toObject();
-
-//        QString res_term = oterm2.value("term").toString();
-//        QString res_sense = oterm2.value("sense").toString();
-
-//        lst << QString(
-//                   "[b]%1 (%2)[/b]\n\n"
-////                   "[i]%2[/i]\n\n"
-//                   "[u]%3[/u][b]%4[/b]"
-//                   ).
-//               arg(src_term,
-//                   src_sense,
-//                   res_sense,
-//                   res_term);
-//    }
    return lst;
 }
 
 QString WordReference::parseVariant(QJsonObject obj) const {
     QString data;
-
-
-    //Parsing first element
-//    const QString first = QString()
-//    obj.ta
 
     const QJsonObject first = obj.take("OriginalTerm").toObject();
     const QString first_term = first.value("term").toString();
@@ -107,17 +72,10 @@ QString WordReference::parseVariant(QJsonObject obj) const {
         const QString sense = variant.value("sense").toString();
         const QString pos = variant.value("POS").toString();
 
-
         data += QString("[i]%1[/i]\t\t%2 [u]%3[/u]\n").arg(term, sense, pos);
-
-//        data += variant.value("term").toString() + "\n";
-//        data += variant.value("sense").toString() + "\n\n";
-
     }
 
-//    data += obj.value("Note").toString() + "\n\n\n";
     return data;
-//    return obj.te
 }
 
 QJsonDocument WordReference::queryData(const QString &text, const QString &src_lang, const QString &dest_lang) const {
@@ -129,21 +87,5 @@ QJsonDocument WordReference::queryData(const QString &text, const QString &src_l
 }
 
 QStringList WordReference::completions(const QString &str,const QString &src_lang, const QString &dest_lang) const {
-//    QJsonDocument doc = queryData(str, src_lang, dest_lang);
-//    qDebug() << "JSON" << doc.toJson();
-//    QJsonObject root = doc.object().value("term0").toObject();
-//    QJsonObject principal = root.value("PrincipalTranslations").toObject();
-
-//    QStringList lst;
-
-//    for (int i = 0; i < 20; i++) {
-//        QJsonObject orig = principal.value(QString::number(i)).toObject();
-//        if(orig.isEmpty()) break;
-//        QJsonObject oterm = orig.value("FirstTranslation").toObject();
-//        QString expl = oterm.value("term").toString();
-//        lst << expl;
-//    }
-//   lst.prepend(str);
-//   return lst;
     return QStringList();
 }

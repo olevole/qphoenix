@@ -26,7 +26,6 @@
 
 #define DICTIONARY_VERSION "0.99"
 
-class QNetworkAccessManager;
 class QJsonDocument;
 
 class WordReference : public QObject, IDictionary
