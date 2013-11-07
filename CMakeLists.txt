@@ -1,5 +1,5 @@
 project(QPhoenix)
-cmake_minimum_required(VERSION 2.8.10)
+cmake_minimum_required(VERSION 2.8.5)
 set(EXECUTABLE_NAME qphoenix)
 set(PROJECT_VERSION 0.999999 CACHE INTERNAL "")
 set(CMAKE_BUILD_TYPE Debug)
