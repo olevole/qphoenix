@@ -105,14 +105,12 @@ public slots:
     void saveCfg();
     void readCfg();
 private slots:
+    void onResponse(const QString &txt);
     void updateComboxes();
     void updateResultComboBox();
-
-
     void changeHandler();
 private:
     QSettings *mSettings;
-
     QComboBox *mTranslatorsComboBox;
     QToolBar *mMainToolBar;
     QPTranslationToolBar *mSrcToolbar;

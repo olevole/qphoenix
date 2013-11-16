@@ -62,7 +62,7 @@
 #include "dictionaryconfig.h"
 #include "itranslationwidget.h"
 #include "commonconfig.h"
-
+#include <QProgressBar>
 
 QString MainWindow::mAboutStr = "Trasnaltor and dictionary with plugins support.\n"
 #ifdef QP_DEBUG
@@ -78,6 +78,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     mSettings(new QSettings(this)),
     mSavePath(""),
+    mProgressBar(new QProgressBar(this)),
     mStatusBar(new QStatusBar(this)),
     mToolBar(new QToolBar(this)),
     mMenuBar(new QMenuBar(this)),
@@ -165,6 +166,15 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setStatusBar(mStatusBar);
     this->setMenuBar(mMenuBar);
 
+    mProgressBar->setMaximum(0);
+    mProgressBar->setMinimum(0);
+    mProgressBar->setValue(0);
+    mStatusBar->addPermanentWidget(mProgressBar);
+
+    mProgressBar->setFormat("");
+    mProgressBar->setFixedWidth(200);
+    stopProgressBar();
+
     this->addToolBar(mToolBar);
     this->addToolBar(mDictionaryWidget->getToolBar());
     this->addToolBar(mTranslationWidget->mainToolBar());
@@ -207,6 +217,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mTranslationWidget, SIGNAL(message(QString)), this, SLOT(setStatusBarMessage(QString)));
     connect(mDictionaryWidget, SIGNAL(message(QString)), this, SLOT(setStatusBarMessage(QString)));
 
+    connect(mTranslationWidget, SIGNAL(started()), this, SLOT(startProgressBar()));
+    connect(mDictionaryWidget, SIGNAL(started()), this, SLOT(startProgressBar()));
+
+    connect(mTranslationWidget, SIGNAL(finished()), this, SLOT(stopProgressBar()));
+    connect(mDictionaryWidget, SIGNAL(finished()), this, SLOT(stopProgressBar()));
 
     mSettings->beginGroup(QP_MAINWINDOW_CONFIG_GROUP);
 
@@ -247,6 +262,18 @@ void MainWindow::setCurrentIndex(int i) {
 
 void MainWindow::setStatusBarMessage(const QString &msg, int timeout) {
     mStatusBar->showMessage(msg, timeout);
+}
+
+void MainWindow::startProgressBar() {
+    mProgressBar->setMaximum(0);
+    mProgressBar->setMinimum(0);
+    mProgressBar->setValue(0);
+}
+
+void MainWindow::stopProgressBar() {
+    mProgressBar->setMaximum(100);
+    mProgressBar->setMinimum(100);
+    mProgressBar->setValue(100);
 }
 
 void MainWindow::onConfigAccept() {
@@ -299,15 +326,11 @@ void MainWindow::readCfg() {
     setCurrentIndex(mSettings->value("TabIndex", 0).toInt());
     restoreGeometry(mSettings->value("Geometry").toByteArray());
     mTranslationWidget->readCfg();
-//    mTranslationWidget->setSourceLanguage(mSettings->value("SrcLang").toString());
-//    mTranslationWidget->setResulteLanguage(mSettings->value("ResLang").toString());
 }
 
 void MainWindow::saveCfg() {
     mSettings->setValue("TabIndex", mTabWidget->currentIndex());
     mSettings->setValue("Geometry", saveGeometry());
-/*    mSettings->setValue("SrcLang", mTranslationWidget->getSourceLanguageCode());
-    mSettings->setValue("ResLang", mTranslationWidget->getResultLanguageCode())*/;
 }
 
 //----------------------------------------------------------------------------------------------

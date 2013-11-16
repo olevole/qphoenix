@@ -28,6 +28,7 @@
 #include <QJsonArray>
 #include <QUrl>
 #include <QDebug>
+#include <QThread>
 
 QString WordReference::mApiKey = "284e7";
 QString WordReference::mApiVer = "0.8";
@@ -89,5 +90,6 @@ QJsonDocument WordReference::queryData(const QString &text, const QString &src_l
 }
 
 QStringList WordReference::completions(const QString &str,const QString &src_lang, const QString &dest_lang) const {
+    QThread::sleep(3);
     return QStringList() << "test" << "tester" << "testing";
 }

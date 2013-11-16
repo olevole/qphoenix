@@ -32,6 +32,7 @@
 #define QP_MAINWINDOW_CONFIG_GROUP "MainWindow"
 
 class QStatusBar;
+class QProgressBar;
 class QToolBar;
 class QMenuBar;
 class QMenu;
@@ -73,6 +74,9 @@ public slots:
     //End API methods
 private slots:
 
+    void startProgressBar();
+    void stopProgressBar();
+
     //! Update plugins, etc information from config dialog.
     void onConfigAccept();
     void updateTranslatorConfig();
@@ -101,6 +105,7 @@ private:
     QSettings *mSettings;
     QString mSavePath;
 
+    QProgressBar *mProgressBar;
     QStatusBar  *mStatusBar;
     QToolBar    *mToolBar;
     QMenuBar    *mMenuBar;

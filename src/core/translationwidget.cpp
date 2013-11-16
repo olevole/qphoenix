@@ -36,6 +36,7 @@
 #include <QMap>
 #include <QClipboard>
 #include <QLabel>
+#include <QProgressBar>
 #include <QSizePolicy>
 #include <QSettings>
 
@@ -124,7 +125,7 @@ QPTranslationWidget::QPTranslationWidget(QWidget *parent) :
 
     connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateResultComboBox()));
 
-    connect(&mThread, SIGNAL(reply(QString)), mResText, SLOT(setText(QString)));
+    connect(&mThread, SIGNAL(reply(QString)), this, SLOT(onResponse(QString)));
 
     connect(mSrcComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(changeHandler()));
     connect(mResComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(changeHandler()));
@@ -256,6 +257,12 @@ void QPTranslationWidget::setTranslator(QPTranslator &translator) {
 
 void QPTranslationWidget::setTranslatorIndex(int idx) {
     mTranslatorsComboBox->setCurrentIndex(idx);
+}
+
+void QPTranslationWidget::onResponse(const QString &txt) {
+    emit message(tr("Translated."));
+    emit finished();
+    mResText->setText(txt);
 }
 
 void QPTranslationWidget::updateComboxes() {

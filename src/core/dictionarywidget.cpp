@@ -152,6 +152,8 @@ void DictionaryWidget::showData(const QStringList &lst, const QString &name) {
 
 void DictionaryWidget::showCompletions(const QStringList &comp) {
     if(mState == WaitingCompletions) {
+        emit message(tr("completions received."));
+        emit finished();
         mTimer.stop();
         if(comp.size() <= 1) {
             requestData();
@@ -224,6 +226,8 @@ void DictionaryWidget::setLanguagePairs(const LanguagePairList &lst) {
 
 void DictionaryWidget::requestCompletions() {
     if(mState == Idle) {
+        emit message(tr("Requesting completions...."));
+        emit started();
         mState = WaitingCompletions;
         mThread.queryCompletions(getSourceLanguageCode(), getResultLanguageCode(), mSrcText->text());
     }
@@ -231,6 +235,8 @@ void DictionaryWidget::requestCompletions() {
 
 void DictionaryWidget::requestData(const QString &word) {
     if(mState == Idle || mState == WaitingCompletions) {
+        emit message(tr("Requesting dictionary..."));
+        emit started();
         mTimer.stop();
         mState = WaitingResponse;
         mThread.query(getSourceLanguageCode(), getResultLanguageCode(), word);
@@ -253,4 +259,6 @@ void DictionaryWidget::finish() {
         mResText->setHtml(DictionaryTemplate::NotFound());
         mResText->update();
     }
+    emit message(tr("Done."));
+    emit finished();
 }
