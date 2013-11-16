@@ -210,7 +210,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mSettings->beginGroup(QP_MAINWINDOW_CONFIG_GROUP);
 
-    readCfg();
     // Read configs
     updateTranslatorConfig();
     onConfigAccept();
@@ -218,6 +217,9 @@ MainWindow::MainWindow(QWidget *parent) :
     mTranslationWidget->setTranslatorsNames(mTranslatorsConfig->getTranslatorsNames());
 
     mTranslatorsConfig->read();
+
+    readCfg();
+
 }
 
 MainWindow::~MainWindow()
@@ -296,11 +298,16 @@ void MainWindow::onIndexChange(const int i) {
 void MainWindow::readCfg() {
     setCurrentIndex(mSettings->value("TabIndex", 0).toInt());
     restoreGeometry(mSettings->value("Geometry").toByteArray());
+    mTranslationWidget->readCfg();
+//    mTranslationWidget->setSourceLanguage(mSettings->value("SrcLang").toString());
+//    mTranslationWidget->setResulteLanguage(mSettings->value("ResLang").toString());
 }
 
 void MainWindow::saveCfg() {
     mSettings->setValue("TabIndex", mTabWidget->currentIndex());
     mSettings->setValue("Geometry", saveGeometry());
+/*    mSettings->setValue("SrcLang", mTranslationWidget->getSourceLanguageCode());
+    mSettings->setValue("ResLang", mTranslationWidget->getResultLanguageCode())*/;
 }
 
 //----------------------------------------------------------------------------------------------

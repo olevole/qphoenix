@@ -71,5 +71,5 @@ public:
     virtual bool isSupportCompletions() = 0;
 };
 
-Q_DECLARE_INTERFACE(IDictionary, "com.qphoenix.interfaces.dictionary/1.0");
+Q_DECLARE_INTERFACE(IDictionary, "com.qphoenix.interfaces.dictionary/1.0")
 

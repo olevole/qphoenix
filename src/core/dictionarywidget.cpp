@@ -254,5 +254,3 @@ void DictionaryWidget::finish() {
         mResText->update();
     }
 }
-
-

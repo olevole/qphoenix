@@ -51,7 +51,9 @@ QStringList WordReference::query(const QString &text, const QString &src_lang, c
         lst << parseVariant(variant);
     }
 
-   return lst;
+    lst.removeDuplicates();
+
+    return lst;
 }
 
 QString WordReference::parseVariant(QJsonObject obj) const {
@@ -87,5 +89,5 @@ QJsonDocument WordReference::queryData(const QString &text, const QString &src_l
 }
 
 QStringList WordReference::completions(const QString &str,const QString &src_lang, const QString &dest_lang) const {
-    return QStringList();
+    return QStringList() << "test" << "tester" << "testing";
 }

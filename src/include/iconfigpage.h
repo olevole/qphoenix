@@ -34,5 +34,5 @@ public:
     virtual void reset() = 0;
 };
 
-Q_DECLARE_INTERFACE(IConfigPage, "com.qphoenix.interfaces.settings/1.0");
+Q_DECLARE_INTERFACE(IConfigPage, "com.qphoenix.interfaces.settings/1.0")
 

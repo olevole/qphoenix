@@ -71,12 +71,15 @@ public:
     //begin of API methods
     virtual QString getSourceText() const;
     virtual QString getResultText() const;
+
     virtual void setSourceText(const QString &text);
     virtual void setResultText(const QString &text);
     virtual void clearSourceText();
     virtual void clearResultText();
     virtual QString getSourceLanguageCode();
     virtual QString getResultLanguageCode();
+    virtual void setSourceLanguage(const QString &code);
+    virtual void setResulteLanguage(const QString &code);
     virtual QObject *qobject();
     virtual void addToolbarAction(QAction *action, TranslationWidgetToolbar toolbar);
     //end of API methods
@@ -98,11 +101,13 @@ public slots:
     virtual void copyResultText();
     //end of API methods
     void setTranslatorIndex(int idx);
+
+    void saveCfg();
+    void readCfg();
 private slots:
     void updateComboxes();
     void updateResultComboBox();
-    void saveCfg();
-    void readCfg();
+
 
     void changeHandler();
 private:

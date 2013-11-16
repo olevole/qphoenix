@@ -106,5 +106,5 @@ QString YandexDictionary::parseTree(QJsonObject root, bool header) {
 
 
 QStringList YandexDictionary::completions(const QString &str,const QString &src_lang, const QString &dest_lang) const {
-    return QStringList();
+    return QStringList() << "testerer" << "testerino";
 }

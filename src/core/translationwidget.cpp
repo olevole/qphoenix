@@ -63,7 +63,7 @@ QString QPLanguageComboBox::currentData() const {
 
 void QPLanguageComboBox::setIndexByKey(const QString &key) {
     for (int i = 0; i < count(); ++i) {
-        const QString itemtext = itemText(i);
+        const QString itemtext = itemData(i).toString();
         if(itemtext == key) {
             setCurrentIndex(i);
         }
@@ -170,6 +170,14 @@ QString QPTranslationWidget::getResultLanguageCode() {
     return mResComboBox->itemData(mResComboBox->currentIndex()).toString();
 }
 
+void QPTranslationWidget::setSourceLanguage(const QString &code) {
+    mSrcComboBox->setIndexByKey(code);
+}
+
+void QPTranslationWidget::setResulteLanguage(const QString &code) {
+    mResComboBox->setIndexByKey(code);
+}
+
 QObject *QPTranslationWidget::qobject() {
     return this;
 }
@@ -191,9 +199,11 @@ void QPTranslationWidget::addToolbarAction(QAction *action, TranslationWidgetToo
 }
 
 void QPTranslationWidget::swap() {
-    const int i = mSrcComboBox->currentIndex();
-    mSrcComboBox->setCurrentIndex(mResComboBox->currentIndex());
-    mResComboBox->setCurrentIndex(i);
+    const QString src_data = mSrcComboBox->currentData();
+    const QString res_data = mResComboBox->currentData();
+
+    mSrcComboBox->setIndexByKey(res_data);
+    mResComboBox->setIndexByKey(src_data);
 }
 
 void QPTranslationWidget::undo() {
@@ -249,6 +259,9 @@ void QPTranslationWidget::setTranslatorIndex(int idx) {
 }
 
 void QPTranslationWidget::updateComboxes() {
+    const QString src_code = mSrcComboBox->currentData();
+    const QString res_code = mResComboBox->currentData();
+
     mSrcComboBox->clear();
     mResComboBox->clear();
 
@@ -266,7 +279,8 @@ void QPTranslationWidget::updateComboxes() {
         counter++;
     }
     updateResultComboBox();
-    readCfg();
+    mSrcComboBox->setIndexByKey(res_code);
+    mResComboBox->setIndexByKey(src_code);
 }
 
 void QPTranslationWidget::updateResultComboBox() {

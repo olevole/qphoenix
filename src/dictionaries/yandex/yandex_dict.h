@@ -44,7 +44,7 @@ public:
     bool unload() {return true;}
     bool isLoaded() const {return true;}
 
-    bool isSupportCompletions() {return false;}
+    bool isSupportCompletions() {return true;}
 private:
     static QString mApiKey;
     QString parseTree(QJsonObject root, bool header = false);

@@ -45,4 +45,4 @@ public:
                                const QString &dest_lang) = 0;
 };
 
-Q_DECLARE_INTERFACE(ITranslator, "com.qphoenix.interfaces.translator/1.0");
+Q_DECLARE_INTERFACE(ITranslator, "com.qphoenix.interfaces.translator/1.0")

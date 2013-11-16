@@ -12,7 +12,8 @@
 
 			"languages" : {
                                 "es" : ["en", "pg" ],
-                                "ru" : ["en", "fr"]
+                                "ru" : ["en", "fr"],
+                                "ru" : ["ru"]
 			}
 		}
 	}

@@ -63,4 +63,4 @@ public:
     virtual void setPluginConnector(PluginConnector connector) = 0;
 };
 
-Q_DECLARE_INTERFACE(IPlugin, "com.qphoenix.interfaces.plugin/1.0");
+Q_DECLARE_INTERFACE(IPlugin, "com.qphoenix.interfaces.plugin/1.0")

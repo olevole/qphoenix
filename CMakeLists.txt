@@ -1,5 +1,5 @@
 project(QPhoenix)
-cmake_minimum_required(VERSION 2.8.5)
+cmake_minimum_required(VERSION 2.8.10)
 set(EXECUTABLE_NAME qphoenix)
 set(PROJECT_VERSION 0.999999 CACHE INTERNAL "")
 set(CMAKE_BUILD_TYPE Debug)
@@ -49,6 +49,7 @@ src/include/iplugin.h
 src/include/itranslator.h
 src/include/idictionary.h
 src/include/imodule.h
+src/include/icore.h
 src/include/api.h)
 
 set(HEADERS

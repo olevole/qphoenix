@@ -44,11 +44,15 @@ public:
     enum TranslationWidgetToolbar {
         MainToolbar,
         SourceTextToolbar,
-        ResultTextToolbar,
+        ResultTextToolbar
     };
 
     virtual QString getSourceLanguageCode() = 0;
     virtual QString getResultLanguageCode() = 0;
+
+
+    virtual void setSourceLanguage(const QString &code) = 0;
+    virtual void setResulteLanguage(const QString &code) = 0;
 
     virtual void addToolbarAction(QAction *action, TranslationWidgetToolbar toolbar) = 0;
     virtual QObject *qobject() = 0;
